@@ -16,13 +16,15 @@ namespace Nocturne.Auth.Core.Identity
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<ApplicationUser>().ToTable("IdentityUser");
-            builder.Entity<ApplicationRole>().ToTable("IdentityRole");
-            builder.Entity<IdentityRoleClaim<long>>().ToTable("IdentityRoleClaim");
-            builder.Entity<IdentityUserClaim<long>>().ToTable("IdentityUserClaim");
-            builder.Entity<IdentityUserLogin<long>>().ToTable("IdentityUserLogin");
-            builder.Entity<IdentityUserRole<long>>().ToTable("IdentityUserRole");
-            builder.Entity<IdentityUserToken<long>>().ToTable("IdentityUserToken");
+            builder.HasDefaultSchema("identity");
+
+            builder.Entity<ApplicationUser>().ToTable("Users");
+            builder.Entity<ApplicationRole>().ToTable("Roles");
+            builder.Entity<IdentityRoleClaim<long>>().ToTable("RoleClaims");
+            builder.Entity<IdentityUserClaim<long>>().ToTable("UserClaims");
+            builder.Entity<IdentityUserLogin<long>>().ToTable("UserLogins");
+            builder.Entity<IdentityUserRole<long>>().ToTable("UserRoles");
+            builder.Entity<IdentityUserToken<long>>().ToTable("UserTokens");
         }
     }
 }

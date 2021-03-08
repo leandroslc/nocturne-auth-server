@@ -3,18 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nocturne.Auth.Core.Identity;
 
-namespace Infra.SqlServer.Migrations
+namespace Migrations.Identity
 {
     [DbContext(typeof(ApplicationIdentityDbContext))]
-    partial class ApplicationIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210308184907_CreateIdentity")]
+    partial class CreateIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("identity")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -39,7 +42,7 @@ namespace Infra.SqlServer.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("IdentityRoleClaim");
+                    b.ToTable("RoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
@@ -62,7 +65,7 @@ namespace Infra.SqlServer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("IdentityUserClaim");
+                    b.ToTable("UserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
@@ -83,7 +86,7 @@ namespace Infra.SqlServer.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("IdentityUserLogin");
+                    b.ToTable("UserLogins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
@@ -98,7 +101,7 @@ namespace Infra.SqlServer.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("IdentityUserRole");
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
@@ -117,7 +120,7 @@ namespace Infra.SqlServer.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("IdentityUserToken");
+                    b.ToTable("UserTokens");
                 });
 
             modelBuilder.Entity("Nocturne.Auth.Core.Identity.ApplicationRole", b =>
@@ -146,7 +149,7 @@ namespace Infra.SqlServer.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("IdentityRole");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Nocturne.Auth.Core.Identity.ApplicationUser", b =>
@@ -213,7 +216,7 @@ namespace Infra.SqlServer.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("IdentityUser");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
