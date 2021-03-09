@@ -1,26 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Nocturne.Auth.Configuration;
 
-namespace Server
+namespace Nocturne.Auth.Server
 {
     public class Program
     {
         public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+            => new AppHostBuilder<Startup>(args).Start();
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        public static IHostBuilder CreateHostBuilder(string[] args)
+            => new AppHostBuilder<Startup>(args).GetHostBuilder();
     }
 }
