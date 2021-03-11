@@ -22,6 +22,7 @@ namespace Nocturne.Auth.Configuration.Services
 
             services.ConfigureApplicationCookie(options =>
             {
+                options.Cookie.Name = "auth";
                 options.LoginPath = "/account/signin";
                 options.ReturnUrlParameter = "returnUrl";
             });
