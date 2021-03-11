@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Text;
@@ -12,7 +10,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Nocturne.Auth.Core.Identity;
 using Nocturne.Auth.Core.Email;
 
-namespace Server.Areas.Identity.Pages.Account
+namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class ForgotPasswordModel : PageModel
@@ -20,7 +18,9 @@ namespace Server.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailService _emailSender;
 
-        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailService emailSender)
+        public ForgotPasswordModel(
+            UserManager<ApplicationUser> userManager,
+            IEmailService emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;

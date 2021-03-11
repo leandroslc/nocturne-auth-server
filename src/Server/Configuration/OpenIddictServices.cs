@@ -15,16 +15,13 @@ namespace Nocturne.Auth.Server.Configuration
                 .AddServer(options =>
                 {
                     options
-                        .SetAuthorizationEndpointUris("/connect/authorize")
-                        .SetDeviceEndpointUris("/connect/device")
-                        .SetLogoutEndpointUris("/connect/logout")
-                        .SetTokenEndpointUris("/connect/token")
-                        .SetUserinfoEndpointUris("/connect/userinfo")
-                        .SetVerificationEndpointUris("/connect/verify");
+                        .SetAuthorizationEndpointUris(AuthorizationEndpoints.Authorize)
+                        .SetLogoutEndpointUris(AuthorizationEndpoints.Logout)
+                        .SetTokenEndpointUris(AuthorizationEndpoints.Token)
+                        .SetUserinfoEndpointUris(AuthorizationEndpoints.UserInfo);
 
                     options
                         .AllowAuthorizationCodeFlow()
-                        .AllowDeviceCodeFlow()
                         .AllowPasswordFlow()
                         .AllowRefreshTokenFlow();
 
@@ -41,8 +38,7 @@ namespace Nocturne.Auth.Server.Configuration
                         .EnableAuthorizationEndpointPassthrough()
                         .EnableLogoutEndpointPassthrough()
                         .EnableTokenEndpointPassthrough()
-                        .EnableUserinfoEndpointPassthrough()
-                        .EnableVerificationEndpointPassthrough();
+                        .EnableUserinfoEndpointPassthrough();
 
                     if (environment.IsDevelopment())
                     {
