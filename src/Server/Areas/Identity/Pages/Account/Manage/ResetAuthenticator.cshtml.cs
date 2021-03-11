@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Nocturne.Auth.Core.Identity;
 
-namespace Server.Areas.Identity.Pages.Account.Manage
+namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
     public class ResetAuthenticatorModel : PageModel
     {

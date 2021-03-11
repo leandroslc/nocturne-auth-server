@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Nocturne.Auth.Core.Identity;
 
-namespace Server.Areas.Identity.Pages.Account.Manage
+namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
     public class ExternalLoginsModel : PageModel
     {

@@ -7,7 +7,7 @@ namespace Nocturne.Auth.Server.Areas.Home.Controllers
         [HttpGet("/")]
         public IActionResult Index()
         {
-            return RedirectToPage("/Account/Login", new { area = "Identity" });
+            return RedirectToPage("/Account/Manage/Index", new { area = "Identity" });
         }
     }
 }

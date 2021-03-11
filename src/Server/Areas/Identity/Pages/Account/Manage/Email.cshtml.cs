@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Nocturne.Auth.Core.Identity;
 using Nocturne.Auth.Core.Email;
 
-namespace Server.Areas.Identity.Pages.Account.Manage
+namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
     public partial class EmailModel : PageModel
     {
