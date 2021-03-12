@@ -24,11 +24,18 @@ namespace Nocturne.Auth.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddRazorPages(options =>
-            {
-                options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
-            });
+            services
+                .AddControllersWithViews()
+                .AddApplicationMvcLocalization();
+
+            services
+                .AddRazorPages(options =>
+                {
+                    options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+                })
+                .AddApplicationMvcLocalization();
+
+            services.AddApplicationLocalization();
 
             services
                 .AddApplicationDbContexts(Configuration)
