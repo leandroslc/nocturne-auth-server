@@ -148,66 +148,15 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
 
             if (request.IsPasswordGrantType())
             {
-                var user = await userManager.FindByNameAsync(request.Username);
-                if (user is null)
-                {
-                    return Forbid(
-                        Errors.InvalidGrant,
-                        "The username/password is invalid.");
-                }
-
-                // Validate the username/password and ensure the account is not locked out.
-                var result = await signInManager.CheckPasswordSignInAsync(
-                    user, request.Password, lockoutOnFailure: true);
-
-                if (!result.Succeeded)
-                {
-                    return Forbid(
-                        Errors.InvalidGrant,
-                        "The username/password couple is invalid.");
-                }
-
-                var principal = await CreateUserPrincipalAsync(user, request);
-
-                return SignInPrincipal(principal);
+                return await ExchangeForPasswordGrant(request);
             }
-
+            else if (request.IsClientCredentialsGrantType())
+            {
+                return await ExchangeForClientCredentialsGrant(request);
+            }
             else if (request.IsAuthorizationCodeGrantType() || request.IsRefreshTokenGrantType())
             {
-                var authenticationResult = await HttpContext.AuthenticateAsync(
-                    OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
-
-                if (!authenticationResult.Succeeded)
-                {
-                    return Forbid(
-                        Errors.InvalidGrant,
-                        "Authentication failed");
-                }
-
-                var principal = authenticationResult.Principal;
-
-                // Use the line below instead if the user should be invalidated if password/roles changes:
-                // var user = signInManager.ValidateSecurityStampAsync(principal);
-                var user = await userManager.GetUserAsync(principal);
-                if (user is null)
-                {
-                    return Forbid(
-                        Errors.InvalidGrant,
-                        "The token is no longer valid.");
-                }
-
-                // Ensure the user is still allowed to sign in.
-                var cannotSignIn = !await signInManager.CanSignInAsync(user);
-                if (cannotSignIn)
-                {
-                    return Forbid(
-                        Errors.InvalidGrant,
-                        "The user is no longer allowed to sign in.");
-                }
-
-                SetClaimsDestinations(principal);
-
-                return SignInPrincipal(principal);
+                return await ExchangeForAuthorizationCodeOrRefreshTokenGrant();
             }
 
             throw new InvalidOperationException("The specified grant type is not supported.");
@@ -239,7 +188,7 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
             switch (consentType)
             {
                 // If the consent is external (e.g when authorizations are granted by a sysadmin),
-                // immediately return an error if no authorization can be found in the database.
+                // immediately return an error if no authorization can be found.
                 case ConsentTypes.External when !hasAuthorizations:
                     return Forbid(
                         Errors.ConsentRequired,
@@ -253,7 +202,7 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
                     return await CreateAndSignInPrincipalAsync(
                         request, user, application, authorizations);
 
-                // At this point, no authorization was found in the database and an error must be returned
+                // At this point, no authorization was found and an error must be returned
                 // if the client application specified prompt=none in the authorization request.
                 case ConsentTypes.Explicit when request.HasPrompt(Prompts.None):
                 case ConsentTypes.Systematic when request.HasPrompt(Prompts.None):
@@ -266,6 +215,97 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
                         Scope = request.Scope
                     });
             }
+        }
+
+        private async Task<IActionResult> ExchangeForClientCredentialsGrant(OpenIddictRequest request)
+        {
+            var application = await GetApplicationAsync(request);
+
+            var identity = new ClaimsIdentity(
+                OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
+                Claims.Name,
+                Claims.Role);
+
+            identity.AddClaim(
+                Claims.Subject,
+                request.ClientId,
+                Destinations.AccessToken,
+                Destinations.IdentityToken);
+
+            identity.AddClaim(
+                Claims.Name,
+                await applicationManager.GetDisplayNameAsync(application),
+                Destinations.AccessToken,
+                Destinations.IdentityToken);
+
+            var principal = new ClaimsPrincipal(identity);
+            principal.SetResources(await scopeManager.ListResourcesAsync(request.GetScopes()).ToListAsync());
+
+            return SignInPrincipal(principal);
+        }
+
+        private async Task<IActionResult> ExchangeForPasswordGrant(OpenIddictRequest request)
+        {
+            var user = await userManager.FindByNameAsync(request.Username);
+            if (user is null)
+            {
+                return Forbid(
+                    Errors.InvalidGrant,
+                    "The username/password is invalid.");
+            }
+
+            // Validate the username/password and ensure the account is not locked out.
+            var result = await signInManager.CheckPasswordSignInAsync(
+                user, request.Password, lockoutOnFailure: true);
+
+            if (!result.Succeeded)
+            {
+                return Forbid(
+                    Errors.InvalidGrant,
+                    "The username/password is invalid.");
+            }
+
+            var principal = await CreateUserPrincipalAsync(user, request);
+
+            return SignInPrincipal(principal);
+        }
+
+        private async Task<IActionResult> ExchangeForAuthorizationCodeOrRefreshTokenGrant()
+        {
+            var authenticationResult = await HttpContext.AuthenticateAsync(
+                OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+
+            if (!authenticationResult.Succeeded)
+            {
+                return Forbid(
+                    Errors.InvalidGrant,
+                    "Authentication failed");
+            }
+
+            var principal = authenticationResult.Principal;
+
+            // Use the line below instead if the user should be invalidated if password/roles changes:
+            // var user = signInManager.ValidateSecurityStampAsync(principal);
+            var user = await userManager.GetUserAsync(principal);
+            if (user is null)
+            {
+                return Forbid(
+                    Errors.InvalidGrant,
+                    "The token is no longer valid.");
+            }
+
+            // Ensure the user is still allowed to sign in.
+            var cannotSignIn = !await signInManager.CanSignInAsync(user);
+            if (cannotSignIn)
+            {
+                return Forbid(
+                    Errors.InvalidGrant,
+                    "The user is no longer allowed to sign in.");
+            }
+
+            SetClaimsDestinations(principal);
+
+            return SignInPrincipal(principal);
         }
 
         private async Task<ClaimsPrincipal> CreateUserPrincipalAsync(

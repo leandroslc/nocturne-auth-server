@@ -22,6 +22,7 @@ namespace Nocturne.Auth.Server.Configuration
 
                     options
                         .AllowAuthorizationCodeFlow()
+                        .AllowClientCredentialsFlow()
                         .AllowPasswordFlow()
                         .AllowRefreshTokenFlow();
 
