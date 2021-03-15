@@ -1,0 +1,20 @@
+{
+  "name": "@nocturn-auth-server/web",
+  "version": "1.0.0",
+  "description": "Nocturne Auth Server web components",
+  "author": "Leandro Silva Luz do Carmo",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "start": "npm run build -- --watch",
+    "build": "rollup -c rollup.config.js"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.2.0",
+    "autoprefixer": "^10.2.5",
+    "rollup": "^2.41.2",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-styles": "^3.14.1",
+    "sass": "^1.32.8"
+  }
+}

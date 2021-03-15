@@ -1,0 +1,41 @@
+@use '../core/core';
+@use '../core/vars';
+
+$height: vars.$navbar-height;
+
+#{core.class('navbar')} {
+  position: relative;
+  z-index: 9;
+  width: 100%;
+  height: $height;
+  color: core.color('in-primary');
+  background-color: core.color('primary');
+  box-shadow: 0 1px 3px core.color('shadow');
+}
+
+#{core.class('navbar-brand')} {
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  height: $height;
+  padding: 0.6rem 1rem;
+  color: core.color('in-primary');
+  background-color: core.color('primary');
+  box-shadow: 0 1px 5px core.color('shadow');
+
+  @include core.bq-greather-than('md') {
+    display: none;
+  }
+}
+
+#{core.class('navbar-title')} {
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+#{core.class('navbar-toggle')} {
+  @include core.bq-greather-than('md') {
+    display: none;
+  }
+}

@@ -1,0 +1,73 @@
+@use '../core/core';
+@use '../core/vars';
+
+$width: vars.$sidebar-width;
+$height: vars.$navbar-height;
+
+#{core.class('sidenav')} {
+  position: relative;
+  grid-area: sidenav;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "brand"
+    "content";
+  width: $width;
+  height: 100%;
+  background-color: core.color('soft-background');
+  box-shadow: 1px 0 3px core.color('shadow');
+  transform: translateX(-#{$width});
+
+  @include core.bq-greather-than('md') {
+    transform: translateX(0);
+  }
+
+  @include core.bq-less-than('md') {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    transition: transform 0.2s;
+
+    &.is-expanded {
+      transform: translateX(0);
+      transition: transform 0.2s;
+    }
+  }
+}
+
+#{core.class('sidenav-brand')} {
+  grid-area: brand;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  height: $height;
+  padding: 0.6rem 1rem;
+  color: core.color('text');
+  box-shadow: 0 1px 5px core.color('shadow');
+}
+
+#{core.class('sidenav-title')} {
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+#{core.class('sidenav-backdrop')} {
+  position: fixed;
+  z-index: 998;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: none;
+  background-color: core.color('shadow');
+  transition: background-color 0.2s;
+
+  &.is-expanded {
+    @include core.bq-less-than('md') {
+      display: block;
+    }
+  }
+}

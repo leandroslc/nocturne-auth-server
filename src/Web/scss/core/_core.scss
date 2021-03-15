@@ -1,0 +1,60 @@
+@use 'sass:map';
+@use './breakpoints';
+@use './vars';
+
+@function class($name) {
+  @return ".#{vars.$prefix}-#{$name}";
+}
+
+@function color($name) {
+  $color: map.get(vars.$colors, $name);
+
+  @if (not $color) {
+    @error 'Color "#{$name}" not found';
+  }
+
+  @return $color;
+}
+
+@mixin bq-greather-than($name) {
+  $min: breakpoints.min($name);
+
+  @if ($min) {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin bq-less-than($name) {
+  $max: breakpoints.max($name);
+
+  @if ($max) {
+    @media (max-width: $max) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin bq-between($min-bq, $max-bq) {
+  $min: breakpoints.min($min-bq);
+  $max: breakpoints.max($max-bq);
+
+  @if $min != null and $max != null {
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  } @else if $max == null {
+    @include bq-greather-than($min-bq) {
+      @content;
+    }
+  } @else if $min == null {
+    @include bq-less-than($max-bq) {
+      @content;
+    }
+  }
+}

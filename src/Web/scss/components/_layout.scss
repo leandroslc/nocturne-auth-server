@@ -1,0 +1,21 @@
+@use '../core/core';
+
+#{core.class('layout')} {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "sidenav header"
+    "sidenav main";
+  height: 100%;
+}
+
+#{core.class('layout-header')} {
+  grid-area: header;
+  display: flex;
+  flex-direction: column;
+}
+
+#{core.class('layout-main')} {
+  grid-area: main;
+}

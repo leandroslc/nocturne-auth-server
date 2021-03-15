@@ -1,0 +1,23 @@
+$prefix: 'im' !default;
+
+$font-size: 16px !default;
+
+$navbar-height: 3.75rem !default;
+$sidebar-width: 17.5rem !default;
+
+$colors: (
+  'background': #f0f0f5,
+  'soft-background': #f5f5f5,
+  'primary': #5682bc,
+  'in-primary': #fff,
+  'text': #3d4e59,
+  'shadow': rgba(0, 0, 0, 0.175),
+);
+
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+);
