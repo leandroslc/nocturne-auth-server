@@ -35,7 +35,7 @@ namespace Nocturne.Auth.Server
                 })
                 .AddApplicationMvcLocalization();
 
-            services.AddApplicationLocalization();
+            services.AddApplicationLocalization(Configuration);
 
             services
                 .AddApplicationDbContexts(Configuration)
