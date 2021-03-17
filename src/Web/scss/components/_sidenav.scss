@@ -64,7 +64,7 @@ $item-padding-x: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 100vh;
+  height: calc(100vh - #{$height});
   padding: 1.2rem $item-margin-x;
   overflow-x: hidden;
 }
@@ -94,6 +94,10 @@ $item-padding-x: 1rem;
     background-color: core.color('soft-background');
     border-radius: 0;
   }
+}
+
+#{core.class('sidenav-icon')} {
+  font-size: 1rem;
 }
 
 #{core.class('sidenav-backdrop')} {
