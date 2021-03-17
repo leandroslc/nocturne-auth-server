@@ -64,7 +64,7 @@ $item-padding-x: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: calc(100vh - #{$height});
+  height: 100vh;
   padding: 1.2rem $item-margin-x;
   overflow-x: hidden;
 }

@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../core/core';
 @use '../core/vars';
 
@@ -33,6 +34,19 @@ $height: vars.$navbar-height;
 }
 
 #{core.class('navbar-toggle')} {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  font-size: 1.4rem;
+  background-color: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover, &:focus {
+    background-color: color.change(core.color('dark'), $alpha: 0.075);
+  }
+
   @include core.bq-greather-than('md') {
     display: none;
   }

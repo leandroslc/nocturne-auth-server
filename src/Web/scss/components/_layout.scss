@@ -1,4 +1,5 @@
 @use '../core/core';
+@use '../core/vars';
 
 #{core.class('layout')} {
   display: grid;
@@ -7,7 +8,7 @@
   grid-template-areas:
     "sidenav header"
     "sidenav main";
-  height: 100%;
+  height: calc(100% + #{vars.$navbar-height});
 }
 
 #{core.class('layout-header')} {

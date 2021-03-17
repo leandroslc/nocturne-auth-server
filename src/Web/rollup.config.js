@@ -14,14 +14,7 @@ const js = typescript({
   watch: './src/**/*.ts',
 });
 
-const bootstrapCSS = sass({
-  bundleName: 'bootstrap',
-  input: './vendor/bootstrap/scss/index.scss',
-  watch: false,
-});
-
 export default [
   css,
   js,
-  bootstrapCSS,
 ];
