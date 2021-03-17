@@ -1,24 +1,32 @@
 import path from 'path';
 
-const Name = 'nocturne-auth-server';
+const projectName = 'nocturne-auth-server';
 
 const projects = {
-  admin: path.resolve(__dirname, `../../src/Admin/wwwroot/lib/${Name}`),
-  server: path.resolve(__dirname, `../../src/Server/wwwroot/lib/${Name}`),
+  admin: path.resolve(__dirname, `../../src/Admin/wwwroot/lib`),
+  server: path.resolve(__dirname, `../../src/Server/wwwroot/lib`),
 };
 
-const getOutputs = (outputMap) => {
+const getOutputs = (name, outputMap) => {
   return Object.keys(projects).map(project => {
-    return outputMap(projects[project]);
+    const outputDir = path.join(projects[project], name);
+
+    return outputMap(outputDir);
   });
 };
 
-const getFileName = (extension) => {
-  return `${Name}.${extension}`;
+const getFileName = (name, extension) => {
+  return `${name}.${extension}`;
+};
+
+const getFileNameByExtension = (extension) => {
+  return getFileName(projectName, extension);
 };
 
 const config = {
+  projectName,
   getFileName,
+  getFileNameByExtension,
   getOutputs,
 };
 

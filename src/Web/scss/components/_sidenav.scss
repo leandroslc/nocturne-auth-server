@@ -1,8 +1,11 @@
+@use 'sass:color';
 @use '../core/core';
 @use '../core/vars';
 
 $width: vars.$sidebar-width;
 $height: vars.$navbar-height;
+$item-margin-x: 0.4rem;
+$item-padding-x: 1rem;
 
 #{core.class('sidenav')} {
   position: relative;
@@ -15,8 +18,8 @@ $height: vars.$navbar-height;
     "content";
   width: $width;
   height: 100%;
-  background-color: core.color('soft-background');
-  box-shadow: 1px 0 3px core.color('shadow');
+  background-color: core.color('primary');
+  border-right: 1px solid core.color('primary');
   transform: translateX(-#{$width});
 
   @include core.bq-greather-than('md') {
@@ -28,6 +31,7 @@ $height: vars.$navbar-height;
     z-index: 999;
     top: 0;
     left: 0;
+    box-shadow: 1px 0 5px core.color('shadow');
     transition: transform 0.2s;
 
     &.is-expanded {
@@ -43,8 +47,8 @@ $height: vars.$navbar-height;
   display: flex;
   align-items: center;
   height: $height;
-  padding: 0.6rem 1rem;
-  color: core.color('text');
+  padding: 0.4rem 1rem;
+  color: core.color('in-primary');
   box-shadow: 0 1px 5px core.color('shadow');
 }
 
@@ -52,6 +56,44 @@ $height: vars.$navbar-height;
   margin-bottom: 0;
   font-size: 1rem;
   font-weight: 500;
+}
+
+#{core.class('sidenav-content')} {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100vh;
+  padding: 1.2rem $item-margin-x;
+  overflow-x: hidden;
+}
+
+#{core.class('sidebar-item')} {
+  display: flex;
+  align-items: center;
+  margin: 0.2rem 0;
+  padding: 0.5rem $item-padding-x;
+  color: core.color('in-primary-soft');
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.3rem;
+
+  &:hover, &:focus {
+    color: core.color('in-primary');
+    background-color: color.change(core.color('dark'), $alpha: 0.175);
+  }
+
+  &.is-active {
+    margin-left: -#{$item-margin-x};
+    margin-right: -#{$item-margin-x};
+    padding-right: #{$item-padding-x + $item-margin-x};
+    padding-left: #{$item-padding-x + $item-margin-x};
+    color: core.color('text');
+    background-color: core.color('soft-background');
+    border-radius: 0;
+  }
 }
 
 #{core.class('sidenav-backdrop')} {
