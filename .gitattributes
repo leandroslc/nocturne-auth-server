@@ -1,3 +1,5 @@
 * eol=lf
 
 *.ico binary
+*.woff binary
+*.woff2 binary

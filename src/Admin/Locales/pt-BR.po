@@ -1,0 +1,113 @@
+msgid "{0} is invalid"
+msgstr "{0} é inválido"
+
+msgid "Allow Authorization Code Flow"
+msgstr "Permitir Authorization Code Flow"
+
+msgid "Allow Client Credentials Flow"
+msgstr "Permitir Client Credentials Flow"
+
+msgid "Allow Implicit Flow"
+msgstr "Permitir Implicit Flow"
+
+msgid "Allow Logout Endpoint"
+msgstr "Permitir endpoint de logout"
+
+msgid "Allow Refresh Token Flow"
+msgstr "Permitir Refresh Token Flow"
+
+msgid "Allow Resource Owner Password Flow"
+msgstr "Permitir Resource Owner Password Flow"
+
+msgid "Allowed Flows"
+msgstr "Fluxos Permitidos"
+
+msgid "Allowed Scopes"
+msgstr "Escopos Permitidos"
+
+msgid "Allows the application to exchange an access token when the token expires, without a new user interaction"
+msgstr "Permite que a aplicação obtenha um token de acesso quando o token expira, sem uma nova interação do usuário"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Confidential"
+msgstr "Confidencial"
+
+msgid "Configurations"
+msgstr "Configurações"
+
+msgid "Consent type"
+msgstr "Tipo de consentimento"
+
+msgid "Explicit"
+msgstr "Explícito"
+
+msgid "External"
+msgstr "Externo"
+
+msgid "Implicit"
+msgstr "Implícito"
+
+msgid "List of scopes"
+msgstr "Lista de escopos"
+
+msgid "List of URIs"
+msgstr "Lista de URIs"
+
+msgid "Logout Redirect Uris"
+msgstr "URIs de Redirecionamento de Logout"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "New application"
+msgstr "Nova aplicação"
+
+msgid "Only recommended if redirect-based flows (like Authorization Code) are not possible"
+msgstr "Apenas recomendado se fluxos baseados em redirecionamento (como Authorization Code) não são possíveis"
+
+msgid "Previously recommended for native apps or javascript apps. Always use Authorization Code instead if possible"
+msgstr "Antigamente recomendado para apps nativos ou apps javascript. Sempre use Authorization Code se possível"
+
+msgid "Public"
+msgstr "Público"
+
+msgid "Recommended for server-side web applications, single page applications (SPAs), mobile apps"
+msgstr "Recomendado para aplicações web server-side, single page applications (SPAs), apps mobile"
+
+msgid "Recommended option"
+msgstr "Opção recomendada"
+
+msgid "Recommended when the application itself is the resource owner, like a machine-to-machine comunication, jobs"
+msgstr "Recomendado quando a aplicação por si mesma é o resource owner, como uma comunicação máquina-para-máquina, jobs"
+
+msgid "Redirect Uris"
+msgstr "URIs de Redirecionamento"
+
+msgid "Save"
+msgstr "Salvar"
+
+msgid "Specification"
+msgstr "Especificação"
+
+msgid "The authorization request is assumed to be pre-approved and no consent form is displayed"
+msgstr "A requisição de autorização é considerada como pré aprovada e nenhum formulário de consentimento é exibido"
+
+msgid "The authorization request is rejected unless a pre-existing authorization (granted programmatically) already exists"
+msgstr "A requisição de autorização é rejeitada a não ser que uma autorização pré-existente (concedida programaticamente) já exista"
+
+msgid "The authorization request must be approved by the end user"
+msgstr "A requisição de autorização deve ser aprovada pelo usuário final"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Use confidential for applications that can hold secrets secure, mainly those that runs on the server, like server-side web apps, web APIs"
+msgstr "Use confidencial para aplicações que podem manter segredos de app seguros, principalmente as que executam no servidor, como aplicações web server-side, APIs web"
+
+msgid "Use public for applications that are not trusted to keep secrets secure, mainly those that runs directly on devices, desktop computers or browsers"
+msgstr "Use público para aplicações que não são confiáveis para manter segredos de app seguros, principalmente as que executam diretamente em dispositivos, computadores pessoais ou browsers"
+
+msgid "with PKCE"
+msgstr "com PKCE"
