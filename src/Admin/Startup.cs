@@ -27,6 +27,8 @@ namespace Nocturne.Auth.Admin
             services.AddApplicationLocalization(Configuration);
 
             services.AddApplicationOpenIddict();
+
+            services.AddApplicationEncryption(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
