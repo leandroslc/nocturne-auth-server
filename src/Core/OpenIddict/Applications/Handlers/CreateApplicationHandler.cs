@@ -7,9 +7,19 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
     public class CreateApplicationHandler : ManageApplicationHandler<CreateApplicationCommand>
     {
         public CreateApplicationHandler(
-            IOpenIddictApplicationManager applicationManager)
-            : base(applicationManager)
+            IOpenIddictApplicationManager applicationManager,
+            IOpenIddictScopeManager scopeManager)
+            : base(applicationManager, scopeManager)
         {
+        }
+
+        public async Task<CreateApplicationCommand> CreateCommandAsync()
+        {
+            var command = new CreateApplicationCommand();
+
+            await AddAvailableScopesAsync(command);
+
+            return command;
         }
 
         public override async Task HandleAsync(CreateApplicationCommand command)

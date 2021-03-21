@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Nocturne.Auth.Admin.Services;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using Nocturne.Auth.Core.OpenIddict.Applications.Handlers;
-using OpenIddict.Abstractions;
 
 namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
 {
@@ -11,15 +10,15 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
     [Route("applications")]
     public class ApplicationsController : Controller
     {
-        private readonly IOpenIddictScopeManager scopeManager;
         private readonly CreateApplicationHandler createApplicationHandler;
+        private readonly EditApplicationHandler editApplicationHandler;
 
         public ApplicationsController(
-            IOpenIddictScopeManager scopeManager,
-            CreateApplicationHandler createApplicationHandler)
+            CreateApplicationHandler createApplicationHandler,
+            EditApplicationHandler editApplicationHandler)
         {
-            this.scopeManager = scopeManager;
             this.createApplicationHandler = createApplicationHandler;
+            this.editApplicationHandler = editApplicationHandler;
         }
 
         [HttpGet("")]
@@ -31,21 +30,16 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
         [HttpGet("new")]
         public async Task<IActionResult> Create()
         {
-            var model = new CreateApplicationCommand();
+            var command = await createApplicationHandler.CreateCommandAsync();
 
-            var scopes = scopeManager.ListAsync();
-
-            await model.AddScopesAsync(scopes, GetScopeNameAsync);
-
-            return View(model);
+            return View(command);
         }
 
         [HttpPost("new")]
         public async Task<IActionResult> Create(CreateApplicationCommand command)
         {
-            var validationResult = createApplicationHandler.ValidateAsync(command);
-
-            await ModelState.AddErrorsFromValidationAsync(validationResult);
+            await ModelState.AddErrorsFromValidationAsync(
+                createApplicationHandler.ValidateAsync(command));
 
             if (ModelState.IsValid is false)
             {
@@ -57,9 +51,38 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
             return RedirectToAction("Index");
         }
 
-        private ValueTask<string> GetScopeNameAsync(object scope)
+        [HttpGet("{id}/edit")]
+        public async Task<IActionResult> Edit(string id)
         {
-            return scopeManager.GetNameAsync(scope);
+            if (await editApplicationHandler.ExistsAsync(id) is false)
+            {
+                return NotFound();
+            }
+
+            var command = await editApplicationHandler.CreateCommandAsync(id);
+
+            return View(command);
+        }
+
+        [HttpPost("{id}/edit")]
+        public async Task<IActionResult> Edit(EditApplicationCommand command)
+        {
+            if (await editApplicationHandler.ExistsAsync(command.Id) is false)
+            {
+                return NotFound();
+            }
+
+            await ModelState.AddErrorsFromValidationAsync(
+                editApplicationHandler.ValidateAsync(command));
+
+            if (ModelState.IsValid is false)
+            {
+                return View(command);
+            }
+
+            await editApplicationHandler.HandleAsync(command);
+
+            return RedirectToAction("Index");
         }
     }
 }

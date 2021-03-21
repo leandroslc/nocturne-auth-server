@@ -1,0 +1,25 @@
+@using static OpenIddict.Abstractions.OpenIddictConstants;
+@model ManageApplicationCommand
+
+<script src="~/js/applications.js" asp-append-version="true"></script>
+<script>
+    manageApplication({
+        constants: {
+            confidentialClientType: '@ClientTypes.Confidential',
+        },
+        elementsIds: {
+            allowAuthorizationCodeFlow: '@nameof(Model.AllowAuthorizationCodeFlow)',
+            allowClientCredentialsFlow: '@nameof(Model.AllowClientCredentialsFlow)',
+            allowImplicitFlow: '@nameof(Model.AllowImplicitFlow)',
+            allowLogoutEndpoint: '@nameof(Model.AllowLogoutEndpoint)',
+            allowPasswordFlow: '@nameof(Model.AllowPasswordFlow)',
+            allowRefreshTokenFlow: '@nameof(Model.AllowRefreshTokenFlow)',
+            allowedScopes: '@nameof(Model.AllowedScopes)',
+            clientType: '@nameof(Model.Type)',
+            consentType: '@nameof(Model.ConsentType)',
+            postLogoutRedirectUris: '@nameof(Model.PostLogoutRedirectUris)',
+            redirectUris: '@nameof(Model.RedirectUris)',
+        },
+        allowedScopes: [@Html.Raw(string.Join(",", Model.AvailableScopes.Select(s => $"'{s}'")))],
+    });
+</script>

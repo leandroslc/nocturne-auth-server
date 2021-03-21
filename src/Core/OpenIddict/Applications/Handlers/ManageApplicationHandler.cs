@@ -15,12 +15,16 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
         where TCommand : ManageApplicationCommand
     {
         public ManageApplicationHandler(
-            IOpenIddictApplicationManager applicationManager)
+            IOpenIddictApplicationManager applicationManager,
+            IOpenIddictScopeManager scopeManager)
         {
             ApplicationManager = applicationManager;
+            ScopeManager = scopeManager;
         }
 
         protected IOpenIddictApplicationManager ApplicationManager { get; }
+
+        protected IOpenIddictScopeManager ScopeManager { get; }
 
         public abstract Task HandleAsync(TCommand command);
 
@@ -73,9 +77,19 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
             return descriptor;
         }
 
+        protected async Task AddAvailableScopesAsync(TCommand command)
+        {
+            var scopes = ScopeManager.ListAsync();
+
+            await foreach (var scope in scopes)
+            {
+                command.AvailableScopes.Add(await ScopeManager.GetNameAsync(scope));
+            }
+        }
+
         private static void AddUris(
             OpenIddictApplicationDescriptor descriptor,
-            ManageApplicationCommand command)
+            TCommand command)
         {
             descriptor.PostLogoutRedirectUris.Clear();
             descriptor.PostLogoutRedirectUris.UnionWith(
@@ -87,7 +101,7 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
         }
 
         private static string GetClientSecret(
-            ManageApplicationCommand command,
+            TCommand command,
             string currentClientSecret)
         {
             if (IsConfidential(command))
@@ -102,7 +116,7 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
 
         private static void AddPermissions(
             OpenIddictApplicationDescriptor descriptor,
-            ManageApplicationCommand command)
+            TCommand command)
         {
             SetPermission(
                 descriptor,
@@ -213,12 +227,12 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
             descriptor.Permissions.RemoveWhere(p => p.StartsWith(permissionType));
         }
 
-        private static bool IsPublic(ManageApplicationCommand command)
+        private static bool IsPublic(TCommand command)
         {
             return command.Type.IsEqualInvariant(ClientTypes.Public);
         }
 
-        private static bool IsConfidential(ManageApplicationCommand command)
+        private static bool IsConfidential(TCommand command)
         {
             return command.Type.IsEqualInvariant(ClientTypes.Confidential);
         }

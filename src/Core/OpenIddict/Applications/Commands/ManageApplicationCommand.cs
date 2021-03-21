@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 
 namespace Nocturne.Auth.Core.OpenIddict.Applications.Commands
 {
@@ -37,15 +35,5 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Commands
         public bool AllowLogoutEndpoint { get; set; }
 
         public List<string> AvailableScopes { get; } = new List<string>();
-
-        public async Task AddScopesAsync(
-            IAsyncEnumerable<object> scopes,
-            Func<object, ValueTask<string>> getScopeNameAsync)
-        {
-            await foreach (var scope in scopes)
-            {
-                AvailableScopes.Add(await getScopeNameAsync(scope));
-            }
-        }
     }
 }
