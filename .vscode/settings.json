@@ -3,5 +3,7 @@
     "**/bin": true,
     "**/obj": true
   },
-  "omnisharp.enableRoslynAnalyzers": true
+  "omnisharp.enableRoslynAnalyzers": true,
+  "csharp.semanticHighlighting.enabled": true,
+  "editor.semanticHighlighting.enabled": true
 }
