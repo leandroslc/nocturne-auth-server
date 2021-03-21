@@ -173,7 +173,7 @@
 
         const allowedScopesTagify = new TagifyElement(elements.allowedScopes, function(options) {
             options.enforceWhitelist = true;
-            options.whitelist = [@Html.Raw(string.Join(",", Model.AvailableScopes)), 'test'];
+            options.whitelist = [@Html.Raw(string.Join(",", Model.AvailableScopes.Select(s => $"'{s}'")))];
         });
 
         function setDisabled(element, isDisabled) {
