@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Nocturne.Auth.Core.OpenIddict;
 using Nocturne.Auth.Core.OpenIddict.Applications;
+using Nocturne.Auth.Core.OpenIddict.Applications.Handlers;
 
 namespace Nocturne.Auth.Configuration.Services
 {

@@ -7,10 +7,10 @@ using Nocturne.Auth.Core.Crypto;
 using OpenIddict.Abstractions;
 using OpenIddict.Core;
 
-namespace Nocturne.Auth.Core.OpenIddict
+namespace Nocturne.Auth.Core.OpenIddict.Applications
 {
     public class CustomOpenIddictApplicationManager<TApplication>
-        : OpenIddictApplicationManager<TApplication>
+        : OpenIddictApplicationManager<TApplication>, ICustomOpenIddictApplicationManager
         where TApplication : class
     {
         private readonly IEncryptionService encryptionService;
@@ -24,6 +24,29 @@ namespace Nocturne.Auth.Core.OpenIddict
             : base(cache, logger, options, resolver)
         {
             this.encryptionService = encryptionService;
+        }
+
+        public async ValueTask<string> GetUnprotectedClientSecretAsync(
+            TApplication application,
+            CancellationToken cancellationToken = default)
+        {
+            var secret = await GetClientSecretAsync(application, cancellationToken);
+
+            return secret is not null
+                ? encryptionService.Decrypt(secret)
+                : null;
+        }
+
+        public ValueTask<string> GetClientSecretAsync(
+            TApplication application,
+            CancellationToken cancellationToken = default)
+        {
+            if (application == null)
+            {
+                throw new ArgumentNullException(nameof(application));
+            }
+
+            return Store.GetClientSecretAsync(application, cancellationToken);
         }
 
         protected override ValueTask<string> ObfuscateClientSecretAsync(
@@ -67,5 +90,9 @@ namespace Nocturne.Auth.Core.OpenIddict
                 return new ValueTask<bool>(false);
             }
         }
+
+        ValueTask<string> ICustomOpenIddictApplicationManager.GetUnprotectedClientSecretAsync(
+            object application, CancellationToken cancellationToken)
+            => GetUnprotectedClientSecretAsync((TApplication)application, cancellationToken);
     }
 }

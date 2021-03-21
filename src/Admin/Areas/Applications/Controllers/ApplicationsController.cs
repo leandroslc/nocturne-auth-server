@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 using Nocturne.Auth.Admin.Services;
-using Nocturne.Auth.Core.OpenIddict.Applications;
-using Nocturne.Auth.Core.OpenIddict.Applications.Models;
+using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
+using Nocturne.Auth.Core.OpenIddict.Applications.Handlers;
 using OpenIddict.Abstractions;
 
 namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
@@ -14,17 +13,13 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
     {
         private readonly IOpenIddictScopeManager scopeManager;
         private readonly CreateApplicationHandler createApplicationHandler;
-        private readonly CreateApplicationValidation createApplicationValidation;
 
         public ApplicationsController(
-            IStringLocalizer<ApplicationsController> localizer,
             IOpenIddictScopeManager scopeManager,
             CreateApplicationHandler createApplicationHandler)
         {
             this.scopeManager = scopeManager;
             this.createApplicationHandler = createApplicationHandler;
-
-            createApplicationValidation = new CreateApplicationValidation(localizer);
         }
 
         [HttpGet("")]
@@ -48,15 +43,16 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
         [HttpPost("new")]
         public async Task<IActionResult> Create(CreateApplicationCommand command)
         {
-            ModelState.AddErrorsFromValidation(
-                createApplicationValidation.Handle(command));
+            var validationResult = createApplicationHandler.ValidateAsync(command);
 
-            if (ModelState.IsValid == false)
+            await ModelState.AddErrorsFromValidationAsync(validationResult);
+
+            if (ModelState.IsValid is false)
             {
                 return View(command);
             }
 
-            await createApplicationHandler.Handle(command);
+            await createApplicationHandler.HandleAsync(command);
 
             return RedirectToAction("Index");
         }

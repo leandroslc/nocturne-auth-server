@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-namespace Nocturne.Auth.Core.OpenIddict.Applications.Models
+namespace Nocturne.Auth.Core.OpenIddict.Applications.Commands
 {
-    public class CreateApplicationCommand
+    public abstract class ManageApplicationCommand
     {
         [Required]
         public string DisplayName { get; set; }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Nocturne.Auth.Core.Extensions;
 
 namespace Nocturne.Auth.Core.Helpers
 {
@@ -50,7 +51,7 @@ namespace Nocturne.Auth.Core.Helpers
 
         private static IEnumerable<string> Split(string uris)
         {
-            return uris.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+            return uris.GetDelimitedElements();
         }
     }
 }
