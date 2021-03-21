@@ -1,0 +1,16 @@
+{
+  "Initialization": {
+    "Scopes": [
+      {
+        "Name": "email",
+        "DisplayName": "Email",
+        "Description": "Email address"
+      },
+      {
+        "Name": "profile",
+        "DisplayName": "Profile",
+        "Description": "Profile information"
+      }
+    ]
+  }
+}
