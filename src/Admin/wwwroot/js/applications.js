@@ -6,7 +6,7 @@ window.manageApplication = function(options) {
 
   const elements = {};
 
-  Object.keys(elementsIds).forEach(key => {
+  Object.keys(elementsIds).forEach(function (key) {
     const id = elementsIds[key];
     const element = document.getElementById(id);
 
@@ -121,3 +121,28 @@ window.manageApplication = function(options) {
   checkClientType();
   checkFlows();
 };
+
+(function () {
+
+  window.viewApplication = function(options) {
+    const clientIdElement = ElementHelper.getRequiredElementById(options.ids.clientId);
+    const clientSecretElement = document.getElementById(options.ids.clientSecret);
+    const copyClientIdElement = ElementHelper.getRequiredElementById(options.ids.copyClientId);
+    const copyClientSecretElement = document.getElementById(options.ids.copyClientSecret);
+    const toggleClientSecretElement = document.getElementById(options.ids.toggleClientSecret);
+
+    function addCopyEvent(element, button) {
+      button.addEventListener('click', function() {
+          ElementHelper.copyText(element);
+      });
+    }
+
+    addCopyEvent(clientIdElement, copyClientIdElement);
+
+    if (clientSecretElement) {
+        addCopyEvent(clientSecretElement, copyClientSecretElement);
+        ElementHelper.addTogglePasswordEvent(clientSecretElement, toggleClientSecretElement);
+    }
+  };
+
+})();

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Nocturne.Auth.Admin.Configuration.Constants;
 using Nocturne.Auth.Admin.Services;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using Nocturne.Auth.Core.OpenIddict.Applications.Handlers;
@@ -12,22 +13,25 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
     {
         private readonly CreateApplicationHandler createApplicationHandler;
         private readonly EditApplicationHandler editApplicationHandler;
+        private readonly ViewApplicationHandler viewApplicationHandler;
 
         public ApplicationsController(
             CreateApplicationHandler createApplicationHandler,
-            EditApplicationHandler editApplicationHandler)
+            EditApplicationHandler editApplicationHandler,
+            ViewApplicationHandler viewApplicationHandler)
         {
             this.createApplicationHandler = createApplicationHandler;
             this.editApplicationHandler = editApplicationHandler;
+            this.viewApplicationHandler = viewApplicationHandler;
         }
 
-        [HttpGet("")]
+        [HttpGet("", Name = RouteNames.ApplicationsHome)]
         public IActionResult Index()
         {
             return View();
         }
 
-        [HttpGet("new")]
+        [HttpGet("new", Name = RouteNames.ApplicationsNew)]
         public async Task<IActionResult> Create()
         {
             var command = await createApplicationHandler.CreateCommandAsync();
@@ -51,7 +55,20 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet("{id}/edit")]
+        [HttpGet("{id}", Name = RouteNames.ApplicationsView)]
+        public async Task<IActionResult> Details(ViewApplicationCommand command)
+        {
+            if (await viewApplicationHandler.ExistsAsync(command) is false)
+            {
+                return NotFound();
+            }
+
+            var result = await viewApplicationHandler.HandleAsync(command);
+
+            return View(result);
+        }
+
+        [HttpGet("{id}/edit", Name = RouteNames.ApplicationsEdit)]
         public async Task<IActionResult> Edit(string id)
         {
             if (await editApplicationHandler.ExistsAsync(id) is false)
