@@ -2,132 +2,117 @@
 @model ManageApplicationCommand
 @inject IViewLocalizer localizer
 
-@{
-    var title = localizer[(string)ViewData["Title"]];
-}
+<div asp-validation-summary="ModelOnly"></div>
 
-<div class="container px-4 py-4">
-    <h1 class="h2 mb-3">@title</h1>
+<div class="mb-3">
+    <label asp-for="DisplayName" class="form-label">@localizer["Name"]</label>
+    <input asp-for="DisplayName" class="form-control" autofocus />
+    <span asp-validation-for="DisplayName" class="d-block form-text text-danger"></span>
+</div>
 
-    <div asp-validation-summary="ModelOnly"></div>
+<div class="mb-3">
+    <label asp-for="Type" class="form-label">@localizer["Type"]</label>
+    <select asp-for="Type" class="form-select">
+        <option value="@ClientTypes.Confidential">@localizer["Confidential"]</option>
+        <option value="@ClientTypes.Public">@localizer["Public"]</option>
+    </select>
+    <ul class="form-text">
+        <li>@localizer["Use confidential for applications that can hold secrets secure, mainly those that runs on the server, like server-side web apps, web APIs"]</li>
+        <li>@localizer["Use public for applications that are not trusted to keep secrets secure, mainly those that runs directly on devices, desktop computers or browsers"]</li>
+    </ul>
+</div>
 
-    <form method="post">
-        <div class="mb-3">
-            <label asp-for="DisplayName" class="form-label">@localizer["Name"]</label>
-            <input asp-for="DisplayName" class="form-control" autofocus />
-            <span asp-validation-for="DisplayName" class="d-block form-text text-danger"></span>
-        </div>
+<div class="mb-3">
+    <label asp-for="AllowedScopes" class="form-label">@localizer["Allowed Scopes"]</label>
+    <input asp-for="AllowedScopes" class="form-control" />
+    <span class="form-text">@localizer["List of scopes"]</span>
+    <span asp-validation-for="AllowedScopes" class="d-block form-text text-danger"></span>
+</div>
 
-        <div class="mb-3">
-            <label asp-for="Type" class="form-label">@localizer["Type"]</label>
-            <select asp-for="Type" class="form-select">
-                <option value="@ClientTypes.Confidential">@localizer["Confidential"]</option>
-                <option value="@ClientTypes.Public">@localizer["Public"]</option>
-            </select>
-            <ul class="form-text">
-                <li>@localizer["Use confidential for applications that can hold secrets secure, mainly those that runs on the server, like server-side web apps, web APIs"]</li>
-                <li>@localizer["Use public for applications that are not trusted to keep secrets secure, mainly those that runs directly on devices, desktop computers or browsers"]</li>
-            </ul>
-        </div>
+<hr class="text-muted" />
 
-        <div class="mb-3">
-            <label asp-for="AllowedScopes" class="form-label">@localizer["Allowed Scopes"]</label>
-            <input asp-for="AllowedScopes" class="form-control" />
-            <span class="form-text">@localizer["List of scopes"]</span>
-            <span asp-validation-for="AllowedScopes" class="d-block form-text text-danger"></span>
-        </div>
+<h3 class="h4 my-3">@localizer["Allowed Flows"]</h3>
 
-        <hr class="text-muted" />
+<div class="mb-4 d-flex flex-column">
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" asp-for="AllowAuthorizationCodeFlow" checked="@Model.AllowAuthorizationCodeFlow" />
+        <label class="form-check-label form-label" asp-for="AllowAuthorizationCodeFlow">@localizer["Allow Authorization Code Flow"] <small>(<a href="https://tools.ietf.org/html/rfc7636">@localizer["with PKCE"]</a>)</small></label>
+    </div>
+    <span class="d-block form-text ms-4 mt-0">@localizer["Recommended for server-side web applications, single page applications (SPAs), mobile apps"]</span>
+    <small><a class="d-inline-block ms-4 mt-1" href="https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth">@localizer["Specification"]</a></small>
+</div>
 
-        <h3 class="h4 my-3">@localizer["Allowed Flows"]</h3>
+<div class="mb-4 d-flex flex-column">
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" asp-for="AllowImplicitFlow" checked="@Model.AllowImplicitFlow">
+        <label class="form-check-label form-label" asp-for="AllowImplicitFlow">@localizer["Allow Implicit Flow"]</label>
+    </div>
+    <span class="d-block form-text ms-4 mt-0">@localizer["Previously recommended for native apps or javascript apps. Always use Authorization Code instead if possible"]</span>
+    <small><a class="d-inline-block ms-4 mt-1" href="https://openid.net/specs/openid-connect-core-1_0.html#ImplicitFlowAuth">@localizer["Specification"]</a></small>
+</div>
 
-        <div class="mb-4 d-flex flex-column">
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" asp-for="AllowAuthorizationCodeFlow" checked="@Model.AllowAuthorizationCodeFlow" />
-                <label class="form-check-label form-label" asp-for="AllowAuthorizationCodeFlow">@localizer["Allow Authorization Code Flow"] <small>(<a href="https://tools.ietf.org/html/rfc7636">@localizer["with PKCE"]</a>)</small></label>
-            </div>
-            <span class="d-block form-text ms-4 mt-0">@localizer["Recommended for server-side web applications, single page applications (SPAs), mobile apps"]</span>
-            <small><a class="d-inline-block ms-4 mt-1" href="https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth">@localizer["Specification"]</a></small>
-        </div>
+<div class="mb-4 d-flex flex-column">
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" asp-for="AllowPasswordFlow" checked="@Model.AllowPasswordFlow">
+        <label class="form-check-label form-label" asp-for="AllowPasswordFlow">@localizer["Allow Resource Owner Password Flow"]</label>
+    </div>
+    <span class="d-block form-text ms-4 mt-0">@localizer["Only recommended if redirect-based flows (like Authorization Code) are not possible"]</span>
+    <small><a class="d-inline-block ms-4 mt-1" href="https://tools.ietf.org/html/rfc6749#section-1.3.3">@localizer["Specification"]</a></small>
+</div>
 
-        <div class="mb-4 d-flex flex-column">
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" asp-for="AllowImplicitFlow" checked="@Model.AllowImplicitFlow">
-                <label class="form-check-label form-label" asp-for="AllowImplicitFlow">@localizer["Allow Implicit Flow"]</label>
-            </div>
-            <span class="d-block form-text ms-4 mt-0">@localizer["Previously recommended for native apps or javascript apps. Always use Authorization Code instead if possible"]</span>
-            <small><a class="d-inline-block ms-4 mt-1" href="https://openid.net/specs/openid-connect-core-1_0.html#ImplicitFlowAuth">@localizer["Specification"]</a></small>
-        </div>
+<div class="mb-4 d-flex flex-column">
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" asp-for="AllowClientCredentialsFlow" checked="@Model.AllowClientCredentialsFlow">
+        <label class="form-check-label form-label" asp-for="AllowClientCredentialsFlow">@localizer["Allow Client Credentials Flow"]</label>
+    </div>
+    <span class="d-block form-text ms-4 mt-0">@localizer["Recommended when the application itself is the resource owner, like a machine-to-machine comunication, jobs"]</span>
+    <small><a class="d-inline-block ms-4 mt-1" href="https://tools.ietf.org/html/rfc6749#section-1.3.4">@localizer["Specification"]</a></small>
+</div>
 
-        <div class="mb-4 d-flex flex-column">
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" asp-for="AllowPasswordFlow" checked="@Model.AllowPasswordFlow">
-                <label class="form-check-label form-label" asp-for="AllowPasswordFlow">@localizer["Allow Resource Owner Password Flow"]</label>
-            </div>
-            <span class="d-block form-text ms-4 mt-0">@localizer["Only recommended if redirect-based flows (like Authorization Code) are not possible"]</span>
-            <small><a class="d-inline-block ms-4 mt-1" href="https://tools.ietf.org/html/rfc6749#section-1.3.3">@localizer["Specification"]</a></small>
-        </div>
+<div class="mb-4 d-flex flex-column">
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" asp-for="AllowRefreshTokenFlow" data-toggle="collapse" data-target="#AllowRefreshTokenFlowRecommendedHint" checked="@Model.AllowRefreshTokenFlow" disabled=@((Model.AllowPasswordFlow || Model.AllowAuthorizationCodeFlow) ? null : "")>
+        <label class="form-check-label form-label" asp-for="AllowRefreshTokenFlow">@localizer["Allow Refresh Token Flow"]</label>
+    </div>
+    <span class="d-block form-text ms-4 mt-0">@localizer["Allows the application to exchange an access token when the token expires, without a new user interaction"]</span>
+    <small><a class="d-inline-block ms-4 mt-1" href="https://openid.net/specs/openid-connect-core-1_0.html#RefreshTokens">@localizer["Specification"]</a></small>
+</div>
 
-        <div class="mb-4 d-flex flex-column">
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" asp-for="AllowClientCredentialsFlow" checked="@Model.AllowClientCredentialsFlow">
-                <label class="form-check-label form-label" asp-for="AllowClientCredentialsFlow">@localizer["Allow Client Credentials Flow"]</label>
-            </div>
-            <span class="d-block form-text ms-4 mt-0">@localizer["Recommended when the application itself is the resource owner, like a machine-to-machine comunication, jobs"]</span>
-            <small><a class="d-inline-block ms-4 mt-1" href="https://tools.ietf.org/html/rfc6749#section-1.3.4">@localizer["Specification"]</a></small>
-        </div>
+<hr class="text-muted" />
 
-        <div class="mb-4 d-flex flex-column">
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" asp-for="AllowRefreshTokenFlow" data-toggle="collapse" data-target="#AllowRefreshTokenFlowRecommendedHint" checked="@Model.AllowRefreshTokenFlow" disabled=@((Model.AllowPasswordFlow || Model.AllowAuthorizationCodeFlow) ? null : "")>
-                <label class="form-check-label form-label" asp-for="AllowRefreshTokenFlow">@localizer["Allow Refresh Token Flow"]</label>
-            </div>
-            <span class="d-block form-text ms-4 mt-0">@localizer["Allows the application to exchange an access token when the token expires, without a new user interaction"]</span>
-            <small><a class="d-inline-block ms-4 mt-1" href="https://openid.net/specs/openid-connect-core-1_0.html#RefreshTokens">@localizer["Specification"]</a></small>
-        </div>
+<h3 class="h4 my-3">@localizer["Configurations"]</h3>
 
-        <hr class="text-muted" />
+<div class="mb-4">
+    <label asp-for="RedirectUris" class="form-label">@localizer["Redirect Uris"]</label>
+    <input asp-for="RedirectUris" class="form-control" />
+    <span class="form-text">@localizer["List of URIs"]</span>
+    <span asp-validation-for="RedirectUris" class="d-block form-text text-danger"></span>
+</div>
 
-        <h3 class="h4 my-3">@localizer["Configurations"]</h3>
+<div class="mb-2">
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" asp-for="AllowLogoutEndpoint" checked="@Model.AllowLogoutEndpoint">
+        <label class="form-check-label form-label" asp-for="AllowLogoutEndpoint">@localizer["Allow Logout Endpoint"]</label>
+    </div>
+</div>
 
-        <div class="mb-4">
-            <label asp-for="RedirectUris" class="form-label">@localizer["Redirect Uris"]</label>
-            <input asp-for="RedirectUris" class="form-control" />
-            <span class="form-text">@localizer["List of URIs"]</span>
-            <span asp-validation-for="RedirectUris" class="d-block form-text text-danger"></span>
-        </div>
+<div class="mb-4 ms-4">
+    <label asp-for="PostLogoutRedirectUris" class="form-label">@localizer["Logout Redirect Uris"]</label>
+    <input asp-for="PostLogoutRedirectUris" class="form-control" />
+    <span class="form-text">@localizer["List of URIs"]</span>
+    <span asp-validation-for="PostLogoutRedirectUris" class="d-block form-text text-danger"></span>
+</div>
 
-        <div class="mb-2">
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" asp-for="AllowLogoutEndpoint" checked="@Model.AllowLogoutEndpoint">
-                <label class="form-check-label form-label" asp-for="AllowLogoutEndpoint">@localizer["Allow Logout Endpoint"]</label>
-            </div>
-        </div>
-
-        <div class="mb-4 ms-4">
-            <label asp-for="PostLogoutRedirectUris" class="form-label">@localizer["Logout Redirect Uris"]</label>
-            <input asp-for="PostLogoutRedirectUris" class="form-control" />
-            <span class="form-text">@localizer["List of URIs"]</span>
-            <span asp-validation-for="PostLogoutRedirectUris" class="d-block form-text text-danger"></span>
-        </div>
-
-        <div class="mb-4">
-            <label asp-for="ConsentType" class="form-label">@localizer["Consent type"]</label>
-            <select asp-for="ConsentType" class="form-select">
-                <option value="@ConsentTypes.Explicit">@localizer["Explicit"]</option>
-                <option value="@ConsentTypes.Implicit">@localizer["Implicit"]</option>
-                <option value="@ConsentTypes.External">@localizer["External"]</option>
-            </select>
-            <ul class="form-text">
-                <li>@localizer["Explicit"]: @localizer["The authorization request must be approved by the end user"]. <strong>@localizer["Recommended option"]</strong></li>
-                <li>@localizer["Implicit"]: @localizer["The authorization request is assumed to be pre-approved and no consent form is displayed"]</li>
-                <li>@localizer["External"]: @localizer["The authorization request is rejected unless a pre-existing authorization (granted programmatically) already exists"]</li>
-            </ul>
-        </div>
-
-        <div class="mb-3">
-            <button class="btn btn-primary save" type="submit">@localizer["Save"]</button>
-            <a class="btn btn-secondary cancel" role="button" asp-route-action="Index">@localizer["Cancel"]</a>
-        </div>
-    </form>
+<div class="mb-4">
+    <label asp-for="ConsentType" class="form-label">@localizer["Consent type"]</label>
+    <select asp-for="ConsentType" class="form-select">
+        <option value="@ConsentTypes.Explicit">@localizer["Explicit"]</option>
+        <option value="@ConsentTypes.Implicit">@localizer["Implicit"]</option>
+        <option value="@ConsentTypes.External">@localizer["External"]</option>
+    </select>
+    <ul class="form-text">
+        <li>@localizer["Explicit"]: @localizer["The authorization request must be approved by the end user"]. <strong>@localizer["Recommended option"]</strong></li>
+        <li>@localizer["Implicit"]: @localizer["The authorization request is assumed to be pre-approved and no consent form is displayed"]</li>
+        <li>@localizer["External"]: @localizer["The authorization request is rejected unless a pre-existing authorization (granted programmatically) already exists"]</li>
+    </ul>
 </div>

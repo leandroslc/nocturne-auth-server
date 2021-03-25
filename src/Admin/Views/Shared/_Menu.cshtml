@@ -1,0 +1,11 @@
+
+<a class="im-sidebar-item @IsActiveItem(PageGroups.Applications)" asp-route="@RouteNames.ApplicationsHome">
+    <span class="bi-window im-sidenav-icon" aria-hidden="true"></span>
+    <span class="ms-2">Applications</span>
+</a>
+
+@functions
+{
+    private string IsActiveItem(string pageGroup)
+        => ViewData[KnownViewData.PageGroup] as string == pageGroup ? "is-active" : string.Empty;
+}

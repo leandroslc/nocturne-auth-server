@@ -1,0 +1,9 @@
+@inject IViewLocalizer localizer
+@model BackViewComponentModel
+
+<div class="d-flex align-items-center mb-2">
+    <a class="btn btn-sm btn-outline-secondary rounded-circle" href="@Model.Url" title="@localizer["Back"]">
+        <span class="bi-arrow-left" aria-hidden="true"></span>
+    </a>
+    <span class="text-muted ms-2">@localizer[Model.Title]</span>
+</div>

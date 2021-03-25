@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - @title</title>
+    <title>@ViewData[KnownViewData.Title] - @title</title>
     <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/lib/tagify/tagify.min.css" />
@@ -39,14 +39,7 @@
                 <h1 class="im-navbar-title">@title</h1>
             </div>
             <nav class="im-sidenav-content">
-                @for (var i = 0; i < 6; i++)
-                {
-                    var active = i == 1 ? " is-active" : "";
-                    <a class="im-sidebar-item @active" href="/applications/new">
-                        <span class="bi-window im-sidenav-icon" aria-hidden="true"></span>
-                        <span class="ms-2">Applications</span>
-                    </a>
-                }
+                <partial name="_Menu" />
             </nav>
         </aside>
         <main class="im-layout-main" class="pb-3">

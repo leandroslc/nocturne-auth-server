@@ -4,38 +4,13 @@
 
 @{
     var title = localizer["Application details"];
-    var copyDescription = localizer["Copy"];
-    var toggleClientSecretDescription = localizer["Toggle client secret visibility"];
-    var backDescription = localizer["Back"];
-    var supportsClientSecret = Model.Type == ClientTypes.Confidential;
 
-    var type = Model.Type switch
-    {
-        ClientTypes.Confidential => localizer["Confidential"],
-        ClientTypes.Public => localizer["Public"],
-        _ => null,
-    };
-
-    var consentType = Model.ConsentType switch
-    {
-        ConsentTypes.Explicit => localizer["Explicit"],
-        ConsentTypes.Implicit => localizer["Implicit"],
-        ConsentTypes.External => localizer["External"],
-        _ => null,
-    };
-
-    var itemClass = "badge bg-light border border-primary text-primary fs-6 fw-normal p-2 me-1 mb-1";
-
-    ViewData["Title"] = title;
+    ViewData[KnownViewData.Title] = title;
+    ViewData[KnownViewData.PageGroup] = PageGroups.Applications;
 }
 
 <div class="container px-4 py-4">
-    <div class="d-flex align-items-center text-muted mb-2">
-        <a class="btn btn-sm btn-outline-secondary rounded-circle" asp-route="@RouteNames.ApplicationsView" title="@backDescription">
-            <span class="bi-arrow-left" aria-hidden="true"></span>
-        </a>
-        <span class="ms-2">@localizer["Applications"]</span>
-    </div>
+    <vc:back title="Applications" url="@Url.RouteUrl(RouteNames.ApplicationsHome)" />
 
     <div class="d-flex align-items-center mb-3">
         <h1 class="h2">@title</h1>
@@ -58,23 +33,23 @@
         <label class="form-label col-form-label col-md-12">@localizer["Client Id"]</label>
         <div class="col input-group align-items-center">
             <input class="form-control" asp-for="@Model.ClientId" readonly />
-            <button class="btn btn-primary" type="button" id="CopyClientId" title="@copyDescription">
+            <button class="btn btn-primary" type="button" id="CopyClientId" title="@localizer["Copy"]">
                 <span class="bi bi-clipboard" aria-hidden="true"></span>
             </button>
         </div>
     </div>
 
-    @if (supportsClientSecret)
+    @if (Model.Type == ClientTypes.Confidential)
     {
         <div class="row mb-3">
             <label class="form-label col-form-label col-md-12">@localizer["Client Secret"]</label>
             <div class="col input-group align-items-center">
                 <input class="form-control" asp-for="@Model.ClientSecret" value="@Model.ClientSecret" type="password" readonly />
-                <button class="btn btn-primary" type="button" id="ToggleClientSecret" title="@toggleClientSecretDescription">
+                <button class="btn btn-primary" type="button" id="ToggleClientSecret" title="@localizer["Toggle client secret visibility"]">
                     <span class="bi bi-eye" aria-hidden="true" is-password="true"></span>
                     <span class="bi bi-eye-slash" aria-hidden="true" is-password="false" style="display: none;"></span>
                 </button>
-                <button class="btn btn-primary border-start" type="button" id="CopyClientSecret" title="@copyDescription">
+                <button class="btn btn-primary border-start" type="button" id="CopyClientSecret" title="@localizer["Copy"]">
                     <span class="bi bi-clipboard" aria-hidden="true"></span>
                 </button>
             </div>
@@ -84,6 +59,14 @@
     <div class="row mb-3">
         <label class="form-label col-form-label col-md-12">@localizer["Type"]</label>
         <div class="col">
+            @{
+                var type = Model.Type switch
+                {
+                    ClientTypes.Confidential => localizer["Confidential"],
+                    ClientTypes.Public => localizer["Public"],
+                    _ => null,
+                };
+            }
             <span class="form-control" readonly>@type</span>
         </div>
     </div>
@@ -96,7 +79,7 @@
                 {
                     @foreach (var scope in Model.AllowedScopes)
                     {
-                        <span class="@itemClass">@scope</span>
+                        <span class="badge bg-light border border-primary text-primary fs-6 fw-normal p-2 me-1 mb-1">@scope</span>
                     }
                 }
                 else
@@ -150,7 +133,7 @@
                 {
                     @foreach (var uri in Model.RedirectUris)
                     {
-                        <span class="@itemClass">@uri</span>
+                        <span class="badge bg-light border border-primary text-primary fs-6 fw-normal p-2 me-1 mb-1">@uri</span>
                     }
                 }
                 else
@@ -169,7 +152,7 @@
                 {
                     @foreach (var uri in Model.PostLogoutRedirectUris)
                     {
-                        <span class="@itemClass">@uri</span>
+                        <span class="badge bg-light border border-primary text-primary fs-6 fw-normal p-2 me-1 mb-1">@uri</span>
                     }
                 }
                 else
@@ -183,6 +166,15 @@
     <div class="row mb-3">
         <label class="form-label col-form-label col-md-12">@localizer["Consent type"]</label>
         <div class="col">
+            @{
+                var consentType = Model.ConsentType switch
+                {
+                    ConsentTypes.Explicit => localizer["Explicit"],
+                    ConsentTypes.Implicit => localizer["Implicit"],
+                    ConsentTypes.External => localizer["External"],
+                    _ => null,
+                };
+            }
             <span class="form-control" readonly>@consentType</span>
         </div>
     </div>

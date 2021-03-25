@@ -1,10 +1,28 @@
 @model CreateApplicationCommand
+@inject IViewLocalizer localizer
 
 @{
-    ViewData["Title"] = "New application";
+    var title = localizer["New application"];
+    var returnUrl = Url.RouteUrl(RouteNames.ApplicationsHome);
+
+    ViewData[KnownViewData.Title] = title;
+    ViewData[KnownViewData.PageGroup] = PageGroups.Applications;
 }
 
-<partial name="_Form" />
+<div class="container px-4 py-4">
+    <vc:back title="Applications" url="@returnUrl" />
+
+    <h1 class="h2 mb-3">@title</h1>
+
+    <form method="post">
+        <partial name="_Form" />
+
+        <div class="mb-3">
+            <button class="btn btn-primary save" type="submit">@localizer["Save"]</button>
+            <a class="btn btn-secondary cancel" role="button" href="@returnUrl">@localizer["Cancel"]</a>
+        </div>
+    </form>
+</div>
 
 @section scripts
 {
