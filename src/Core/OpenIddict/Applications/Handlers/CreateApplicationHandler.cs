@@ -22,11 +22,13 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
             return command;
         }
 
-        public override async Task HandleAsync(CreateApplicationCommand command)
+        public override async Task<string> HandleAsync(CreateApplicationCommand command)
         {
             var descriptor = await GenerateDescriptorAsync(command);
 
-            await ApplicationManager.CreateAsync(descriptor);
+            var application = await ApplicationManager.CreateAsync(descriptor);
+
+            return await ApplicationManager.GetIdAsync(application);
         }
     }
 }

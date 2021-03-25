@@ -40,6 +40,7 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
         }
 
         [HttpPost("new")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateApplicationCommand command)
         {
             await ModelState.AddErrorsFromValidationAsync(
@@ -50,9 +51,9 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
                 return View(command);
             }
 
-            await createApplicationHandler.HandleAsync(command);
+            var applicationId = await createApplicationHandler.HandleAsync(command);
 
-            return RedirectToAction("Index");
+            return RedirectToDetails(applicationId);
         }
 
         [HttpGet("{id}", Name = RouteNames.ApplicationsView)]
@@ -82,6 +83,7 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
         }
 
         [HttpPost("{id}/edit")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditApplicationCommand command)
         {
             if (await editApplicationHandler.ExistsAsync(command.Id) is false)
@@ -99,7 +101,12 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
 
             await editApplicationHandler.HandleAsync(command);
 
-            return RedirectToAction("Index");
+            return RedirectToDetails(command.Id);
+        }
+
+        private IActionResult RedirectToDetails(string id)
+        {
+            return RedirectToRoute(RouteNames.ApplicationsView, new { id });
         }
     }
 }
