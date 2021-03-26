@@ -52,6 +52,9 @@ msgstr "Tipo de consentimento"
 msgid "Copy"
 msgstr "Copiar"
 
+msgid "Details"
+msgstr "Detalhes"
+
 msgid "Edit application"
 msgstr "Editar aplicação"
 
@@ -79,6 +82,9 @@ msgstr "Nome"
 msgid "New application"
 msgstr "Nova aplicação"
 
+msgid "No applications found"
+msgstr "Nenhuma aplicação encontrada"
+
 msgid "None"
 msgstr "Nenhum"
 
@@ -105,6 +111,9 @@ msgstr "URIs de Redirecionamento"
 
 msgid "Save"
 msgstr "Salvar"
+
+msgid "Search"
+msgstr "Pesquisar"
 
 msgid "Specification"
 msgstr "Especificação"

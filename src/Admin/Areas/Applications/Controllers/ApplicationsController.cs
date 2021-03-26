@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Nocturne.Auth.Admin.Areas.Applications.Models;
 using Nocturne.Auth.Admin.Configuration.Constants;
 using Nocturne.Auth.Admin.Services;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
@@ -14,21 +15,32 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
         private readonly CreateApplicationHandler createApplicationHandler;
         private readonly EditApplicationHandler editApplicationHandler;
         private readonly ViewApplicationHandler viewApplicationHandler;
+        private readonly ListApplicationsHandler listApplicationsHandler;
 
         public ApplicationsController(
             CreateApplicationHandler createApplicationHandler,
             EditApplicationHandler editApplicationHandler,
-            ViewApplicationHandler viewApplicationHandler)
+            ViewApplicationHandler viewApplicationHandler,
+            ListApplicationsHandler listApplicationsHandler)
         {
             this.createApplicationHandler = createApplicationHandler;
             this.editApplicationHandler = editApplicationHandler;
             this.viewApplicationHandler = viewApplicationHandler;
+            this.listApplicationsHandler = listApplicationsHandler;
         }
 
         [HttpGet("", Name = RouteNames.ApplicationsHome)]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(ListApplicationsCommand command)
         {
-            return View();
+            var results = await listApplicationsHandler.HandleAsync(command);
+
+            var model = new ApplicationIndexViewModel
+            {
+                Applications = results,
+                Query = command,
+            };
+
+            return View(model);
         }
 
         [HttpGet("new", Name = RouteNames.ApplicationsNew)]

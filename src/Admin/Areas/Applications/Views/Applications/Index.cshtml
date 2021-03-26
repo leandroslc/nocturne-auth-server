@@ -1,0 +1,66 @@
+@model ApplicationIndexViewModel
+@inject IViewLocalizer localizer
+
+@{
+    var title = localizer["Applications"];
+
+    ViewData[KnownViewData.Title] = title;
+    ViewData[KnownViewData.PageGroup] = PageGroups.Applications;
+}
+
+<div class="container px-4 py-4">
+
+    <div class="d-flex align-items-center mb-4">
+        <h1 class="h2">@title</h1>
+        <div class="ms-auto">
+            <a asp-route="@RouteNames.ApplicationsNew" class="btn btn-success">
+                <span class="bi-plus" aria-hidden="true"></span>
+                <span>@localizer["New application"]</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="row justify-content-end mb-4">
+        <form class="col-md-6" method="GET">
+            <div class="row g-1">
+                <div class="col">
+                    <input class="form-control" placeholder="@localizer["Name"]" id="name" name="name" value="@Model.Query.Name" autofocus />
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary" type="submit" title="@localizer["Search"]">
+                        <span class="visually-hidden">@localizer["Search"]</span>
+                        <span class="bi-search" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    @if (Model.Applications.Any())
+    {
+        <div class="list-group">
+            @foreach (var application in Model.Applications)
+            {
+                <div class="list-group-item d-flex align-items-center py-3">
+                    <a class="btn btn-sm btn-outline-primary" asp-route="@RouteNames.ApplicationsView" asp-route-id="@application.Id">
+                        @localizer["Details"]
+                    </a>
+                    <div class="d-flex align-items-center ms-3">
+                        <span>@application.Name</span>
+                    </div>
+                    <div class="d-flex flex-column text-muted ms-auto">
+                        <small class="text-black-50">@localizer["Client Id"]</small>
+                        <small>@application.ClientId</small>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="d-flex flex-column align-items-center text-muted my-3 py-5">
+            <span class="bi-window display-4" aria-hidden="true"></span>
+            <p class="h4 fw-light">@localizer["No applications found"]</p>
+        </div>
+    }
+</div>

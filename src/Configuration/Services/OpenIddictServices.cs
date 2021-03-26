@@ -13,6 +13,7 @@ namespace Nocturne.Auth.Configuration.Services
             services.AddScoped<CreateApplicationHandler>();
             services.AddScoped<EditApplicationHandler>();
             services.AddScoped<ViewApplicationHandler>();
+            services.AddScoped<ListApplicationsHandler>();
 
             return services
                 .AddOpenIddict()
