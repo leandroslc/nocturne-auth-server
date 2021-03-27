@@ -24,7 +24,9 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
 
         public override async Task<string> HandleAsync(CreateApplicationCommand command)
         {
-            var descriptor = await GenerateDescriptorAsync(command);
+            var descriptor = await new ApplicationDescriptorBuilder(
+                command, ApplicationManager)
+                .BuildAsync();
 
             var application = await ApplicationManager.CreateAsync(descriptor);
 

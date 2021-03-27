@@ -19,7 +19,10 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
         {
             var application = await GetApplicationAsync(command.Id);
 
-            var descriptor = await GenerateDescriptorAsync(command, application);
+            var descriptor = await new ApplicationDescriptorBuilder(
+                command, ApplicationManager)
+                .WithApplication(application)
+                .BuildAsync();
 
             await ApplicationManager.UpdateAsync(application, descriptor);
         }
