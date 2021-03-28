@@ -127,6 +127,15 @@ msgstr "A requisição de autorização é rejeitada a não ser que uma autoriza
 msgid "The authorization request must be approved by the end user"
 msgstr "A requisição de autorização deve ser aprovada pelo usuário final"
 
+msgid "The consent type is required"
+msgstr "O tipo de consentimento é obrigatório"
+
+msgid "The name is required"
+msgstr "O nome é obrigatório"
+
+msgid "The type is required"
+msgstr "O tipo é obrigatório"
+
 msgid "Toggle client secret visibility"
 msgstr "Alternar visibilidade do client secret"
 

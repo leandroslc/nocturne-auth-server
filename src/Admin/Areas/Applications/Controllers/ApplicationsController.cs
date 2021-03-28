@@ -55,9 +55,6 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateApplicationCommand command)
         {
-            await ModelState.AddErrorsFromValidationAsync(
-                createApplicationHandler.ValidateAsync(command));
-
             if (ModelState.IsValid is false)
             {
                 return View(command);
@@ -102,9 +99,6 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
             {
                 return NotFound();
             }
-
-            await ModelState.AddErrorsFromValidationAsync(
-                editApplicationHandler.ValidateAsync(command));
 
             if (ModelState.IsValid is false)
             {
