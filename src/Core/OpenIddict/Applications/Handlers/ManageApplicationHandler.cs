@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using OpenIddict.Abstractions;
 
@@ -9,17 +10,28 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
     {
         public ManageApplicationHandler(
             IOpenIddictApplicationManager applicationManager,
-            IOpenIddictScopeManager scopeManager)
+            IOpenIddictScopeManager scopeManager,
+            IStringLocalizer<ManageApplicationHandler<TCommand>> localizer)
         {
             ApplicationManager = applicationManager;
             ScopeManager = scopeManager;
+            Localizer = localizer;
         }
 
         protected IOpenIddictApplicationManager ApplicationManager { get; }
 
         protected IOpenIddictScopeManager ScopeManager { get; }
 
-        public abstract Task HandleAsync(TCommand command);
+        protected IStringLocalizer Localizer { get; }
+
+        protected async Task<string> FindDuplicatedApplicationId(TCommand command)
+        {
+            var application = await ApplicationManager.FindByNameAsync(command.DisplayName);
+
+            return application is null
+                ? null
+                : await ApplicationManager.GetIdAsync(application);
+        }
 
         protected async Task AddAvailableScopesAsync(TCommand command)
         {

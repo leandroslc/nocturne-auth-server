@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Nocturne.Auth.Core.Helpers;
+using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace Nocturne.Auth.Core.OpenIddict.Applications.Commands
 {
@@ -11,10 +12,10 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Commands
         public string DisplayName { get; set; }
 
         [Required(ErrorMessage = "The type is required")]
-        public string Type { get; set; }
+        public string Type { get; set; } = ClientTypes.Confidential;
 
         [Required(ErrorMessage = "The consent type is required")]
-        public string ConsentType { get; set; }
+        public string ConsentType { get; set; } = ConsentTypes.Explicit;
 
         public string AllowedScopes { get; set; }
 

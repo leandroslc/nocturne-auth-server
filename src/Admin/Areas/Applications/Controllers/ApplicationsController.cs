@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Auth.Admin.Areas.Applications.Models;
 using Nocturne.Auth.Admin.Configuration.Constants;
-using Nocturne.Auth.Admin.Services;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using Nocturne.Auth.Core.OpenIddict.Applications.Handlers;
 
@@ -10,29 +9,14 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
 {
     [Area("Applications")]
     [Route("applications")]
-    public class ApplicationsController : Controller
+    public class ApplicationsController : CustomController
     {
-        private readonly CreateApplicationHandler createApplicationHandler;
-        private readonly EditApplicationHandler editApplicationHandler;
-        private readonly ViewApplicationHandler viewApplicationHandler;
-        private readonly ListApplicationsHandler listApplicationsHandler;
-
-        public ApplicationsController(
-            CreateApplicationHandler createApplicationHandler,
-            EditApplicationHandler editApplicationHandler,
-            ViewApplicationHandler viewApplicationHandler,
-            ListApplicationsHandler listApplicationsHandler)
-        {
-            this.createApplicationHandler = createApplicationHandler;
-            this.editApplicationHandler = editApplicationHandler;
-            this.viewApplicationHandler = viewApplicationHandler;
-            this.listApplicationsHandler = listApplicationsHandler;
-        }
-
         [HttpGet("", Name = RouteNames.ApplicationsHome)]
-        public async Task<IActionResult> Index(ListApplicationsCommand command)
+        public async Task<IActionResult> Index(
+            [FromServices] ListApplicationsHandler handler,
+            ListApplicationsCommand command)
         {
-            var results = await listApplicationsHandler.HandleAsync(command);
+            var results = await handler.HandleAsync(command);
 
             var model = new ApplicationIndexViewModel
             {
@@ -44,70 +28,86 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
         }
 
         [HttpGet("new", Name = RouteNames.ApplicationsNew)]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(
+            [FromServices] CreateApplicationHandler handler)
         {
-            var command = await createApplicationHandler.CreateCommandAsync();
+            var command = await handler.CreateCommandAsync();
 
             return View(command);
         }
 
         [HttpPost("new")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateApplicationCommand command)
+        public async Task<IActionResult> Create(
+            [FromServices] CreateApplicationHandler handler,
+            CreateApplicationCommand command)
         {
             if (ModelState.IsValid is false)
             {
-                return View(command);
+                return Problems();
             }
 
-            var applicationId = await createApplicationHandler.HandleAsync(command);
+            var (result, applicationId) = await handler.HandleAsync(command);
 
-            return RedirectToDetails(applicationId);
+            return await GetResultBuilder(result)
+                .Success(Success)
+                .Problems(Problems)
+                .BuildAsync();
+
+            IActionResult Success() => RedirectToDetails(applicationId);
+            IActionResult Problems() => View(command);
         }
 
         [HttpGet("{id}", Name = RouteNames.ApplicationsView)]
-        public async Task<IActionResult> Details(ViewApplicationCommand command)
+        public async Task<IActionResult> Details(
+            [FromServices] ViewApplicationHandler handler,
+            ViewApplicationCommand command)
         {
-            if (await viewApplicationHandler.ExistsAsync(command) is false)
+            if (await handler.ExistsAsync(command) is false)
             {
                 return NotFound();
             }
 
-            var result = await viewApplicationHandler.HandleAsync(command);
+            var result = await handler.HandleAsync(command);
 
             return View(result);
         }
 
         [HttpGet("{id}/edit", Name = RouteNames.ApplicationsEdit)]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(
+            [FromServices] EditApplicationHandler handler,
+            string id)
         {
-            if (await editApplicationHandler.ExistsAsync(id) is false)
+            if (await handler.ExistsAsync(id) is false)
             {
                 return NotFound();
             }
 
-            var command = await editApplicationHandler.CreateCommandAsync(id);
+            var command = await handler.CreateCommandAsync(id);
 
             return View(command);
         }
 
         [HttpPost("{id}/edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(EditApplicationCommand command)
+        public async Task<IActionResult> Edit(
+            [FromServices] EditApplicationHandler handler,
+            EditApplicationCommand command)
         {
-            if (await editApplicationHandler.ExistsAsync(command.Id) is false)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid is false)
             {
-                return View(command);
+                return Problems();
             }
 
-            await editApplicationHandler.HandleAsync(command);
+            var result = await handler.HandleAsync(command);
 
-            return RedirectToDetails(command.Id);
+            return await GetResultBuilder(result)
+                .Success(Success)
+                .Problems(Problems)
+                .BuildAsync();
+
+            IActionResult Success() => RedirectToDetails(command.Id);
+            IActionResult Problems() => View(command);
         }
 
         private IActionResult RedirectToDetails(string id)

@@ -1,8 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
+using Nocturne.Auth.Core.Extensions;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
+using Nocturne.Auth.Core.Results;
 using OpenIddict.Abstractions;
 using static OpenIddict.Abstractions.OpenIddictConstants;
+using static OpenIddict.Abstractions.OpenIddictExceptions;
 
 namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
 {
@@ -10,26 +14,10 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
     {
         public EditApplicationHandler(
             IOpenIddictApplicationManager applicationManager,
-            IOpenIddictScopeManager scopeManager)
-            : base(applicationManager, scopeManager)
+            IOpenIddictScopeManager scopeManager,
+            IStringLocalizer<EditApplicationHandler> localizer)
+            : base(applicationManager, scopeManager, localizer)
         {
-        }
-
-        public override async Task HandleAsync(EditApplicationCommand command)
-        {
-            var application = await GetApplicationAsync(command.Id);
-
-            var descriptor = await new ApplicationDescriptorBuilder(
-                command, ApplicationManager)
-                .WithApplication(application)
-                .BuildAsync();
-
-            await ApplicationManager.UpdateAsync(application, descriptor);
-        }
-
-        public async Task<bool> ExistsAsync(string id)
-        {
-            return await GetApplicationAsync(id) is not null;
         }
 
         public async Task<EditApplicationCommand> CreateCommandAsync(string id)
@@ -59,6 +47,43 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
             return command;
         }
 
+        public async Task<Result> HandleAsync(EditApplicationCommand command)
+        {
+            var application = await GetApplicationAsync(command.Id);
+
+            if (application is null)
+            {
+                return Result.NotFound();
+            }
+
+            if (await HasDuplicated(command))
+            {
+                return Result.Fail(Localizer["Application {0} already exists", command.DisplayName]);
+            }
+
+            var descriptor = await new ApplicationDescriptorBuilder(
+                command, ApplicationManager)
+                .WithApplication(application)
+                .BuildAsync();
+
+            try
+            {
+                await ApplicationManager.UpdateAsync(application, descriptor);
+            }
+            catch (ConcurrencyException)
+            {
+                Result.Fail(Localizer[
+                    "The application has been modified externally. Check the data and try again"]);
+            }
+
+            return Result.Success;
+        }
+
+        public async Task<bool> ExistsAsync(string applicationId)
+        {
+            return await GetApplicationAsync(applicationId) is not null;
+        }
+
         private async ValueTask<string> GetAllowedScopes(
             object application,
             IReadOnlyCollection<string> availableScopes)
@@ -84,6 +109,13 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
         private ValueTask<bool> HasPermissionAsync(object application, string permission)
         {
             return ApplicationManager.HasPermissionAsync(application, permission);
+        }
+
+        private async Task<bool> HasDuplicated(EditApplicationCommand command)
+        {
+            var existingApplicationId = await FindDuplicatedApplicationId(command);
+
+            return existingApplicationId is not null && !command.Id.IsEqualInvariant(existingApplicationId);
         }
     }
 }

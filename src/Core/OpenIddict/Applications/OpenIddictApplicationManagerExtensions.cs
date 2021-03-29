@@ -1,7 +1,10 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenIddict.Abstractions;
+using OpenIddict.Core;
+using Application = OpenIddict.EntityFrameworkCore.Models.OpenIddictEntityFrameworkCoreApplication<long>;
 
 namespace Nocturne.Auth.Core.OpenIddict.Applications
 {
@@ -18,7 +21,27 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications
                 return customManager.GetUnprotectedClientSecretAsync(application, cancelationToken);
             }
 
-            throw new NotSupportedException("Application manager does not support this method");
+            throw MethodNotSupported();
         }
+
+        public static async ValueTask<object> FindByNameAsync<TManager>(
+            this TManager manager,
+            string name,
+            CancellationToken cancellationToken = default)
+            where TManager : IOpenIddictApplicationManager
+        {
+            if (manager is OpenIddictApplicationManager<Application> customManager)
+            {
+                return await customManager
+                    .GetAsync(
+                        query => query.Where(a => a.DisplayName == name),
+                        cancellationToken);
+            }
+
+            throw MethodNotSupported();
+        }
+
+        private static NotSupportedException MethodNotSupported()
+            => new("The application manager does not support this method");
     }
 }

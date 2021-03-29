@@ -28,6 +28,9 @@ msgstr "Escopos Permitidos"
 msgid "Allows the application to exchange an access token when the token expires, without a new user interaction"
 msgstr "Permite que a aplicação obtenha um token de acesso quando o token expira, sem uma nova interação do usuário"
 
+msgid "Application {0} already exists"
+msgstr "A aplicação {0} já existe"
+
 msgid "Application details"
 msgstr "Detalhes da aplicação"
 
@@ -117,6 +120,9 @@ msgstr "Pesquisar"
 
 msgid "Specification"
 msgstr "Especificação"
+
+msgid "The application has been modified externally. Check the data and try again"
+msgstr "A aplicação foi modificada externamente. Verifique os dados e tente novamente"
 
 msgid "The authorization request is assumed to be pre-approved and no consent form is displayed"
 msgstr "A requisição de autorização é considerada como pré aprovada e nenhum formulário de consentimento é exibido"
