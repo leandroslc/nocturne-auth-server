@@ -2,7 +2,7 @@
 @model ManageApplicationCommand
 @inject IViewLocalizer localizer
 
-<div asp-validation-summary="ModelOnly"></div>
+<div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
 
 <div class="mb-3">
     <label asp-for="DisplayName" class="form-label">@localizer["Name"]</label>
@@ -16,6 +16,7 @@
         <option value="@ClientTypes.Confidential">@localizer["Confidential"]</option>
         <option value="@ClientTypes.Public">@localizer["Public"]</option>
     </select>
+    <span asp-validation-for="Type" class="d-block form-text text-danger"></span>
     <ul class="form-text">
         <li>@localizer["Use confidential for applications that can hold secrets secure, mainly those that runs on the server, like server-side web apps, web APIs"]</li>
         <li>@localizer["Use public for applications that are not trusted to keep secrets secure, mainly those that runs directly on devices, desktop computers or browsers"]</li>
