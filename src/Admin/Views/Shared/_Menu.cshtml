@@ -1,7 +1,8 @@
+@inject IViewLocalizer localizer
 
 <a class="im-sidebar-item @IsActiveItem(PageGroups.Applications)" asp-route="@RouteNames.ApplicationsHome">
     <span class="bi-window im-sidenav-icon" aria-hidden="true"></span>
-    <span class="ms-2">Applications</span>
+    <span class="ms-2">@localizer["Applications"]</span>
 </a>
 
 @functions
