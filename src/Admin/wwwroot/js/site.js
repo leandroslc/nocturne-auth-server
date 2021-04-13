@@ -86,14 +86,34 @@
 
     const tagify = new Tagify(element, options);
 
+    // Store and restore active element functions are workarounds to prevent
+    // tagfy from stealing focus from other elements.
+    var currentActiveElement;
+
+    function storeActiveElement() {
+      currentActiveElement = document.activeElement;
+    }
+
+    function restoreActiveElement() {
+      currentActiveElement && currentActiveElement.focus();
+    }
+
     this.disable = function() {
+      storeActiveElement();
+
       tagify.setReadonly(true);
       element.setAttribute('disabled', '');
+
+      restoreActiveElement();
     }
 
     this.clean = function() {
+      storeActiveElement();
+
       tagify.removeAllTags();
       element.value = '';
+
+      restoreActiveElement();
     }
 
     this.disableAndClean = function() {
@@ -102,8 +122,12 @@
     }
 
     this.enable = function() {
+      storeActiveElement();
+
       tagify.setReadonly(false);
       element.removeAttribute('disabled');
+
+      restoreActiveElement();
     }
   }
 

@@ -8,59 +8,78 @@
     ViewData[KnownViewData.PageGroup] = PageGroups.Applications;
 }
 
-<div class="container px-4 py-4">
+<div class="page">
+    <div class="page-heading"></div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-header">
+                <h1 class="page-card-title">@title</h1>
+                <a class="btn btn-success ml-auto" asp-route="@RouteNames.ApplicationsNew">
+                    <span class="bi-plus" aria-hidden="true"></span>
+                    <span>@localizer["New application"]</span>
+                </a>
+            </div>
+            <div class="page-card-content">
+                <form class="form-inline" method="GET" loading="loading" loading-hide="results">
+                    <label class="form-label my-1 mr-2" for="name">@localizer["Name"]</label>
+                    <input class="form-control my-1 mr-sm-2" id="name" name="name" value="@Model.Query.Name" autofocus />
 
-    <div class="d-flex align-items-center mb-4">
-        <h1 class="h2">@title</h1>
-        <div class="ms-auto">
-            <a asp-route="@RouteNames.ApplicationsNew" class="btn btn-success">
-                <span class="bi-plus" aria-hidden="true"></span>
-                <span>@localizer["New application"]</span>
-            </a>
+                    <button class="btn btn-primary my-1 mr-2" type="submit">
+                        <span class="bi-search mr-1" aria-hidden="true"></span>
+                        <span>@localizer["Search"]</span>
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
-    <div class="row justify-content-end mb-4">
-        <form class="col-md-6" method="GET">
-            <div class="row g-1">
-                <div class="col">
-                    <input class="form-control" placeholder="@localizer["Name"]" id="name" name="name" value="@Model.Query.Name" autofocus />
-                </div>
-                <div class="col-auto">
-                    <button class="btn btn-primary" type="submit" title="@localizer["Search"]">
-                        <span class="visually-hidden">@localizer["Search"]</span>
-                        <span class="bi-search" aria-hidden="true"></span>
-                    </button>
+    <div class="page-container">
+        @if (Model.Applications.Any())
+        {
+            <div class="page-card" id="results">
+                <div class="table-responsive">
+                    <table class="table page-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>@localizer["Name"]</th>
+                                <th>@localizer["Client Id"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var application in Model.Applications)
+                            {
+                                <tr>
+                                    <td class="w-min">
+                                        <a class="btn btn-sm btn-outline-primary" asp-route="@RouteNames.ApplicationsView" asp-route-id="@application.Id">
+                                            @localizer["Details"]
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @application.Name
+                                    </td>
+                                    <td>
+                                        <code class="text-black-50">@application.ClientId</code>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </form>
-    </div>
+        }
+        else
+        {
+            <div class="empty mt-3" role="status" id="results">
+                <span class="bi-window empty-icon" aria-hidden="true"></span>
+                <p class="empty-text">@localizer["No applications found"]</p>
+            </div>
+        }
 
-    @if (Model.Applications.Any())
-    {
-        <div class="list-group">
-            @foreach (var application in Model.Applications)
-            {
-                <div class="list-group-item d-flex flex-wrap align-items-center py-3">
-                    <a class="btn btn-sm btn-outline-primary" asp-route="@RouteNames.ApplicationsView" asp-route-id="@application.Id">
-                        @localizer["Details"]
-                    </a>
-                    <div class="d-flex align-items-center ms-3">
-                        <span>@application.Name</span>
-                    </div>
-                    <div class="d-none d-lg-flex flex-column text-muted text-nowrap ms-auto">
-                        <small class="text-black-50">@localizer["Client Id"]</small>
-                        <code class="text-black-50">@application.ClientId</code>
-                    </div>
-                </div>
-            }
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status" id="loading" style="display: none;">
+                <span class="sr-only">@localizer["Loading..."]</span>
+            </div>
         </div>
-    }
-    else
-    {
-        <div class="d-flex flex-column align-items-center text-muted my-3 py-5">
-            <span class="bi-window display-4" aria-hidden="true"></span>
-            <p class="h4 fw-light">@localizer["No applications found"]</p>
-        </div>
-    }
+    </div>
 </div>

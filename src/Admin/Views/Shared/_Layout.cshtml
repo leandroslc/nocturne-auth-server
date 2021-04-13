@@ -1,7 +1,8 @@
 ﻿@using System.Globalization;
+@inject IViewLocalizer localizer;
 
 @{
-    var title = "Auth Admin";
+    var title = localizer["Authorization Server (Admin)"];
     var language = CultureInfo.CurrentCulture.Name;
 }
 
@@ -11,46 +12,38 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData[KnownViewData.Title] - @title</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="http://localhost:3002/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://localhost:3002/bootstrap-icons/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/lib/tagify/tagify.min.css" />
-    <link rel="stylesheet" href="~/lib/nocturne-auth-server/nocturne-auth-server.css" asp-append-version="true" />
+    <link rel="stylesheet" href="http://localhost:3002/impromptu/impromptu.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="im-layout">
-        <header class="im-layout-header">
-            <nav class="im-navbar">
-                <div class="im-navbar-brand">
-                    <button class="im-navbar-toggle me-2" im-sidenav-toggle="_sidenav">
+    <div class="layout">
+        <header class="layout-header">
+            <nav class="navbar">
+                <div class="navbar-brand">
+                    <button class="navbar-toggle mr-2" sidenav-toggle="_sidenav">
                         <span class="bi-list" aria-hidden="true"></span>
                     </button>
-                    <div class="im-logo-wrapper">
-                        <img class="im-logo" src="~/logo.svg" alt="logo" role="img" />
-                    </div>
-                    <h1 class="im-navbar-title">@title</h1>
+                    <img class="navbar-logo mr-2" src="~/logo.svg" alt="logo" role="img" />
+                    <h1 class="navbar-title">@title</h1>
                 </div>
             </nav>
         </header>
-        <aside class="im-sidenav" id="_sidenav">
-            <div class="im-sidenav-brand">
-                <div class="im-logo-wrapper me-2">
-                    <img class="im-logo" src="~/logo.svg" alt="logo" role="img" />
-                </div>
-                <h1 class="im-navbar-title">@title</h1>
-            </div>
-            <nav class="im-sidenav-content">
+        <aside class="sidenav layout-sidenav" id="_sidenav">
+            <nav class="sidenav-content">
                 <partial name="_Menu" />
             </nav>
         </aside>
-        <main class="im-layout-main" class="pb-3">
+        <main class="layout-main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <script src="~/lib/nocturne-auth-server/nocturne-auth-server.js" asp-append-version="true"></script>
+    <script src="http://localhost:3002/impromptu/impromptu.js"></script>
     <script src="~/lib/jquery/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="http://localhost:3002/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery-validation/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/tagify/tagify.min.js"></script>

@@ -5,3 +5,7 @@
   font-size: 0.95rem;
   list-style: none;
 }
+
+.tagify.form-control {
+  height: unset;
+}

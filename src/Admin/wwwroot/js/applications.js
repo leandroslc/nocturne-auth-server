@@ -42,8 +42,6 @@ window.manageApplication = function(options) {
       setDisabled(allowClientCredentialsElement, true);
       allowClientCredentialsElement.checked = false;
     }
-
-    clientType === constants.confidentialClientType
   }
 
   function checkRefreshTokenFlow() {

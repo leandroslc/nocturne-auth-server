@@ -37,6 +37,9 @@ msgstr "Detalhes da aplicação"
 msgid "Applications"
 msgstr "Aplicações"
 
+msgid "Authorization Server (Admin)"
+msgstr "Servidor de Autorização (Admin)"
+
 msgid "Back"
 msgstr "Voltar"
 
@@ -69,6 +72,9 @@ msgstr "Externo"
 
 msgid "Implicit"
 msgstr "Implícito"
+
+msgid "Home page"
+msgstr "Página inicial"
 
 msgid "List of scopes"
 msgstr "Lista de escopos"
