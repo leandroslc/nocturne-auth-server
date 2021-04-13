@@ -103,6 +103,7 @@ namespace Nocturne.Auth.Core.Web.TagHelpers
         {
             var summary = new TagBuilder("div");
             summary.AddCssClass(options.SummaryClass);
+            summary.Attributes.Add("style", "font-size: 0.9em");
 
             summary.InnerHtml.AppendHtml(CreateItemsCountSummary());
 

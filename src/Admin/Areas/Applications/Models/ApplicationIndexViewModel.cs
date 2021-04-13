@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using Nocturne.Auth.Core.Collections;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using Nocturne.Auth.Core.OpenIddict.Applications.Results;
 
@@ -8,6 +8,6 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Models
     {
         public ListApplicationsCommand Query { get; set; }
 
-        public IReadOnlyCollection<ListApplicationsResult> Applications { get; set; }
+        public IPagedCollection<ListApplicationsResult> Applications { get; set; }
     }
 }

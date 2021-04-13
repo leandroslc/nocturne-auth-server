@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Nocturne.Auth.Core.Collections;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using Nocturne.Auth.Core.OpenIddict.Applications.Results;
 using OpenIddict.Core;
@@ -18,7 +18,7 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
             this.applicationManager = applicationManager;
         }
 
-        public async ValueTask<IReadOnlyCollection<ListApplicationsResult>> HandleAsync(
+        public async ValueTask<IPagedCollection<ListApplicationsResult>> HandleAsync(
             ListApplicationsCommand command)
         {
             IQueryable<ListApplicationsResult> query(IQueryable<Application> applications)
@@ -30,7 +30,8 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
             var total = await applicationManager.CountAsync(query);
             var applications = applicationManager.ListAsync(queryWithPages);
 
-            return await applications.ToListAsync();
+            return new PagedCollection<ListApplicationsResult>(
+                await applications.ToListAsync(), command.Page, command.PageSize, total);
         }
 
         private static IQueryable<ListApplicationsResult> GetQuery(

@@ -24,7 +24,7 @@ namespace Nocturne.Auth.Core.Web.TagHelpers
 
         public string SummaryClass { get; set; } = "mr-2";
 
-        public string SummaryItemCountClass { get; set; } = "text-muted mr-2";
+        public string SummaryItemCountClass { get; set; } = "mr-2";
 
         public string SummaryItemsCountText { get; set; } = "{0:n0} items";
 

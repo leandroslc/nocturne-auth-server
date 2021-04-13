@@ -1,3 +1,6 @@
+msgid "{0:n0} items"
+msgstr "{0:n0} itens"
+
 msgid "{0} is invalid"
 msgstr "{0} é inválido"
 
@@ -88,6 +91,9 @@ msgstr "URIs de Redirecionamento de Logout"
 msgid "Name"
 msgstr "Nome"
 
+msgid "Next page"
+msgstr "Próxima página"
+
 msgid "New application"
 msgstr "Nova aplicação"
 
@@ -99,6 +105,12 @@ msgstr "Nenhum"
 
 msgid "Only recommended if redirect-based flows (like Authorization Code) are not possible"
 msgstr "Apenas recomendado se fluxos baseados em redirecionamento (como Authorization Code) não são possíveis"
+
+msgid "Page list"
+msgstr "Lista de páginas"
+
+msgid "Previous page"
+msgstr "Página anterior"
 
 msgid "Previously recommended for native apps or javascript apps. Always use Authorization Code instead if possible"
 msgstr "Antigamente recomendado para apps nativos ou apps javascript. Sempre use Authorization Code se possível"
@@ -123,6 +135,9 @@ msgstr "Salvar"
 
 msgid "Search"
 msgstr "Pesquisar"
+
+msgid "Showing {0:n0} &ndash; {0:n0}"
+msgstr "Mostrando {0:n0} &ndash; {0:n0}"
 
 msgid "Specification"
 msgstr "Especificação"

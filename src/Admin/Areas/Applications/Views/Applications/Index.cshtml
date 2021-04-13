@@ -36,6 +36,8 @@
     <div class="page-container">
         @if (Model.Applications.Any())
         {
+            <pages collection="@Model.Applications" param-name="page"></pages>
+
             <div class="page-card" id="results">
                 <div class="table-responsive">
                     <table class="table page-table">
@@ -59,7 +61,7 @@
                                         @application.Name
                                     </td>
                                     <td>
-                                        <code class="text-black-50">@application.ClientId</code>
+                                        <code class="text-muted">@application.ClientId</code>
                                     </td>
                                 </tr>
                             }
