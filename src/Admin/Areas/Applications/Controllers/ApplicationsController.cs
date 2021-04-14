@@ -44,7 +44,7 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
         {
             if (ModelState.IsValid is false)
             {
-                return Problems();
+                return await Problems();
             }
 
             var (result, applicationId) = await handler.HandleAsync(command);
@@ -55,7 +55,13 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
                 .BuildAsync();
 
             IActionResult Success() => RedirectToDetails(applicationId);
-            IActionResult Problems() => View(command);
+
+            async Task<IActionResult> Problems()
+            {
+                await handler.AddAvailableScopesAsync(command);
+
+                return View(command);
+            }
         }
 
         [HttpGet("{id}", Name = RouteNames.ApplicationsView)]
@@ -96,7 +102,7 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
         {
             if (ModelState.IsValid is false)
             {
-                return Problems();
+                return await Problems();
             }
 
             var result = await handler.HandleAsync(command);
@@ -107,7 +113,13 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
                 .BuildAsync();
 
             IActionResult Success() => RedirectToDetails(command.Id);
-            IActionResult Problems() => View(command);
+
+            async Task<IActionResult> Problems()
+            {
+                await handler.AddAvailableScopesAsync(command);
+
+                return View(command);
+            }
         }
 
         private IActionResult RedirectToDetails(string id)

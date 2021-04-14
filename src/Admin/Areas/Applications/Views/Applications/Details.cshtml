@@ -32,14 +32,14 @@
                 <div class="row mb-3">
                     <label class="form-label col-form-label col-md-12">@localizer["Name"]</label>
                     <div class="col">
-                        <span class="form-control" readonly>@Model.DisplayName</span>
+                        <span class="form-control-plaintext" readonly>@Model.DisplayName</span>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label class="form-label col-form-label col-md-12">@localizer["Client Id"]</label>
-                    <div class="col input-group align-items-center">
-                        <input class="form-control" asp-for="@Model.ClientId" readonly />
+                    <div class="col-auto input-group align-items-center">
+                        <input class="form-control-plaintext" asp-for="@Model.ClientId" readonly />
                         <div class="input-group-append">
                             <button class="btn btn-secondary" type="button" id="CopyClientId" title="@localizer["Copy"]">
                                 <span class="bi bi-clipboard" aria-hidden="true"></span>
@@ -53,7 +53,7 @@
                     <div class="row mb-3">
                         <label class="form-label col-form-label col-md-12">@localizer["Client Secret"]</label>
                         <div class="col input-group align-items-center">
-                            <input class="form-control" asp-for="@Model.ClientSecret" value="@Model.ClientSecret" type="password" readonly />
+                            <input class="form-control-plaintext" asp-for="@Model.ClientSecret" value="@Model.ClientSecret" type="password" readonly />
                             <div class="input-group-append">
                                 <button class="btn btn-secondary" type="button" id="ToggleClientSecret" title="@localizer["Toggle client secret visibility"]">
                                     <span class="bi bi-eye" aria-hidden="true" is-password="true"></span>
@@ -80,99 +80,106 @@
                                 _ => null,
                             };
                         }
-                        <span class="form-control" readonly>@type</span>
+                        <span class="form-control-plaintext" readonly>@type</span>
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label class="form-label col-form-label col-md-12">@localizer["Allowed Scopes"]</label>
                     <div class="col">
-                        <div class="d-flex align-items-center">
-                            @if (Model.AllowedScopes.Count > 0)
-                            {
+                        @if (Model.AllowedScopes.Count > 0)
+                        {
+                            <ul>
                                 @foreach (var scope in Model.AllowedScopes)
                                 {
-                                    <span class="badge bg-light border border-primary text-primary fs-6 fw-normal p-2 me-1 mb-1">@scope</span>
+                                    <li>@scope</li>
                                 }
-                            }
-                            else
-                            {
-                                <span class="text-muted">@localizer["None"]</span>
-                            }
-                        </div>
+                            </ul>
+                        }
+                        else
+                        {
+                            <span class="text-muted">@localizer["None"]</span>
+                        }
                     </div>
                 </div>
 
-                <hr class="text-muted" />
+                <hr class="text-muted my-4" />
 
                 <h3 class="h4 my-3">@localizer["Allowed Flows"]</h3>
 
-                <ul class="form-label">
-                    @if (Model.AllowAuthorizationCodeFlow)
-                    {
-                        <li>@localizer["Authorization Code Flow"] @localizer["with PKCE"]</li>
-                    }
+                @if (Model.HasAnyAllowedFlow)
+                {
+                    <ul>
+                        @if (Model.AllowAuthorizationCodeFlow)
+                        {
+                            <li>@localizer["Authorization Code Flow"] @localizer["with PKCE"]</li>
+                        }
 
-                    @if (Model.AllowImplicitFlow)
-                    {
-                        <li>@localizer["Implicit Flow"]</li>
-                    }
+                        @if (Model.AllowImplicitFlow)
+                        {
+                            <li>@localizer["Implicit Flow"]</li>
+                        }
 
-                    @if (@Model.AllowPasswordFlow)
-                    {
-                        <li>@localizer["Resource Owner Password Flow"]</li>
-                    }
+                        @if (@Model.AllowPasswordFlow)
+                        {
+                            <li>@localizer["Resource Owner Password Flow"]</li>
+                        }
 
-                    @if (@Model.AllowClientCredentialsFlow)
-                    {
-                        <li>@localizer["Client Credentials Flow"]</li>
-                    }
+                        @if (@Model.AllowClientCredentialsFlow)
+                        {
+                            <li>@localizer["Client Credentials Flow"]</li>
+                        }
 
-                    @if (@Model.AllowRefreshTokenFlow)
-                    {
-                        <li>@localizer["Refresh Token Flow"]</li>
-                    }
-                </ul>
+                        @if (@Model.AllowRefreshTokenFlow)
+                        {
+                            <li>@localizer["Refresh Token Flow"]</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <span class="text-muted">@localizer["None"]</span>
+                }
 
-                <hr class="text-muted" />
+                <hr class="text-muted my-4" />
 
                 <h3 class="h4 my-3">@localizer["Configurations"]</h3>
 
                 <div class="row mb-3">
                     <label class="form-label col-form-label col-md-12">@localizer["Redirect Uris"]</label>
                     <div class="col">
-                        <div class="d-flex align-items-center">
-                            @if (Model.RedirectUris.Count > 0)
-                            {
+                        @if (Model.RedirectUris.Count > 0)
+                        {
+                            <ul>
                                 @foreach (var uri in Model.RedirectUris)
                                 {
-                                    <span class="badge bg-light border border-primary text-primary fs-6 fw-normal p-2 me-1 mb-1">@uri</span>
+                                    <li>@uri</li>
                                 }
-                            }
-                            else
-                            {
-                                <span class="text-muted">@localizer["None"]</span>
-                            }
-                        </div>
+                            </ul>
+                        }
+                        else
+                        {
+                            <span class="text-muted">@localizer["None"]</span>
+                        }
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <label class="form-label col-form-label col-md-12">@localizer["Logout Redirect Uris"]</label>
                     <div class="col">
-                        <div class="d-flex align-items-center">
-                            @if (Model.PostLogoutRedirectUris.Count > 0)
-                            {
+                        @if (Model.PostLogoutRedirectUris.Count > 0)
+                        {
+                            <ul>
                                 @foreach (var uri in Model.PostLogoutRedirectUris)
                                 {
-                                    <span class="badge bg-light border border-primary text-primary fs-6 fw-normal p-2 me-1 mb-1">@uri</span>
+                                    <li>@uri</li>
                                 }
-                            }
-                            else
-                            {
-                                <span class="text-muted">@localizer["None"]</span>
-                            }
-                        </div>
+                            </ul>
+                        }
+                        else
+                        {
+                            <span class="text-muted">@localizer["None"]</span>
+                        }
                     </div>
                 </div>
 
@@ -188,7 +195,7 @@
                                 _ => null,
                             };
                         }
-                        <span class="form-control" readonly>@consentType</span>
+                        <span class="form-control-plaintext" readonly>@consentType</span>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
+using Nocturne.Auth.Core.Extensions;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using OpenIddict.Abstractions;
 
@@ -24,23 +25,41 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
 
         protected IStringLocalizer Localizer { get; }
 
-        protected async Task<string> FindDuplicatedApplicationId(TCommand command)
-        {
-            var application = await ApplicationManager.FindByNameAsync(command.DisplayName);
-
-            return application is null
-                ? null
-                : await ApplicationManager.GetIdAsync(application);
-        }
-
-        protected async Task AddAvailableScopesAsync(TCommand command)
+        public async Task AddAvailableScopesAsync(TCommand command)
         {
             var scopes = ScopeManager.ListAsync();
 
             await foreach (var scope in scopes)
             {
-                command.AvailableScopes.Add(await ScopeManager.GetNameAsync(scope));
+                var name = await ScopeManager.GetNameAsync(scope);
+
+                command.AvailableScopes.Add(name);
             }
+        }
+
+        protected async ValueTask<bool> HasDuplicatedApplication(
+            TCommand command,
+            object currentApplication = null)
+        {
+            var application = await ApplicationManager.FindByNameAsync(command.DisplayName);
+
+            var existingApplicationId = application is not null
+                ? await ApplicationManager.GetIdAsync(application)
+                : null;
+
+            if (existingApplicationId is null)
+            {
+                return false;
+            }
+
+            if (currentApplication is null)
+            {
+                 return true;
+            }
+
+            var currentApplicationId = await ApplicationManager.GetIdAsync(currentApplication);
+
+            return currentApplicationId!.IsEqualInvariant(existingApplicationId) is false;
         }
     }
 }

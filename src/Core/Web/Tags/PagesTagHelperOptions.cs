@@ -28,6 +28,6 @@ namespace Nocturne.Auth.Core.Web.TagHelpers
 
         public string SummaryItemsCountText { get; set; } = "{0:n0} items";
 
-        public string SummaryRangeText { get; set; } = "Showing {0:n0} &ndash; {0:n0}";
+        public string SummaryRangeText { get; set; } = "Showing {0:n0} &ndash; {1:n0}";
     }
 }

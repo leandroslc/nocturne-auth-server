@@ -27,7 +27,7 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
 
         public async Task<(Result, string)> HandleAsync(CreateApplicationCommand command)
         {
-            if (await HasDuplicated(command))
+            if (await HasDuplicatedApplication(command))
             {
                 return (
                     Result.Fail(Localizer["Application {0} already exists", command.DisplayName]),
@@ -43,11 +43,6 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
             return (
                 Result.Success,
                 await ApplicationManager.GetIdAsync(application));
-        }
-
-        private async Task<bool> HasDuplicated(CreateApplicationCommand command)
-        {
-            return await FindDuplicatedApplicationId(command) is not null;
         }
     }
 }

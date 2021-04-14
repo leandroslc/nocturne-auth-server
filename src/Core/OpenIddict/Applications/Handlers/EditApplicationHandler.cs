@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
-using Nocturne.Auth.Core.Extensions;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using Nocturne.Auth.Core.Results;
 using OpenIddict.Abstractions;
@@ -56,9 +55,9 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
                 return Result.NotFound();
             }
 
-            if (await HasDuplicated(command))
+            if (await HasDuplicatedApplication(command, application))
             {
-                return Result.Fail(Localizer["Application {0} already exists", command.DisplayName]);
+                return Result.Fail(Localizer["Application {0} already exists", command.DisplayName]!);
             }
 
             var descriptor = await new ApplicationDescriptorBuilder(
@@ -72,8 +71,8 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
             }
             catch (ConcurrencyException)
             {
-                Result.Fail(Localizer[
-                    "The application has been modified externally. Check the data and try again"]);
+                Result.Fail(
+                    Localizer["The application has been modified externally. Check the data and try again"]!);
             }
 
             return Result.Success;
@@ -109,13 +108,6 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
         private ValueTask<bool> HasPermissionAsync(object application, string permission)
         {
             return ApplicationManager.HasPermissionAsync(application, permission);
-        }
-
-        private async Task<bool> HasDuplicated(EditApplicationCommand command)
-        {
-            var existingApplicationId = await FindDuplicatedApplicationId(command);
-
-            return existingApplicationId is not null && !command.Id.IsEqualInvariant(existingApplicationId);
         }
     }
 }

@@ -30,10 +30,15 @@ namespace Nocturne.Auth.Core.OpenIddict.Applications.Results
 
         public bool AllowRefreshTokenFlow { get; set; }
 
-        public bool AllowHybridFlow { get; set; }
-
         public bool AllowImplicitFlow { get; set; }
 
         public bool AllowLogoutEndpoint { get; set; }
+
+        public bool HasAnyAllowedFlow =>
+            AllowPasswordFlow ||
+            AllowClientCredentialsFlow ||
+            AllowAuthorizationCodeFlow ||
+            AllowRefreshTokenFlow ||
+            AllowImplicitFlow;
     }
 }

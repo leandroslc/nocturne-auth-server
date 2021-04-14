@@ -136,8 +136,8 @@ msgstr "Salvar"
 msgid "Search"
 msgstr "Pesquisar"
 
-msgid "Showing {0:n0} &ndash; {0:n0}"
-msgstr "Mostrando {0:n0} &ndash; {0:n0}"
+msgid "Showing {0:n0} &ndash; {1:n0}"
+msgstr "Mostrando {0:n0} &ndash; {1:n0}"
 
 msgid "Specification"
 msgstr "Especificação"

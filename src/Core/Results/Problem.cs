@@ -4,6 +4,8 @@ namespace Nocturne.Auth.Core.Results
     {
         public Problem(string name, string description)
         {
+            Check.NotNull(description, nameof(description));
+
             Name = name;
             Description = description;
         }
