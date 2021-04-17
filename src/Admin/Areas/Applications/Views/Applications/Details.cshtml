@@ -29,173 +29,185 @@
                 </a>
             </div>
             <div class="page-card-content">
-                <div class="row mb-3">
-                    <label class="form-label col-form-label col-md-12">@localizer["Name"]</label>
-                    <div class="col">
-                        <span class="form-control-plaintext" readonly>@Model.DisplayName</span>
-                    </div>
-                </div>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">@localizer["Details"]</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">@localizer["Settings"]</a>
+                    </li>
+                </ul>
 
-                <div class="row mb-3">
-                    <label class="form-label col-form-label col-md-12">@localizer["Client Id"]</label>
-                    <div class="col-auto input-group align-items-center">
-                        <input class="form-control-plaintext" asp-for="@Model.ClientId" readonly />
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary" type="button" id="CopyClientId" title="@localizer["Copy"]">
-                                <span class="bi bi-clipboard" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                @if (Model.Type == ClientTypes.Confidential)
-                {
-                    <div class="row mb-3">
-                        <label class="form-label col-form-label col-md-12">@localizer["Client Secret"]</label>
-                        <div class="col input-group align-items-center">
-                            <input class="form-control-plaintext" asp-for="@Model.ClientSecret" value="@Model.ClientSecret" type="password" readonly />
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary" type="button" id="ToggleClientSecret" title="@localizer["Toggle client secret visibility"]">
-                                    <span class="bi bi-eye" aria-hidden="true" is-password="true"></span>
-                                    <span class="bi bi-eye-slash" aria-hidden="true" is-password="false" style="display: none;"></span>
-                                </button>
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary border-start" type="button" id="CopyClientSecret" title="@localizer["Copy"]">
-                                    <span class="bi bi-clipboard" aria-hidden="true"></span>
-                                </button>
+                <div class="tab-content">
+                    <div class="tab-pane py-3 px-3 active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row mb-3">
+                            <label class="form-label col-form-label col-md-12">@localizer["Name"]</label>
+                            <div class="col">
+                                <span class="form-control-plaintext" readonly>@Model.DisplayName</span>
                             </div>
                         </div>
-                    </div>
-                }
 
-                <div class="row mb-3">
-                    <label class="form-label col-form-label col-md-12">@localizer["Type"]</label>
-                    <div class="col">
-                        @{
-                            var type = Model.Type switch
-                            {
-                                ClientTypes.Confidential => localizer["Confidential"],
-                                ClientTypes.Public => localizer["Public"],
-                                _ => null,
-                            };
-                        }
-                        <span class="form-control-plaintext" readonly>@type</span>
-                    </div>
-                </div>
+                        <div class="row mb-3">
+                            <label class="form-label col-form-label col-md-12">@localizer["Client Id"]</label>
+                            <div class="col-auto input-group align-items-center">
+                                <input class="form-control-plaintext" asp-for="@Model.ClientId" readonly />
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button" id="CopyClientId" title="@localizer["Copy"]">
+                                        <span class="bi bi-clipboard" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="row mb-3">
-                    <label class="form-label col-form-label col-md-12">@localizer["Allowed Scopes"]</label>
-                    <div class="col">
-                        @if (Model.AllowedScopes.Count > 0)
+                        @if (Model.Type == ClientTypes.Confidential)
                         {
-                            <ul>
-                                @foreach (var scope in Model.AllowedScopes)
-                                {
-                                    <li>@scope</li>
+                            <div class="row mb-3">
+                                <label class="form-label col-form-label col-md-12">@localizer["Client Secret"]</label>
+                                <div class="col input-group align-items-center">
+                                    <input class="form-control-plaintext" asp-for="@Model.ClientSecret" value="@Model.ClientSecret" type="password" readonly />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-secondary" type="button" id="ToggleClientSecret" title="@localizer["Toggle client secret visibility"]">
+                                            <span class="bi bi-eye" aria-hidden="true" is-password="true"></span>
+                                            <span class="bi bi-eye-slash" aria-hidden="true" is-password="false" style="display: none;"></span>
+                                        </button>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-secondary border-start" type="button" id="CopyClientSecret" title="@localizer["Copy"]">
+                                            <span class="bi bi-clipboard" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="row mb-3">
+                            <label class="form-label col-form-label col-md-12">@localizer["Type"]</label>
+                            <div class="col">
+                                @{
+                                    var type = Model.Type switch
+                                    {
+                                        ClientTypes.Confidential => localizer["Confidential"],
+                                        ClientTypes.Public => localizer["Public"],
+                                        _ => null,
+                                    };
                                 }
-                            </ul>
-                        }
-                        else
-                        {
-                            <span class="text-muted">@localizer["None"]</span>
-                        }
+                                <span class="form-control-plaintext" readonly>@type</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <hr class="text-muted my-4" />
-
-                <h3 class="h4 my-3">@localizer["Allowed Flows"]</h3>
-
-                @if (Model.HasAnyAllowedFlow)
-                {
-                    <ul>
-                        @if (Model.AllowAuthorizationCodeFlow)
-                        {
-                            <li>@localizer["Authorization Code Flow"] @localizer["with PKCE"]</li>
-                        }
-
-                        @if (Model.AllowImplicitFlow)
-                        {
-                            <li>@localizer["Implicit Flow"]</li>
-                        }
-
-                        @if (@Model.AllowPasswordFlow)
-                        {
-                            <li>@localizer["Resource Owner Password Flow"]</li>
-                        }
-
-                        @if (@Model.AllowClientCredentialsFlow)
-                        {
-                            <li>@localizer["Client Credentials Flow"]</li>
-                        }
-
-                        @if (@Model.AllowRefreshTokenFlow)
-                        {
-                            <li>@localizer["Refresh Token Flow"]</li>
-                        }
-                    </ul>
-                }
-                else
-                {
-                    <span class="text-muted">@localizer["None"]</span>
-                }
-
-                <hr class="text-muted my-4" />
-
-                <h3 class="h4 my-3">@localizer["Configurations"]</h3>
-
-                <div class="row mb-3">
-                    <label class="form-label col-form-label col-md-12">@localizer["Redirect Uris"]</label>
-                    <div class="col">
-                        @if (Model.RedirectUris.Count > 0)
-                        {
-                            <ul>
-                                @foreach (var uri in Model.RedirectUris)
+                    <div class="tab-pane py-3 px-3" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                        <div class="row mb-3">
+                            <label class="form-label col-form-label col-md-12">@localizer["Allowed Scopes"]</label>
+                            <div class="col">
+                                @if (Model.AllowedScopes.Count > 0)
                                 {
-                                    <li>@uri</li>
+                                    <ul>
+                                        @foreach (var scope in Model.AllowedScopes)
+                                        {
+                                            <li>@scope</li>
+                                        }
+                                    </ul>
                                 }
-                            </ul>
-                        }
-                        else
-                        {
-                            <span class="text-muted">@localizer["None"]</span>
-                        }
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label class="form-label col-form-label col-md-12">@localizer["Logout Redirect Uris"]</label>
-                    <div class="col">
-                        @if (Model.PostLogoutRedirectUris.Count > 0)
-                        {
-                            <ul>
-                                @foreach (var uri in Model.PostLogoutRedirectUris)
+                                else
                                 {
-                                    <li>@uri</li>
+                                    <span class="text-muted">@localizer["None"]</span>
                                 }
-                            </ul>
-                        }
-                        else
-                        {
-                            <span class="text-muted">@localizer["None"]</span>
-                        }
-                    </div>
-                </div>
+                            </div>
+                        </div>
 
-                <div class="row mb-3">
-                    <label class="form-label col-form-label col-md-12">@localizer["Consent type"]</label>
-                    <div class="col">
-                        @{
-                            var consentType = Model.ConsentType switch
-                            {
-                                ConsentTypes.Explicit => localizer["Explicit"],
-                                ConsentTypes.Implicit => localizer["Implicit"],
-                                ConsentTypes.External => localizer["External"],
-                                _ => null,
-                            };
-                        }
-                        <span class="form-control-plaintext" readonly>@consentType</span>
+                        <div class="row mb-3">
+                            <label class="form-label col-form-label col-md-12">@localizer["Allowed Flows"]</label>
+                            <div class="col">
+                                @if (Model.HasAnyAllowedFlow)
+                                {
+                                    <ul>
+                                        @if (Model.AllowAuthorizationCodeFlow)
+                                        {
+                                            <li>@localizer["Authorization Code Flow"] @localizer["with PKCE"]</li>
+                                        }
+
+                                        @if (Model.AllowImplicitFlow)
+                                        {
+                                            <li>@localizer["Implicit Flow"]</li>
+                                        }
+
+                                        @if (@Model.AllowPasswordFlow)
+                                        {
+                                            <li>@localizer["Resource Owner Password Flow"]</li>
+                                        }
+
+                                        @if (@Model.AllowClientCredentialsFlow)
+                                        {
+                                            <li>@localizer["Client Credentials Flow"]</li>
+                                        }
+
+                                        @if (@Model.AllowRefreshTokenFlow)
+                                        {
+                                            <li>@localizer["Refresh Token Flow"]</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">@localizer["None"]</span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="form-label col-form-label col-md-12">@localizer["Redirect Uris"]</label>
+                            <div class="col">
+                                @if (Model.RedirectUris.Count > 0)
+                                {
+                                    <ul>
+                                        @foreach (var uri in Model.RedirectUris)
+                                        {
+                                            <li>@uri</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">@localizer["None"]</span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="form-label col-form-label col-md-12">@localizer["Logout Redirect Uris"]</label>
+                            <div class="col">
+                                @if (Model.PostLogoutRedirectUris.Count > 0)
+                                {
+                                    <ul>
+                                        @foreach (var uri in Model.PostLogoutRedirectUris)
+                                        {
+                                            <li>@uri</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">@localizer["None"]</span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="form-label col-form-label col-md-12">@localizer["Consent type"]</label>
+                            <div class="col">
+                                @{
+                                    var consentType = Model.ConsentType switch
+                                    {
+                                        ConsentTypes.Explicit => localizer["Explicit"],
+                                        ConsentTypes.Implicit => localizer["Implicit"],
+                                        ConsentTypes.External => localizer["External"],
+                                        _ => null,
+                                    };
+                                }
+                                <span class="form-control-plaintext" readonly>@consentType</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

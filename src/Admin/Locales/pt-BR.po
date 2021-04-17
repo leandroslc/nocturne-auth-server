@@ -109,6 +109,9 @@ msgstr "Apenas recomendado se fluxos baseados em redirecionamento (como Authoriz
 msgid "Page list"
 msgstr "Lista de páginas"
 
+msgid "Permissions"
+msgstr "Permissões"
+
 msgid "Previous page"
 msgstr "Página anterior"
 
@@ -130,11 +133,17 @@ msgstr "Recomendado quando a aplicação por si mesma é o resource owner, como 
 msgid "Redirect Uris"
 msgstr "URIs de Redirecionamento"
 
+msgid "Roles"
+msgstr "Papéis"
+
 msgid "Save"
 msgstr "Salvar"
 
 msgid "Search"
 msgstr "Pesquisar"
+
+msgid "Settings"
+msgstr "Configurações"
 
 msgid "Showing {0:n0} &ndash; {1:n0}"
 msgstr "Mostrando {0:n0} &ndash; {1:n0}"
