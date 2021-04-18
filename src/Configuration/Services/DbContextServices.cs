@@ -19,11 +19,11 @@ namespace Nocturne.Auth.Configuration.Services
             services.AddSqlServerDbContext<ApplicationIdentityDbContext>(
                 connectionString);
 
-            services.AddSqlServerDbContext<OpenIddictDbContext>(
+            services.AddSqlServerDbContext<AuthorizationDbContext>(
                 connectionString,
                 options =>
                 {
-                    options.UseOpenIddict<long>();
+                    options.UseOpenIddict<Application, Authorization, Scope, Token, string>();
                 });
 
             return services;

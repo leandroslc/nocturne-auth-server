@@ -4,7 +4,6 @@ using Nocturne.Auth.Core.Collections;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using Nocturne.Auth.Core.OpenIddict.Applications.Results;
 using OpenIddict.Core;
-using Application = OpenIddict.EntityFrameworkCore.Models.OpenIddictEntityFrameworkCoreApplication<long>;
 
 namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
 {

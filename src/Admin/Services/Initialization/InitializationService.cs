@@ -42,9 +42,9 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
         private async Task ApplyOpenIddictMigrations(IServiceProvider services)
         {
-            logger.LogInformation($"Applying database migrations for \"{nameof(OpenIddictDbContext)}\"");
+            logger.LogInformation($"Applying database migrations for \"{nameof(AuthorizationDbContext)}\"");
 
-            var context = services.GetRequiredService<OpenIddictDbContext>();
+            var context = services.GetRequiredService<AuthorizationDbContext>();
             await context.Database.MigrateAsync();
         }
 

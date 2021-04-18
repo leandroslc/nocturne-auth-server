@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using OpenIddict.Abstractions;
 using OpenIddict.Core;
-using Application = OpenIddict.EntityFrameworkCore.Models.OpenIddictEntityFrameworkCoreApplication<long>;
 
 namespace Nocturne.Auth.Core.OpenIddict.Applications
 {

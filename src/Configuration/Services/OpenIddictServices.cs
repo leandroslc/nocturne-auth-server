@@ -24,8 +24,8 @@ namespace Nocturne.Auth.Configuration.Services
 
                     options
                         .UseEntityFrameworkCore()
-                        .UseDbContext<OpenIddictDbContext>()
-                        .ReplaceDefaultEntities<long>();
+                        .UseDbContext<AuthorizationDbContext>()
+                        .ReplaceDefaultEntities<Application, Authorization, Scope, Token, string>();
                 });
         }
     }
