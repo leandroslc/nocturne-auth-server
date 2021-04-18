@@ -1,4 +1,4 @@
-namespace Nocturne.Auth.Core.Collections
+namespace Nocturne.Auth.Core.Shared.Collections
 {
     public interface IPagedCollection
     {

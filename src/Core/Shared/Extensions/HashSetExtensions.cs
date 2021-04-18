@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Nocturne.Auth.Core.Extensions
+namespace Nocturne.Auth.Core.Shared.Extensions
 {
     /// <summary>
     /// Extension methods for the <see cref="HashSet{T}" /> class

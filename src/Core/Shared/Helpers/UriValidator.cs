@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Nocturne.Auth.Core.Extensions;
+using Nocturne.Auth.Core.Shared.Extensions;
 
-namespace Nocturne.Auth.Core.Helpers
+namespace Nocturne.Auth.Core.Shared.Helpers
 {
     public static class UriValidator
     {

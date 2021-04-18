@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Nocturne.Auth.Core.Helpers;
+using Nocturne.Auth.Core.Shared.Helpers;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace Nocturne.Auth.Core.OpenIddict.Applications.Commands

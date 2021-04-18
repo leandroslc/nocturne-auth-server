@@ -1,6 +1,6 @@
 using System;
 
-namespace Nocturne.Auth.Core.Extensions
+namespace Nocturne.Auth.Core.Shared.Extensions
 {
     public static class StringExtensions
     {

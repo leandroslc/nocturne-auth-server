@@ -1,6 +1,6 @@
-using Nocturne.Auth.Core.Collections;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using Nocturne.Auth.Core.OpenIddict.Applications.Results;
+using Nocturne.Auth.Core.Shared.Collections;
 
 namespace Nocturne.Auth.Admin.Areas.Applications.Models
 {

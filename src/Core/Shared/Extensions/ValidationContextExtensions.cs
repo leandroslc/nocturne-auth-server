@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Localization;
 
-namespace Nocturne.Auth.Core.Extensions
+namespace Nocturne.Auth.Core.Shared.Extensions
 {
     /// <summary>
     /// Extension methods for the <see cref="ValidationContext" /> class

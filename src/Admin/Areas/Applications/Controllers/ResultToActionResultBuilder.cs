@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Nocturne.Auth.Core.Results;
+using Nocturne.Auth.Core.Shared.Results;
 using Mvc = Microsoft.AspNetCore.Mvc;
 
 namespace Nocturne.Auth.Admin.Areas.Applications.Controllers

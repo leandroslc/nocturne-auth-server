@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
-using Nocturne.Auth.Core.Extensions;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
+using Nocturne.Auth.Core.Shared.Extensions;
 using OpenIddict.Abstractions;
 
 namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers

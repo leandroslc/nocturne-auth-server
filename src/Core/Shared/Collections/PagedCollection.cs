@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Nocturne.Auth.Core.Collections
+namespace Nocturne.Auth.Core.Shared.Collections
 {
     public class PagedCollection<TValue> : IPagedCollection<TValue>
     {

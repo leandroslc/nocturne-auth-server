@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Nocturne.Auth.Core.Extensions
+namespace Nocturne.Auth.Core.Shared.Extensions
 {
     public static class DictionaryExtensions
     {

@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
-using Nocturne.Auth.Core.Collections;
-using Nocturne.Auth.Core.Extensions;
+using Nocturne.Auth.Core.Shared.Collections;
+using Nocturne.Auth.Core.Shared.Extensions;
 
 namespace Nocturne.Auth.Core.Web.TagHelpers
 {

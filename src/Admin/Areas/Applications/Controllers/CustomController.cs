@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Result = Nocturne.Auth.Core.Results.Result;
+using Result = Nocturne.Auth.Core.Shared.Results.Result;
 
 namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Nocturne.Auth.Core.Results
+namespace Nocturne.Auth.Core.Shared.Results
 {
     public sealed class ProblemsResult : Result
     {

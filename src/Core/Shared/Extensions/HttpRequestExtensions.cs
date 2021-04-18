@@ -2,7 +2,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace Nocturne.Auth.Core.Extensions
+namespace Nocturne.Auth.Core.Shared.Extensions
 {
     public static class HttpRequestExtensions
     {

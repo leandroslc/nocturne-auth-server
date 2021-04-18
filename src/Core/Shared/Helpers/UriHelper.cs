@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Nocturne.Auth.Core.Extensions;
+using Nocturne.Auth.Core.Shared.Extensions;
 
-namespace Nocturne.Auth.Core.Helpers
+namespace Nocturne.Auth.Core.Shared.Helpers
 {
     /// <summary>
     /// A helper class to get and validate URIs
