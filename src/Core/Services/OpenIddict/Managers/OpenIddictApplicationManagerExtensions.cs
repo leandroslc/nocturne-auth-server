@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using OpenIddict.Abstractions;
 using OpenIddict.Core;
 
-namespace Nocturne.Auth.Core.OpenIddict.Applications
+namespace Nocturne.Auth.Core.Services.OpenIddict.Managers
 {
     public static class OpenIddictApplicationManagerExtensions
     {

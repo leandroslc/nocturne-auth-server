@@ -1,4 +1,4 @@
-namespace Nocturne.Auth.Core.Email
+namespace Nocturne.Auth.Core.Services.Email
 {
     public class EmailOptions
     {

@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Options;
 
-namespace Nocturne.Auth.Core.Crypto
+namespace Nocturne.Auth.Core.Services.Crypto
 {
     public class EncryptionService : IEncryptionService
     {

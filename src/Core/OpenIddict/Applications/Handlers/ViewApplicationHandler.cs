@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using Nocturne.Auth.Core.OpenIddict.Applications.Results;
+using Nocturne.Auth.Core.Services.OpenIddict.Managers;
 using OpenIddict.Abstractions;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 

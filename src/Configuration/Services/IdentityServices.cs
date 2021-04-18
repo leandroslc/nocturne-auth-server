@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nocturne.Auth.Core.Identity;
+using Nocturne.Auth.Core.Services.Identity;
 using OpenIddictConstants = OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace Nocturne.Auth.Configuration.Services

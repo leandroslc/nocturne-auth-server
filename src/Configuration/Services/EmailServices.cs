@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nocturne.Auth.Core.Email;
+using Nocturne.Auth.Core.Services.Email;
 
 namespace Nocturne.Auth.Configuration.Services
 {

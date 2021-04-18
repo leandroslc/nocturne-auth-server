@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ApplictionAuthorization = Nocturne.Auth.Core.OpenIddict.Authorization;
+using Nocturne.Auth.Core.Services.OpenIddict;
 
 namespace Nocturne.Auth.Core.OpenIddict
 {
@@ -17,7 +17,7 @@ namespace Nocturne.Auth.Core.OpenIddict
             builder.HasDefaultSchema("auth");
 
             builder.Entity<Application>().ToTable("Applications");
-            builder.Entity<ApplictionAuthorization>().ToTable("Authorizations");
+            builder.Entity<Authorization>().ToTable("Authorizations");
             builder.Entity<Scope>().ToTable("Scopes");
             builder.Entity<Token>().ToTable("Tokens");
         }

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using MimeKit;
 using System.Threading.Tasks;
 
-namespace Nocturne.Auth.Core.Email
+namespace Nocturne.Auth.Core.Services.Email
 {
     public class EmailService : IEmailService
     {

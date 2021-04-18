@@ -1,7 +1,7 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nocturne.Auth.Core.Crypto;
+using Nocturne.Auth.Core.Services.Crypto;
 
 namespace Nocturne.Auth.Configuration.Services
 {

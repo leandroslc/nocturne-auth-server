@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Nocturne.Auth.Core.OpenIddict.Applications
+namespace Nocturne.Auth.Core.Services.OpenIddict.Managers
 {
     public interface ICustomOpenIddictApplicationManager
     {

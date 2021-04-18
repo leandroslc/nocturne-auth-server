@@ -1,4 +1,4 @@
-namespace Nocturne.Auth.Core.Crypto
+namespace Nocturne.Auth.Core.Services.Crypto
 {
     public interface IEncryptionService
     {

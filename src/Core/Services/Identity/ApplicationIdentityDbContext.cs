@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Nocturne.Auth.Core.Identity
+namespace Nocturne.Auth.Core.Services.Identity
 {
     public class ApplicationIdentityDbContext
         : IdentityDbContext<ApplicationUser, ApplicationRole, long>

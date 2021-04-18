@@ -1,6 +1,6 @@
 using OpenIddict.EntityFrameworkCore.Models;
 
-namespace Nocturne.Auth.Core.OpenIddict
+namespace Nocturne.Auth.Core.Services.OpenIddict
 {
     public class Token : OpenIddictEntityFrameworkCoreToken<string, Application, Authorization>
     {
