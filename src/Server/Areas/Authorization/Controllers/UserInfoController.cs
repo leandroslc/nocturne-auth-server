@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Nocturne.Auth.Core.Identity;
+using Nocturne.Auth.Core.Services.Identity;
 using Nocturne.Auth.Server.Configuration;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;

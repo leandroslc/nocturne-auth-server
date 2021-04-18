@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Nocturne.Auth.Core.Identity;
-using Nocturne.Auth.Core.Email;
+using Nocturne.Auth.Core.Services.Identity;
+using Nocturne.Auth.Core.Services.Email;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {

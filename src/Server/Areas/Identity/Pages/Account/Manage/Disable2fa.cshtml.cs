@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Nocturne.Auth.Core.Identity;
+using Nocturne.Auth.Core.Services.Identity;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
