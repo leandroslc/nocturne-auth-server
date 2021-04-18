@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Nocturne.Auth.Core.Services.OpenIddict;
 
-namespace Nocturne.Auth.Core.OpenIddict
+namespace Nocturne.Auth.Core.Modules
 {
     public class AuthorizationDbContext : DbContext
     {

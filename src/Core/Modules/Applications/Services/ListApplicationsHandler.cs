@@ -1,12 +1,10 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
-using Nocturne.Auth.Core.OpenIddict.Applications.Results;
 using Nocturne.Auth.Core.Services.OpenIddict;
 using Nocturne.Auth.Core.Shared.Collections;
 using OpenIddict.Core;
 
-namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
+namespace Nocturne.Auth.Core.Modules.Applications.Services
 {
     public class ListApplicationsHandler
     {

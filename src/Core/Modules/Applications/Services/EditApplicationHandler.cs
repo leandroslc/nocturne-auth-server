@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
-using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using Nocturne.Auth.Core.Shared.Results;
 using OpenIddict.Abstractions;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 using static OpenIddict.Abstractions.OpenIddictExceptions;
 
-namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
+namespace Nocturne.Auth.Core.Modules.Applications.Services
 {
     public class EditApplicationHandler : ManageApplicationHandler<EditApplicationCommand>
     {

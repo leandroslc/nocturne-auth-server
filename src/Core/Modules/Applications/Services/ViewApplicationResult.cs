@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Nocturne.Auth.Core.OpenIddict.Applications.Results
+namespace Nocturne.Auth.Core.Modules.Applications.Services
 {
     public class ViewApplicationResult
     {

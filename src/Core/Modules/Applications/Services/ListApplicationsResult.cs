@@ -1,4 +1,4 @@
-namespace Nocturne.Auth.Core.OpenIddict.Applications.Results
+namespace Nocturne.Auth.Core.Modules.Applications.Services
 {
     public class ListApplicationsResult
     {

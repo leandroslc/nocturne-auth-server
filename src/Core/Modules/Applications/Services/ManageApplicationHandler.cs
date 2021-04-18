@@ -1,11 +1,10 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
-using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using Nocturne.Auth.Core.Services.OpenIddict.Managers;
 using Nocturne.Auth.Core.Shared.Extensions;
 using OpenIddict.Abstractions;
 
-namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
+namespace Nocturne.Auth.Core.Modules.Applications.Services
 {
     public abstract class ManageApplicationHandler<TCommand>
         where TCommand : ManageApplicationCommand

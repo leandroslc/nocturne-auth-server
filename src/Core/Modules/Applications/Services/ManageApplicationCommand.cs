@@ -4,7 +4,7 @@ using System.Linq;
 using Nocturne.Auth.Core.Shared.Helpers;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
-namespace Nocturne.Auth.Core.OpenIddict.Applications.Commands
+namespace Nocturne.Auth.Core.Modules.Applications.Services
 {
     public abstract class ManageApplicationCommand : IValidatableObject
     {

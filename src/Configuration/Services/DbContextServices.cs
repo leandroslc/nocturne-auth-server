@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nocturne.Auth.Core.OpenIddict;
+using Nocturne.Auth.Core.Modules;
 using Nocturne.Auth.Core.Services.Identity;
 using Nocturne.Auth.Core.Services.OpenIddict;
 

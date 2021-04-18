@@ -1,14 +1,13 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
 using Nocturne.Auth.Core.Services.OpenIddict.Managers;
 using Nocturne.Auth.Core.Shared.Extensions;
 using Nocturne.Auth.Core.Shared.Helpers;
 using OpenIddict.Abstractions;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
-namespace Nocturne.Auth.Core.OpenIddict.Applications.Handlers
+namespace Nocturne.Auth.Core.Modules.Applications.Services
 {
     public class ApplicationDescriptorBuilder
     {

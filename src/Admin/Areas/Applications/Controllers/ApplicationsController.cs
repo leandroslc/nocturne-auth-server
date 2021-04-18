@@ -2,8 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Auth.Admin.Areas.Applications.Models;
 using Nocturne.Auth.Admin.Configuration.Constants;
-using Nocturne.Auth.Core.OpenIddict.Applications.Commands;
-using Nocturne.Auth.Core.OpenIddict.Applications.Handlers;
+using Nocturne.Auth.Core.Modules.Applications.Services;
 
 namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
 {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Nocturne.Auth.Core.OpenIddict;
+using Nocturne.Auth.Core.Modules;
 using OpenIddict.Abstractions;
 
 namespace Nocturne.Auth.Admin.Services.Initialization

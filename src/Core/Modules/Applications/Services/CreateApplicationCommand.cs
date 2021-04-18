@@ -1,4 +1,4 @@
-namespace Nocturne.Auth.Core.OpenIddict.Applications.Commands
+namespace Nocturne.Auth.Core.Modules.Applications.Services
 {
     public class CreateApplicationCommand : ManageApplicationCommand
     {
