@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
-using Nocturne.Auth.Core.Shared.Results;
 using OpenIddict.Abstractions;
 
 namespace Nocturne.Auth.Core.Modules.Applications.Services
@@ -24,13 +23,12 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
             return command;
         }
 
-        public async Task<(Result, string)> HandleAsync(CreateApplicationCommand command)
+        public async Task<CreateApplicationResult> HandleAsync(CreateApplicationCommand command)
         {
             if (await HasDuplicatedApplication(command))
             {
-                return (
-                    Result.Fail(Localizer["Application {0} already exists", command.DisplayName]),
-                    null);
+                return CreateApplicationResult.Fail(
+                    Localizer["Application {0} already exists", command.DisplayName]);
             }
 
             var descriptor = await new ApplicationDescriptorBuilder(
@@ -39,8 +37,7 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
 
             var application = await ApplicationManager.CreateAsync(descriptor);
 
-            return (
-                Result.Success,
+            return CreateApplicationResult.Created(
                 await ApplicationManager.GetIdAsync(application));
         }
     }

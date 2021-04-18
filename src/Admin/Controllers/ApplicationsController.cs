@@ -1,12 +1,12 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Nocturne.Auth.Admin.Areas.Applications.Models;
 using Nocturne.Auth.Admin.Configuration.Constants;
+using Nocturne.Auth.Admin.Controllers.Models;
 using Nocturne.Auth.Core.Modules.Applications.Services;
+using Nocturne.Auth.Core.Shared.Results;
 
-namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
+namespace Nocturne.Auth.Admin.Controllers
 {
-    [Area("Applications")]
     [Route("applications")]
     public class ApplicationsController : CustomController
     {
@@ -46,14 +46,21 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
                 return await Problems();
             }
 
-            var (result, applicationId) = await handler.HandleAsync(command);
+            var result = await handler.HandleAsync(command);
 
-            return await GetResultBuilder(result)
-                .Success(Success)
-                .Problems(Problems)
-                .BuildAsync();
+            if (result.Success)
+            {
+                RedirectToDetails(result.ApplicationId);
+            }
 
-            IActionResult Success() => RedirectToDetails(applicationId);
+            if (result.HasProblems)
+            {
+                AddErrors(result.Problems);
+
+                return await Problems();
+            }
+
+            throw new ResultNotHandledException(result);
 
             async Task<IActionResult> Problems()
             {
@@ -106,12 +113,24 @@ namespace Nocturne.Auth.Admin.Areas.Applications.Controllers
 
             var result = await handler.HandleAsync(command);
 
-            return await GetResultBuilder(result)
-                .Success(Success)
-                .Problems(Problems)
-                .BuildAsync();
+            if (result.Success)
+            {
+                return RedirectToDetails(result.ApplicationId);
+            }
 
-            IActionResult Success() => RedirectToDetails(command.Id);
+            if (result.HasProblems)
+            {
+                AddErrors(result.Problems);
+
+                return await Problems();
+            }
+
+            if (result.IsNotFound)
+            {
+                return NotFound();
+            }
+
+            throw new ResultNotHandledException(result);
 
             async Task<IActionResult> Problems()
             {

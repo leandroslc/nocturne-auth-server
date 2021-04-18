@@ -45,18 +45,19 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
             return command;
         }
 
-        public async Task<Result> HandleAsync(EditApplicationCommand command)
+        public async Task<EditApplicationResult> HandleAsync(EditApplicationCommand command)
         {
             var application = await GetApplicationAsync(command.Id);
 
             if (application is null)
             {
-                return Result.NotFound();
+                return EditApplicationResult.NotFound();
             }
 
             if (await HasDuplicatedApplication(command, application))
             {
-                return Result.Fail(Localizer["Application {0} already exists", command.DisplayName]!);
+                return EditApplicationResult.Fail(
+                    Localizer["Application {0} already exists", command.DisplayName]!);
             }
 
             var descriptor = await new ApplicationDescriptorBuilder(
@@ -70,11 +71,11 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
             }
             catch (ConcurrencyException)
             {
-                Result.Fail(
+                EditApplicationResult.Fail(
                     Localizer["The application has been modified externally. Check the data and try again"]!);
             }
 
-            return Result.Success;
+            return EditApplicationResult.Updated(command.Id);
         }
 
         public async Task<bool> ExistsAsync(string applicationId)
