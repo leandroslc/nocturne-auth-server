@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Nocturne.Auth.Core.Services.OpenIddict;
 using Nocturne.Auth.Core.Shared.Collections;
+using Nocturne.Auth.Core.Shared.Extensions;
 using OpenIddict.Core;
 
 namespace Nocturne.Auth.Core.Modules.Applications.Services
