@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Auth.Core.Services.Identity;
+using Nocturne.Auth.Core.Shared.Extensions;
 using Nocturne.Auth.Server.Areas.Authorization.Models;
 using Nocturne.Auth.Server.Configuration;
 using Nocturne.Auth.Server.Services;
