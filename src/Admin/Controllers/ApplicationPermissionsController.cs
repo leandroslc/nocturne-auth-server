@@ -149,6 +149,46 @@ namespace Nocturne.Auth.Admin.Controllers
             throw new ResultNotHandledException(result);
         }
 
+        [HttpGet("{id}/delete", Name = RouteNames.ApplicationPermissionsDelete)]
+        public async Task<IActionResult> Delete(
+            [FromServices] DeleteApplicationPermissionHandler handler,
+            long? id)
+        {
+            var command = await handler.CreateCommandAsync(id);
+
+            if (command is null)
+            {
+                return NotFound();
+            }
+
+            return View(command);
+        }
+
+        [HttpPost("{id}/delete")]
+        public async Task<IActionResult> Delete(
+            [FromServices] DeleteApplicationPermissionHandler handler,
+            DeleteApplicationPermissionCommand command)
+        {
+            if (ModelState.IsValid is false)
+            {
+                return ViewWithErrors(command);
+            }
+
+            var result = await handler.HandleAsync(command);
+
+            if (result.IsSuccess)
+            {
+                return Ok();
+            }
+
+            if (result.IsNotFound)
+            {
+                return NotFound();
+            }
+
+            throw new ResultNotHandledException(result);
+        }
+
         public IActionResult ViewWithErrors(object model)
         {
             Response.StatusCode = 400;

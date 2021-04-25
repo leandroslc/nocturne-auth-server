@@ -10,6 +10,8 @@ namespace Nocturne.Auth.Admin.Configuration.Constants
 
         public const string ApplicationsView = nameof(ApplicationsView);
 
+        public const string ApplicationPermissionsDelete = nameof(ApplicationPermissionsDelete);
+
         public const string ApplicationPermissionsEdit = nameof(ApplicationPermissionsEdit);
 
         public const string ApplicationPermissionsHome = nameof(ApplicationPermissionsHome);

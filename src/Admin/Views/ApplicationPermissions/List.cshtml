@@ -32,7 +32,7 @@
                                     <span>@localizer["Details"]</span>
                                 </button>
                                 <div class="dropdown-divider"></div>
-                                <button class="dropdown-item text-danger" type="button">
+                                <button class="dropdown-item text-danger" type="button" data-permission-action="@Url.RouteUrl(RouteNames.ApplicationPermissionsDelete, new { Model.ApplicationId, permission.Id })">
                                     <span class="bi-trash mr-2" aria-hidden="true"></span>
                                     <span>@localizer["Delete"]</span>
                                 </button>

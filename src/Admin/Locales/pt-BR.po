@@ -70,6 +70,9 @@ msgstr "Copiar"
 msgid "Delete"
 msgstr "Excluir"
 
+msgid "Delete permission"
+msgstr "Apagar permissão"
+
 msgid "Description"
 msgstr "Descrição"
 
@@ -196,6 +199,12 @@ msgstr "A requisição de autorização é rejeitada a não ser que uma autoriza
 msgid "The authorization request must be approved by the end user"
 msgstr "A requisição de autorização deve ser aprovada pelo usuário final"
 
+msgid "The confirmation name does not match"
+msgstr "O nome de confirmação não corresponde"
+
+msgid "The confirmation name is required"
+msgstr "O nome de confirmação é obrigatório"
+
 msgid "The consent type is required"
 msgstr "O tipo de consentimento é obrigatório"
 
@@ -226,6 +235,9 @@ msgstr "Alternar visibilidade do client secret"
 msgid "Type"
 msgstr "Tipo"
 
+msgid "Type the permission name to confirm"
+msgstr "Digite o nome da permissão para confirmar"
+
 msgid "Use confidential for applications that can hold secrets secure, mainly those that runs on the server, like server-side web apps, web APIs"
 msgstr "Use confidencial para aplicações que podem manter segredos de app seguros, principalmente as que executam no servidor, como aplicações web server-side, APIs web"
 
@@ -234,3 +246,6 @@ msgstr "Use público para aplicações que não são confiáveis para manter seg
 
 msgid "with PKCE"
 msgstr "com PKCE"
+
+msgid "You are about to delete the permission {0} and this action is irreversible. All applications and/or users may be affected."
+msgstr "Você está prestes a excluir a permissão {0} e esta ação é irreversível. Todas as aplicações e/ou usuários podem ser afetados."
