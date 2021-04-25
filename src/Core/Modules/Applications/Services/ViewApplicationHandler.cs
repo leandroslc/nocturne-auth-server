@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Nocturne.Auth.Core.Services.OpenIddict.Managers;
 using OpenIddict.Abstractions;
-using static OpenIddict.Abstractions.OpenIddictConstants;
+using OpenIdPermissions = OpenIddict.Abstractions.OpenIddictConstants.Permissions;
 
 namespace Nocturne.Auth.Core.Modules.Applications.Services
 {
@@ -32,12 +32,12 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
                 Type = await applicationManager.GetClientTypeAsync(application),
                 PostLogoutRedirectUris = await applicationManager.GetPostLogoutRedirectUrisAsync(application),
                 RedirectUris = await applicationManager.GetRedirectUrisAsync(application),
-                AllowAuthorizationCodeFlow = await HasPermissionAsync(application, Permissions.GrantTypes.AuthorizationCode),
-                AllowClientCredentialsFlow = await HasPermissionAsync(application, Permissions.GrantTypes.ClientCredentials),
-                AllowImplicitFlow = await HasPermissionAsync(application, Permissions.GrantTypes.Implicit),
-                AllowPasswordFlow = await HasPermissionAsync(application, Permissions.GrantTypes.Password),
-                AllowRefreshTokenFlow = await HasPermissionAsync(application, Permissions.GrantTypes.RefreshToken),
-                AllowLogoutEndpoint = await HasPermissionAsync(application, Permissions.Endpoints.Logout),
+                AllowAuthorizationCodeFlow = await HasPermissionAsync(application, OpenIdPermissions.GrantTypes.AuthorizationCode),
+                AllowClientCredentialsFlow = await HasPermissionAsync(application, OpenIdPermissions.GrantTypes.ClientCredentials),
+                AllowImplicitFlow = await HasPermissionAsync(application, OpenIdPermissions.GrantTypes.Implicit),
+                AllowPasswordFlow = await HasPermissionAsync(application, OpenIdPermissions.GrantTypes.Password),
+                AllowRefreshTokenFlow = await HasPermissionAsync(application, OpenIdPermissions.GrantTypes.RefreshToken),
+                AllowLogoutEndpoint = await HasPermissionAsync(application, OpenIdPermissions.Endpoints.Logout),
             };
 
             await AddAllowedScopesAsync(application, result);
@@ -63,7 +63,7 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
             {
                 var scopeName = await scopeManager.GetNameAsync(scope);
 
-                if (await HasPermissionAsync(application, Permissions.Prefixes.Scope + scopeName))
+                if (await HasPermissionAsync(application, OpenIdPermissions.Prefixes.Scope + scopeName))
                 {
                     result.AllowedScopes.Add(scopeName);
                 }

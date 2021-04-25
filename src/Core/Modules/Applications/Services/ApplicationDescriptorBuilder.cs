@@ -5,7 +5,8 @@ using Nocturne.Auth.Core.Services.OpenIddict.Managers;
 using Nocturne.Auth.Core.Shared.Extensions;
 using Nocturne.Auth.Core.Shared.Helpers;
 using OpenIddict.Abstractions;
-using static OpenIddict.Abstractions.OpenIddictConstants;
+using ClientTypes = OpenIddict.Abstractions.OpenIddictConstants.ClientTypes;
+using OpenIdPermissions = OpenIddict.Abstractions.OpenIddictConstants.Permissions;
 
 namespace Nocturne.Auth.Core.Modules.Applications.Services
 {
@@ -72,69 +73,69 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
         {
             SetPermission(
                 command.AllowLogoutEndpoint,
-                Permissions.Endpoints.Logout);
+                OpenIdPermissions.Endpoints.Logout);
 
             SetPermission(
                 command.AllowAuthorizationCodeFlow,
-                Permissions.GrantTypes.AuthorizationCode);
+                OpenIdPermissions.GrantTypes.AuthorizationCode);
 
             SetPermission(
                 command.AllowClientCredentialsFlow,
-                Permissions.GrantTypes.ClientCredentials);
+                OpenIdPermissions.GrantTypes.ClientCredentials);
 
             SetPermission(
                 command.AllowImplicitFlow,
-                Permissions.GrantTypes.Implicit);
+                OpenIdPermissions.GrantTypes.Implicit);
 
             SetPermission(
                 command.AllowPasswordFlow,
-                Permissions.GrantTypes.Password);
+                OpenIdPermissions.GrantTypes.Password);
 
             SetPermission(
                 command.AllowRefreshTokenFlow,
-                Permissions.GrantTypes.RefreshToken);
+                OpenIdPermissions.GrantTypes.RefreshToken);
 
             SetPermission(
                 command.AllowAuthorizationCodeFlow || command.AllowImplicitFlow,
-                Permissions.Endpoints.Authorization);
+                OpenIdPermissions.Endpoints.Authorization);
 
             SetPermission(
                 command.AllowAuthorizationCodeFlow ||
                 command.AllowClientCredentialsFlow ||
                 command.AllowPasswordFlow ||
                 command.AllowRefreshTokenFlow,
-                Permissions.Endpoints.Token);
+                OpenIdPermissions.Endpoints.Token);
 
             SetPermission(
                 command.AllowAuthorizationCodeFlow,
-                Permissions.ResponseTypes.Code);
+                OpenIdPermissions.ResponseTypes.Code);
 
             SetPermission(
                 command.AllowImplicitFlow,
-                Permissions.ResponseTypes.IdToken);
+                OpenIdPermissions.ResponseTypes.IdToken);
 
             SetPermission(
                 command.AllowImplicitFlow && IsPublic(command),
-                Permissions.ResponseTypes.IdTokenToken,
-                Permissions.ResponseTypes.Token);
+                OpenIdPermissions.ResponseTypes.IdTokenToken,
+                OpenIdPermissions.ResponseTypes.Token);
 
             SetPermission(
                 command.AllowHybridFlow,
-                Permissions.ResponseTypes.CodeIdToken);
+                OpenIdPermissions.ResponseTypes.CodeIdToken);
 
             SetPermission(
                 command.AllowHybridFlow && IsPublic(command),
-                Permissions.ResponseTypes.CodeIdTokenToken,
-                Permissions.ResponseTypes.CodeToken);
+                OpenIdPermissions.ResponseTypes.CodeIdTokenToken,
+                OpenIdPermissions.ResponseTypes.CodeToken);
 
-            RemovePermissionsOfType(Permissions.Prefixes.Scope);
+            RemovePermissionsOfType(OpenIdPermissions.Prefixes.Scope);
 
             if (command.AllowedScopes != null)
             {
                 descriptor.Permissions.UnionWith(
                     command.AllowedScopes
                     .GetDelimitedElements()
-                    .Select(s => Permissions.Prefixes.Scope + s));
+                    .Select(s => OpenIdPermissions.Prefixes.Scope + s));
             }
         }
 
