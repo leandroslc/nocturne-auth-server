@@ -22,13 +22,13 @@ namespace Nocturne.Auth.Admin
                 .AddControllersWithViews()
                 .AddApplicationMvcLocalization();
 
-            services.AddApplicationDbContexts(Configuration);
-
-            services.AddApplicationLocalization(Configuration);
+            services
+                .AddApplicationDbContexts(Configuration)
+                .AddApplicationLocalization(Configuration)
+                .AddApplicationEncryption(Configuration)
+                .AddApplicationModules();
 
             services.AddApplicationOpenIddict();
-
-            services.AddApplicationEncryption(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
