@@ -1,0 +1,36 @@
+@inject IViewLocalizer localizer
+
+<div class="row mb-3">
+    <div class="col d-flex justify-content-end">
+        <button class="btn btn-outline-success" type="button">@localizer["New permission"]</button>
+    </div>
+</div>
+
+<form class="form-inline justify-content-end mb-3" id="search-permissions-form" loading="loading-permissions" loading-hide="search-permissions-results">
+    <div class="input-group my-1">
+        <input class="form-control" id="search-permission" name="name" placeholder="@localizer["Search"]" />
+        <div class="input-group-append">
+            <button class="btn btn-primary" title="@localizer["Search"]">
+                <span class="sr-only">@localizer["Search"]</span>
+                <span class="bi-search" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</form>
+
+<div class="row mb-3">
+    <div class="col">
+        <div id="search-permissions-results"></div>
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status" id="loading-permissions" style="display: none;">
+                <span class="sr-only">@localizer["Loading..."]</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="permission-modal" tabindex="-1" role="dialog" aria-labelledby="permission-modal-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>

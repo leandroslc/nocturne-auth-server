@@ -37,6 +37,9 @@ msgstr "A aplicação {0} já existe"
 msgid "Application details"
 msgstr "Detalhes da aplicação"
 
+msgid "Application not found"
+msgstr "Aplicação não encontrada"
+
 msgid "Applications"
 msgstr "Aplicações"
 
@@ -61,11 +64,20 @@ msgstr "Tipo de consentimento"
 msgid "Copy"
 msgstr "Copiar"
 
+msgid "Description"
+msgstr "Descrição"
+
 msgid "Details"
 msgstr "Detalhes"
 
+msgid "Edit"
+msgstr "Editar"
+
 msgid "Edit application"
 msgstr "Editar aplicação"
+
+msgid "Edit permission"
+msgstr "Editar permissão"
 
 msgid "Explicit"
 msgstr "Explícito"
@@ -97,6 +109,9 @@ msgstr "Próxima página"
 msgid "New application"
 msgstr "Nova aplicação"
 
+msgid "New permission"
+msgstr "Nova permissão"
+
 msgid "No applications found"
 msgstr "Nenhuma aplicação encontrada"
 
@@ -106,11 +121,17 @@ msgstr "Nenhum"
 msgid "Only recommended if redirect-based flows (like Authorization Code) are not possible"
 msgstr "Apenas recomendado se fluxos baseados em redirecionamento (como Authorization Code) não são possíveis"
 
+msgid "Open menu"
+msgstr "Abrir menu"
+
 msgid "Page list"
 msgstr "Lista de páginas"
 
 msgid "Permissions"
 msgstr "Permissões"
+
+msgid "Permission not found"
+msgstr "Permissão não encontrada"
 
 msgid "Previous page"
 msgstr "Página anterior"
@@ -154,6 +175,9 @@ msgstr "Especificação"
 msgid "The application has been modified externally. Check the data and try again"
 msgstr "A aplicação foi modificada externamente. Verifique os dados e tente novamente"
 
+msgid "The application is required"
+msgstr "A aplicação é obrigatória"
+
 msgid "The authorization request is assumed to be pre-approved and no consent form is displayed"
 msgstr "A requisição de autorização é considerada como pré aprovada e nenhum formulário de consentimento é exibido"
 
@@ -168,6 +192,21 @@ msgstr "O tipo de consentimento é obrigatório"
 
 msgid "The name is required"
 msgstr "O nome é obrigatório"
+
+msgid "The name must have less than {1} characters"
+msgstr "O nome deve ter meno de {1} caracteres"
+
+msgid "The description must have less than {1} characters"
+msgstr "A descrição deve ter menos que {1} caracteres"
+
+msgid "The permission {0} already exists"
+msgstr "A permissão {0} já existe"
+
+msgid "The permission id is required"
+msgstr "O id da permissão é obrigatório"
+
+msgid "The permission has been modified. Check the data and try again"
+msgstr "A permissão foi modificada. Verifique os dados e tente novamente"
 
 msgid "The type is required"
 msgstr "O tipo é obrigatório"

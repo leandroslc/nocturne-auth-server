@@ -1,0 +1,28 @@
+@inject IViewLocalizer localizer
+@model ManagePermissionCommand
+
+<form loading="permission-loading">
+    <div class="modal-body">
+        <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">@localizer["Name"]</label>
+            <input asp-for="Name" class="form-control" autofocus />
+            <span asp-validation-for="Name" class="d-block form-text text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">@localizer["Description"]</label>
+            <textarea asp-for="Description" class="form-control text-area"></textarea>
+            <span asp-validation-for="Description" class="d-block form-text text-danger"></span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="spinner-border spinner-border-sm text-primary" role="status" id="permission-loading" style="display: none;">
+            <span class="sr-only">@localizer["Loading..."]</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">@localizer["Save"]</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">@localizer["Cancel"]</button>
+    </div>
+</form>

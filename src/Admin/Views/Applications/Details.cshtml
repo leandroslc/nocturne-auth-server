@@ -36,6 +36,9 @@
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">@localizer["Settings"]</a>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="permissions-tab" data-toggle="tab" href="#permissions" role="tab" aria-controls="permissions" aria-selected="false">@localizer["Permissions"]</a>
+                    </li>
                 </ul>
 
                 <div class="tab-content">
@@ -209,6 +212,10 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="tab-pane py-3 px-3" id="permissions" role="tabpanel" aria-labelledby="permissions-tab">
+                        <partial name="./Permissions" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -218,6 +225,7 @@
 @section scripts
 {
     <script src="~/js/applications.js" asp-append-version="true"></script>
+    <script src="~/js/permissions.js" asp-append-version="true"></script>
     <script>
         viewApplication({
             ids: {
@@ -226,6 +234,19 @@
                 copyClientId: 'CopyClientId',
                 copyClientSecret: 'CopyClientSecret',
                 toggleClientSecret: 'ToggleClientSecret'
+            },
+        });
+
+        managePermissions({
+            searchUrl: '@Url.RouteUrl(RouteNames.ApplicationPermissionsHome, new { applicationId = Model.Id })',
+            searchForm: document.getElementById('search-permissions-form'),
+            modalId: 'permission-modal',
+            results: document.getElementById('search-permissions-results'),
+            url: {
+                new: '',
+                edit: '@Url.RouteUrl(RouteNames.ApplicationPermissionsEdit, new { applicationId = Model.Id })',
+                delete: '',
+                details: '',
             },
         });
     </script>

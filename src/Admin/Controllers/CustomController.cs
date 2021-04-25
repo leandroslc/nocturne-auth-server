@@ -10,8 +10,20 @@ namespace Nocturne.Auth.Admin.Controllers
         {
             foreach (var problem in problems)
             {
-                ModelState.AddModelError(problem.Name ?? string.Empty, problem.Description);
+                AddModelError(problem);
             }
+        }
+
+        protected void AddError(string error)
+        {
+            var problem = new Problem(error);
+
+            AddModelError(problem);
+        }
+
+        private void AddModelError(Problem problem)
+        {
+            ModelState.AddModelError(problem.Name ?? string.Empty, problem.Description);
         }
     }
 }
