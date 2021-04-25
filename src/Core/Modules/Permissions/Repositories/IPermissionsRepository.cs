@@ -13,6 +13,8 @@ namespace Nocturne.Auth.Core.Modules.Permissions.Repositories
 
         Task<Permission> GetById(long id);
 
+        Task DeleteAsync(Permission permission);
+
         Task InsertAsync(Permission permission);
 
         Task UpdateAsync(Permission permission);

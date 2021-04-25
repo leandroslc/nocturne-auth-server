@@ -36,6 +36,13 @@ namespace Nocturne.Auth.Core.Modules.Permissions.Repositories
                 .AnyAsync(p => p.Name == permission.Name && p.Id != permission.Id);
         }
 
+        public async Task DeleteAsync(Permission permission)
+        {
+            context.Remove(permission);
+
+            await context.SaveChangesAsync();
+        }
+
         public async Task InsertAsync(Permission permission)
         {
             context.Set<Permission>().Add(permission);
