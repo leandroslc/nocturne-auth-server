@@ -32,6 +32,53 @@ namespace Nocturne.Auth.Admin.Controllers
             throw new ResultNotHandledException(result);
         }
 
+        [HttpGet("new", Name = RouteNames.ApplicationPermissionsNew)]
+        public async Task<IActionResult> Create(
+            [FromServices] CreatePermissionHandler handler,
+            string applicationId)
+        {
+            if (await handler.ApplicationExists(applicationId) is false)
+            {
+                return NotFound();
+            }
+
+            var command = new CreatePermissionCommand(applicationId);
+
+            return View(command);
+        }
+
+        [HttpPost("new")]
+        public async Task<IActionResult> Create(
+            [FromServices] CreatePermissionHandler handler,
+            CreatePermissionCommand command)
+        {
+            if (ModelState.IsValid is false)
+            {
+                return ViewWithErrors(command);
+            }
+
+            var result = await handler.HandleAsync(command);
+
+            if (result.IsSuccess)
+            {
+                return Ok();
+            }
+
+            if (result.IsFailure || result.IsDuplicated)
+            {
+                AddError(result.ErrorDescription);
+
+                return ViewWithErrors(command);
+            }
+
+            if (result.IsNotFound)
+            {
+                return NotFound();
+            }
+
+            throw new ResultNotHandledException(result);
+        }
+
         [HttpGet("edit", Name = RouteNames.ApplicationPermissionsEdit)]
         public async Task<IActionResult> Edit(
             [FromServices] EditPermissionHandler handler,

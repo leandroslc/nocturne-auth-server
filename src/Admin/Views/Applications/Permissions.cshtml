@@ -1,8 +1,12 @@
+@model ViewApplicationResult
 @inject IViewLocalizer localizer
 
 <div class="row mb-3">
     <div class="col d-flex justify-content-end">
-        <button class="btn btn-outline-success" type="button">@localizer["New permission"]</button>
+        <button class="btn btn-outline-success" id="new-permission-button" type="button" data-permission-action="@Url.RouteUrl(RouteNames.ApplicationPermissionsNew, new { applicationId = Model.Id })">
+            <span class="bi-plus" aria-hidden="true"></span>
+            <span>@localizer["New permission"]</span>
+        </button>
     </div>
 </div>
 

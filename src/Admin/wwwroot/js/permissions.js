@@ -27,13 +27,13 @@
 })();
 
 (function () {
-  const PermissionIdAttribute = 'data-permission';
   const PermissionActionAttribute = 'data-permission-action';
 
   window.managePermissions = function(options) {
     const searchPermissions = new SearchPermissions(options);
     const results = options.results;
     const modalId = options.modalId;
+    const newPermissionButton = options.newPermissionButton;
 
     const modal = new Modal(modalId);
 
@@ -79,12 +79,18 @@
       setupModalForm(url);
     }
 
-    function show(url) {
+    function show(element) {
+      const url = element.getAttribute(PermissionActionAttribute);
+
       $.get(url, function (response) {
         setupModal(response, url);
         modal.show();
       });
     }
+
+    newPermissionButton.addEventListener('click', function() {
+      show(newPermissionButton);
+    });
 
     results.addEventListener('click', function (event) {
       const element = event.target.closest('[' + PermissionActionAttribute + ']');
@@ -93,10 +99,7 @@
         return;
       }
 
-      const url = element.getAttribute(PermissionActionAttribute);
-      const permissionId = element.getAttribute(PermissionIdAttribute);
-
-      show(url, permissionId);
+      show(element);
     });
 
     searchPermissions.search();

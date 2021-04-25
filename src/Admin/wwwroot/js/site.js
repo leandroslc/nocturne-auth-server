@@ -180,8 +180,12 @@
     const content = element.querySelector('.modal-content');
     const $modal = $(element);
 
-    $modal.on('shown.bs.modal', function () {
+    function autofocus() {
       $modal.find('[autofocus]').focus();
+    }
+
+    $modal.on('shown.bs.modal', function () {
+      autofocus();
     });
 
     $modal.on('hidden.bs.modal', function () {
@@ -198,6 +202,7 @@
 
     this.setContent = function(html) {
       content.innerHTML = html;
+      autofocus();
     }
 
     this.querySelector = function(selector) {

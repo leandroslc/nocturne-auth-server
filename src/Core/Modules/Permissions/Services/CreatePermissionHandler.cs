@@ -40,6 +40,11 @@ namespace Nocturne.Auth.Core.Modules.Permissions.Services
 
         public async Task<bool> ApplicationExists(string applicationId)
         {
+            if (applicationId is null)
+            {
+                return false;
+            }
+
             return await GetApplication(applicationId) is not null;
         }
 

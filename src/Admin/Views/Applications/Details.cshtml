@@ -240,14 +240,9 @@
         managePermissions({
             searchUrl: '@Url.RouteUrl(RouteNames.ApplicationPermissionsHome, new { applicationId = Model.Id })',
             searchForm: document.getElementById('search-permissions-form'),
-            modalId: 'permission-modal',
             results: document.getElementById('search-permissions-results'),
-            url: {
-                new: '',
-                edit: '@Url.RouteUrl(RouteNames.ApplicationPermissionsEdit, new { applicationId = Model.Id })',
-                delete: '',
-                details: '',
-            },
+            modalId: 'permission-modal',
+            newPermissionButton: document.getElementById('new-permission-button'),
         });
     </script>
 }
