@@ -129,6 +129,26 @@ namespace Nocturne.Auth.Admin.Controllers
             throw new ResultNotHandledException(result);
         }
 
+        [HttpGet("{id}", Name = RouteNames.ApplicationPermissionsView)]
+        public async Task<IActionResult> Details(
+            [FromServices] ViewApplicationPermissionHandler handler,
+            ViewApplicationPermissionCommand command)
+        {
+            var result = await handler.HandleAsync(command);
+
+            if (result.IsSuccess)
+            {
+                return View(result.Permission);
+            }
+
+            if (result.IsNotFound)
+            {
+                return NotFound();
+            }
+
+            throw new ResultNotHandledException(result);
+        }
+
         public IActionResult ViewWithErrors(object model)
         {
             Response.StatusCode = 400;

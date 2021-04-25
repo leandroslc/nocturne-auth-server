@@ -27,7 +27,7 @@
                                     <span class="bi-pencil mr-2" aria-hidden="true"></span>
                                     <span>@localizer["Edit"]</span>
                                 </button>
-                                <button class="dropdown-item" type="button">
+                                <button class="dropdown-item" type="button" data-permission-action="@Url.RouteUrl(RouteNames.ApplicationPermissionsView, new { Model.ApplicationId, permission.Id })">
                                     <span class="bi-info-circle mr-2" aria-hidden="true"></span>
                                     <span>@localizer["Details"]</span>
                                 </button>

@@ -52,6 +52,9 @@ msgstr "Voltar"
 msgid "Cancel"
 msgstr "Cancelar"
 
+msgid "Close"
+msgstr "Fechar"
+
 msgid "Confidential"
 msgstr "Confidencial"
 
@@ -63,6 +66,9 @@ msgstr "Tipo de consentimento"
 
 msgid "Copy"
 msgstr "Copiar"
+
+msgid "Delete"
+msgstr "Excluir"
 
 msgid "Description"
 msgstr "Descrição"
@@ -129,6 +135,9 @@ msgstr "Lista de páginas"
 
 msgid "Permissions"
 msgstr "Permissões"
+
+msgid "Permission details"
+msgstr "Detalhes da permissão"
 
 msgid "Permission not found"
 msgstr "Permissão não encontrada"

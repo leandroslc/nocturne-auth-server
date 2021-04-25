@@ -19,6 +19,7 @@ namespace Nocturne.Auth.Configuration.Services
             services.AddScoped<CreatePermissionHandler>();
             services.AddScoped<EditPermissionHandler>();
             services.AddScoped<ListApplicationPermissionsHandler>();
+            services.AddScoped<ViewApplicationPermissionHandler>();
 
             return services;
         }
