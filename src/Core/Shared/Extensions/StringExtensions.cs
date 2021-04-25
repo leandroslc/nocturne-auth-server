@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 
 namespace Nocturne.Auth.Core.Shared.Extensions
 {
@@ -14,6 +15,13 @@ namespace Nocturne.Auth.Core.Shared.Extensions
             var valueSeparators = separators?.Length > 0 ? separators : new[] { ' ', ',' };
 
             return value.Split(valueSeparators, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        public static string RemoveLeadingSpaces(this string value)
+        {
+            Check.NotNull(value, nameof(value));
+
+            return Regex.Replace(value, @"[\s]+", " ", RegexOptions.IgnorePatternWhitespace).Trim();
         }
     }
 }
