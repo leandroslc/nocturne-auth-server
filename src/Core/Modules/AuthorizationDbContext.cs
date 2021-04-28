@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Nocturne.Auth.Core.Modules.Permissions;
+using Nocturne.Auth.Core.Modules.Roles;
 using Nocturne.Auth.Core.Services.OpenIddict;
 
 namespace Nocturne.Auth.Core.Modules
@@ -19,6 +20,7 @@ namespace Nocturne.Auth.Core.Modules
 
             ConfigureOpenIdModels(builder);
             ConfigurePermissions(builder);
+            ConfigureRoles(builder);
         }
 
         private static void ConfigureOpenIdModels(ModelBuilder builder)
@@ -33,16 +35,50 @@ namespace Nocturne.Auth.Core.Modules
         {
             var permissions = builder.Entity<Permission>().ToTable("Permissions");
 
-            permissions.Property(p => p.ConcurrencyToken)
+            permissions
+                .Property(p => p.ConcurrencyToken)
                 .HasMaxLength(50)
                 .IsConcurrencyToken();
 
-            permissions.Property(p => p.Name)
+            permissions
+                .Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(200);
 
-            permissions.Property(p => p.Description)
+            permissions
+                .Property(p => p.Description)
                 .HasMaxLength(400);
+
+            permissions
+                .HasOne(p => p.Application)
+                .WithMany()
+                .HasForeignKey(p => p.ApplicationId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+
+        private static void ConfigureRoles(ModelBuilder builder)
+        {
+            var roles = builder.Entity<Role>().ToTable("Roles");
+
+            roles
+                .Property(p => p.ConcurrencyToken)
+                .HasMaxLength(50)
+                .IsConcurrencyToken();
+
+            roles
+                .Property(p => p.Name)
+                .HasMaxLength(200)
+                .IsRequired();
+
+            roles
+                .Property(p => p.Description)
+                .HasMaxLength(400);
+
+            roles
+                .HasOne(p => p.Application)
+                .WithMany()
+                .HasForeignKey(p => p.ApplicationId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
