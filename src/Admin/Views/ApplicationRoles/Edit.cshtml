@@ -1,0 +1,10 @@
+@model EditApplicationRoleCommand
+
+@{
+    ViewData[KnownViewData.Title] = "Edit role";
+    ViewData[KnownViewData.PageGroup] = PageGroups.Applications;
+    ViewData[KnownViewData.ReturnTitle] = "Role details";
+    ViewData[KnownViewData.ReturnUrl] = Url.RouteUrl(RouteNames.ApplicationRolesView, new { Model.ApplicationId, Model.Id });
+}
+
+<partial name="_Form" />

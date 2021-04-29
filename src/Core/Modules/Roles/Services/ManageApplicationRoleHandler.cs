@@ -24,7 +24,16 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
 
         protected IRolesRepository RolesRepository { get; }
 
-        protected async Task<Application> GetApplication(string applicationId)
+        protected async Task<RoleApplication> GetRoleApplicationAsync(string applicationId)
+        {
+            var application = await GetApplicationAsync(applicationId);
+
+            return application is null
+                ? null
+                : new RoleApplication(application.Id, application.DisplayName);
+        }
+
+        protected async Task<Application> GetApplicationAsync(string applicationId)
         {
             return await ApplicationManager.FindByIdAsync(applicationId);
         }

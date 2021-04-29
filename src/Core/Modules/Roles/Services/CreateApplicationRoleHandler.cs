@@ -16,9 +16,16 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
         {
         }
 
+        public async Task<CreateApplicationRoleCommand> CreateCommandAsync(string applicationId)
+        {
+            var application = await GetRoleApplicationAsync(applicationId);
+
+            return new CreateApplicationRoleCommand(application);
+        }
+
         public async Task<ManageApplicationRoleResult> HandleAsync(CreateApplicationRoleCommand command)
         {
-            var application = await GetApplication(command.ApplicationId);
+            var application = await GetApplicationAsync(command.ApplicationId);
 
             if (application is null)
             {
@@ -35,17 +42,13 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
 
             await RolesRepository.InsertAsync(role);
 
-            return ManageApplicationRoleResult.Success(role.Id);
+            return ManageApplicationRoleResult.Success(role.Id, role.ApplicationId);
         }
 
         public async Task<bool> ApplicationExists(string applicationId)
         {
-            if (applicationId is null)
-            {
-                return false;
-            }
-
-            return await GetApplication(applicationId) is not null;
+            return applicationId != null
+                && await GetApplicationAsync(applicationId) is not null;
         }
 
         private static Role CreateRole(CreateApplicationRoleCommand command)

@@ -19,5 +19,15 @@ namespace Nocturne.Auth.Admin.Configuration.Constants
         public const string ApplicationPermissionsNew = nameof(ApplicationPermissionsNew);
 
         public const string ApplicationPermissionsView = nameof(ApplicationPermissionsView);
+
+        public const string ApplicationRolesDelete = nameof(ApplicationRolesDelete);
+
+        public const string ApplicationRolesEdit = nameof(ApplicationRolesEdit);
+
+        public const string ApplicationRolesHome = nameof(ApplicationRolesHome);
+
+        public const string ApplicationRolesNew = nameof(ApplicationRolesNew);
+
+        public const string ApplicationRolesView = nameof(ApplicationRolesView);
     }
 }

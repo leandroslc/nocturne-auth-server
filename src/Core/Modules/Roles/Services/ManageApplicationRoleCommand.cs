@@ -4,6 +4,16 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
 {
     public abstract class ManageApplicationRoleCommand
     {
+        public ManageApplicationRoleCommand(RoleApplication application)
+        {
+            ApplicationId = application.Id;
+            Application = application;
+        }
+
+        public ManageApplicationRoleCommand()
+        {
+        }
+
         [Required(ErrorMessage = "The name is required")]
         [MaxLength(200, ErrorMessage = "The name must have less than {1} characters")]
         public string Name { get; set; }
@@ -13,5 +23,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
 
         [Required(ErrorMessage = "The application is required")]
         public string ApplicationId { get; set; }
+
+        public RoleApplication Application { get; }
     }
 }

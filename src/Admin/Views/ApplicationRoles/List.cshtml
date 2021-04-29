@@ -1,0 +1,62 @@
+@inject IViewLocalizer localizer
+@model ApplicationRolesViewModel
+
+@{
+    Layout = null;
+}
+
+@if (Model.Roles.Any())
+{
+    <div class="table-responsive">
+        <table class="table page-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>@localizer["Name"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model.Roles)
+                {
+                    var menuId = $"role-menu-{role.Id}";
+
+                    <tr>
+                        <td class="w-min">
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-outline-primary" href="@Url.RouteUrl(RouteNames.ApplicationRolesView, new { Model.ApplicationId, role.Id })">
+                                    @localizer["Details"]
+                                </a>
+                                <button class="btn btn-sm btn-outline-primary dropdown-toggle dropdown-toggle-split" type="button" id="@menuId" data-toggle="dropdown" title="@localizer["Open menu"]" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">@localizer["Open menu"]</span>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="@menuId">
+                                    <a class="dropdown-item" href="@Url.RouteUrl(RouteNames.ApplicationRolesEdit, new { Model.ApplicationId, role.Id })">
+                                        <span class="bi-pencil mr-2" aria-hidden="true"></span>
+                                        <span>@localizer["Edit"]</span>
+                                    </a>
+                                    <a class="dropdown-item" href="@Url.RouteUrl(RouteNames.ApplicationRolesView, new { Model.ApplicationId, role.Id })">
+                                        <span class="bi-info-circle mr-2" aria-hidden="true"></span>
+                                        <span>@localizer["Details"]</span>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <button class="dropdown-item text-danger" type="button" data-role-action="@Url.RouteUrl(RouteNames.ApplicationRolesDelete, new { Model.ApplicationId, role.Id })">
+                                        <span class="bi-trash mr-2" aria-hidden="true"></span>
+                                        <span>@localizer["Delete"]</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                        <td>@role.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="empty mt-3" role="status">
+        <span class="bi-ui-checks-grid empty-icon" aria-hidden="true"></span>
+        <p class="empty-text">@localizer["No roles found"]</p>
+    </div>
+}

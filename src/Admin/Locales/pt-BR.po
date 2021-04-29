@@ -40,6 +40,9 @@ msgstr "Detalhes da aplicação"
 msgid "Application not found"
 msgstr "Aplicação não encontrada"
 
+msgid "Application"
+msgstr "Aplicação"
+
 msgid "Applications"
 msgstr "Aplicações"
 
@@ -88,6 +91,9 @@ msgstr "Editar aplicação"
 msgid "Edit permission"
 msgstr "Editar permissão"
 
+msgid "Edit role"
+msgstr "Editar grupo"
+
 msgid "Explicit"
 msgstr "Explícito"
 
@@ -121,8 +127,17 @@ msgstr "Nova aplicação"
 msgid "New permission"
 msgstr "Nova permissão"
 
+msgid "New role"
+msgstr "Novo grupo"
+
 msgid "No applications found"
 msgstr "Nenhuma aplicação encontrada"
+
+msgid "No permissions found"
+msgstr "Nenhuma permissão encontrada"
+
+msgid "No roles found"
+msgstr "Nenhum grupo encontrado"
 
 msgid "None"
 msgstr "Nenhum"
@@ -166,8 +181,11 @@ msgstr "Recomendado quando a aplicação por si mesma é o resource owner, como 
 msgid "Redirect Uris"
 msgstr "URIs de Redirecionamento"
 
+msgid "Role details"
+msgstr "Detalhes do grupo"
+
 msgid "Roles"
-msgstr "Papéis"
+msgstr "Grupos"
 
 msgid "Save"
 msgstr "Salvar"
@@ -238,6 +256,9 @@ msgstr "Tipo"
 msgid "Type the permission name to confirm"
 msgstr "Digite o nome da permissão para confirmar"
 
+msgid "Type the role name to confirm"
+msgstr "Digite o nome do grupo para confirmar"
+
 msgid "Use confidential for applications that can hold secrets secure, mainly those that runs on the server, like server-side web apps, web APIs"
 msgstr "Use confidencial para aplicações que podem manter segredos de app seguros, principalmente as que executam no servidor, como aplicações web server-side, APIs web"
 
@@ -248,4 +269,7 @@ msgid "with PKCE"
 msgstr "com PKCE"
 
 msgid "You are about to delete the permission {0} and this action is irreversible. All applications and/or users may be affected."
-msgstr "Você está prestes a excluir a permissão {0} e esta ação é irreversível. Todas as aplicações e/ou usuários podem ser afetados."
+msgstr "Você está prestes a excluir a permissão {0} e esta ação é irreversível. Todas as aplicações e/ou usuários poderão ser afetados."
+
+msgid "You are about to delete the role {0} and this action is irreversible. The users of the application may be affected."
+msgstr "Você está prestes a excluir o grupo {0} e esta ação é irreversível. Os usuários da aplicação poderão ser afetados."

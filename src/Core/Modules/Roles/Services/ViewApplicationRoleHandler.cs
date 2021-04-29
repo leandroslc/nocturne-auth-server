@@ -1,15 +1,20 @@
 using System.Threading.Tasks;
 using Nocturne.Auth.Core.Modules.Roles.Repositories;
+using Nocturne.Auth.Core.Services.OpenIddict;
+using Nocturne.Auth.Core.Services.OpenIddict.Managers;
 
 namespace Nocturne.Auth.Core.Modules.Roles.Services
 {
     public sealed class ViewApplicationRoleHandler
     {
+        private readonly CustomOpenIddictApplicationManager<Application> applicationManager;
         private readonly IRolesRepository rolesRepository;
 
         public ViewApplicationRoleHandler(
+            CustomOpenIddictApplicationManager<Application> applicationManager,
             IRolesRepository rolesRepository)
         {
+            this.applicationManager = applicationManager;
             this.rolesRepository = rolesRepository;
         }
 
@@ -23,7 +28,9 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
                 return ViewApplicationRoleResult.NotFound();
             }
 
-            return ViewApplicationRoleResult.Success(role);
+            var application = await GetApplicationAsync(role);
+
+            return ViewApplicationRoleResult.Success(role, application);
         }
 
         private async Task<Role> GetRoleAsync(long? id)
@@ -34,6 +41,13 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
             }
 
             return await rolesRepository.GetById(id.Value);
+        }
+
+        private async Task<RoleApplication> GetApplicationAsync(Role role)
+        {
+            var application = await applicationManager.FindByIdAsync(role.ApplicationId);
+
+            return new RoleApplication(application.Id, application.DisplayName);
         }
     }
 }

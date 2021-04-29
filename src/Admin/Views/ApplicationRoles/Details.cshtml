@@ -1,0 +1,79 @@
+@using static OpenIddict.Abstractions.OpenIddictConstants;
+@model ViewApplicationRoleResult
+@inject IViewLocalizer localizer
+
+@{
+    var title = localizer["Role details"];
+    var returnUrl = Url.RouteUrl(RouteNames.ApplicationsView, new { id = Model.Application.Id });
+
+    ViewData[KnownViewData.Title] = title;
+    ViewData[KnownViewData.PageGroup] = PageGroups.Applications;
+}
+
+<div class="page">
+    <div class="page-heading">
+        <div class="page-container">
+            <span class="small d-block mb-1">@Model.Application.Name</span>
+            <a class="page-back" href="@returnUrl">
+                <span class="bi-arrow-left" aria-hidden="true"></span>
+                <span>@localizer["Application details"]</span>
+            </a>
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-header">
+                <h1 class="page-card-title">@title</h1>
+                <a class="btn btn-success ml-auto" asp-route="@RouteNames.ApplicationRolesEdit" asp-route-applicationId="@Model.Application.Id" asp-route-id="@Model.Role.Id">
+                    <span class="bi-pencil" aria-hidden="true"></span>
+                    <span>@localizer["Edit"]</span>
+                </a>
+            </div>
+            <div class="page-card-content">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">@localizer["Details"]</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="permissions-tab" data-toggle="tab" href="#permissions" role="tab" aria-controls="permissions" aria-selected="false">@localizer["Permissions"]</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane py-3 px-3 active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row mb-3">
+                            <label class="form-label col-form-label col-md-12">@localizer["Name"]</label>
+                            <div class="col">
+                                <span class="form-control-plaintext" readonly>@Model.Role.Name</span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="form-label col-form-label col-md-12">@localizer["Description"]</label>
+                            <div class="col">
+                                <span class="form-control-plaintext" readonly>@Model.Role.Description</span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="form-label col-form-label col-md-12">@localizer["Application"]</label>
+                            <div class="col">
+                                <span class="form-control-plaintext" readonly>@Model.Application.Name</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane py-3 px-3" id="permissions" role="tabpanel" aria-labelledby="permissions-tab">
+                        @* <partial name="./Permissions" /> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+    </script>
+}

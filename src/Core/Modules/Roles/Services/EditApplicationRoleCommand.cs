@@ -6,12 +6,12 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
         {
         }
 
-        public EditApplicationRoleCommand(Role role)
+        public EditApplicationRoleCommand(Role role, RoleApplication application)
+            : base(application)
         {
             Id = role.Id;
             Name = role.Name;
             Description = role.Description;
-            ApplicationId = role.ApplicationId;
         }
 
         public long? Id { get; set; }

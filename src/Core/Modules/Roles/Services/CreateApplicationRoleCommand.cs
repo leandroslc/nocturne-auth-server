@@ -6,9 +6,9 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
         {
         }
 
-        public CreateApplicationRoleCommand(string applicationId)
+        public CreateApplicationRoleCommand(RoleApplication application)
+            : base(application)
         {
-            ApplicationId = applicationId;
         }
     }
 }

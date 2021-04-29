@@ -21,7 +21,9 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
         {
             var role = await GetRoleAsync(id);
 
-            return new EditApplicationRoleCommand(role);
+            var application = await GetRoleApplicationAsync(role.ApplicationId);
+
+            return new EditApplicationRoleCommand(role, application);
         }
 
         public async Task<ManageApplicationRoleResult> HandleAsync(EditApplicationRoleCommand command)
@@ -53,12 +55,12 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
                     Localizer["The permission has been modified. Check the data and try again"]);
             }
 
-            return ManageApplicationRoleResult.Success(role.Id);
+            return ManageApplicationRoleResult.Success(role.Id, role.ApplicationId);
         }
 
-        public Task<bool> RoleExsits(long id)
+        public async Task<bool> RoleExsits(long? id)
         {
-            return RolesRepository.Exists(id);
+            return id.HasValue && await RolesRepository.Exists(id.Value);
         }
 
         private async Task<Role> GetRoleAsync(long id)

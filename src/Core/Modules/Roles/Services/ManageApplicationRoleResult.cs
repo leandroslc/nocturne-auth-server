@@ -14,12 +14,17 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
 
         public long RoleId { get; private set; }
 
-        public static ManageApplicationRoleResult Success(long roleId)
+        public string ApplicationId { get; private set; }
+
+        public static ManageApplicationRoleResult Success(
+            long roleId,
+            string applicationId)
         {
             return new ManageApplicationRoleResult
             {
                 IsSuccess = true,
                 RoleId = roleId,
+                ApplicationId = applicationId,
             };
         }
 
