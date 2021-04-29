@@ -54,6 +54,7 @@ namespace Nocturne.Auth.Core.Modules.Permissions.Services
             {
                 Id = p.Id,
                 Name = p.Name,
+                Description = p.Description,
             });
         }
     }

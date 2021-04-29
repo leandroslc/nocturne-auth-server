@@ -189,7 +189,7 @@ namespace Nocturne.Auth.Admin.Controllers
             throw new ResultNotHandledException(result);
         }
 
-        public IActionResult ViewWithErrors(object model)
+        private IActionResult ViewWithErrors(object model)
         {
             Response.StatusCode = 400;
 

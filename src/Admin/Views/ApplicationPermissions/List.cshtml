@@ -9,6 +9,7 @@
                 <tr>
                     <th></th>
                     <th>@localizer["Name"]</th>
+                    <th>@localizer["Description"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -18,9 +19,9 @@
 
                     <tr>
                         <td class="w-min">
-                            <button class="btn btn-outline-primary" type="button" id="@menuId" data-toggle="dropdown" title="@localizer["Open menu"]" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn btn-sm btn-outline-primary" type="button" id="@menuId" data-toggle="dropdown" title="@localizer["Open menu"]" aria-haspopup="true" aria-expanded="false">
                                 <span class="sr-only">@localizer["Open menu"]</span>
-                                <span class="bi-three-dots-vertical" aria-hidden="true"></span>
+                                <span class="bi-three-dots" aria-hidden="true"></span>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="@menuId">
                                 <button class="dropdown-item" type="button" data-permission-action="@Url.RouteUrl(RouteNames.ApplicationPermissionsEdit, new { Model.ApplicationId, permission.Id })">
@@ -39,6 +40,7 @@
                             </div>
                         </td>
                         <td>@permission.Name</td>
+                        <td>@permission.Description?.Truncate(50)</td>
                     </tr>
                 }
             </tbody>
