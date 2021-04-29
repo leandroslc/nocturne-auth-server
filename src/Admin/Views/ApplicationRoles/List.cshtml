@@ -13,6 +13,7 @@
                 <tr>
                     <th></th>
                     <th>@localizer["Name"]</th>
+                    <th>@localizer["Description"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +27,7 @@
                                 <a class="btn btn-sm btn-outline-primary" href="@Url.RouteUrl(RouteNames.ApplicationRolesView, new { Model.ApplicationId, role.Id })">
                                     @localizer["Details"]
                                 </a>
-                                <button class="btn btn-sm btn-outline-primary dropdown-toggle dropdown-toggle-split" type="button" id="@menuId" data-toggle="dropdown" title="@localizer["Open menu"]" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn btn-sm btn-outline-primary dropdown-toggle dropdown-toggle-split" type="button" id="@menuId" data-toggle="dropdown" data-boundary="viewport" title="@localizer["Open menu"]" aria-haspopup="true" aria-expanded="false">
                                     <span class="sr-only">@localizer["Open menu"]</span>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="@menuId">
@@ -47,6 +48,7 @@
                             </div>
                         </td>
                         <td>@role.Name</td>
+                        <td>@role.Description?.Truncate(50)</td>
                     </tr>
                 }
             </tbody>

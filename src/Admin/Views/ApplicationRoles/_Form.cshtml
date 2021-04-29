@@ -35,7 +35,7 @@
 
                     <div class="mb-3">
                         <label asp-for="Description" class="form-label">@localizer["Description"]</label>
-                        <input asp-for="Description" class="form-control" />
+                        <textarea asp-for="Description" class="form-control text-area"></textarea>
                         <span asp-validation-for="Description" class="d-block form-text text-danger"></span>
                     </div>
 

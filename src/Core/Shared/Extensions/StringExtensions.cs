@@ -23,5 +23,16 @@ namespace Nocturne.Auth.Core.Shared.Extensions
 
             return Regex.Replace(value, @"[\s]+", " ", RegexOptions.IgnorePatternWhitespace).Trim();
         }
+
+        public static string Truncate(this string value, int maxLength)
+        {
+            const string truncateSufix = "...";
+
+            Check.NotNull(value, nameof(value));
+
+            return value.Length <= maxLength
+                ? value
+                : value.Substring(0, maxLength - truncateSufix.Length) + truncateSufix;
+        }
     }
 }

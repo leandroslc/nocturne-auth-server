@@ -76,6 +76,9 @@ msgstr "Excluir"
 msgid "Delete permission"
 msgstr "Apagar permissão"
 
+msgid "Delete role"
+msgstr "Apagar grupo"
+
 msgid "Description"
 msgstr "Descrição"
 
