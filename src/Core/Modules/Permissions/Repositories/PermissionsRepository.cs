@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Nocturne.Auth.Core.Modules.Roles;
 
 namespace Nocturne.Auth.Core.Modules.Permissions.Repositories
 {
@@ -66,6 +67,18 @@ namespace Nocturne.Auth.Core.Modules.Permissions.Repositories
             var permissions = context
                 .Set<Permission>()
                 .Where(p => p.ApplicationId == applicationId);
+
+            return await query(permissions).ToListAsync();
+        }
+
+        public async Task<IReadOnlyCollection<TResult>> QueryByRole<TResult>(
+            long roleId,
+            Func<IQueryable<Permission>, IQueryable<TResult>> query)
+        {
+            var permissions = context
+                .Set<RolePermission>()
+                .Where(p => p.RoleId == roleId)
+                .Select(p => p.Permission);
 
             return await query(permissions).ToListAsync();
         }

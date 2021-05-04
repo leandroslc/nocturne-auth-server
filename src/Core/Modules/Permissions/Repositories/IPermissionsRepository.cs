@@ -22,5 +22,9 @@ namespace Nocturne.Auth.Core.Modules.Permissions.Repositories
         Task<IReadOnlyCollection<TResult>> QueryByApplication<TResult>(
             string applicationId,
             Func<IQueryable<Permission>, IQueryable<TResult>> query);
+
+        Task<IReadOnlyCollection<TResult>> QueryByRole<TResult>(
+            long roleId,
+            Func<IQueryable<Permission>, IQueryable<TResult>> query);
     }
 }
