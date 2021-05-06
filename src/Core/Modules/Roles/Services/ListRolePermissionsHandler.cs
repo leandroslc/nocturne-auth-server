@@ -49,7 +49,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
         private static IQueryable<ListRolePermissionsItem> GetPermissionsQuery(
             IQueryable<Permission> query)
         {
-            query = query.OrderBy(p => p.Name);
+            query = query.OrderBy(p => p.Application.DisplayName).ThenBy(p => p.Name);
 
             return query.Select(p => new ListRolePermissionsItem
             {

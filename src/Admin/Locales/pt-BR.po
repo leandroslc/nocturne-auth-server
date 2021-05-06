@@ -46,6 +46,12 @@ msgstr "Aplicação"
 msgid "Applications"
 msgstr "Aplicações"
 
+msgid "Are you sure you want to unassign the permission from the role?"
+msgstr "Tem certeza de que deseja desvincular a permissão do grupo?"
+
+msgid "Assign permissions"
+msgstr "Atribuir permissões"
+
 msgid "Authorization Server (Admin)"
 msgstr "Servidor de Autorização (Admin)"
 
@@ -136,6 +142,9 @@ msgstr "Novo grupo"
 msgid "No applications found"
 msgstr "Nenhuma aplicação encontrada"
 
+msgid "No permissions assigned"
+msgstr "Nenhuma permissão atribuída"
+
 msgid "No permissions found"
 msgstr "Nenhuma permissão encontrada"
 
@@ -186,6 +195,9 @@ msgstr "URIs de Redirecionamento"
 
 msgid "Role details"
 msgstr "Detalhes do grupo"
+
+msgid "Role not found"
+msgstr "Grupo não encontrado"
 
 msgid "Roles"
 msgstr "Grupos"
@@ -261,6 +273,12 @@ msgstr "Digite o nome da permissão para confirmar"
 
 msgid "Type the role name to confirm"
 msgstr "Digite o nome do grupo para confirmar"
+
+msgid "Unassign"
+msgstr "Desvincular"
+
+msgid "Unassign permission"
+msgstr "Desvincular permissão"
 
 msgid "Use confidential for applications that can hold secrets secure, mainly those that runs on the server, like server-side web apps, web APIs"
 msgstr "Use confidencial para aplicações que podem manter segredos de app seguros, principalmente as que executam no servidor, como aplicações web server-side, APIs web"

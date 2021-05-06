@@ -1,0 +1,45 @@
+@inject IViewLocalizer localizer
+@model AssignPermissionsToRoleCommand
+
+<div class="modal-header">
+    <h5 class="modal-title" id="permission-modal-label">@localizer["Assign permissions"]</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form loading="permission-loading">
+    <div class="modal-body">
+        <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+
+        @{
+            var permissionNumber = 0;
+        }
+
+        @foreach (var permission in Model.Permissions)
+        {
+            var identifier = $"{nameof(Model.Permissions)}[{permissionNumber}]";
+            var selectedIdentifier = $"{identifier}.Selected";
+            var idIdentifier = $"{identifier}.Id";
+            var nameIdentifier = $"{identifier}.Name";
+
+            <div class="mb-4 d-flex flex-column">
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" id="@selectedIdentifier" name="@selectedIdentifier" value="true" checked="@permission.Selected" disabled="@permission.Selected" />
+                    <label class="custom-control-label form-label" for="@selectedIdentifier">@permission.Name</label>
+                    <input type="hidden" name="@idIdentifier" value="@permission.Id" />
+                    <input type="hidden" name="@nameIdentifier" value="@permission.Name" />
+                    <input type="hidden" name="@selectedIdentifier" value="false" />
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="modal-footer">
+        <div class="spinner-border spinner-border-sm text-primary" role="status" id="permission-loading" style="display: none;">
+            <span class="sr-only">@localizer["Loading..."]</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">@localizer["Save"]</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">@localizer["Cancel"]</button>
+    </div>
+</form>

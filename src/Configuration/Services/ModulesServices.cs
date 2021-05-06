@@ -31,6 +31,11 @@ namespace Nocturne.Auth.Configuration.Services
             services.AddScoped<ViewApplicationRoleHandler>();
             services.AddScoped<DeleteApplicationRoleHandler>();
 
+            services.AddScoped<IRolePermissionsRepository, RolePermissionsRepository>();
+            services.AddScoped<ListRolePermissionsHandler>();
+            services.AddScoped<AssignPermissionsToRoleHandler>();
+            services.AddScoped<UnassignPermissionFromRoleHandler>();
+
             return services;
         }
     }

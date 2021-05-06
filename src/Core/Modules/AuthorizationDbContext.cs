@@ -86,6 +86,8 @@ namespace Nocturne.Auth.Core.Modules
         {
             var rolePermissions = builder.Entity<RolePermission>().ToTable("RolePermissions");
 
+            rolePermissions.HasKey(p => new { p.RoleId, p.PermissionId });
+
             rolePermissions
                 .HasOne(p => p.Permission)
                 .WithMany()
