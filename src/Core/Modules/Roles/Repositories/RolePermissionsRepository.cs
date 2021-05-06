@@ -28,15 +28,11 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
         {
             return await
                 (from p in context.Set<Permission>()
-                from r in context.Set<RolePermission>().DefaultIfEmpty()
-                where ids.Contains(p.Id) && r == null
-                select p)
-                .ToListAsync();
-            // return await context
-            //     .Set<RolePermission>()
-            //     .Where(p => p.RoleId == role.Id && ids.Contains(p.PermissionId))
-            //     .Select(p => p.Permission)
-            //     .ToListAsync();
+                 join rp in context.Set<RolePermission>() on p.Id equals rp.PermissionId into j
+                 from r in j.DefaultIfEmpty()
+                 where ids.Contains(p.Id) && r == null
+                 select p)
+                 .ToListAsync();
         }
 
         public async Task UnassignPermissionAsync(Role role, Permission permission)
