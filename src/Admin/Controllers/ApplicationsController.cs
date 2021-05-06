@@ -50,7 +50,7 @@ namespace Nocturne.Auth.Admin.Controllers
 
             if (result.Success)
             {
-                RedirectToDetails(result.ApplicationId);
+                return RedirectToDetails(result.ApplicationId);
             }
 
             if (result.HasProblems)
