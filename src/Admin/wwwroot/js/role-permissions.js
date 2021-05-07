@@ -28,12 +28,13 @@
 
 (function () {
   const PermissionActionAttribute = 'data-permission-action';
+  const ApplicationChangeAttribute = 'data-application-change';
 
   window.managePermissions = function(options) {
     const searchPermissions = new SearchPermissions(options);
     const results = options.results;
     const modalId = options.modalId;
-    const newPermissionButton = options.newPermissionButton;
+    const addPermissionsButton = options.addPermissionsButton;
 
     const modal = new Modal(modalId);
 
@@ -62,6 +63,23 @@
       };
     }
 
+    function createChangeApplicationEvent(form, baseApplicationChangeUrl) {
+      const formLoading = Loading.create(form);
+
+      return function (event) {
+        event.preventDefault();
+
+        const applicationId = event.target.value;
+        const url = baseApplicationChangeUrl + '?applicationId=' + applicationId;
+
+        formLoading.start();
+
+        $.get(url, function (response) {
+          setupModal(response, url);
+        });
+      }
+    }
+
     function setupModalForm(url) {
       const form = modal.querySelector('form');
 
@@ -72,6 +90,15 @@
       Validator.attach(form);
 
       form.addEventListener('submit', createModalFormSubmitEvent(form, url));
+
+      const changeApplicationElement = form.querySelector('[' + ApplicationChangeAttribute  + ']');
+
+      if (changeApplicationElement) {
+        const baseApplicationChangeUrl = changeApplicationElement.getAttribute(ApplicationChangeAttribute);
+
+        changeApplicationElement.addEventListener(
+          'change', createChangeApplicationEvent(form, baseApplicationChangeUrl));
+      }
     }
 
     function setupModal(content, url) {
@@ -88,8 +115,8 @@
       });
     }
 
-    newPermissionButton.addEventListener('click', function() {
-      show(newPermissionButton);
+    addPermissionsButton.addEventListener('click', function() {
+      show(addPermissionsButton);
     });
 
     results.addEventListener('click', function (event) {

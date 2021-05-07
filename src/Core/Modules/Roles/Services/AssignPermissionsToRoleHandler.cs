@@ -5,6 +5,9 @@ using Microsoft.Extensions.Localization;
 using Nocturne.Auth.Core.Modules.Permissions;
 using Nocturne.Auth.Core.Modules.Permissions.Repositories;
 using Nocturne.Auth.Core.Modules.Roles.Repositories;
+using Nocturne.Auth.Core.Services.OpenIddict;
+using Nocturne.Auth.Core.Services.OpenIddict.Managers;
+using Nocturne.Auth.Core.Shared.Extensions;
 
 namespace Nocturne.Auth.Core.Modules.Roles.Services
 {
@@ -14,17 +17,20 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
         private readonly IRolesRepository rolesRepository;
         private readonly IPermissionsRepository permissionsRepository;
         private readonly IRolePermissionsRepository rolePermissionsRepository;
+        private readonly CustomOpenIddictApplicationManager<Application> applicationManager;
 
         public AssignPermissionsToRoleHandler(
             IStringLocalizer<AssignPermissionsToRoleHandler> localizer,
             IRolesRepository rolesRepository,
             IPermissionsRepository permissionsRepository,
-            IRolePermissionsRepository rolePermissionsRepository)
+            IRolePermissionsRepository rolePermissionsRepository,
+            CustomOpenIddictApplicationManager<Application> applicationManager)
         {
             this.localizer = localizer;
             this.rolesRepository = rolesRepository;
             this.permissionsRepository = permissionsRepository;
             this.rolePermissionsRepository = rolePermissionsRepository;
+            this.applicationManager = applicationManager;
         }
 
         public async Task<AssignPermissionsToRoleCommand> CreateCommandAsync(
@@ -33,11 +39,14 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
         {
             var role = await GetRoleAsync(roleId);
 
-            var command = new AssignPermissionsToRoleCommand
+            var currentApplicationId = applicationId ?? role.ApplicationId;
+
+            var command = new AssignPermissionsToRoleCommand(
+                currentApplicationId,
+                await GetAvailableApplicationsAsync())
             {
                 RoleId = role.Id,
-                Permissions = await GetAvailableApplicationPermissionsAsync(
-                    applicationId ?? role.ApplicationId),
+                Permissions = await GetAvailableApplicationPermissionsAsync(currentApplicationId),
             };
 
             await SetSelectedPermissionsAsync(command, role);
@@ -54,7 +63,8 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
                 return AssignPermissionsToRoleResult.NotFound(localizer["Role not found"]);
             }
 
-            var selectedPermissions = command.Permissions.Where(p => p.Selected);
+            var selectedPermissions = command.Permissions?.Where(p => p.Selected)
+                ?? Enumerable.Empty<AssignPermissionsToRolePermission>();
 
             var permissionsToAssign = await GetUnassignedPermissionsAsync(role, selectedPermissions);
 
@@ -113,6 +123,22 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
                 {
                     Id = p.Id,
                     Name = p.Name,
+                });
+            }
+        }
+
+        private async Task<IReadOnlyCollection<RoleApplication>> GetAvailableApplicationsAsync()
+        {
+            return await applicationManager.ListAsync(Query).ToListAsync();
+
+            static IQueryable<RoleApplication> Query(IQueryable<Application> query)
+            {
+                query = query.OrderBy(p => p.DisplayName);
+
+                return query.Select(p => new RoleApplication
+                {
+                    Id = p.Id,
+                    Name = p.DisplayName,
                 });
             }
         }

@@ -1,6 +1,13 @@
 @inject IViewLocalizer localizer
 @model AssignPermissionsToRoleCommand
 
+@{
+    var applications = Model.AvailableApplications.Select(application => new SelectListItem(
+        application.Name,
+        application.Id,
+        string.Equals(application.Id, Model.CurrentApplicationId, StringComparison.InvariantCultureIgnoreCase)));
+}
+
 <div class="modal-header">
     <h5 class="modal-title" id="permission-modal-label">@localizer["Assign permissions"]</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -11,25 +18,43 @@
     <div class="modal-body">
         <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
 
+        <div class="mb-3">
+            <label class="form-label" for="applicationId">@localizer["Application"]</label>
+            <select class="custom-select" asp-items="applications" id="applicationId" name="applicationId" autofocus data-application-change="@Url.RouteUrl(RouteNames.RolePermissionsAdd, new { Model.RoleId })">
+            </select>
+        </div>
+
         @{
             var permissionNumber = 0;
         }
 
-        @foreach (var permission in Model.Permissions)
+        @if (Model.Permissions.Any())
         {
-            var identifier = $"{nameof(Model.Permissions)}[{permissionNumber}]";
-            var selectedIdentifier = $"{identifier}.Selected";
-            var idIdentifier = $"{identifier}.Id";
-            var nameIdentifier = $"{identifier}.Name";
+            @foreach (var permission in Model.Permissions)
+            {
+                var identifier = $"{nameof(Model.Permissions)}[{permissionNumber}]";
+                var selectedIdentifier = $"{identifier}.Selected";
+                var idIdentifier = $"{identifier}.Id";
+                var nameIdentifier = $"{identifier}.Name";
 
-            <div class="mb-4 d-flex flex-column">
-                <div class="custom-control custom-checkbox">
-                    <input class="custom-control-input" type="checkbox" id="@selectedIdentifier" name="@selectedIdentifier" value="true" checked="@permission.Selected" disabled="@permission.Selected" />
-                    <label class="custom-control-label form-label" for="@selectedIdentifier">@permission.Name</label>
-                    <input type="hidden" name="@idIdentifier" value="@permission.Id" />
-                    <input type="hidden" name="@nameIdentifier" value="@permission.Name" />
-                    <input type="hidden" name="@selectedIdentifier" value="false" />
+                <div class="mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="@selectedIdentifier" name="@selectedIdentifier" value="true" checked="@permission.Selected" disabled="@permission.Selected" />
+                        <label class="custom-control-label form-label" for="@selectedIdentifier">@permission.Name</label>
+                        <input type="hidden" name="@idIdentifier" value="@permission.Id" />
+                        <input type="hidden" name="@nameIdentifier" value="@permission.Name" />
+                        <input type="hidden" name="@selectedIdentifier" value="false" />
+                    </div>
                 </div>
+
+                permissionNumber += 1;
+            }
+        }
+        else
+        {
+            <div class="text-center text-muted mb-3 mt-4">
+                <span class="bi-exclamation-circle" aria-hidden="true"></span>
+                <span>@localizer["No permissions found"]</span>
             </div>
         }
     </div>

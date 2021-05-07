@@ -10,6 +10,10 @@ namespace Nocturne.Auth.Core.Modules.Roles
             Name = name;
         }
 
+        public RoleApplication()
+        {
+        }
+
         public string Id { get; set; }
 
         public string Name { get; set; }
