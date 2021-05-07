@@ -34,7 +34,10 @@ namespace Nocturne.Auth.Core.Modules.Permissions.Repositories
         {
             return context
                 .Set<Permission>()
-                .AnyAsync(p => p.Name == permission.Name && p.Id != permission.Id);
+                .AnyAsync(p =>
+                    p.Name == permission.Name &&
+                    p.ApplicationId == permission.ApplicationId &&
+                    p.Id != permission.Id);
         }
 
         public async Task DeleteAsync(Permission permission)
