@@ -33,6 +33,12 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [Display(Name = "Name")]
+            [DataType(DataType.Text)]
+            [MaxLength(200, ErrorMessage = "The name must have less than {1} characters")]
+            public string Name { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -44,7 +50,8 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Name = user.Name,
             };
         }
 
@@ -85,9 +92,21 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            await UpdateUserAsync(user);
+
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
+        }
+
+        private async Task UpdateUserAsync(ApplicationUser user)
+        {
+            if (Input.Name != user.Name)
+            {
+                user.Name = Input.Name;
+            }
+
+            await _userManager.UpdateAsync(user);
         }
     }
 }
