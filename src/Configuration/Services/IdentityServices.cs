@@ -37,5 +37,20 @@ namespace Nocturne.Auth.Configuration.Services
 
             return services;
         }
+
+        public static IServiceCollection AddApplicationIdentityServicesOnly(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services
+                .AddIdentityCore<ApplicationUser>(options =>
+                {
+                    configuration.GetSection("Identity").Bind(options);
+                })
+                .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+            return services;
+        }
     }
 }

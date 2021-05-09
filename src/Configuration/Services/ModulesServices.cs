@@ -4,6 +4,7 @@ using Nocturne.Auth.Core.Modules.Permissions.Repositories;
 using Nocturne.Auth.Core.Modules.Permissions.Services;
 using Nocturne.Auth.Core.Modules.Roles.Repositories;
 using Nocturne.Auth.Core.Modules.Roles.Services;
+using Nocturne.Auth.Core.Modules.Users.Services;
 
 namespace Nocturne.Auth.Configuration.Services
 {
@@ -35,6 +36,8 @@ namespace Nocturne.Auth.Configuration.Services
             services.AddScoped<ListRolePermissionsHandler>();
             services.AddScoped<AssignPermissionsToRoleHandler>();
             services.AddScoped<UnassignPermissionFromRoleHandler>();
+
+            services.AddScoped<ListUsersHandler>();
 
             return services;
         }

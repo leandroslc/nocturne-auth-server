@@ -10,6 +10,11 @@
     <span>@localizer["Applications"]</span>
 </a>
 
+<a class="sidebar-item @IsActiveItem(PageGroups.Users)" asp-route="@RouteNames.UsersHome">
+    <span class="bi-people sidenav-icon mr-2" aria-hidden="true"></span>
+    <span>@localizer["Users"]</span>
+</a>
+
 @functions
 {
     private string IsActiveItem(string pageGroup)

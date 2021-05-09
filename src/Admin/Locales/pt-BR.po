@@ -151,6 +151,9 @@ msgstr "Nenhuma permissão encontrada"
 msgid "No roles found"
 msgstr "Nenhum grupo encontrado"
 
+msgid "No users found"
+msgstr "Nenhum usuário encontrado"
+
 msgid "None"
 msgstr "Nenhum"
 
@@ -285,6 +288,9 @@ msgstr "Use confidencial para aplicações que podem manter segredos de app segu
 
 msgid "Use public for applications that are not trusted to keep secrets secure, mainly those that runs directly on devices, desktop computers or browsers"
 msgstr "Use público para aplicações que não são confiáveis para manter segredos de app seguros, principalmente as que executam diretamente em dispositivos, computadores pessoais ou browsers"
+
+msgid "Users"
+msgstr "Usuários"
 
 msgid "with PKCE"
 msgstr "com PKCE"

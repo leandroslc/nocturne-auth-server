@@ -1,0 +1,79 @@
+@model UserIndexViewModel
+@inject IViewLocalizer localizer
+
+@{
+    var title = localizer["Users"];
+
+    ViewData[KnownViewData.Title] = title;
+    ViewData[KnownViewData.PageGroup] = PageGroups.Users;
+}
+
+<div class="page">
+    <div class="page-heading"></div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-header">
+                <h1 class="page-card-title">@title</h1>
+            </div>
+            <div class="page-card-content">
+                <form class="form-inline" method="GET" loading="loading" loading-hide="results">
+                    <label class="form-label my-1 mr-2" for="name">@localizer["Name"]</label>
+                    <input class="form-control my-1 mr-sm-2" id="name" name="name" value="@Model.Query.Name" autofocus />
+
+                    <button class="btn btn-primary my-1 mr-2" type="submit">
+                        <span class="bi-search mr-1" aria-hidden="true"></span>
+                        <span>@localizer["Search"]</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-container">
+        @if (Model.Users.Any())
+        {
+            <pages collection="@Model.Users" param-name="page"></pages>
+
+            <div class="page-card" id="results">
+                <div class="table-responsive">
+                    <table class="table page-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>@localizer["Name"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model.Users)
+                            {
+                                <tr>
+                                    <td class="w-min">
+                                        <a class="btn btn-sm btn-outline-primary" asp-route="" asp-route-id="@user.Id">
+                                            @localizer["Details"]
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @user.Name
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="empty mt-3" role="status" id="results">
+                <span class="bi-people empty-icon" aria-hidden="true"></span>
+                <p class="empty-text">@localizer["No users found"]</p>
+            </div>
+        }
+
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status" id="loading" style="display: none;">
+                <span class="sr-only">@localizer["Loading..."]</span>
+            </div>
+        </div>
+    </div>
+</div>
