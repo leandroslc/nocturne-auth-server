@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Nocturne.Auth.Admin.Configuration.Constants;
 using Nocturne.Auth.Admin.Controllers.Models;
 using Nocturne.Auth.Core.Modules.Users.Services;
+using Nocturne.Auth.Core.Shared.Results;
 
 namespace Nocturne.Auth.Admin.Controllers
 {
@@ -23,6 +24,26 @@ namespace Nocturne.Auth.Admin.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpGet("{id}", Name = RouteNames.UsersView)]
+        public async Task<IActionResult> Details(
+            [FromServices] ViewUserHandler handler,
+            ViewUserCommand command)
+        {
+            var result = await handler.HandleAsync(command);
+
+            if (result.IsSuccess)
+            {
+                return View(result.User);
+            }
+
+            if (result.IsNotFound)
+            {
+                return NotFound();
+            }
+
+            throw new ResultNotHandledException(result);
         }
     }
 }

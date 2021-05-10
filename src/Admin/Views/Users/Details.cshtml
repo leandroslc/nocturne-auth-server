@@ -1,0 +1,67 @@
+@model ViewUserItem
+@inject IViewLocalizer localizer
+
+@{
+    var title = localizer["User details"];
+    var returnUrl = Url.RouteUrl(RouteNames.UsersHome);
+
+    ViewData[KnownViewData.Title] = title;
+    ViewData[KnownViewData.PageGroup] = PageGroups.Users;
+}
+
+<div class="page">
+    <div class="page-heading">
+        <div class="page-container">
+            <a class="page-back" href="@returnUrl">
+                <span class="bi-arrow-left" aria-hidden="true"></span>
+                <span>@localizer["Users"]</span>
+            </a>
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-header">
+                <h1 class="page-card-title">@title</h1>
+            </div>
+            <div class="page-card-content">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">@localizer["Details"]</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="roles-tab" data-toggle="tab" href="#roles" role="tab" aria-controls="roles" aria-selected="false">@localizer["Roles"]</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane py-3 px-3 active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row mb-3">
+                            <label class="form-label col-form-label col-md-12">@localizer["Name"]</label>
+                            <div class="col">
+                                <span class="form-control-plaintext" readonly>@Model.Name</span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 pl-3">
+                            <div class="custom-control custom-switch col">
+                                <input type="checkbox" class="custom-control-input" id="enabled" checked="@Model.Enabled" disabled />
+                                <label class="custom-control-label form-label" for="enabled">
+                                    @(Model.Enabled ? localizer["Enabled"] : localizer["Disabled"])
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane py-3 px-3" id="roles" role="tabpanel" aria-labelledby="roles-tab">
+                        @* <partial name="./Roles" /> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script></script>
+}

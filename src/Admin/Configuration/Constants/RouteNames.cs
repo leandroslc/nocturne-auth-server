@@ -37,5 +37,7 @@ namespace Nocturne.Auth.Admin.Configuration.Constants
         public const string RolePermissionsRemove = nameof(RolePermissionsRemove);
 
         public const string UsersHome = nameof(UsersHome);
+
+        public const string UsersView = nameof(UsersView);
     }
 }

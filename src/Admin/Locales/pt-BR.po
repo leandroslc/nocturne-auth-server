@@ -91,6 +91,9 @@ msgstr "Descrição"
 msgid "Details"
 msgstr "Detalhes"
 
+msgid "Disabled"
+msgstr "Desabilitado"
+
 msgid "Edit"
 msgstr "Editar"
 
@@ -102,6 +105,9 @@ msgstr "Editar permissão"
 
 msgid "Edit role"
 msgstr "Editar grupo"
+
+msgid "Enabled"
+msgstr "Habilitado"
 
 msgid "Explicit"
 msgstr "Explícito"
@@ -288,6 +294,9 @@ msgstr "Use confidencial para aplicações que podem manter segredos de app segu
 
 msgid "Use public for applications that are not trusted to keep secrets secure, mainly those that runs directly on devices, desktop computers or browsers"
 msgstr "Use público para aplicações que não são confiáveis para manter segredos de app seguros, principalmente as que executam diretamente em dispositivos, computadores pessoais ou browsers"
+
+msgid "User details"
+msgstr "Detalhes do usuário"
 
 msgid "Users"
 msgstr "Usuários"

@@ -38,6 +38,7 @@ namespace Nocturne.Auth.Configuration.Services
             services.AddScoped<UnassignPermissionFromRoleHandler>();
 
             services.AddScoped<ListUsersHandler>();
+            services.AddScoped<ViewUserHandler>();
 
             return services;
         }
