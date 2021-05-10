@@ -22,6 +22,7 @@ namespace Nocturne.Auth.Core.Modules
             ConfigurePermissions(builder);
             ConfigureRoles(builder);
             ConfigureRolePermissions(builder);
+            ConfigureUserRoles(builder);
         }
 
         private static void ConfigureOpenIdModels(ModelBuilder builder)
@@ -95,6 +96,19 @@ namespace Nocturne.Auth.Core.Modules
                 .OnDelete(DeleteBehavior.Cascade);
 
             rolePermissions
+                .HasOne(p => p.Role)
+                .WithMany()
+                .HasForeignKey(p => p.RoleId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+
+        private static void ConfigureUserRoles(ModelBuilder builder)
+        {
+            var userRoles = builder.Entity<UserRole>().ToTable("UserRoles");
+
+            userRoles.HasKey(p => new { p.UserId, p.RoleId });
+
+            userRoles
                 .HasOne(p => p.Role)
                 .WithMany()
                 .HasForeignKey(p => p.RoleId)
