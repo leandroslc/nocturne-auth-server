@@ -1,0 +1,51 @@
+@inject IViewLocalizer localizer
+@model UserRolesViewModel
+
+@if (Model.Roles.Any())
+{
+    <pages collection="@Model.Roles" param-name="page"></pages>
+
+    <div class="table-responsive">
+        <table class="table page-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>@localizer["Name"]</th>
+                    <th>@localizer["Application"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model.Roles)
+                {
+                    var menuId = $"role-menu-{role.Id}";
+
+                    <tr>
+                        <td class="w-min">
+                            <button class="btn btn-sm btn-outline-primary" type="button" id="@menuId" data-toggle="dropdown" title="@localizer["Open menu"]" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">@localizer["Open menu"]</span>
+                                <span class="bi-three-dots" aria-hidden="true"></span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="@menuId">
+                                <button class="dropdown-item text-danger" type="button" data-role-action="@Url.RouteUrl(RouteNames.UserRolesRemove, new { Model.UserId, roleId = role.Id })">
+                                    <span class="bi-trash mr-2" aria-hidden="true"></span>
+                                    <span>@localizer["Unassign"]</span>
+                                </button>
+                            </div>
+                        </td>
+                        <td>
+                            <a target="_blank" href="@Url.RouteUrl(RouteNames.ApplicationRolesView, new { role.ApplicationId, role.Id })">@role.Name</a>
+                        </td>
+                        <td>@role.ApplicationName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="empty mt-3" role="status">
+        <span class="bi-ui-checks-grid empty-icon" aria-hidden="true"></span>
+        <p class="empty-text">@localizer["No roles found"]</p>
+    </div>
+}

@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="tab-pane py-3 px-3" id="roles" role="tabpanel" aria-labelledby="roles-tab">
-                        @* <partial name="./Roles" /> *@
+                        <partial name="./Roles" />
                     </div>
                 </div>
             </div>
@@ -63,5 +63,14 @@
 
 @section scripts
 {
-    <script></script>
+    <script src="~/js/user-roles.js" asp-append-version="true"></script>
+    <script>
+        manageRoles({
+            searchUrl: '@Url.RouteUrl(RouteNames.UserRolesHome, new { userId = Model.Id })',
+            searchForm: document.getElementById('search-roles-form'),
+            results: document.getElementById('search-roles-results'),
+            modalId: 'roles-modal',
+            addRolesButton: document.getElementById('add-roles-button'),
+        });
+    </script>
 }
