@@ -14,6 +14,6 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
         Task<IReadOnlyCollection<Role>> GetUnassignedRolesAsync(
             ApplicationUser user, IEnumerable<long> roleIds);
 
-        Task UnassignRoleAsync(ApplicationUser user, Role permission);
+        Task UnassignRoleAsync(ApplicationUser user, Role role);
     }
 }
