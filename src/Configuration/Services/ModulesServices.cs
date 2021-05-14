@@ -42,6 +42,8 @@ namespace Nocturne.Auth.Configuration.Services
 
             services.AddScoped<IUserRolesRepository, UserRolesRepository>();
             services.AddScoped<ListUserRolesHandler>();
+            services.AddScoped<AssignRolesToUserHandler>();
+            services.AddScoped<UnassignRoleFromUserHandler>();
 
             return services;
         }

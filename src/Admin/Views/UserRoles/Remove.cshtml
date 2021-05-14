@@ -1,0 +1,26 @@
+@inject IViewLocalizer localizer
+@model UnassignRoleFromUserCommand
+
+<div class="modal-header">
+    <h5 class="modal-title" id="roles-modal-label">@localizer["Unassign role"]</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form loading="role-loading">
+    <div class="modal-body">
+        <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+
+        <div class="mb-3">
+            <p>@localizer["Are you sure you want to unassign the role from this user?"]</p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="spinner-border spinner-border-sm text-primary" role="status" id="role-loading" style="display: none;">
+            <span class="sr-only">@localizer["Loading..."]</span>
+        </div>
+
+        <button type="submit" class="btn btn-danger">@localizer["Unassign"]</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">@localizer["Cancel"]</button>
+    </div>
+</form>

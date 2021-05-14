@@ -1,0 +1,78 @@
+@inject IViewLocalizer localizer
+@model AssignRolesToUserCommand
+
+@{
+    var applications = Model.AvailableApplications.Select(application => new SelectListItem(
+        application.Name,
+        application.Id,
+        string.Equals(application.Id, Model.CurrentApplicationId, StringComparison.InvariantCultureIgnoreCase)));
+}
+
+<div class="modal-header">
+    <h5 class="modal-title" id="roles-modal-label">@localizer["Assign roles"]</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form loading="role-loading">
+    <div class="modal-body">
+        <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+
+        <div class="mb-3">
+            <label class="form-label" for="applicationId">@localizer["Application"]</label>
+            <select class="custom-select" asp-items="applications" id="applicationId" name="applicationId" autofocus data-application-change="@Url.RouteUrl(RouteNames.UserRolesAdd, new { Model.UserId })">
+                <option value="">@localizer["Select..."]</option>
+            </select>
+        </div>
+
+        @{
+            var roleNumber = 0;
+        }
+
+        @if (Model.Roles == null)
+        {
+            <div class="text-center text-muted mb-3 mt-4">
+                <span class="bi-exclamation-circle" aria-hidden="true"></span>
+                <span>@localizer["Select an application"]</span>
+            </div>
+        }
+        else if (Model.Roles.Any())
+        {
+            @foreach (var roles in Model.Roles)
+            {
+                var identifier = $"{nameof(Model.Roles)}[{roleNumber}]";
+                var selectedIdentifier = $"{identifier}.Selected";
+                var idIdentifier = $"{identifier}.Id";
+                var nameIdentifier = $"{identifier}.Name";
+
+                <div class="mb-2">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="@selectedIdentifier" name="@selectedIdentifier" value="true" checked="@roles.Selected" disabled="@roles.Selected" />
+                        <label class="custom-control-label form-label" for="@selectedIdentifier">@roles.Name</label>
+                        <input type="hidden" name="@idIdentifier" value="@roles.Id" />
+                        <input type="hidden" name="@nameIdentifier" value="@roles.Name" />
+                        <input type="hidden" name="@selectedIdentifier" value="false" />
+                    </div>
+                </div>
+
+                roleNumber += 1;
+            }
+        }
+        else
+        {
+            <div class="text-center text-muted mb-3 mt-4">
+                <span class="bi-exclamation-circle" aria-hidden="true"></span>
+                <span>@localizer["No roles found"]</span>
+            </div>
+        }
+    </div>
+
+    <div class="modal-footer">
+        <div class="spinner-border spinner-border-sm text-primary" role="status" id="role-loading" style="display: none;">
+            <span class="sr-only">@localizer["Loading..."]</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">@localizer["Save"]</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">@localizer["Cancel"]</button>
+    </div>
+</form>

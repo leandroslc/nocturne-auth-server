@@ -39,7 +39,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
         {
             var user = await GetUserAsync(userId);
 
-            var availableRoles = applicationId is not null
+            var availableRoles = applicationId is null
                 ? null
                 : await GetAvailableApplicationRolesAsync(applicationId);
 
@@ -51,7 +51,10 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
                 Roles = availableRoles,
             };
 
-            await SetSelectedRolesAsync(command, user);
+            if (availableRoles is not null)
+            {
+                await SetSelectedRolesAsync(command, user);
+            }
 
             return command;
         }

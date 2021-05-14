@@ -52,6 +52,9 @@ msgstr "Tem certeza de que deseja desvincular a permissão do grupo?"
 msgid "Assign permissions"
 msgstr "Atribuir permissões"
 
+msgid "Assign roles"
+msgstr "Atribuir grupos"
+
 msgid "Authorization Server (Admin)"
 msgstr "Servidor de Autorização (Admin)"
 
@@ -217,6 +220,12 @@ msgstr "Salvar"
 msgid "Search"
 msgstr "Pesquisar"
 
+msgid "Select..."
+msgstr "Selecione..."
+
+msgid "Select an application"
+msgstr "Selecione uma aplicação"
+
 msgid "Settings"
 msgstr "Configurações"
 
@@ -289,6 +298,9 @@ msgstr "Desvincular"
 msgid "Unassign permission"
 msgstr "Desvincular permissão"
 
+msgid "Unassign role"
+msgstr "Desvincular grupo"
+
 msgid "Use confidential for applications that can hold secrets secure, mainly those that runs on the server, like server-side web apps, web APIs"
 msgstr "Use confidencial para aplicações que podem manter segredos de app seguros, principalmente as que executam no servidor, como aplicações web server-side, APIs web"
 
@@ -300,6 +312,9 @@ msgstr "Detalhes do usuário"
 
 msgid "Users"
 msgstr "Usuários"
+
+msgid "User not found"
+msgstr "Usuário não encontrado"
 
 msgid "with PKCE"
 msgstr "com PKCE"
