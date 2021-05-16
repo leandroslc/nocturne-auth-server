@@ -9,3 +9,15 @@
 .tagify.form-control {
   height: unset;
 }
+
+.greetings-card {
+  border: none;
+  box-shadow: 0 0 0.36rem rgb(0, 0, 0, 0.125);
+  border-radius: 0.4rem;
+}
+
+.greetings-card-img {
+  align-self: center;
+  width: 76%;
+  height: 14rem;
+}

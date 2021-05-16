@@ -133,6 +133,15 @@ msgstr "Lista de URIs"
 msgid "Logout Redirect Uris"
 msgstr "URIs de Redirecionamento de Logout"
 
+msgid "Manage"
+msgstr "Gerenciar"
+
+msgid "Manage applications (clients) and APIs"
+msgstr "Gerencie aplicações (clients) e APIs"
+
+msgid "Manage all registered users"
+msgstr "Gerencie todos os usuários registrados"
+
 msgid "Name"
 msgstr "Nome"
 
@@ -315,6 +324,9 @@ msgstr "Usuários"
 
 msgid "User not found"
 msgstr "Usuário não encontrado"
+
+msgid "Welcome"
+msgstr "Bem-vindo"
 
 msgid "with PKCE"
 msgstr "com PKCE"

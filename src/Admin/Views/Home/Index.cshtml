@@ -4,3 +4,41 @@
     ViewData[KnownViewData.Title] = localizer["Home page"];
     ViewData[KnownViewData.PageGroup] = PageGroups.Home;
 }
+
+<div class="page">
+    <div class="page-heading">
+        <div class="page-container">
+            <h1 class="page-title">@localizer["Welcome"]</h1>
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="card-deck">
+            <div class="card greetings-card pt-4">
+                <img class="card-img-top greetings-card-img" src="~/img/applications.svg" alt="@localizer["Applications"]">
+                <div class="card-body">
+                    <h5 class="card-title">@localizer["Applications"]</h5>
+                    <p class="card-text">@localizer["Manage applications (clients) and APIs"]</p>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-outline-primary" asp-route="@RouteNames.ApplicationsHome">
+                        <span>@localizer["Manage"]</span>
+                        <span class="bi-arrow-right" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="card greetings-card pt-4">
+                <img class="card-img-top greetings-card-img" src="~/img/users.svg" alt="@localizer["Users"]">
+                <div class="card-body">
+                    <h5 class="card-title">@localizer["Users"]</h5>
+                    <p class="card-text">@localizer["Manage all registered users"]</p>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-outline-primary" asp-route="@RouteNames.UsersHome">
+                        <span>@localizer["Manage"]</span>
+                        <span class="bi-arrow-right" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
