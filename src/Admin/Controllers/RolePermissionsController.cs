@@ -94,7 +94,7 @@ namespace Nocturne.Auth.Admin.Controllers
             return View(command);
         }
 
-        [HttpPost("{PermissionId}/remove")]
+        [HttpPost("{permissionId}/remove")]
         public async Task<IActionResult> Remove(
             [FromServices]UnassignPermissionFromRoleHandler handler,
             UnassignPermissionFromRoleCommand command)
