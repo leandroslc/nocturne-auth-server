@@ -60,10 +60,10 @@
                     <div class="mb-4 d-flex flex-column">
                         <div class="custom-control custom-checkbox">
                             <input class="custom-control-input" type="checkbox" asp-for="AllowAuthorizationCodeFlow" checked="@Model.AllowAuthorizationCodeFlow" />
-                            <label class="custom-control-label form-label" asp-for="AllowAuthorizationCodeFlow">@localizer["Allow Authorization Code Flow"] <small>(<a href="https://tools.ietf.org/html/rfc7636">@localizer["with PKCE"]</a>)</small></label>
+                            <label class="custom-control-label form-label" asp-for="AllowAuthorizationCodeFlow">@localizer["Allow Authorization Code Flow"] <small>(<a href="https://tools.ietf.org/html/rfc7636" target="_blank">@localizer["with PKCE"]</a>)</small></label>
                         </div>
                         <span class="d-block form-text ml-4 mt-0">@localizer["Recommended for server-side web applications, single page applications (SPAs), mobile apps"]</span>
-                        <small><a class="d-inline-block ml-4 mt-1" href="https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth">@localizer["Specification"]</a></small>
+                        <small><a class="d-inline-block ml-4 mt-1" href="https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth" target="_blank">@localizer["Specification"]</a></small>
                     </div>
 
                     <div class="mb-4 d-flex flex-column">
@@ -72,7 +72,7 @@
                             <label class="custom-control-label form-label" asp-for="AllowImplicitFlow">@localizer["Allow Implicit Flow"]</label>
                         </div>
                         <span class="d-block form-text ml-4 mt-0">@localizer["Previously recommended for native apps or javascript apps. Always use Authorization Code instead if possible"]</span>
-                        <small><a class="d-inline-block ml-4 mt-1" href="https://openid.net/specs/openid-connect-core-1_0.html#ImplicitFlowAuth">@localizer["Specification"]</a></small>
+                        <small><a class="d-inline-block ml-4 mt-1" href="https://openid.net/specs/openid-connect-core-1_0.html#ImplicitFlowAuth" target="_blank">@localizer["Specification"]</a></small>
                     </div>
 
                     <div class="mb-4 d-flex flex-column">
@@ -81,7 +81,7 @@
                             <label class="custom-control-label form-label" asp-for="AllowPasswordFlow">@localizer["Allow Resource Owner Password Flow"]</label>
                         </div>
                         <span class="d-block form-text ml-4 mt-0">@localizer["Only recommended if redirect-based flows (like Authorization Code) are not possible"]</span>
-                        <small><a class="d-inline-block ml-4 mt-1" href="https://tools.ietf.org/html/rfc6749#section-1.3.3">@localizer["Specification"]</a></small>
+                        <small><a class="d-inline-block ml-4 mt-1" href="https://tools.ietf.org/html/rfc6749#section-1.3.3" target="_blank">@localizer["Specification"]</a></small>
                     </div>
 
                     <div class="mb-4 d-flex flex-column">
@@ -90,7 +90,7 @@
                             <label class="custom-control-label form-label" asp-for="AllowClientCredentialsFlow">@localizer["Allow Client Credentials Flow"]</label>
                         </div>
                         <span class="d-block form-text ml-4 mt-0">@localizer["Recommended when the application itself is the resource owner, like a machine-to-machine comunication, jobs"]</span>
-                        <small><a class="d-inline-block ml-4 mt-1" href="https://tools.ietf.org/html/rfc6749#section-1.3.4">@localizer["Specification"]</a></small>
+                        <small><a class="d-inline-block ml-4 mt-1" href="https://tools.ietf.org/html/rfc6749#section-1.3.4" target="_blank">@localizer["Specification"]</a></small>
                     </div>
 
                     <div class="mb-4 d-flex flex-column">
@@ -99,7 +99,7 @@
                             <label class="custom-control-label form-label" asp-for="AllowRefreshTokenFlow">@localizer["Allow Refresh Token Flow"]</label>
                         </div>
                         <span class="d-block form-text ml-4 mt-0">@localizer["Allows the application to exchange an access token when the token expires, without a new user interaction"]</span>
-                        <small><a class="d-inline-block ml-4 mt-1" href="https://openid.net/specs/openid-connect-core-1_0.html#RefreshTokens">@localizer["Specification"]</a></small>
+                        <small><a class="d-inline-block ml-4 mt-1" href="https://openid.net/specs/openid-connect-core-1_0.html#RefreshTokens" target="_blank">@localizer["Specification"]</a></small>
                     </div>
 
                     <hr class="text-muted" />
