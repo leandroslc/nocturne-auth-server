@@ -36,6 +36,7 @@ namespace Nocturne.Auth.Configuration.Services
             });
 
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomUserClaimsPrincipalFactory>();
+            services.AddScoped<SignInManager<ApplicationUser>, CustomSignInManager>();
 
             return services;
         }
