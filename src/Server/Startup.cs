@@ -41,7 +41,8 @@ namespace Nocturne.Auth.Server
                 .AddApplicationDbContexts(Configuration)
                 .AddApplicationIdentity(Configuration)
                 .AddApplicationEmail(Configuration)
-                .AddApplicationEncryption(Configuration);
+                .AddApplicationEncryption(Configuration)
+                .AddApplicationModules();
 
             services
                 .AddApplicationOpenIddict()

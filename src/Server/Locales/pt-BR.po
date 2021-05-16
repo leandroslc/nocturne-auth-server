@@ -1,0 +1,5 @@
+msgid "Invalid client id"
+msgstr "Client id inválido"
+
+msgid "Invalid user"
+msgstr "Usuário inválido"
