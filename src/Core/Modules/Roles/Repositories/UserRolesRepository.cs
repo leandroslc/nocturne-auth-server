@@ -44,6 +44,15 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
                 .Select(p => p.Role);
         }
 
+        public IQueryable<RolePermission> QueryRolePermissionsByUser(long userId)
+        {
+            return
+                from userRole in context.Set<UserRole>()
+                join rolePermission in context.Set<RolePermission>() on userRole.RoleId equals rolePermission.RoleId
+                where userRole.UserId == userId
+                select rolePermission;
+        }
+
         public async Task UnassignRoleAsync(ApplicationUser user, Role role)
         {
             var userRole = await context
