@@ -35,6 +35,8 @@ namespace Nocturne.Auth.Configuration.Services
                 options.ClaimsIdentity.RoleClaimType = OpenIddictConstants.Claims.Role;
             });
 
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomUserClaimsPrincipalFactory>();
+
             return services;
         }
 
