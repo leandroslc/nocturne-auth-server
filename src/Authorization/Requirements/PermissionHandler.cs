@@ -18,7 +18,7 @@ namespace Nocturne.Auth.Authorization.Requirements
             AuthorizationHandlerContext context,
             PermissionRequirement requirement)
         {
-            if (context.User is null )
+            if (context.User is null)
             {
                 return;
             }
@@ -28,7 +28,7 @@ namespace Nocturne.Auth.Authorization.Requirements
                 return;
             }
 
-            var access = await service.GetUserAccessControlAsync();
+            var access = await service.GetUserAccessControlAsync(context.User.Identity.Name);
 
             if (HasPermission(access, requirement))
             {

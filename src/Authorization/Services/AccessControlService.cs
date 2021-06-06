@@ -34,9 +34,10 @@ namespace Nocturne.Auth.Authorization.Services
             };
         }
 
-        public async Task<UserAccessControlResponse> GetUserAccessControlAsync()
+        public async Task<UserAccessControlResponse> GetUserAccessControlAsync(
+            string userIdentifier)
         {
-            var cachedResponse = await cache.GetAsync();
+            var cachedResponse = await cache.GetAsync(userIdentifier, settings.ClientId);
 
             if (cachedResponse != null)
             {
@@ -45,7 +46,7 @@ namespace Nocturne.Auth.Authorization.Services
 
             var access = await GetUserAccessControlInternalAsync();
 
-            await cache.SetAsync(access);
+            await cache.SetAsync(userIdentifier, settings.ClientId, access);
 
             return access;
         }
