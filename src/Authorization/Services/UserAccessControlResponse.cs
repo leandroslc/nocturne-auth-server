@@ -4,7 +4,7 @@ namespace Nocturne.Auth.Authorization.Services
 {
     public class UserAccessControlResponse
     {
-        public static UserAccessControlResponse Empty => new UserAccessControlResponse
+        public static UserAccessControlResponse Empty => new()
         {
             Roles = new HashSet<string>(0),
             Permissions = new HashSet<string>(0),

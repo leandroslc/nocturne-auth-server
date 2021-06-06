@@ -36,14 +36,16 @@ namespace Nocturne.Auth.Authorization.Services
 
         public async Task<UserAccessControlResponse> GetUserAccessControlAsync()
         {
-            if (cache.TryGet(out var response))
+            var cachedResponse = await cache.GetAsync();
+
+            if (cachedResponse != null)
             {
-                return response;
+                return cachedResponse;
             }
 
             var access = await GetUserAccessControlInternalAsync();
 
-            cache.Set(access);
+            await cache.SetAsync(access);
 
             return access;
         }

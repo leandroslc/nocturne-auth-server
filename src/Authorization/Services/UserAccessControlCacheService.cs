@@ -1,6 +1,7 @@
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Nocturne.Auth.Authorization.Services
 {
@@ -8,38 +9,31 @@ namespace Nocturne.Auth.Authorization.Services
     {
         private const string SessionKey = "_access-control";
 
-        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IDistributedCache cache;
 
-        public UserAccessControlCacheService(
-            IHttpContextAccessor httpContextAccessor)
+        public UserAccessControlCacheService(IDistributedCache cache)
         {
-            this.httpContextAccessor = httpContextAccessor;
+            this.cache = cache;
         }
 
-        public void Set(UserAccessControlResponse value)
+        public async Task SetAsync(UserAccessControlResponse value)
         {
             var data = JsonSerializer.SerializeToUtf8Bytes(value);
 
-            httpContextAccessor.HttpContext.Session.Set(SessionKey, data);
+            await cache.SetAsync(SessionKey, data);
         }
 
-        public bool TryGet(out UserAccessControlResponse value)
+        public async Task<UserAccessControlResponse> GetAsync()
         {
-            var session = httpContextAccessor.HttpContext.Session;
+            var data = await cache.GetAsync(SessionKey);
 
-            if (session.TryGetValue(SessionKey, out var data) is false)
+            if (data is null)
             {
-                value = null;
-
-                return false;
+                return null;
             }
 
-            var item = JsonSerializer.Deserialize<UserAccessControlResponse>(
+            return JsonSerializer.Deserialize<UserAccessControlResponse>(
                 new ReadOnlySpan<byte>(data));
-
-            value = item;
-
-            return true;
         }
     }
 }
