@@ -3,29 +3,24 @@ using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
 using Nocturne.Auth.Authorization.Configuration;
 
 namespace Nocturne.Auth.Authorization.Services
 {
-    public class AccessControlService
+    public class UserAccessControlService
     {
         private readonly AuthorizationSettings settings;
         private readonly IHttpClientFactory clientFactory;
-        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly UserAccessControlCacheService cache;
         private readonly JsonSerializerOptions jsonSerializerOptions;
 
-        public AccessControlService(
+        public UserAccessControlService(
             AuthorizationSettings settings,
             IHttpClientFactory clientFactory,
-            IHttpContextAccessor httpContextAccessor,
             UserAccessControlCacheService cache)
         {
             this.settings = settings;
             this.clientFactory = clientFactory;
-            this.httpContextAccessor = httpContextAccessor;
             this.cache = cache;
 
             jsonSerializerOptions = new JsonSerializerOptions
@@ -35,27 +30,28 @@ namespace Nocturne.Auth.Authorization.Services
         }
 
         public async Task<UserAccessControlResponse> GetUserAccessControlAsync(
-            string userIdentifier)
+            UserAccessControlCommand command)
         {
-            var cachedResponse = await cache.GetAsync(userIdentifier, settings.ClientId);
+            command.Verify();
+
+            var cachedResponse = await cache.GetAsync(command.AccessToken, settings.ClientId);
 
             if (cachedResponse != null)
             {
                 return cachedResponse;
             }
 
-            var access = await GetUserAccessControlInternalAsync();
+            var access = await RequestUserAccessControlAsync(command);
 
-            await cache.SetAsync(userIdentifier, settings.ClientId, access);
+            await cache.SetAsync(command.UserIdentifier, settings.ClientId, access);
 
             return access;
         }
 
-        private async Task<UserAccessControlResponse> GetUserAccessControlInternalAsync()
+        private async Task<UserAccessControlResponse> RequestUserAccessControlAsync(
+            UserAccessControlCommand command)
         {
-            var client = CreateClient();
-
-            await AddAuthenticationAsync(client);
+            var client = CreateClient(command.AccessToken);
 
             var response = await client.GetAsync(settings.AccessControlEndpoint);
 
@@ -70,24 +66,18 @@ namespace Nocturne.Auth.Authorization.Services
                 .DeserializeAsync<UserAccessControlResponse>(content, jsonSerializerOptions);
         }
 
-        private HttpClient CreateClient()
+        private HttpClient CreateClient(string accessToken)
         {
-            var client = clientFactory.CreateClient();
+            var client = clientFactory.CreateClient(Constants.HttpClientName);
 
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
 
-            return client;
-        }
-
-        private async Task AddAuthenticationAsync(HttpClient client)
-        {
-            var accessToken = await httpContextAccessor
-                .HttpContext.GetTokenAsync("access_token");
-
             client.DefaultRequestHeaders.Authorization
                 = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            return client;
         }
     }
 }
