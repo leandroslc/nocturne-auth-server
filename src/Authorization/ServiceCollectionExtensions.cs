@@ -14,29 +14,19 @@ namespace Nocturne.Auth.Authorization
             this IServiceCollection services,
             Action<Options> optionsBuilder)
         {
-            ConfigureOptions(services, optionsBuilder);
+            var options = new Options();
 
-            services.AddScoped<AccessControlService>();
+            optionsBuilder?.Invoke(options);
+
+            services.AddOptions<Options>();
+            services.AddHttpClient(Constants.HttpClientName);
+
+            services.AddScoped<AuthorizationSettings>();
+            services.AddScoped<UserAccessControlService>();
             services.AddScoped<UserAccessControlCacheService>();
             services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 
             return services;
-        }
-
-        private static void ConfigureOptions(
-            IServiceCollection services,
-            Action<Options> optionsBuilder)
-        {
-            if (optionsBuilder == null)
-            {
-                throw new ArgumentNullException(nameof(optionsBuilder));
-            }
-
-            var options = new Options();
-
-            optionsBuilder(options);
-
-            services.AddSingleton(new AuthorizationSettings(options));
         }
     }
 }
