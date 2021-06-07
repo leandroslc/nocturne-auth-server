@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -8,12 +7,14 @@ using Nocturne.Auth.Authorization.Services;
 
 namespace Nocturne.Auth.Authorization.Requirements
 {
-    public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
+    public abstract class AccessControlAuthorizationHandler<TRequirement>
+        : AuthorizationHandler<TRequirement>
+        where TRequirement : IAuthorizationRequirement
     {
         private readonly UserAccessControlService service;
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public PermissionHandler(
+        public AccessControlAuthorizationHandler(
             IHttpContextAccessor httpContextAccessor,
             UserAccessControlService service)
         {
@@ -21,9 +22,11 @@ namespace Nocturne.Auth.Authorization.Requirements
             this.service = service;
         }
 
+        protected abstract bool IsAllowed(UserAccessControlResponse access, TRequirement requirement);
+
         protected override async Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
-            PermissionRequirement requirement)
+            TRequirement requirement)
         {
             if (context.User is null)
             {
@@ -43,18 +46,10 @@ namespace Nocturne.Auth.Authorization.Requirements
 
             var access = await service.GetUserAccessControlAsync(command);
 
-            if (HasPermission(access, requirement))
+            if (IsAllowed(access, requirement))
             {
                 context.Succeed(requirement);
             }
-        }
-
-        private static bool HasPermission(
-            UserAccessControlResponse access,
-            PermissionRequirement requirement)
-        {
-            return requirement.Permissions.Any(
-                permission => access.Permissions.Contains(permission));
         }
     }
 }

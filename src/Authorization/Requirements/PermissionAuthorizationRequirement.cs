@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Nocturne.Auth.Authorization.Requirements
 {
-    public class PermissionRequirement : IAuthorizationRequirement
+    public class PermissionAuthorizationRequirement : IAuthorizationRequirement
     {
-        public PermissionRequirement(
+        public PermissionAuthorizationRequirement(
             IReadOnlyCollection<string> permissions)
         {
             Permissions = permissions;

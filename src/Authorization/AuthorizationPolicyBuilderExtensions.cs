@@ -16,7 +16,21 @@ namespace Nocturne.Auth.Authorization
             this AuthorizationPolicyBuilder builder,
             params string[] permissions)
         {
-            return builder.AddRequirements(new PermissionRequirement(permissions));
+            return builder.AddRequirements(new PermissionAuthorizationRequirement(permissions));
+        }
+
+        public static AuthorizationPolicyBuilder RequireCustomRole(
+            this AuthorizationPolicyBuilder builder,
+            string role)
+        {
+            return builder.RequireCustomRoles(role);
+        }
+
+        public static AuthorizationPolicyBuilder RequireCustomRoles(
+            this AuthorizationPolicyBuilder builder,
+            params string[] roles)
+        {
+            return builder.AddRequirements(new RoleAuthorizationRequirement(roles));
         }
     }
 }
