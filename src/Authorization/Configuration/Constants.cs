@@ -5,5 +5,7 @@ namespace Nocturne.Auth.Authorization.Configuration
         internal const string DefaultAccessControlEndpoint = "api/access";
 
         internal const string HttpClientName = "Nocturne.Auth.Authorization";
+
+        internal const string AccessTokenName = "access_token";
     }
 }
