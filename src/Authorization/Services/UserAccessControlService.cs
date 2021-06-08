@@ -34,7 +34,7 @@ namespace Nocturne.Auth.Authorization.Services
         {
             command.Verify();
 
-            var cachedResponse = await cache.GetAsync(command.AccessToken, settings.ClientId);
+            var cachedResponse = await cache.GetAsync(command.UserIdentifier, settings.ClientId);
 
             if (cachedResponse != null)
             {
