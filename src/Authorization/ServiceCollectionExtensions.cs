@@ -11,14 +11,27 @@ namespace Nocturne.Auth.Authorization
             this IServiceCollection services,
             Action<AuthorizationOptions> optionsBuilder)
         {
-            services.AddOptions<AuthorizationOptions>().Configure(optionsBuilder);
+            services.AddAuthorizationSettings(optionsBuilder);
             services.AddHttpClient(Constants.HttpClientName);
+            services.AddHttpContextAccessor();
 
-            services.AddScoped<AuthorizationSettings>();
             services.AddScoped<UserAccessControlService>();
             services.AddScoped<UserAccessControlCacheService>();
 
             return new UserAccessControlBuilder(services);
+        }
+
+        private static void AddAuthorizationSettings(
+            this IServiceCollection services,
+            Action<AuthorizationOptions> optionsBuilder)
+        {
+            var options = new AuthorizationOptions();
+
+            optionsBuilder?.Invoke(options);
+
+            var settings = new AuthorizationSettings(options);
+
+            services.AddSingleton(settings);
         }
     }
 }
