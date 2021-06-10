@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Nocturne.Auth.Admin.Configuration.Services;
 using Nocturne.Auth.Configuration.Services;
 
 namespace Nocturne.Auth.Admin
@@ -27,7 +28,8 @@ namespace Nocturne.Auth.Admin
                 .AddApplicationIdentityServicesOnly(Configuration)
                 .AddApplicationLocalization(Configuration)
                 .AddApplicationEncryption(Configuration)
-                .AddApplicationModules();
+                .AddApplicationModules()
+                .AddApplicationAuthentication(Configuration);
 
             services.AddApplicationOpenIddict();
         }
@@ -49,6 +51,7 @@ namespace Nocturne.Auth.Admin
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
