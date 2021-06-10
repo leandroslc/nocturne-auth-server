@@ -1,8 +1,5 @@
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Nocturne.Auth.Authorization.Configuration;
 using Nocturne.Auth.Authorization.Services;
 
 namespace Nocturne.Auth.Authorization.Requirements
@@ -12,13 +9,10 @@ namespace Nocturne.Auth.Authorization.Requirements
         where TRequirement : IAuthorizationRequirement
     {
         private readonly UserAccessControlService service;
-        private readonly IHttpContextAccessor httpContextAccessor;
 
         public AccessControlAuthorizationHandler(
-            IHttpContextAccessor httpContextAccessor,
             UserAccessControlService service)
         {
-            this.httpContextAccessor = httpContextAccessor;
             this.service = service;
         }
 
@@ -40,7 +34,6 @@ namespace Nocturne.Auth.Authorization.Requirements
 
             var command = new UserAccessControlCommand
             {
-                AccessToken = await httpContextAccessor.HttpContext.GetTokenAsync(Constants.AccessTokenName),
                 UserIdentifier = context.User.Identity.Name,
             };
 

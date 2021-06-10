@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Nocturne.Auth.Authorization.Configuration;
 
 namespace Nocturne.Auth.Authorization.Services
@@ -11,16 +12,19 @@ namespace Nocturne.Auth.Authorization.Services
     {
         private readonly AuthorizationSettings settings;
         private readonly IHttpClientFactory clientFactory;
+        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly UserAccessControlCacheService cache;
         private readonly JsonSerializerOptions jsonSerializerOptions;
 
         public UserAccessControlService(
             AuthorizationSettings settings,
             IHttpClientFactory clientFactory,
+            IHttpContextAccessor httpContextAccessor,
             UserAccessControlCacheService cache)
         {
             this.settings = settings;
             this.clientFactory = clientFactory;
+            this.httpContextAccessor = httpContextAccessor;
             this.cache = cache;
 
             jsonSerializerOptions = new JsonSerializerOptions
@@ -41,17 +45,17 @@ namespace Nocturne.Auth.Authorization.Services
                 return cachedResponse;
             }
 
-            var access = await RequestUserAccessControlAsync(command);
+            var access = await RequestUserAccessControlAsync();
 
             await cache.SetAsync(command.UserIdentifier, settings.ClientId, access);
 
             return access;
         }
 
-        private async Task<UserAccessControlResponse> RequestUserAccessControlAsync(
-            UserAccessControlCommand command)
+        private async Task<UserAccessControlResponse> RequestUserAccessControlAsync()
         {
-            var client = CreateClient(command.AccessToken);
+            var accessToken = await GetAccessTokenAsync();
+            var client = CreateClient(accessToken);
 
             var response = await client.GetAsync(settings.AccessControlEndpoint);
 
@@ -78,6 +82,11 @@ namespace Nocturne.Auth.Authorization.Services
                 = new AuthenticationHeaderValue("Bearer", accessToken);
 
             return client;
+        }
+
+        private async Task<string> GetAccessTokenAsync()
+        {
+            return await settings.GetAccessTokenAsync(httpContextAccessor.HttpContext);
         }
     }
 }

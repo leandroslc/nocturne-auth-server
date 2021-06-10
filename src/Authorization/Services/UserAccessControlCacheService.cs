@@ -2,16 +2,21 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
+using Nocturne.Auth.Authorization.Configuration;
 
 namespace Nocturne.Auth.Authorization.Services
 {
     public class UserAccessControlCacheService
     {
         private readonly IDistributedCache cache;
+        private readonly AuthorizationSettings settings;
 
-        public UserAccessControlCacheService(IDistributedCache cache)
+        public UserAccessControlCacheService(
+            IDistributedCache cache,
+            AuthorizationSettings settings)
         {
             this.cache = cache;
+            this.settings = settings;
         }
 
         public async Task SetAsync(
@@ -23,7 +28,9 @@ namespace Nocturne.Auth.Authorization.Services
 
             var data = JsonSerializer.SerializeToUtf8Bytes(value);
 
-            await cache.SetAsync(key, data);
+            var options = GetEntryOptions();
+
+            await cache.SetAsync(key, data, options);
         }
 
         public async Task<UserAccessControlResponse> GetAsync(
@@ -41,6 +48,14 @@ namespace Nocturne.Auth.Authorization.Services
 
             return JsonSerializer.Deserialize<UserAccessControlResponse>(
                 new ReadOnlySpan<byte>(data));
+        }
+
+        private DistributedCacheEntryOptions GetEntryOptions()
+        {
+            return new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = settings.CacheExpirationTime,
+            };
         }
 
         private static string GetCacheKey(string userIdentifier, string clientId)

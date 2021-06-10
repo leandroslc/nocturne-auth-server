@@ -1,5 +1,4 @@
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Nocturne.Auth.Authorization.Services;
 
 namespace Nocturne.Auth.Authorization.Requirements
@@ -8,9 +7,8 @@ namespace Nocturne.Auth.Authorization.Requirements
         : AccessControlAuthorizationHandler<RoleAuthorizationRequirement>
     {
         public RoleAuthorizationHandler(
-            IHttpContextAccessor httpContextAccessor,
             UserAccessControlService service)
-            : base(httpContextAccessor, service)
+            : base(service)
         {
         }
 
