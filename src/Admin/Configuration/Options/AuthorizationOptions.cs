@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Nocturne.Auth.Admin.Configuration.Services
+namespace Nocturne.Auth.Admin.Configuration.Options
 {
     public sealed class AuthorizationOptions
     {

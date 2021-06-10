@@ -29,9 +29,11 @@ namespace Nocturne.Auth.Admin
                 .AddApplicationLocalization(Configuration)
                 .AddApplicationEncryption(Configuration)
                 .AddApplicationModules()
-                .AddApplicationAuthentication(Configuration);
+                .AddApplicationAuthentication(Configuration)
+                .AddApplicationAccessControl(Configuration);
 
             services.AddApplicationOpenIddict();
+            services.AddAccessTokenManagement();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Nocturne.Auth.Admin.Configuration.Options;
 
 namespace Nocturne.Auth.Admin.Configuration.Services
 {
@@ -15,7 +16,9 @@ namespace Nocturne.Auth.Admin.Configuration.Services
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            var authorizationOptions = GetAuthorizationOptions(configuration);
+            var authorizationOptions = configuration
+                .GetSection(AuthorizationOptions.Section)
+                .Get<AuthorizationOptions>();
 
             services
                 .AddAuthentication(options =>
@@ -55,17 +58,6 @@ namespace Nocturne.Auth.Admin.Configuration.Services
                 });
 
             return services;
-        }
-
-        private static AuthorizationOptions GetAuthorizationOptions(IConfiguration configuration)
-        {
-            var options = new AuthorizationOptions();
-
-            configuration
-                .GetSection(AuthorizationOptions.Section)
-                .Bind(options);
-
-            return options;
         }
     }
 }
