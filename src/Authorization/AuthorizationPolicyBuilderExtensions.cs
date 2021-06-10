@@ -1,7 +1,6 @@
-using Microsoft.AspNetCore.Authorization;
 using Nocturne.Auth.Authorization.Requirements;
 
-namespace Nocturne.Auth.Authorization
+namespace Microsoft.AspNetCore.Authorization
 {
     public static class AuthorizationPolicyBuilderExtensions
     {
