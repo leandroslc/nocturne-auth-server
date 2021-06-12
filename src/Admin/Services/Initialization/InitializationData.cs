@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using OpenIddict.Abstractions;
 
 namespace Nocturne.Auth.Admin.Services.Initialization
 {
@@ -6,21 +7,19 @@ namespace Nocturne.Auth.Admin.Services.Initialization
     {
         public const string Section = "Initialization";
 
-        public ICollection<ScopeData> Scopes { get; set; } = new List<ScopeData>();
+        public ICollection<OpenIddictScopeDescriptor> Scopes { get; set; }
 
-        public class ScopeData
+        public OpenIddictApplicationDescriptor AdminApplication { get; set; }
+
+        public UserData AdminUser { get; set; }
+
+        public class UserData
         {
             public string Name { get; set; }
 
-            public string DisplayName { get; set; }
+            public string Email { get; set; }
 
-            public string Description { get; set; }
-
-            public IDictionary<string, string> DisplayNames { get; set; } = new Dictionary<string, string>();
-
-            public IDictionary<string, string> Descriptions { get; set; } = new Dictionary<string, string>();
-
-            public ICollection<string> Resources { get; set; } = new List<string>();
+            public string Password { get; set; }
         }
     }
 }

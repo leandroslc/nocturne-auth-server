@@ -11,6 +11,33 @@
         "DisplayName": "Profile",
         "Description": "Profile information"
       }
-    ]
+    ],
+    "AdminApplication": {
+      "ClientId": "37ccb205-b374-4739-b974-fa9b8581d0ea",
+      "ClientSecret": "028ff01a-1c8c-443d-8174-464d34f06c41",
+      "ConsentType": "explicit",
+      "DisplayName": "Authorization Server (Admin)",
+      "Type": "confidential",
+      "Permissions": [
+        "ept:logout",
+        "gt:authorization_code",
+        "gt:refresh_token",
+        "ept:authorization",
+        "ept:token",
+        "rst:code",
+        "scp:email",
+        "scp:profile"],
+      "PostLogoutRedirectUris": [
+        "https://localhost:5001"
+      ],
+      "RedirectUris": [
+        "https://localhost:5001/signin-oidc"
+      ]
+    },
+    "AdminUser": {
+      "Name": "Administrator",
+      "Email": "test@test.com",
+      "Password": "Pass123$"
+    }
   }
 }
