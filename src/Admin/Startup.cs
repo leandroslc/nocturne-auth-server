@@ -30,7 +30,8 @@ namespace Nocturne.Auth.Admin
                 .AddApplicationEncryption(Configuration)
                 .AddApplicationModules()
                 .AddApplicationAuthentication(Configuration)
-                .AddApplicationAccessControl(Configuration);
+                .AddApplicationAccessControl(Configuration)
+                .AddApplicationAuthorization();
 
             services.AddApplicationOpenIddict();
             services.AddAccessTokenManagement();
