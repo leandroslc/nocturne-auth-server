@@ -244,6 +244,8 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             {
                 Logger.LogInformation("Role {name} of {applicationId} already exists", name, applicationId);
 
+                await AssignPermissionsToRole(services, role.Id, permissionIds);
+
                 return role.Id;
             }
 
