@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Nocturne.Auth.Admin.Configuration.Constants;
 using Nocturne.Auth.Admin.Configuration.Services;
 using Nocturne.Auth.Configuration.Services;
 
@@ -22,6 +23,8 @@ namespace Nocturne.Auth.Admin
             services
                 .AddControllersWithViews()
                 .AddApplicationMvcLocalization();
+
+            services.AddApplicationAntiforgery(ApplicationConstants.Identifier);
 
             services
                 .AddApplicationDbContexts(Configuration)

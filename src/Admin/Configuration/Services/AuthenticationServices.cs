@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Nocturne.Auth.Admin.Configuration.Constants;
 using Nocturne.Auth.Admin.Configuration.Options;
+using Nocturne.Auth.Core.Web;
 
 namespace Nocturne.Auth.Admin.Configuration.Services
 {
@@ -28,6 +30,7 @@ namespace Nocturne.Auth.Admin.Configuration.Services
                 })
                 .AddCookie(options =>
                 {
+                    options.Cookie.Name = CookieNameGenerator.Compute("auth", ApplicationConstants.Identifier);
                     options.Cookie.SameSite = SameSiteMode.Strict;
                     options.ReturnUrlParameter = "returnUrl";
                     options.AccessDeniedPath = AccessDeniedPath;
@@ -55,6 +58,9 @@ namespace Nocturne.Auth.Admin.Configuration.Services
                     options.TokenValidationParameters.RoleClaimType = "role";
 
                     options.DisableTelemetry = true;
+
+                    options.NonceCookie.Name = "oidc-nonce";
+                    options.CorrelationCookie.Name = "oidc-correlation";
                 });
 
             return services;

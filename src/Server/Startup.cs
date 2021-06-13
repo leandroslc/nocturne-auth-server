@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Nocturne.Auth.Configuration.Services;
 using Nocturne.Auth.Server.Configuration;
+using Nocturne.Auth.Server.Configuration.Constants;
 
 namespace Nocturne.Auth.Server
 {
@@ -35,11 +36,13 @@ namespace Nocturne.Auth.Server
                 })
                 .AddApplicationMvcLocalization();
 
+            services.AddApplicationAntiforgery(ApplicationConstants.Identifier);
+
             services.AddApplicationLocalization(Configuration);
 
             services
                 .AddApplicationDbContexts(Configuration)
-                .AddApplicationIdentity(Configuration)
+                .AddApplicationIdentity(Configuration, ApplicationConstants.Identifier)
                 .AddApplicationEmail(Configuration)
                 .AddApplicationEncryption(Configuration)
                 .AddApplicationModules();

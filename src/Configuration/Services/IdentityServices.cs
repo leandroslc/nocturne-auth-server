@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nocturne.Auth.Core.Services.Identity;
+using Nocturne.Auth.Core.Web;
 using OpenIddictConstants = OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace Nocturne.Auth.Configuration.Services
@@ -10,7 +11,8 @@ namespace Nocturne.Auth.Configuration.Services
     {
         public static IServiceCollection AddApplicationIdentity(
             this IServiceCollection services,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            string applicationIdentifier)
         {
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -22,7 +24,7 @@ namespace Nocturne.Auth.Configuration.Services
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.Cookie.Name = "auth";
+                options.Cookie.Name = CookieNameGenerator.Compute("auth", applicationIdentifier);
                 options.LoginPath = "/account/signin";
                 options.ReturnUrlParameter = "returnUrl";
             });
