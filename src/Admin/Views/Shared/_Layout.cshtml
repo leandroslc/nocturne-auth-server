@@ -1,5 +1,6 @@
 ﻿@using System.Globalization;
 @inject IViewLocalizer localizer;
+@inject WebAssets assets;
 
 @{
     var title = localizer["Authorization Server (Admin)"];
@@ -12,10 +13,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData[KnownViewData.Title] - @title</title>
-    <link rel="stylesheet" href="http://localhost:3002/bootstrap/bootstrap.min.css" />
-    <link rel="stylesheet" href="http://localhost:3002/bootstrap-icons/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="@assets.Url("bootstrap/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@assets.Url("bootstrap-icons/bootstrap-icons.min.css")" />
+    <link rel="stylesheet" href="@assets.Url("impromptu/impromptu.min.css")" />
     <link rel="stylesheet" href="~/lib/tagify/tagify.min.css" />
-    <link rel="stylesheet" href="http://localhost:3002/impromptu/impromptu.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
@@ -41,11 +42,11 @@
         </main>
     </div>
 
-    <script src="http://localhost:3002/impromptu/impromptu.js"></script>
-    <script src="~/lib/jquery/jquery.min.js"></script>
-    <script src="http://localhost:3002/bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/jquery-validation/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="@assets.Url("impromptu/impromptu.min.js")"></script>
+    <script src="@assets.Url("jquery/jquery.min.js")"></script>
+    <script src="@assets.Url("bootstrap/bootstrap.bundle.min.js")"></script>
+    <script src="@assets.Url("jquery-validation/jquery.validate.min.js")"></script>
+    <script src="@assets.Url("jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js")"></script>
     <script src="~/lib/tagify/tagify.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 

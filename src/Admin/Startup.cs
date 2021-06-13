@@ -24,7 +24,9 @@ namespace Nocturne.Auth.Admin
                 .AddControllersWithViews()
                 .AddApplicationMvcLocalization();
 
-            services.AddApplicationAntiforgery(ApplicationConstants.Identifier);
+            services
+                .AddApplicationAntiforgery(ApplicationConstants.Identifier)
+                .AddApplicationWebAssets(Configuration);
 
             services
                 .AddApplicationDbContexts(Configuration)
