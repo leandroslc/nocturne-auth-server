@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Auth.Admin.Configuration.Constants;
 using Nocturne.Auth.Admin.Controllers.Models;
@@ -8,6 +9,7 @@ using Nocturne.Auth.Core.Shared.Results;
 namespace Nocturne.Auth.Admin.Controllers
 {
     [Route("roles/{roleId}/permissions")]
+    [Authorize(Policy = Policies.ManageApplications)]
     public class RolePermissionsController : CustomController
     {
         [HttpGet("", Name = RouteNames.RolePermissionsHome)]
