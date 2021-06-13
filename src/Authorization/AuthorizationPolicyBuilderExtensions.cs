@@ -18,6 +18,12 @@ namespace Microsoft.AspNetCore.Authorization
             return builder.AddRequirements(new PermissionAuthorizationRequirement(permissions));
         }
 
+        public static AuthorizationPolicyBuilder RequireAnyPermission(
+            this AuthorizationPolicyBuilder builder)
+        {
+            return builder.AddRequirements(new AnyPermissionAuthorizationRequirement());
+        }
+
         public static AuthorizationPolicyBuilder RequireCustomRole(
             this AuthorizationPolicyBuilder builder,
             string role)
@@ -30,6 +36,12 @@ namespace Microsoft.AspNetCore.Authorization
             params string[] roles)
         {
             return builder.AddRequirements(new RoleAuthorizationRequirement(roles));
+        }
+
+        public static AuthorizationPolicyBuilder RequireAnyCustomRole(
+            this AuthorizationPolicyBuilder builder)
+        {
+            return builder.AddRequirements(new AnyRoleAuthorizationRequirement());
         }
     }
 }

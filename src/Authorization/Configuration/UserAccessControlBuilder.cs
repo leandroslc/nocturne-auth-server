@@ -16,6 +16,7 @@ namespace Nocturne.Auth.Authorization.Configuration
         public UserAccessControlBuilder AddPermissionAuthorizationHandler()
         {
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, AnyPermissionAuthorizationHandler>();
 
             return this;
         }
@@ -23,6 +24,7 @@ namespace Nocturne.Auth.Authorization.Configuration
         public UserAccessControlBuilder AddRoleAuthorizationHandler()
         {
             services.AddScoped<IAuthorizationHandler, RoleAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, AnyRoleAuthorizationHandler>();
 
             return this;
         }
