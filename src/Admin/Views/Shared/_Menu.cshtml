@@ -1,22 +1,32 @@
 @inject IViewLocalizer localizer
+@inject IAuthorizationService authorizationService;
 
 <a class="sidebar-item @IsActiveItem(PageGroups.Home)" href="~/">
     <span class="bi-house sidenav-icon mr-2" aria-hidden="true"></span>
     <span>@localizer["Home page"]</span>
 </a>
 
-<a class="sidebar-item @IsActiveItem(PageGroups.Applications)" asp-route="@RouteNames.ApplicationsHome">
-    <span class="bi-window sidenav-icon mr-2" aria-hidden="true"></span>
-    <span>@localizer["Applications"]</span>
-</a>
+@if (await HasAccessAsync(Policies.ManageApplications))
+{
+    <a class="sidebar-item @IsActiveItem(PageGroups.Applications)" asp-route="@RouteNames.ApplicationsHome">
+        <span class="bi-window sidenav-icon mr-2" aria-hidden="true"></span>
+        <span>@localizer["Applications"]</span>
+    </a>
+}
 
-<a class="sidebar-item @IsActiveItem(PageGroups.Users)" asp-route="@RouteNames.UsersHome">
-    <span class="bi-people sidenav-icon mr-2" aria-hidden="true"></span>
-    <span>@localizer["Users"]</span>
-</a>
+@if (await HasAccessAsync(Policies.ManageUserRoles))
+{
+    <a class="sidebar-item @IsActiveItem(PageGroups.Users)" asp-route="@RouteNames.UsersHome">
+        <span class="bi-people sidenav-icon mr-2" aria-hidden="true"></span>
+        <span>@localizer["Users"]</span>
+    </a>
+}
 
 @functions
 {
     private string IsActiveItem(string pageGroup)
         => ViewData[KnownViewData.PageGroup] as string == pageGroup ? "is-active" : string.Empty;
+
+    private async Task<bool> HasAccessAsync(string policy)
+        => (await authorizationService.AuthorizeAsync(User, policy)).Succeeded;
 }
