@@ -30,6 +30,8 @@ namespace Nocturne.Auth.Admin.Configuration.Constants
 
         public const string ApplicationRolesView = nameof(ApplicationRolesView);
 
+        public const string Home = nameof(Home);
+
         public const string RolePermissionsHome = nameof(RolePermissionsHome);
 
         public const string RolePermissionsAdd = nameof(RolePermissionsAdd);

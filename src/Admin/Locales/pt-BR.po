@@ -4,6 +4,9 @@ msgstr "{0:n0} itens"
 msgid "{0} is invalid"
 msgstr "{0} é inválido"
 
+msgid "Access denied"
+msgstr "Acesso negado"
+
 msgid "Allow Authorization Code Flow"
 msgstr "Permitir Authorization Code Flow"
 
@@ -60,6 +63,9 @@ msgstr "Servidor de Autorização (Admin)"
 
 msgid "Back"
 msgstr "Voltar"
+
+msgid "Back to home"
+msgstr "Voltar para o início"
 
 msgid "Cancel"
 msgstr "Cancelar"
@@ -276,6 +282,9 @@ msgstr "O nome deve ter meno de {1} caracteres"
 
 msgid "The description must have less than {1} characters"
 msgstr "A descrição deve ter menos que {1} caracteres"
+
+msgid "The page you are trying to access has a restricted access"
+msgstr "A página que você está tentando acessar possui acesso restrito"
 
 msgid "The permission {0} already exists"
 msgstr "A permissão {0} já existe"

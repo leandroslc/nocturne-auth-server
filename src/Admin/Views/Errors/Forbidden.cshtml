@@ -1,0 +1,25 @@
+@inject IViewLocalizer localizer
+@inject IAuthorizationService authorizationService
+
+@{
+    ViewData[KnownViewData.Title] = localizer["Access denied"];
+}
+
+<div class="page">
+    <div class="page-heading"></div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-content">
+                <div class="d-flex flex-column align-items-center justify-content-center py-5">
+                    <h1 class="h3 font-weight-normal">@localizer["Access denied"]</h1>
+                    <p>@localizer["The page you are trying to access has a restricted access"].</p>
+
+                    @if ((await authorizationService.AuthorizeAsync(User, Policies.GeneralAccess)).Succeeded)
+                    {
+                        <a class="btn btn-outline-primary rounded-pill" asp-route="@RouteNames.Home">@localizer["Back to home"]</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+﻿@using System.Globalization;
+@inject IViewLocalizer localizer;
+
+@{
+    var title = localizer["Authorization Server (Admin)"];
+    var language = CultureInfo.CurrentCulture.Name;
+}
+
+<!DOCTYPE html>
+<html lang="@language">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData[KnownViewData.Title] - @title</title>
+    <link rel="stylesheet" href="http://localhost:3002/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://localhost:3002/bootstrap-icons/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="http://localhost:3002/impromptu/impromptu.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="layout">
+        <header class="layout-header">
+            <nav class="navbar">
+                <div class="navbar-brand">
+                    <img class="navbar-logo mr-2" src="~/logo.svg" alt="logo" role="img" />
+                    <h1 class="navbar-title">@title</h1>
+                </div>
+            </nav>
+        </header>
+        <main class="layout-main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
