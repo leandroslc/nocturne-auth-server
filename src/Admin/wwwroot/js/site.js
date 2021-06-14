@@ -181,7 +181,9 @@
     const $modal = $(element);
 
     function autofocus() {
-      $modal.find('[autofocus]').focus();
+      var $autofocus = $modal.find('[autofocus]');
+
+      $autofocus.length > 0 && $autofocus.get(0).focus();
     }
 
     $modal.on('shown.bs.modal', function () {
@@ -202,7 +204,6 @@
 
     this.setContent = function(html) {
       content.innerHTML = html;
-      autofocus();
     }
 
     this.querySelector = function(selector) {
