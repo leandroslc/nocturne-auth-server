@@ -36,7 +36,9 @@ namespace Nocturne.Auth.Server
                 })
                 .AddApplicationMvcLocalization();
 
-            services.AddApplicationAntiforgery(ApplicationConstants.Identifier);
+            services
+                .AddApplicationAntiforgery(ApplicationConstants.Identifier)
+                .AddApplicationWebAssets(Configuration);
 
             services.AddApplicationLocalization(Configuration);
 
