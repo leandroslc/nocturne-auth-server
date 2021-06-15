@@ -54,6 +54,13 @@ namespace Nocturne.Auth.Configuration
         {
             var host = Host
                 .CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostContext, configBuilder) =>
+                {
+                    configBuilder.AddJsonFile(
+                        "appsettings.local.json",
+                        optional: true,
+                        reloadOnChange: true);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.ConfigureKestrel(options => options.AddServerHeader = false);
