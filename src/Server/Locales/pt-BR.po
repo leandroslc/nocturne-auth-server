@@ -1,5 +1,11 @@
+msgid "I understand"
+msgstr "Entendi"
+
 msgid "Invalid client id"
 msgstr "Client id inválido"
 
 msgid "Invalid user"
 msgstr "Usuário inválido"
+
+msgid "This site stores data like cookies to enable required functionality"
+msgstr "Este site armazena dados como cookies para habilitar funcionalidades obrigatórias"

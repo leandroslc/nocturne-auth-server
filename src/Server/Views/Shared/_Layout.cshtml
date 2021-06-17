@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Server</title>
     <link rel="stylesheet" href="@assets.Url("bootstrap/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@assets.Url("cookieconsent/cookieconsent.min.css")" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
@@ -37,7 +38,11 @@
     </footer>
     <script src="@assets.Url("jquery/jquery.min.js")"></script>
     <script src="@assets.Url("bootstrap/bootstrap.bundle.min.js")"></script>
+    <script src="@assets.Url("cookieconsent/cookieconsent.min.js")"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/cookieconsent.js" asp-append-version="true"></script>
+
+    <partial name="./_CookieConsent" />
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
