@@ -124,6 +124,9 @@ msgstr "Explícito"
 msgid "External"
 msgstr "Externo"
 
+msgid "I understand"
+msgstr "Entendi"
+
 msgid "Implicit"
 msgstr "Implícito"
 
@@ -297,6 +300,9 @@ msgstr "A permissão foi modificada. Verifique os dados e tente novamente"
 
 msgid "The type is required"
 msgstr "O tipo é obrigatório"
+
+msgid "This site stores data like cookies to enable required functionality"
+msgstr "Este site armazena dados como cookies para habilitar funcionalidades obrigatórias"
 
 msgid "Toggle client secret visibility"
 msgstr "Alternar visibilidade do client secret"
