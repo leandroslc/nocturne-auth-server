@@ -1,18 +1,47 @@
+using System;
+using System.Threading.Tasks;
+using FluentEmail.Core;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using System.Threading.Tasks;
 
 namespace Nocturne.Auth.Core.Services.Email
 {
     public class EmailService : IEmailService
     {
         private readonly EmailOptions options;
+        private readonly EmailSettings settings;
+        private readonly IFluentEmailFactory emailFactory;
 
-        public EmailService(IOptions<EmailOptions> options)
+        public EmailService(
+            IOptions<EmailOptions> options,
+            EmailSettings settings,
+            IFluentEmailFactory emailFactory)
         {
             this.options = options.Value;
+            this.settings = settings;
+            this.emailFactory = emailFactory;
+        }
+
+        public async Task SendAsync(EmailCommandWithTemplate command)
+        {
+            var email = emailFactory.Create();
+
+            var response = await email
+                .To(command.Email)
+                .Subject(command.Subject)
+                .UsingTemplateFromFile(
+                    settings.GetTemplateFilePath(command.TemplateName),
+                    command.TemplateModel)
+                .SendAsync();
+
+            if (response.Successful is false)
+            {
+                var errors = string.Join(", ", response.ErrorMessages);
+
+                throw new InvalidOperationException($"Error while sending email: {errors}");
+            }
         }
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)

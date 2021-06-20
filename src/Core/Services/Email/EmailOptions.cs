@@ -1,3 +1,5 @@
+using System.IO;
+
 namespace Nocturne.Auth.Core.Services.Email
 {
     public class EmailOptions
@@ -17,5 +19,11 @@ namespace Nocturne.Auth.Core.Services.Email
         public string Login { get; set; }
 
         public string Password { get; set; }
+
+        public bool RequiresAuthentication { get; set; }
+
+        public string Security { get; set; }
+
+        public string TemplatesPath { get; set; } = Path.Combine("Templates", "Emails");
     }
 }
