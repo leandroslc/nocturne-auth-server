@@ -26,8 +26,12 @@ namespace Nocturne.Auth.Core.Services.Email
             this.emailFactory = emailFactory;
         }
 
-        public async Task SendAsync(EmailCommandWithTemplate command)
+        public async Task SendAsync(EmailWithTemplateCommand command)
         {
+            Check.NotNull(command, nameof(command));
+
+            Validate(command);
+
             var email = emailFactory.Create();
 
             var response = await email
@@ -35,7 +39,7 @@ namespace Nocturne.Auth.Core.Services.Email
                 .Subject(command.Subject)
                 .UsingTemplateFromFile(
                     GetTemplateFile(command.TemplateName),
-                    command.TemplateModel)
+                    command.TemplateModel ?? new object())
                 .SendAsync();
 
             if (response.Successful is false)
@@ -126,6 +130,19 @@ namespace Nocturne.Auth.Core.Services.Email
             return options.UseSSL
                 ? SecureSocketOptions.Auto
                 : SecureSocketOptions.None;
+        }
+
+        public static void Validate(EmailWithTemplateCommand command)
+        {
+            if (string.IsNullOrWhiteSpace(command.Email))
+            {
+                throw new InvalidOperationException("The destination email cannot be empty");
+            }
+
+            if (string.IsNullOrWhiteSpace(command.TemplateName))
+            {
+                throw new InvalidOperationException("The email template cannot be empty");
+            }
         }
     }
 }

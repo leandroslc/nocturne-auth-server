@@ -6,6 +6,6 @@ namespace Nocturne.Auth.Core.Services.Email
     {
         Task SendEmailAsync(string email, string subject, string htmlMessage);
 
-        Task SendAsync(EmailCommandWithTemplate command);
+        Task SendAsync(EmailWithTemplateCommand command);
     }
 }

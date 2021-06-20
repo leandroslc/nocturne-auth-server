@@ -1,13 +1,8 @@
 namespace Nocturne.Auth.Core.Services.Email
 {
-    public class EmailCommandWithTemplate
+    public class EmailWithTemplateCommand
     {
-        public EmailCommandWithTemplate(string email)
-        {
-            Email = email;
-        }
-
-        public string Email { get; private set; }
+        public string Email { get; set; }
 
         public string Subject { get; set; }
 
