@@ -1,18 +1,53 @@
+using System;
+using System.Globalization;
+using System.IO;
+using System.Threading.Tasks;
+using FluentEmail.Core;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using System.Threading.Tasks;
 
 namespace Nocturne.Auth.Core.Services.Email
 {
     public class EmailService : IEmailService
     {
         private readonly EmailOptions options;
+        private readonly EmailSettings settings;
+        private readonly IFluentEmailFactory emailFactory;
 
-        public EmailService(IOptions<EmailOptions> options)
+        public EmailService(
+            IOptions<EmailOptions> options,
+            EmailSettings settings,
+            IFluentEmailFactory emailFactory)
         {
             this.options = options.Value;
+            this.settings = settings;
+            this.emailFactory = emailFactory;
+        }
+
+        public async Task SendAsync(EmailWithTemplateCommand command)
+        {
+            Check.NotNull(command, nameof(command));
+
+            Validate(command);
+
+            var email = emailFactory.Create();
+
+            var response = await email
+                .To(command.Email)
+                .Subject(command.Subject)
+                .UsingTemplateFromFile(
+                    GetTemplateFile(command.TemplateName),
+                    command.TemplateModel ?? new object())
+                .SendAsync();
+
+            if (response.Successful is false)
+            {
+                var errors = string.Join(", ", response.ErrorMessages);
+
+                throw new InvalidOperationException($"Error while sending email: {errors}");
+            }
         }
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
@@ -43,6 +78,48 @@ namespace Nocturne.Auth.Core.Services.Email
             await client.DisconnectAsync(true);
         }
 
+        private string GetTemplateFile(string templateName)
+        {
+            Check.NotNull(templateName, nameof(templateName));
+
+            var cultureName = CultureInfo.CurrentCulture.Name;
+
+            if (TryGetTemplateFileByCulture(templateName, cultureName, out var filePath))
+            {
+                return filePath;
+            }
+
+            throw new InvalidOperationException($"No email template found for {templateName}");
+        }
+
+        private bool TryGetTemplateFileByCulture(
+            string templateName,
+            string cultureName,
+            out string foundFile)
+        {
+            var fileName = settings.GetTemplateFilePath($"{templateName}.{cultureName}");
+
+            if (File.Exists(fileName))
+            {
+                foundFile = fileName;
+
+                return true;
+            }
+
+            fileName = settings.GetTemplateFilePath($"{templateName}");
+
+            if (File.Exists(fileName))
+            {
+                foundFile = fileName;
+
+                return true;
+            }
+
+            foundFile = null;
+
+            return false;
+        }
+
         private bool CanUseAuthentication()
         {
             return string.IsNullOrWhiteSpace(options.Password) == false;
@@ -53,6 +130,19 @@ namespace Nocturne.Auth.Core.Services.Email
             return options.UseSSL
                 ? SecureSocketOptions.Auto
                 : SecureSocketOptions.None;
+        }
+
+        public static void Validate(EmailWithTemplateCommand command)
+        {
+            if (string.IsNullOrWhiteSpace(command.Email))
+            {
+                throw new InvalidOperationException("The destination email cannot be empty");
+            }
+
+            if (string.IsNullOrWhiteSpace(command.TemplateName))
+            {
+                throw new InvalidOperationException("The email template cannot be empty");
+            }
         }
     }
 }
