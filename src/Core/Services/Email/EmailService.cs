@@ -1,4 +1,6 @@
 using System;
+using System.Globalization;
+using System.IO;
 using System.Threading.Tasks;
 using FluentEmail.Core;
 using MailKit.Net.Smtp;
@@ -32,7 +34,7 @@ namespace Nocturne.Auth.Core.Services.Email
                 .To(command.Email)
                 .Subject(command.Subject)
                 .UsingTemplateFromFile(
-                    settings.GetTemplateFilePath(command.TemplateName),
+                    GetTemplateFile(command.TemplateName),
                     command.TemplateModel)
                 .SendAsync();
 
@@ -70,6 +72,48 @@ namespace Nocturne.Auth.Core.Services.Email
             await client.SendAsync(message);
 
             await client.DisconnectAsync(true);
+        }
+
+        private string GetTemplateFile(string templateName)
+        {
+            Check.NotNull(templateName, nameof(templateName));
+
+            var cultureName = CultureInfo.CurrentCulture.Name;
+
+            if (TryGetTemplateFileByCulture(templateName, cultureName, out var filePath))
+            {
+                return filePath;
+            }
+
+            throw new InvalidOperationException($"No email template found for {templateName}");
+        }
+
+        private bool TryGetTemplateFileByCulture(
+            string templateName,
+            string cultureName,
+            out string foundFile)
+        {
+            var fileName = settings.GetTemplateFilePath($"{templateName}.{cultureName}");
+
+            if (File.Exists(fileName))
+            {
+                foundFile = fileName;
+
+                return true;
+            }
+
+            fileName = settings.GetTemplateFilePath($"{templateName}");
+
+            if (File.Exists(fileName))
+            {
+                foundFile = fileName;
+
+                return true;
+            }
+
+            foundFile = null;
+
+            return false;
         }
 
         private bool CanUseAuthentication()
