@@ -32,6 +32,7 @@ namespace Nocturne.Auth.Configuration.Services
             var emailSettings = GetEmailSettings(emailOptions, environment);
 
             services.AddSingleton(emailSettings);
+            services.AddSingleton(emailOptions);
 
             services.AddFluentEmailInternal(emailOptions, emailSettings);
 
