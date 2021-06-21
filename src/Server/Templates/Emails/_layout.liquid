@@ -3,32 +3,32 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>{{ title }}</title>
+  <title>{{ Title }}</title>
 </head>
-<body style="margin: 0; padding: 0;" bgcolor="#f5f5f5">
+<body style="margin: 0; padding: 0;">
  <table border="0" cellpadding="0" cellspacing="0" width="100%">
   <tr>
    <td>
      <table align="center" border="0" cellpadding="0" cellspacing="0" width="70%">
        <tr>
-         <td bgcolor="#ffffff" style="color: #153643; padding: 16px 16px 16px 16px; font-family: Arial, sans-serif; font-size: 20px;">
-           {% if CompanyLogoUrl %}
+         <td bgcolor="#ffffff" style="color: #153643; padding: 16px 16px 16px 16px; font-family: Arial, sans-serif; font-size: 18px;">
+           {% if CompanyLogoUrl != null and CompanyLogoUrl != "" %}
            <img src="{{ CompanyLogoUrl }}" alt="Logo" style="margin-right: 12px;" />
            {% endif %}
-           <b>CompanyName</b>
+           <b>{{ CompanyName }}</b>
          </td>
        </tr>
        <tr>
-         <td bgcolor="#1b6ec2" style="color: #ffffff; padding: 16px 16px 16px 16px; font-family: Arial, sans-serif; font-size: 20px;">
-          <b>ApplicationName</b>
+         <td bgcolor="#1b6ec2" style="color: #ffffff; padding: 12px 16px 12px 16px; font-family: Arial, sans-serif; font-size: 18px;">
+          <b>{{ ApplicationName }}</b>
          </td>
        </tr>
        <tr>
          <td bgcolor="#ffffff" style="padding: 40px 28px 40px 28px;">
             <table border="0">
               <tr>
-                <td style="color: #153643; font-family: Arial, sans-serif; font-size: 20px;">
-                  <b>Title</b>
+                <td style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                  <b>{{ Title }}</b>
                 </td>
               </tr>
               <tr>
@@ -39,12 +39,13 @@
             </table>
           </td>
        </tr>
+       {% if CompanyInfo != null and CompanyInfo != "" %}
        <tr>
-         <td align="right" bgcolor="#efefef" style="color: #153643; padding: 16px 16px 16px 16px; font-family: Arial, sans-serif; font-size: 12px;">
-            Company Info <br/>
-            Address <br/>
+         <td align="right" bgcolor="#f5f5f5" style="color: #153643; padding: 16px 16px 16px 16px; font-family: Arial, sans-serif; font-size: 12px;">
+            {{ CompanyInfo }}
           </td>
        </tr>
+       {% endif %}
      </table>
    </td>
   </tr>

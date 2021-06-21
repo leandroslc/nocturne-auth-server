@@ -17,11 +17,11 @@ namespace Nocturne.Auth.Core.Services.Email
         private readonly IFluentEmailFactory emailFactory;
 
         public EmailService(
-            IOptions<EmailOptions> options,
+            EmailOptions options,
             EmailSettings settings,
             IFluentEmailFactory emailFactory)
         {
-            this.options = options.Value;
+            this.options = options;
             this.settings = settings;
             this.emailFactory = emailFactory;
         }
@@ -39,7 +39,7 @@ namespace Nocturne.Auth.Core.Services.Email
                 .Subject(command.Subject)
                 .UsingTemplateFromFile(
                     GetTemplateFile(command.TemplateName),
-                    command.TemplateModel ?? new object())
+                    CreateTemplateModel(command))
                 .SendAsync();
 
             if (response.Successful is false)
@@ -120,6 +120,18 @@ namespace Nocturne.Auth.Core.Services.Email
             return false;
         }
 
+        private EmailTemplateModel CreateTemplateModel(EmailWithTemplateCommand command)
+        {
+            var model = command.TemplateModel ?? new EmailTemplateModel();
+
+            model.ApplicationName = options.Template.ApplicationName;
+            model.CompanyInfo = options.Template.CompanyInfo;
+            model.CompanyLogoUrl = options.Template.CompanyLogoUrl;
+            model.CompanyName = options.Template.CompanyName;
+
+            return model;
+        }
+
         private bool CanUseAuthentication()
         {
             return string.IsNullOrWhiteSpace(options.Password) == false;
@@ -132,7 +144,7 @@ namespace Nocturne.Auth.Core.Services.Email
                 : SecureSocketOptions.None;
         }
 
-        public static void Validate(EmailWithTemplateCommand command)
+        private static void Validate(EmailWithTemplateCommand command)
         {
             if (string.IsNullOrWhiteSpace(command.Email))
             {

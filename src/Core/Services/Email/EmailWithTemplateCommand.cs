@@ -8,6 +8,6 @@ namespace Nocturne.Auth.Core.Services.Email
 
         public string TemplateName { get; set; }
 
-        public object TemplateModel { get; set; }
+        public EmailTemplateModel TemplateModel { get; set; }
     }
 }
