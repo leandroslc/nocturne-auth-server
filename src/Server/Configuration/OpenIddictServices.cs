@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Nocturne.Auth.Server.Configuration.Options;
 using OpenIddict.Abstractions;
 
 namespace Nocturne.Auth.Server.Configuration
@@ -9,8 +9,10 @@ namespace Nocturne.Auth.Server.Configuration
     {
         public static OpenIddictBuilder AddApplicationServer(
             this OpenIddictBuilder builder,
-            IWebHostEnvironment environment)
+            IConfiguration configuration)
         {
+            var serverOptions = GetIdServerOptions(configuration);
+
             builder
                 .AddServer(options =>
                 {
@@ -41,12 +43,10 @@ namespace Nocturne.Auth.Server.Configuration
                         .EnableTokenEndpointPassthrough()
                         .EnableUserinfoEndpointPassthrough();
 
-                    if (environment.IsDevelopment())
-                    {
-                        options
-                            .AddDevelopmentEncryptionCertificate()
-                            .AddDevelopmentSigningCertificate();
+                    options.AddCertificates(serverOptions);
 
+                    if (serverOptions.DisableTransportSecurityRequirement)
+                    {
                         aspNetCoreBuilder.DisableTransportSecurityRequirement();
                     }
                 })
@@ -55,6 +55,35 @@ namespace Nocturne.Auth.Server.Configuration
                     options.UseLocalServer();
                     options.UseAspNetCore();
                 });
+
+            return builder;
+        }
+
+        private static OpenIdServerOptions GetIdServerOptions(IConfiguration configuration)
+        {
+            var options = new OpenIdServerOptions();
+
+            configuration.GetSection(OpenIdServerOptions.Section).Bind(options);
+
+            return options;
+        }
+
+        private static OpenIddictServerBuilder AddCertificates(
+            this OpenIddictServerBuilder builder,
+            OpenIdServerOptions options)
+        {
+            if (options.UseDevelopmentCertificates)
+            {
+                builder
+                    .AddDevelopmentEncryptionCertificate()
+                    .AddDevelopmentSigningCertificate();
+            }
+            else
+            {
+                builder
+                    .AddEncryptionCertificate(options.EncryptionCertificateThumbprint)
+                    .AddSigningCertificate(options.SigningCertificateThumbprint);
+            }
 
             return builder;
         }

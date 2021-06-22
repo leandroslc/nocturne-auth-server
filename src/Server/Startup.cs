@@ -52,7 +52,7 @@ namespace Nocturne.Auth.Server
 
             services
                 .AddApplicationOpenIddict()
-                .AddApplicationServer(Environment);
+                .AddApplicationServer(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
