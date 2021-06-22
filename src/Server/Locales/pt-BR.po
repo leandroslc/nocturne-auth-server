@@ -1,3 +1,9 @@
+msgid "Confirm"
+msgstr "Confirmar"
+
+msgid "Confirm your email"
+msgstr "Confirme seu email"
+
 msgid "I understand"
 msgstr "Entendi"
 
@@ -7,5 +13,17 @@ msgstr "Client id inválido"
 msgid "Invalid user"
 msgstr "Usuário inválido"
 
+msgid "Please confirm your account by clicking the button below."
+msgstr "Por favor, confirme sua conta de acesso clicando no botão abaixo."
+
+msgid "Reset"
+msgstr "Redefinir"
+
+msgid "Reset Password"
+msgstr "Redefinir senha"
+
 msgid "This site stores data like cookies to enable required functionality"
 msgstr "Este site armazena dados como cookies para habilitar funcionalidades obrigatórias"
+
+msgid "To reset your password click on the button below."
+msgstr "Para redefinir sua senha, clique no botão abaixo."

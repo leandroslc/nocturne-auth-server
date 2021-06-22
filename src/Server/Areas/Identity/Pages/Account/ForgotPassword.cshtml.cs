@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Nocturne.Auth.Core.Services.Email;
 using Nocturne.Auth.Core.Services.Identity;
+using Nocturne.Auth.Server.Areas.Identity.Emails;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 {
@@ -16,11 +17,11 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailService _emailSender;
+        private readonly IdentityEmailService _emailSender;
 
         public ForgotPasswordModel(
             UserManager<ApplicationUser> userManager,
-            IEmailService emailSender)
+            IdentityEmailService emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;
@@ -57,10 +58,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(
-                    Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                await _emailSender.SendResetPassword(user, Input.Email, callbackUrl);
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

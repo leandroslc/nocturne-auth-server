@@ -8,17 +8,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Nocturne.Auth.Core.Services.Identity;
 using Nocturne.Auth.Core.Services.Email;
+using Nocturne.Auth.Server.Areas.Identity.Emails;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
     public partial class EmailModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailService _emailSender;
+        private readonly IdentityEmailService _emailSender;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
-            IEmailService emailSender)
+            IdentityEmailService emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;
@@ -94,10 +95,8 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
                     pageHandler: null,
                     values: new { userId, email = Input.NewEmail, code },
                     protocol: Request.Scheme);
-                await _emailSender.SendEmailAsync(
-                    Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                await _emailSender.SendEmailConfirmation(user, Input.NewEmail, callbackUrl);
 
                 StatusMessage = "Confirmation link to change email sent. Please check your email.";
                 return RedirectToPage();
@@ -130,10 +129,8 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
                 pageHandler: null,
                 values: new { area = "Identity", userId, code },
                 protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
-                email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+            await _emailSender.SendEmailConfirmation(user, email, callbackUrl);
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
