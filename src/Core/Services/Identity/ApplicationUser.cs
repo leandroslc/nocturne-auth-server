@@ -14,5 +14,7 @@ namespace Nocturne.Auth.Core.Services.Identity
         public string Name { get; set; }
 
         public bool Enabled { get; set; }
+
+        public string FirstName => Name?.Split(' ')?[0];
     }
 }

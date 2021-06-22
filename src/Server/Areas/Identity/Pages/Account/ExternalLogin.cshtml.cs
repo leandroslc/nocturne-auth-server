@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Nocturne.Auth.Core.Services.Email;
 using Nocturne.Auth.Core.Services.Identity;
+using Nocturne.Auth.Server.Areas.Identity.Emails;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 {
@@ -19,14 +20,14 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailService _emailSender;
+        private readonly IdentityEmailService _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             ILogger<ExternalLoginModel> logger,
-            IEmailService emailSender)
+            IdentityEmailService emailSender)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -140,8 +141,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                             values: new { area = "Identity", userId, code },
                             protocol: Request.Scheme);
 
-                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        await _emailSender.SendEmailConfirmation(user, Input.Email, callbackUrl);
 
                         // If account confirmation is required, we need to show the link if we don't have a real email sender
                         if (_userManager.Options.SignIn.RequireConfirmedAccount)

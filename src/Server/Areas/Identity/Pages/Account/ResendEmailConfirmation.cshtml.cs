@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Localization;
 using Nocturne.Auth.Core.Services.Email;
 using Nocturne.Auth.Core.Services.Identity;
+using Nocturne.Auth.Server.Areas.Identity.Emails;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 {
@@ -16,14 +18,17 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
     public class ResendEmailConfirmationModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailService _emailSender;
+        private readonly IdentityEmailService _emailSender;
+        private readonly IStringLocalizer _localizer;
 
         public ResendEmailConfirmationModel(
             UserManager<ApplicationUser> userManager,
-            IEmailService emailSender)
+            IdentityEmailService emailSender,
+            IStringLocalizer<ResendEmailConfirmationModel> localizer)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _localizer = localizer;
         }
 
         [BindProperty]
@@ -62,10 +67,8 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                 pageHandler: null,
                 values: new { userId, code },
                 protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
-                Input.Email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+            await _emailSender.SendEmailConfirmation(user, Input.Email, callbackUrl);
 
             ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
             return Page();

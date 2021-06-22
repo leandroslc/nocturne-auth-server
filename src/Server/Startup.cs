@@ -45,6 +45,7 @@ namespace Nocturne.Auth.Server
             services
                 .AddApplicationDbContexts(Configuration)
                 .AddApplicationIdentity(Configuration, ApplicationConstants.Identifier)
+                .AddIdentityEmails()
                 .AddApplicationEmailService(Configuration, Environment)
                 .AddApplicationEncryption(Configuration)
                 .AddApplicationModules();

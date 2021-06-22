@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Nocturne.Auth.Core.Services.Email;
 using Nocturne.Auth.Core.Services.Identity;
+using Nocturne.Auth.Server.Areas.Identity.Emails;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 {
@@ -22,13 +23,13 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailService _emailSender;
+        private readonly IdentityEmailService _emailSender;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailService emailSender)
+            IdentityEmailService emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -100,8 +101,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code, returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailConfirmation(user, Input.Email, callbackUrl);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

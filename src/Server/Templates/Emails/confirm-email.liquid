@@ -1,0 +1,10 @@
+{% layout '_layout.liquid' %}
+
+{% if UserName != null and UserName != "" %}
+<p style="font-family: Arial, sans-serif; font-size: 16px;">{{ UserName }},</p>
+{% endif %}
+<p style="color: #153643; font-family: Arial, sans-serif; font-size: 16px;">{{ Message }}</p>
+<br/>
+<a href="{{ CallbackUrl }}" style="display: inline-block; padding: 8px 12px 8px 12px; background: #0b5822;">
+  <font color="#ffffff">{{ ConfirmButtonText }}</font>
+</a>
