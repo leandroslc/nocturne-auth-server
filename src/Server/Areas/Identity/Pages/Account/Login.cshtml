@@ -1,85 +1,122 @@
 @page "/account/signin"
 @model LoginModel
+@inject IViewLocalizer localizer
+@inject WebAssets assets
 
 @{
-    ViewData["Title"] = "Log in";
+    var title = localizer["Log in"];
+
+    bool enableRememberLogin = false;
+    bool enableExternalLogin = false;
+
+    ViewData[KnownViewData.Title] = title;
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                </div>
-                <div class="form-group">
+<h1 class="login-content-title">@title</h1>
+
+<form id="account" class="login-form-box" method="post" loading="loading">
+    <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+    <div class="form-group">
+        <label class="form-label" asp-for="Input.Email">@localizer["Email"]</label>
+        <div class="input-over-group input-over-group-left">
+            <div class="input-over-addon input-over-addon-left" style="font-size: 1.4rem;" aria-hidden="true">
+                <span class="bi-person"></span>
+            </div>
+            <input asp-for="Input.Email" class="form-control form-control-lg" style="font-size: 1rem;" autofocus />
+        </div>
+        <span asp-validation-for="Input.Email" class="d-block form-text text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="form-label" asp-for="Input.Password">@localizer["Password"]</label>
+        <div class="input-over-group input-over-group-left input-over-group-right">
+            <div class="input-over-addon input-over-addon-left" style="font-size: 1.4rem;" aria-hidden="true">
+                <span class="bi-key" style="transform: rotate(40deg);"></span>
+            </div>
+            <input asp-for="Input.Password" class="form-control form-control-lg" style="font-size: 1rem;" />
+            <button type="button" id="password-toggle" class="btn input-over-addon input-over-addon-right" style="font-size: 1.4rem;" title="@localizer["Toggle password visibility"]">
+                <span class="bi-eye" is-password="true" aria-hidden="true"></span>
+                <span class="bi-eye-slash" is-password="false" aria-hidden="true" style="display: none;"></span>
+            </button>
+        </div>
+        <span asp-validation-for="Input.Password" class="d-block form-text text-danger"></span>
+    </div>
+
+    @if (enableRememberLogin)
+    {
+        <div class="form-group">
+            <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" asp-for="Input.RememberMe" checked />
+                <label class="custom-control-label form-label" asp-for="Input.RememberMe">@localizer["Remember my login"]</label>
+            </div>
+        </div>
+    }
+    else
+    {
+        <input type="hidden" asp-for="Input.RememberMe" value="true" />
+    }
+
+    @if (enableExternalLogin)
+    {
+        <hr />
+
+        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+        {
+            <div>
+                <p>
+                    @localizer["No external authentication services configured"]. <a href="https://go.microsoft.com/fwlink/?LinkID=532715">@localizer["More info"]</a>.
+                </p>
+            </div>
+        }
+        else
+        {
+            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                <div>
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                        @foreach (var provider in Model.ExternalLogins)
+                        {
+                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                        }
                     </p>
                 </div>
             </form>
-        </section>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h4>Use another service to log in.</h4>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
-</div>
+        }
+    }
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <div class="form-group mt-4">
+        <button type="submit" class="btn btn-primary btn-block text-uppercase py-3">
+            @localizer["Enter"]
+
+            <div class="spinner-border spinner-border-sm ml-2" role="status" id="loading" style="display: none;">
+                <span class="sr-only">@localizer["Loading..."]</span>
+            </div>
+        </button>
+    </div>
+</form>
+
+<section class="text-right mt-3">
+    <p>
+        <a id="forgot-password" asp-page="./ForgotPassword">
+            @localizer["Forgot your password?"]
+        </a>
+    </p>
+    <p>
+        @localizer["Don't have an account?"]
+        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">
+            @localizer["Register here"]
+        </a>
+    </p>
+    <p>
+        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">
+            @localizer["Resend email confirmation"]
+        </a>
+    </p>
+</section>
+
+@section scripts {
+    <script>
+        const passwordElement = document.getElementById('@($"{nameof(Model.Input)}_{nameof(Model.Input.Password)}")');
+        const togglePasswordElement = document.getElementById('password-toggle');
+
+        ElementHelper.addTogglePasswordEvent('click', togglePasswordElement, passwordElement);
+    </script>
 }

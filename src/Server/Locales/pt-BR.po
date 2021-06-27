@@ -4,6 +4,18 @@ msgstr "Confirmar"
 msgid "Confirm your email"
 msgstr "Confirme seu email"
 
+msgid "Don't have an account?"
+msgstr "Não tem uma conta?"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Enter"
+msgstr "Entrar"
+
+msgid "Forgot your password?"
+msgstr "Esqueceu sua senha?"
+
 msgid "I understand"
 msgstr "Entendi"
 
@@ -13,8 +25,29 @@ msgstr "Client id inválido"
 msgid "Invalid user"
 msgstr "Usuário inválido"
 
+msgid "Loading..."
+msgstr "Carregando..."
+
+msgid "More info"
+msgstr "Mais informações"
+
+msgid "No external authentication services configured"
+msgstr "Nenhum serviço de autenticação externa configurado"
+
+msgid "Password"
+msgstr "Senha"
+
 msgid "Please confirm your account by clicking the button below."
 msgstr "Por favor, confirme sua conta de acesso clicando no botão abaixo."
+
+msgid "Register here"
+msgstr "Cadastre-se aqui"
+
+msgid "Remember my login"
+msgstr "Lembrar meu login"
+
+msgid "Resend email confirmation"
+msgstr "Reenviar email de confirmação"
 
 msgid "Reset"
 msgstr "Redefinir"
@@ -27,3 +60,6 @@ msgstr "Este site armazena dados como cookies para habilitar funcionalidades obr
 
 msgid "To reset your password click on the button below."
 msgstr "Para redefinir sua senha, clique no botão abaixo."
+
+msgid "Toggle password visibility"
+msgstr "Alternar visibilidade da senha"
