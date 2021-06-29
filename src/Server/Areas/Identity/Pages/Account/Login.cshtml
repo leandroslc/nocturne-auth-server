@@ -1,4 +1,5 @@
 @page "/account/signin"
+@using Microsoft.AspNetCore.Http.Extensions
 @model LoginModel
 @inject IViewLocalizer localizer
 @inject WebAssets assets
@@ -9,57 +10,75 @@
     bool enableRememberLogin = false;
     bool enableExternalLogin = false;
 
+    var currentUrl = Request.GetEncodedPathAndQuery();
+
     ViewData[KnownViewData.Title] = title;
 }
 
 <h1 class="login-content-title">@title</h1>
 
-<form id="account" class="login-form-box" method="post" loading="loading">
-    <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
-    <div class="form-group">
-        <label class="form-label" asp-for="Input.Email">@localizer["Email"]</label>
-        <div class="input-over-group input-over-group-left">
-            <div class="input-over-addon input-over-addon-left" style="font-size: 1.4rem;" aria-hidden="true">
-                <span class="bi-person"></span>
+<section class="login-form-box">
+    <form id="account" method="post" loading="loading">
+        <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <label class="form-label" asp-for="Input.Email">@localizer["Email"]</label>
+            <div class="input-over-group input-over-group-left">
+                <div class="input-over-addon input-over-addon-left" style="font-size: 1.4rem;" aria-hidden="true">
+                    <span class="bi-person"></span>
+                </div>
+                <input asp-for="Input.Email" class="form-control form-control-lg" style="font-size: 1rem;" autocomplete="username" autofocus />
             </div>
-            <input asp-for="Input.Email" class="form-control form-control-lg" style="font-size: 1rem;" autofocus />
+            <span asp-validation-for="Input.Email" class="d-block form-text text-danger"></span>
         </div>
-        <span asp-validation-for="Input.Email" class="d-block form-text text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label class="form-label" asp-for="Input.Password">@localizer["Password"]</label>
-        <div class="input-over-group input-over-group-left input-over-group-right">
-            <div class="input-over-addon input-over-addon-left" style="font-size: 1.4rem;" aria-hidden="true">
-                <span class="bi-key" style="transform: rotate(40deg);"></span>
+        <div class="form-group">
+            <label class="form-label" asp-for="Input.Password">@localizer["Password"]</label>
+            <div class="input-over-group input-over-group-left input-over-group-right">
+                <div class="input-over-addon input-over-addon-left" style="font-size: 1.4rem;" aria-hidden="true">
+                    <span class="bi-key" style="transform: rotate(40deg);"></span>
+                </div>
+                <input asp-for="Input.Password" class="form-control form-control-lg" style="font-size: 1rem;" autocomplete="current-password" />
+                <button type="button" id="password-toggle" class="btn input-over-addon input-over-addon-right" style="font-size: 1.4rem;" title="@localizer["Toggle password visibility"]">
+                    <span class="bi-eye" is-password="true" aria-hidden="true"></span>
+                    <span class="bi-eye-slash" is-password="false" aria-hidden="true" style="display: none;"></span>
+                </button>
             </div>
-            <input asp-for="Input.Password" class="form-control form-control-lg" style="font-size: 1rem;" />
-            <button type="button" id="password-toggle" class="btn input-over-addon input-over-addon-right" style="font-size: 1.4rem;" title="@localizer["Toggle password visibility"]">
-                <span class="bi-eye" is-password="true" aria-hidden="true"></span>
-                <span class="bi-eye-slash" is-password="false" aria-hidden="true" style="display: none;"></span>
+            <span asp-validation-for="Input.Password" class="d-block form-text text-danger"></span>
+        </div>
+
+        @if (enableRememberLogin)
+        {
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" asp-for="Input.RememberMe" checked />
+                    <label class="custom-control-label form-label" asp-for="Input.RememberMe">@localizer["Remember my login"]</label>
+                </div>
+            </div>
+        }
+        else
+        {
+            <input type="hidden" asp-for="Input.RememberMe" value="true" />
+        }
+
+        <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary btn-block text-uppercase py-3">
+                @localizer["Enter"]
+
+                <div class="spinner-border spinner-border-sm ml-2" role="status" id="loading" style="display: none;">
+                    <span class="sr-only">@localizer["Loading..."]</span>
+                </div>
             </button>
         </div>
-        <span asp-validation-for="Input.Password" class="d-block form-text text-danger"></span>
-    </div>
+    </form>
+</section>
 
-    @if (enableRememberLogin)
-    {
-        <div class="form-group">
-            <div class="custom-control custom-checkbox">
-                <input class="custom-control-input" asp-for="Input.RememberMe" checked />
-                <label class="custom-control-label form-label" asp-for="Input.RememberMe">@localizer["Remember my login"]</label>
-            </div>
-        </div>
-    }
-    else
-    {
-        <input type="hidden" asp-for="Input.RememberMe" value="true" />
-    }
+@if (enableExternalLogin)
+{
+    <hr />
 
-    @if (enableExternalLogin)
-    {
-        <hr />
+    <h2 class="login-content-title">@localizer["Or log in using:"]</h2>
 
-        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+    <section class="login-form-box">
+        @if ((Model.ExternalLogins?.Count ?? 0) == 0)
         {
             <div>
                 <p>
@@ -74,39 +93,29 @@
                     <p>
                         @foreach (var provider in Model.ExternalLogins)
                         {
-                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                            <button type="submit" class="btn btn-outline-primary" name="provider" value="@provider.Name" title="@localizer["Log in using your {0} account", provider.DisplayName]">@provider.DisplayName</button>
                         }
                     </p>
                 </div>
             </form>
         }
-    }
-
-    <div class="form-group mt-4">
-        <button type="submit" class="btn btn-primary btn-block text-uppercase py-3">
-            @localizer["Enter"]
-
-            <div class="spinner-border spinner-border-sm ml-2" role="status" id="loading" style="display: none;">
-                <span class="sr-only">@localizer["Loading..."]</span>
-            </div>
-        </button>
-    </div>
-</form>
+    </section>
+}
 
 <section class="text-right mt-3">
     <p>
-        <a id="forgot-password" asp-page="./ForgotPassword">
+        <a id="forgot-password" asp-page="./ForgotPassword" asp-route-returnUrl="@currentUrl">
             @localizer["Forgot your password?"]
         </a>
     </p>
     <p>
         @localizer["Don't have an account?"]
-        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">
+        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" asp-route-cancelUrl="@currentUrl">
             @localizer["Register here"]
         </a>
     </p>
     <p>
-        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">
+        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation" asp-route-returnUrl="@currentUrl">
             @localizer["Resend email confirmation"]
         </a>
     </p>

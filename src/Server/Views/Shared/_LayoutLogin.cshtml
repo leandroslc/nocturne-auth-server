@@ -3,7 +3,6 @@
 @inject WebAssets assets;
 
 @{
-    var title = localizer["Account"];
     var language = CultureInfo.CurrentCulture.Name;
     var applicationName = "Conta de Praia Grande";
 }
@@ -13,7 +12,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData[KnownViewData.Title] - @title</title>
+    <title>@ViewData[KnownViewData.Title] - @applicationName</title>
     <link rel="stylesheet" href="@assets.Url("bootstrap/bootstrap.min.css")" />
     <link rel="stylesheet" href="@assets.Url("bootstrap-icons/bootstrap-icons.min.css")" />
     <link rel="stylesheet" href="@assets.Url("impromptu/impromptu.min.css")" />

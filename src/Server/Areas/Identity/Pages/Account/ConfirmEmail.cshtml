@@ -1,8 +1,33 @@
 @page "/account/email/verify"
 @model ConfirmEmailModel
+@inject IViewLocalizer localizer
+
 @{
-    ViewData["Title"] = "Confirm email";
+    var title = localizer["Email confirmation"];
+
+    ViewData[KnownViewData.Title] = title;
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<h1 class="login-content-title">@title</h1>
+
+<div class="login-form-box">
+    @if (Model.Success)
+    {
+        <div class="alert alert-success" role="alert">
+            @localizer["Thank you for confirming your email."]
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @localizer["Error confirming your email."]
+        </div>
+    }
+
+    <div class="form-group mt-5">
+        <a class="btn btn-primary" asp-route="@RouteNames.Home">
+            <span class="bi-arrow-left" aria-hidden="true"></span>
+            @localizer["Back to home page"]
+        </a>
+    </div>
+</div>
