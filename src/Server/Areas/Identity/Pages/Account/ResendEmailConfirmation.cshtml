@@ -1,26 +1,53 @@
 @page "/account/resend-confirmation"
 @model ResendEmailConfirmationModel
+@inject IViewLocalizer localizer
+
 @{
-    ViewData["Title"] = "Resend email confirmation";
+    var title = localizer["Resend confirmation"];
+
+    ViewData[KnownViewData.Title] = title;
 }
 
-<h1>@ViewData["Title"]</h1>
-<h4>Enter your email.</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">Resend</button>
-        </form>
-    </div>
-</div>
+<h1 class="login-content-title">@title</h1>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+@if (Model.EmailSent)
+{
+    <div class="login-form-box">
+        <div class="alert alert-success" role="alert">
+            @localizer["Verification email sent. Please check your email"]
+        </div>
+
+        <div class="form-group mt-5">
+            <a class="btn btn-primary" href="@Model.ReturnUrl">
+                <span class="bi-arrow-left" aria-hidden="true"></span>
+                @localizer["Back"]
+            </a>
+        </div>
+    </div>
+}
+else
+{
+    <form class="login-form-box" method="post" loading="loading">
+        <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+
+        <p>@localizer["To send a confirmation email, enter the email associated with your account."]</p>
+
+        <div class="form-group">
+            <label class="form-label" asp-for="Input.Email">@localizer["Email"]</label>
+            <input class="form-control" asp-for="Input.Email" autofocus />
+            <span class="d-block form-text text-danger" asp-validation-for="Input.Email"></span>
+        </div>
+
+        <div class="form-group mt-5">
+            <button type="submit" class="btn btn-primary">
+                @localizer["Resend"]
+            </button>
+            <a class="btn btn-secondary" href="@Model.ReturnUrl">
+                @localizer["Cancel"]
+            </a>
+            <div class="spinner-border spinner-border-sm ml-2" role="status" id="loading" style="display: none;">
+                <span class="sr-only">@localizer["Loading..."]</span>
+            </div>
+        </div>
+    </form>
 }

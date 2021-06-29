@@ -1,14 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Localization;
-using Nocturne.Auth.Core.Services.Email;
 using Nocturne.Auth.Core.Services.Identity;
 using Nocturne.Auth.Server.Areas.Identity.Emails;
 
@@ -17,18 +14,15 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ResendEmailConfirmationModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IdentityEmailService _emailSender;
-        private readonly IStringLocalizer _localizer;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IdentityEmailService emailSender;
 
         public ResendEmailConfirmationModel(
             UserManager<ApplicationUser> userManager,
-            IdentityEmailService emailSender,
-            IStringLocalizer<ResendEmailConfirmationModel> localizer)
+            IdentityEmailService emailSender)
         {
-            _userManager = userManager;
-            _emailSender = emailSender;
-            _localizer = localizer;
+            this.userManager = userManager;
+            this.emailSender = emailSender;
         }
 
         [BindProperty]
@@ -36,41 +30,56 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "The email is required")]
+            [EmailAddress(ErrorMessage = "The email is not valid")]
             public string Email { get; set; }
         }
 
-        public void OnGet()
+        public string ReturnUrl { get; set; }
+
+        [TempData]
+        public bool EmailSent { get; set; }
+
+        public void OnGet(string returnUrl = null)
         {
+            ReturnUrl = returnUrl ?? Url.Content("~/");
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            if (!ModelState.IsValid)
+            ReturnUrl = returnUrl ?? Url.Content("~/");
+
+            if (ModelState.IsValid is false)
             {
                 return Page();
             }
 
-            var user = await _userManager.FindByEmailAsync(Input.Email);
+            var user = await userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
-                return Page();
+                return PageWithStatus();
             }
 
-            var userId = await _userManager.GetUserIdAsync(user);
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var userId = await userManager.GetUserIdAsync(user);
+
+            var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
             var callbackUrl = Url.Page(
                 "/Account/ConfirmEmail",
                 pageHandler: null,
                 values: new { userId, code },
                 protocol: Request.Scheme);
 
-            await _emailSender.SendEmailConfirmation(user, Input.Email, callbackUrl);
+            await emailSender.SendEmailConfirmation(user, Input.Email, callbackUrl);
 
-            ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+            return PageWithStatus();
+        }
+
+        private IActionResult PageWithStatus()
+        {
+            EmailSent = true;
+
             return Page();
         }
     }

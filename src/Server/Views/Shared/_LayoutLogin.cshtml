@@ -1,0 +1,65 @@
+@using System.Globalization;
+@inject IViewLocalizer localizer;
+@inject WebAssets assets;
+
+@{
+    var language = CultureInfo.CurrentCulture.Name;
+    var applicationName = "Conta de Praia Grande";
+}
+
+<!DOCTYPE html>
+<html lang="@language">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData[KnownViewData.Title] - @applicationName</title>
+    <link rel="stylesheet" href="@assets.Url("bootstrap/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@assets.Url("bootstrap-icons/bootstrap-icons.min.css")" />
+    <link rel="stylesheet" href="@assets.Url("impromptu/impromptu.min.css")" />
+    <link rel="stylesheet" href="@assets.Url("impromptu/impromptu-login.min.css")" />
+    <link rel="stylesheet" href="@assets.Url("cookieconsent/cookieconsent.min.css")" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="login-background">
+    <div class="layout">
+        <header class="layout-header">
+            <nav class="navbar">
+                <div class="navbar-brand">
+                    <img class="navbar-logo mr-2" src="~/logo.svg" alt="logo" role="img" />
+                    <h1 class="navbar-title">@applicationName</h1>
+                </div>
+            </nav>
+        </header>
+        <main class="layout-main">
+            <div class="login-container">
+                <aside class="login-aside-container">
+                    <div class="login-aside-background" aria-hidden="true"></div>
+                    <div class="login-aside">
+                        <img class="login-application-logo" src="~/logo.svg" alt="Logo" />
+                        <span class="login-application-title">@applicationName</span>
+                        <img class="login-application-image" src="~/img/authentication.svg" alt="Authentication" />
+                    </div>
+                </aside>
+
+                <div class="login-content-container">
+                    <div class="login-content">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="@assets.Url("jquery/jquery.min.js")"></script>
+    <script src="@assets.Url("bootstrap/bootstrap.bundle.min.js")"></script>
+    <script src="@assets.Url("impromptu/impromptu.min.js")"></script>
+    <script src="@assets.Url("cookieconsent/cookieconsent.min.js")"></script>
+    <script src="@assets.Url("jquery-validation/jquery.validate.min.js")"></script>
+    <script src="@assets.Url("jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js")"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/cookieconsent.js" asp-append-version="true"></script>
+
+    <partial name="./_CookieConsent" />
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

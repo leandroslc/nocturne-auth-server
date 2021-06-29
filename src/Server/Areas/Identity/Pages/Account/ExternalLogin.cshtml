@@ -1,12 +1,42 @@
 ﻿@page "/account/external"
 @model ExternalLoginModel
+@inject IViewLocalizer localizer
+
 @{
-    ViewData["Title"] = "Register";
+    var title = localizer["Register"];
+
+    ViewData[KnownViewData.Title] = title;
 }
 
-<h1>@ViewData["Title"]</h1>
-<h4 id="external-login-title">Associate your @Model.ProviderDisplayName account.</h4>
-<hr />
+<h1 class="login-content-title">@title</h1>
+
+<form class="login-form-box" asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post" loading="loading">
+    <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+
+    <p id="external-login-title">@localizer["Associate your {0} account", Model.ProviderDisplayName]</p>
+
+    <p id="external-login-description" class="alert alert-info">
+        @localizer["You've successfully authenticated with {0}", Html.Raw($"<strong>{Model.ProviderDisplayName}</strong>")].
+        @localizer["Please enter an email address below to finish logging in"]
+    </p>
+
+    <div class="form-group">
+        <label class="form-label" asp-for="Input.Email">@localizer["Email"]</label>
+        <input class="form-control" asp-for="Input.Email" />
+        <span class="d-block form-text text-danger" asp-validation-for="Input.Email"></span>
+    </div>
+
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">
+            @localizer["Register"]
+        </button>
+        <div class="spinner-border spinner-border-sm ml-2" role="status" id="loading" style="display: none;">
+            <span class="sr-only">@localizer["Loading..."]</span>
+        </div>
+    </div>
+</form>
+
+@* <hr />
 
 <p id="external-login-description" class="text-info">
     You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
@@ -30,4 +60,4 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}
+} *@

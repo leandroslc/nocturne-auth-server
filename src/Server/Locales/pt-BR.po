@@ -1,29 +1,239 @@
+msgid "Associate your {0} account"
+msgstr "Associe sua conta {0}"
+
+msgid "Authenticator code"
+msgstr "Código autenticador"
+
+msgid "Back"
+msgstr "Voltar"
+
+msgid "Back to home page"
+msgstr "Voltar à página inicial"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
 msgid "Confirm"
 msgstr "Confirmar"
+
+msgid "Confirm password"
+msgstr "Confirmar senha"
 
 msgid "Confirm your email"
 msgstr "Confirme seu email"
 
+msgid "Don't have an account?"
+msgstr "Não tem uma conta?"
+
+msgid "Don't have access to your authenticator device?"
+msgstr "Não possui acesso ao seu dispositivo autenticador?"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Email confirmation"
+msgstr "Confirmação de e-mail"
+
+msgid "Email sent"
+msgstr "E-mail enviado"
+
+msgid "Email sent. Please check your email to reset your password"
+msgstr "E-mail enviado. Por favor, verifique seu e-mail para redefinir sua senha"
+
+msgid "Enter"
+msgstr "Entrar"
+
+msgid "Error confirming your email."
+msgstr "Erro ao confirmar seu email."
+
+msgid "Error changing the email."
+msgstr "Erro ao alterar o e-mail."
+
+msgid "Error changing user name."
+msgstr "Erro ao alterar o nome de usuário."
+
+msgid "Forgot my password"
+msgstr "Esqueci minha senha"
+
+msgid "Forgot your password?"
+msgstr "Esqueceu sua senha?"
+
 msgid "I understand"
 msgstr "Entendi"
+
+msgid "Invalid authenticator code"
+msgstr "Código autenticador inválido"
 
 msgid "Invalid client id"
 msgstr "Client id inválido"
 
+msgid "Invalid login attempt"
+msgstr "Tentativa de login inválida"
+
+msgid "Invalid recovery code entered"
+msgstr "Código de recuperação inválido"
+
+msgid "Invalid token."
+msgstr "Token inválido."
+
 msgid "Invalid user"
 msgstr "Usuário inválido"
 
+msgid "Loading..."
+msgstr "Carregando..."
+
+msgid "Locked out"
+msgstr "Bloqueado"
+
+msgid "Log in"
+msgstr "Log in"
+
+msgid "Log in using your {0} account"
+msgstr "Entre usando sua conta {0}"
+
+msgid "Log in with a recovery code"
+msgstr "Entre com um código de recuperação"
+
+msgid "More info"
+msgstr "Mais informações"
+
+msgid "No external authentication services configured"
+msgstr "Nenhum serviço de autenticação externa configurado"
+
+msgid "Or register using:"
+msgstr "Ou cadastre-se usando:"
+
+msgid "Or log in using:"
+msgstr "Ou entre usando:"
+
+msgid "Password"
+msgstr "Senha"
+
+msgid "Passwords must have at least one digit ('0'-'9')."
+msgstr "Senhas devem ter no mínimo um digito ('0'-'9')."
+
+msgid "Passwords must have at least one lowercase ('a'-'z')."
+msgstr "Senhas devem ter no mínimo uma letra minúscula ('a'-'z')."
+
+msgid "Passwords must have at least one non alphanumeric character."
+msgstr "Senhas devem ter no mínimo um caractere não-alfanumérico."
+
+msgid "Passwords must have at least one uppercase ('A'-'Z')."
+msgstr "Senhas devem ter no mínimo uma letra maiúscula ('A'-'Z')."
+
 msgid "Please confirm your account by clicking the button below."
 msgstr "Por favor, confirme sua conta de acesso clicando no botão abaixo."
+
+msgid "Please enter an email address below to finish logging in"
+msgstr "Por favor informe um endereço de e-mail abaixo para completar o acesso"
+
+msgid "Recovery code"
+msgstr "Código de recuperação"
+
+msgid "Recovery code verification"
+msgstr "Verificação de código de recuperação"
+
+msgid "Register"
+msgstr "Cadastrar"
+
+msgid "Register confirmation"
+msgstr "Confirmação de cadastro"
+
+msgid "Register here"
+msgstr "Cadastre-se aqui"
+
+msgid "Remember this machine"
+msgstr "Lembrar este dispositivo"
+
+msgid "Remember my login"
+msgstr "Lembrar meu login"
+
+msgid "Resend"
+msgstr "Reenviar"
+
+msgid "Resend confirmation"
+msgstr "Reenviar confirmação"
+
+msgid "Resend email confirmation"
+msgstr "Reenviar email de confirmação"
 
 msgid "Reset"
 msgstr "Redefinir"
 
 msgid "Reset Password"
+msgstr "Redefinir Senha"
+
+msgid "Reset password"
 msgstr "Redefinir senha"
+
+msgid "Thank you for confirming your email."
+msgstr "Obrigado por confirmar seu email."
+
+msgid "Thank you for confirming your email change."
+msgstr "Obrigado por confirmar sua alteração de email."
+
+msgid "The code is required"
+msgstr "O código é obrigatório"
+
+msgid "The email is not valid"
+msgstr "O email não é válido"
+
+msgid "The email is required"
+msgstr "O email é obrigatório"
+
+msgid "The name is required"
+msgstr "O nome é obrigatório"
+
+msgid "The password and confirmation password do not match"
+msgstr "A senha e a confirmação de senha não correspondem"
+
+msgid "The code must have at least {2} and max {1} characters"
+msgstr "O código deve ter no mínimo {2} e no máximo {1} caracteres"
+
+msgid "The password must have at least {2} and max {1} characters"
+msgstr "A senha deve ter no mínimo {2} e no máximo {1} caracteres"
+
+msgid "The password is required"
+msgstr "A senha é obrigatória"
+
+msgid "This account has been locked out. Please try again later."
+msgstr "Esta conta foi bloqueada. Por favor, tente novamente mais tarde."
 
 msgid "This site stores data like cookies to enable required functionality"
 msgstr "Este site armazena dados como cookies para habilitar funcionalidades obrigatórias"
 
+msgid "To finalize your registration, please check your email to confirm your account."
+msgstr "Para finalizar seu cadastro, por favor verifique seu e-mail para confirmar sua conta."
+
+msgid "To request a password reset, enter the email associated with your account."
+msgstr "Para solicitar uma redefinição de senha, informe o e-mail associado à sua conta."
+
 msgid "To reset your password click on the button below."
 msgstr "Para redefinir sua senha, clique no botão abaixo."
+
+msgid "To send a confirmation email, enter the email associated with your account."
+msgstr "Para enviar um email de confirmação, informe o e-mail associado à sua conta."
+
+msgid "Toggle password visibility"
+msgstr "Alternar visibilidade da senha"
+
+msgid "Two-factor authentication"
+msgstr "Autenticação em dois fatores"
+
+msgid "Username '{0}' is already taken."
+msgstr "O nome de usuário '{0}' já está sendo usado."
+
+msgid "Verification email sent. Please check your email"
+msgstr "Email de confirmação enviado. Por favor, verifique seu email"
+
+msgid "You've successfully authenticated with {0}"
+msgstr "Você foi autenticado com sucesso com a conta {0}"
+
+msgid "You have requested to log in with a recovery code. This login will not be remembered until you provide an authenticator app code at log in or disable 2FA and log in again."
+msgstr "Você solicitou para entrar com um código de verificação. Este login não será lembrado até que você providencie um código de um aplicativo autenticador no log in ou desabilite a autenticação em dois fatores e faça login novamente."
+
+msgid "Your login is protected with an authenticator app. Enter your authenticator code below."
+msgstr "Seu login está protegido por um aplicativo de autenticação. Informe seu código autenticador abaixo."
+
+msgid "Your password has been reset"
+msgstr "Sua senha foi redefinida"

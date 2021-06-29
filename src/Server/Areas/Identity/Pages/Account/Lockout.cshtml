@@ -1,10 +1,24 @@
 ﻿@page "/account/lockout"
 @model LockoutModel
+@inject IViewLocalizer localizer
+
 @{
-    ViewData["Title"] = "Locked out";
+    var title = localizer["Locked out"];
+
+    ViewData[KnownViewData.Title] = title;
 }
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">This account has been locked out, please try again later.</p>
-</header>
+<h1 class="login-content-title">@title</h1>
+
+<div class="login-form-box">
+    <div class="alert alert-danger" role="alert">
+        @localizer["This account has been locked out. Please try again later."]
+    </div>
+
+    <div class="form-group mt-5">
+        <a class="btn btn-primary" href="@Model.ReturnUrl">
+            <span class="bi-arrow-left" aria-hidden="true"></span>
+            @localizer["Back"]
+        </a>
+    </div>
+</div>
