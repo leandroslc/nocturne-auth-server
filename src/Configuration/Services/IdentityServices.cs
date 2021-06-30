@@ -20,7 +20,8 @@ namespace Nocturne.Auth.Configuration.Services
                     configuration.GetSection("Identity").Bind(options);
                 })
                 .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddErrorDescriber<CustomIdentityErrorDescriber>();
 
             services.ConfigureApplicationCookie(options =>
             {
