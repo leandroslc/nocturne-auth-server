@@ -1,3 +1,9 @@
+msgid "A user with this login already exists"
+msgstr "Um usuário com este login já existe"
+
+msgid "An unknown failure has occurred"
+msgstr "Ocorreu uma falha desconhecida"
+
 msgid "Associate your {0} account"
 msgstr "Associe sua conta {0}"
 
@@ -12,6 +18,9 @@ msgstr "Voltar à página inicial"
 
 msgid "Cancel"
 msgstr "Cancelar"
+
+msgid "Concurrency failure, the resource has been modified"
+msgstr "Falha de concorrência, o recurso foi modificado"
 
 msgid "Confirm"
 msgstr "Confirmar"
@@ -33,6 +42,9 @@ msgstr "E-mail"
 
 msgid "Email confirmation"
 msgstr "Confirmação de e-mail"
+
+msgid "Email '{0}' is invalid"
+msgstr "O e-mail '{0}' é inválido"
 
 msgid "Email sent"
 msgstr "E-mail enviado"
@@ -61,6 +73,9 @@ msgstr "Esqueceu sua senha?"
 msgid "I understand"
 msgstr "Entendi"
 
+msgid "Incorrect password"
+msgstr "Senha incorreta"
+
 msgid "Invalid authenticator code"
 msgstr "Código autenticador inválido"
 
@@ -73,8 +88,8 @@ msgstr "Tentativa de login inválida"
 msgid "Invalid recovery code entered"
 msgstr "Código de recuperação inválido"
 
-msgid "Invalid token."
-msgstr "Token inválido."
+msgid "Invalid token"
+msgstr "Token inválido"
 
 msgid "Invalid user"
 msgstr "Usuário inválido"
@@ -84,6 +99,9 @@ msgstr "Carregando..."
 
 msgid "Locked out"
 msgstr "Bloqueado"
+
+msgid "Lockout is not enabled for this user"
+msgstr "O bloqueio não está habilitado para este usuário"
 
 msgid "Log in"
 msgstr "Log in"
@@ -109,18 +127,6 @@ msgstr "Ou entre usando:"
 msgid "Password"
 msgstr "Senha"
 
-msgid "Passwords must have at least one digit ('0'-'9')."
-msgstr "Senhas devem ter no mínimo um digito ('0'-'9')."
-
-msgid "Passwords must have at least one lowercase ('a'-'z')."
-msgstr "Senhas devem ter no mínimo uma letra minúscula ('a'-'z')."
-
-msgid "Passwords must have at least one non alphanumeric character."
-msgstr "Senhas devem ter no mínimo um caractere não-alfanumérico."
-
-msgid "Passwords must have at least one uppercase ('A'-'Z')."
-msgstr "Senhas devem ter no mínimo uma letra maiúscula ('A'-'Z')."
-
 msgid "Please confirm your account by clicking the button below."
 msgstr "Por favor, confirme sua conta de acesso clicando no botão abaixo."
 
@@ -129,6 +135,9 @@ msgstr "Por favor informe um endereço de e-mail abaixo para completar o acesso"
 
 msgid "Recovery code"
 msgstr "Código de recuperação"
+
+msgid "Recovery code redemption failure"
+msgstr "Falha ao resgatar o código de recuperação"
 
 msgid "Recovery code verification"
 msgstr "Verificação de código de recuperação"
@@ -166,6 +175,12 @@ msgstr "Redefinir Senha"
 msgid "Reset password"
 msgstr "Redefinir senha"
 
+msgid "Role name '{0}' is already taken"
+msgstr "O nome do grupo '{0}' já está sendo usado"
+
+msgid "Role name '{0}' is invalid"
+msgstr "O nome do grupo '{0}' é inválido"
+
 msgid "Thank you for confirming your email."
 msgstr "Obrigado por confirmar seu email."
 
@@ -174,6 +189,12 @@ msgstr "Obrigado por confirmar sua alteração de email."
 
 msgid "The code is required"
 msgstr "O código é obrigatório"
+
+msgid "The code must have at least {2} and max {1} characters"
+msgstr "O código deve ter no mínimo {2} e no máximo {1} caracteres"
+
+msgid "The email '{0}' is already taken"
+msgstr "O e-mail '{0}' já está sendo usado"
 
 msgid "The email is not valid"
 msgstr "O email não é válido"
@@ -187,14 +208,29 @@ msgstr "O nome é obrigatório"
 msgid "The password and confirmation password do not match"
 msgstr "A senha e a confirmação de senha não correspondem"
 
-msgid "The code must have at least {2} and max {1} characters"
-msgstr "O código deve ter no mínimo {2} e no máximo {1} caracteres"
+msgid "The password is required"
+msgstr "A senha é obrigatória"
 
 msgid "The password must have at least {2} and max {1} characters"
 msgstr "A senha deve ter no mínimo {2} e no máximo {1} caracteres"
 
-msgid "The password is required"
-msgstr "A senha é obrigatória"
+msgid "The password must be at least {0} characters"
+msgstr "A senha deve ter ao menos {0} caracteres"
+
+msgid "The password must use at least {0} different characters"
+msgstr "A senha deve usar ao menos {0} caracteres diferentes"
+
+msgid "The password must have at least one digit (0-9)"
+msgstr "A senha deve ter ao menos um dígito (0-9)"
+
+msgid "The password must have at least one lowercase letter (a-z)"
+msgstr "A senha deve ter ao menos uma letra minúscula (a-z)"
+
+msgid "The password must have at least one non alphanumeric character"
+msgstr "A senha deve ter ao menos um caractere não-alfanumérico"
+
+msgid "The password must have at least one uppercase letter (A-Z)"
+msgstr "A senha deve ter ao menos uma letra maiúscula (A-Z)"
 
 msgid "This account has been locked out. Please try again later."
 msgstr "Esta conta foi bloqueada. Por favor, tente novamente mais tarde."
@@ -220,8 +256,20 @@ msgstr "Alternar visibilidade da senha"
 msgid "Two-factor authentication"
 msgstr "Autenticação em dois fatores"
 
-msgid "Username '{0}' is already taken."
-msgstr "O nome de usuário '{0}' já está sendo usado."
+msgid "User already has a password set"
+msgstr "O usuário já tem uma senha definida"
+
+msgid "User already in role '{0}'"
+msgstr "O usuário já está no grupo '{0}'"
+
+msgid "User is not in role '{0}'"
+msgstr "O usuário não está no grupo '{0}'"
+
+msgid "Username '{0}' can only contain letters or digits"
+msgstr "O nome de usuário '{0}' apenas pode conter letras ou digitos"
+
+msgid "Username '{0}' is already taken"
+msgstr "O nome de usuário '{0}' já está sendo usado"
 
 msgid "Verification email sent. Please check your email"
 msgstr "Email de confirmação enviado. Por favor, verifique seu email"
