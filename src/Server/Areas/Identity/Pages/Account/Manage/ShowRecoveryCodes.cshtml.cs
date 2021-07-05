@@ -8,9 +8,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string[] RecoveryCodes { get; set; }
 
-        [TempData]
-        public string StatusMessage { get; set; }
-
         public IActionResult OnGet()
         {
             if (RecoveryCodes == null || RecoveryCodes.Length == 0)

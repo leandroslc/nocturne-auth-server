@@ -1,25 +1,53 @@
 ﻿@page "/manage/disable-two-factor"
 @model Disable2faModel
+@inject IViewLocalizer localizer;
+
 @{
-    ViewData["Title"] = "Disable two-factor authentication (2FA)";
-    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+    var title = localizer["Disable two-factor authentication (2FA)"];
+
+    ViewData[KnownViewData.Title] = title;
+    ViewData[KnownViewData.PageGroup] = ManageNavPages.TwoFactorAuthentication;
 }
 
-<partial name="_StatusMessage" for="StatusMessage" />
-<h2>@ViewData["Title"]</h2>
+<div class="page">
+    <div class="page-heading">
+        <div class="page-container">
+            <a class="page-back" asp-page="./TwoFactorAuthentication">
+                <span class="bi-arrow-left" aria-hidden="true"></span>
+                <span>@localizer["Two-factor authentication (2FA)"]</span>
+            </a>
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-header">
+                <div class="page-card-title">@title</div>
+            </div>
+            <div class="page-card-content">
+                <form method="post" loading="loading" class="col-md-8">
 
-<div class="alert alert-warning" role="alert">
-    <p>
-        <strong>This action only disables 2FA.</strong>
-    </p>
-    <p>
-        Disabling 2FA does not change the keys used in authenticator apps. If you wish to change the key
-        used in an authenticator app you should <a asp-page="./ResetAuthenticator">reset your authenticator keys.</a>
-    </p>
-</div>
+                    <p>
+                        @localizer["This action disables the two-factor authentication. You can reenable it when you setup an authenticator app."]
+                    </p>
 
-<div>
-    <form method="post" class="form-group">
-        <button class="btn btn-danger" type="submit">Disable 2FA</button>
-    </form>
+                    <p class="alert alert-warning" role="alert">
+                        @localizer["Disabling two-factor authentication does not change the keys used in authenticator apps. If you wish to change the key used in an authenticator app you should"]
+                        <a asp-page="./ResetAuthenticator">@localizer["reset your authenticator keys"]</a>.
+                    </p>
+
+                    <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+
+                    <div class="form-group mt-5">
+                        <button class="btn btn-primary" type="submit">
+                            @localizer["Disable"]
+                        </button>
+
+                        <div class="spinner-border spinner-border-sm text-primary" role="status" id="loading" style="display: none;">
+                            <span class="sr-only">@localizer["Loading..."]</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

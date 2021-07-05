@@ -9,29 +9,29 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
     public class ResetAuthenticatorModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ILogger<ResetAuthenticatorModel> _logger;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly ILogger<ResetAuthenticatorModel> logger;
 
         public ResetAuthenticatorModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<ResetAuthenticatorModel> logger)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.logger = logger;
         }
 
         [TempData]
-        public string StatusMessage { get; set; }
+        public bool AuthenticationKeyResetSucceeded { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetUserAsync();
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return UserNotFound();
             }
 
             return Page();
@@ -39,20 +39,32 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetUserAsync();
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return UserNotFound();
             }
 
-            await _userManager.SetTwoFactorEnabledAsync(user, false);
-            await _userManager.ResetAuthenticatorKeyAsync(user);
-            _logger.LogInformation("User with ID '{UserId}' has reset their authentication app key.", user.Id);
+            await userManager.SetTwoFactorEnabledAsync(user, false);
+            await userManager.ResetAuthenticatorKeyAsync(user);
 
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your authenticator app key has been reset, you will need to configure your authenticator app using the new key.";
+            logger.LogInformation("User with ID '{UserId}' has reset their authentication app key.", user.Id);
+
+            await signInManager.RefreshSignInAsync(user);
+
+            AuthenticationKeyResetSucceeded = true;
 
             return RedirectToPage("./EnableAuthenticator");
+        }
+
+        private Task<ApplicationUser> GetUserAsync()
+        {
+            return userManager.GetUserAsync(User);
+        }
+
+        private IActionResult UserNotFound()
+        {
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
     }
 }

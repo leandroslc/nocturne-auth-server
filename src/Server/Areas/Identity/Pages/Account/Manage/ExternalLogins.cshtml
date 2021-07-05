@@ -1,53 +1,95 @@
 ﻿@page "/manage/external"
 @model ExternalLoginsModel
+@inject IViewLocalizer localizer;
+
 @{
-    ViewData["Title"] = "Manage your external logins";
-    ViewData["ActivePage"] = ManageNavPages.ExternalLogins;
+    var title = localizer["External logins"];
+
+    ViewData[KnownViewData.Title] = title;
+    ViewData[KnownViewData.PageGroup] = ManageNavPages.ExternalLogins;
 }
 
-<partial name="_StatusMessage" for="StatusMessage" />
-@if (Model.CurrentLogins?.Count > 0)
-{
-    <h4>Registered Logins</h4>
-    <table class="table">
-        <tbody>
-            @foreach (var login in Model.CurrentLogins)
-            {
-                <tr>
-                    <td id="@($"login-provider-{login.LoginProvider}")">@login.ProviderDisplayName</td>
-                    <td>
-                        @if (Model.ShowRemoveButton)
-                        {
-                            <form id="@($"remove-login-{login.LoginProvider}")" asp-page-handler="RemoveLogin" method="post">
-                                <div>
-                                    <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
-                                    <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
-                                    <button type="submit" class="btn btn-primary" title="Remove this @login.ProviderDisplayName login from your account">Remove</button>
-                                </div>
-                            </form>
-                        }
-                        else
-                        {
-                            @: &nbsp;
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-@if (Model.OtherLogins?.Count > 0)
-{
-    <h4>Add another service to log in.</h4>
-    <hr />
-    <form id="link-login-form" asp-page-handler="LinkLogin" method="post" class="form-horizontal">
-        <div id="socialLoginList">
-            <p>
-                @foreach (var provider in Model.OtherLogins)
+<div class="page">
+    <div class="page-heading"></div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-header">
+                <div class="page-card-title">@title</div>
+            </div>
+            <div class="page-card-content col-md-8">
+                @if (Model.ExternalLoginActionSucceeded)
                 {
-                    <button id="@($"link-login-button-{provider.Name}")" type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        @Model.ExternalLoginStatusMessage
+                    </div>
                 }
-            </p>
+
+                @if (Model.ExternalLoginActionFailed)
+                {
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        @Model.ExternalLoginStatusMessage
+                    </div>
+                }
+
+                <p class="form-label">
+                    @localizer["Manage your external logins"]
+                </p>
+
+                @if (Model.CurrentLogins?.Count > 0)
+                {
+                    <h4>@localizer["Registered logins"]</h4>
+                    <table class="table">
+                        <tbody>
+                            @foreach (var login in Model.CurrentLogins)
+                            {
+                                <tr>
+                                    <td id="@($"login-provider-{login.LoginProvider}")">@login.ProviderDisplayName</td>
+                                    <td>
+                                        @if (Model.ShowRemoveButton)
+                                        {
+                                            <form id="@($"remove-login-{login.LoginProvider}")" asp-page-handler="RemoveLogin" method="post">
+                                                <div>
+                                                    <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
+                                                    <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
+                                                    <button type="submit" class="btn btn-primary" title="@localizer["Remove this {0} login from your account", login.ProviderDisplayName]">
+                                                        @localizer["Remove"]
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            @: &nbsp;
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+
+                @if (Model.OtherLogins?.Count > 0)
+                {
+                    <h4>@localizer["Add another service to log in"]</h4>
+                    <hr />
+                    <form id="link-login-form" asp-page-handler="LinkLogin" method="post" class="form-horizontal">
+                        <div id="socialLoginList">
+                            <p>
+                                @foreach (var provider in Model.OtherLogins)
+                                {
+                                    <button id="@($"link-login-button-{provider.Name}")" type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="@localizer["Log in using your {0} account", provider.DisplayName]">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            </div>
         </div>
-    </form>
-}
+    </div>
+</div>

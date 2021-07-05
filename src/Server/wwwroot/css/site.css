@@ -5,3 +5,28 @@
   font-size: 0.95rem;
   list-style: none;
 }
+
+.steps-list {
+  list-style: none;
+  counter-reset: item;
+}
+
+.steps-list > li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.4rem;
+  counter-increment: item;
+}
+
+.steps-list > li::before {
+  top: 1px;
+  min-width: 1.6rem;
+  padding: 0.05rem 0.15rem;
+  margin-right: 0.4rem;
+  text-align: center;
+  color: #ffffff;
+  vertical-align: top;
+  background: var(--primary);
+  border-radius: 100%;
+  content: counter(item);
+}

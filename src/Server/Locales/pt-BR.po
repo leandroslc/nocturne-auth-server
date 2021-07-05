@@ -1,11 +1,29 @@
 msgid "A user with this login already exists"
 msgstr "Um usuário com este login já existe"
 
+msgid "Actions"
+msgstr "Ações"
+
+msgid "Add"
+msgstr "Adicionar"
+
+msgid "Add an authenticator app"
+msgstr "Adicionar um aplicativo autenticador"
+
+msgid "Add another service to log in"
+msgstr "Adicionar outro serviço para fazer log in"
+
+msgid "An unexpected error occurred disabling the two-factor authenticaton"
+msgstr "Um erro inesperado ocorreu ao desabilitar a autenticação de dois fatores"
+
 msgid "An unknown failure has occurred"
 msgstr "Ocorreu uma falha desconhecida"
 
 msgid "Associate your {0} account"
 msgstr "Associe sua conta {0}"
+
+msgid "Authenticator app"
+msgstr "Aplicativo autenticador"
 
 msgid "Authenticator code"
 msgstr "Código autenticador"
@@ -19,8 +37,20 @@ msgstr "Voltar à página inicial"
 msgid "Cancel"
 msgstr "Cancelar"
 
+msgid "Cannot disable two-factor authentication as it is not currently enabled"
+msgstr "Não é possível desabilitar a autenticação de dois fatores pois não está habilitada"
+
+msgid "Change email"
+msgstr "Alterar e-mail"
+
+msgid "Change password"
+msgstr "Alterar senha"
+
 msgid "Concurrency failure, the resource has been modified"
 msgstr "Falha de concorrência, o recurso foi modificado"
+
+msgid "Configure authenticator app"
+msgstr "Configurar aplicativo autenticador"
 
 msgid "Confirm"
 msgstr "Confirmar"
@@ -28,14 +58,56 @@ msgstr "Confirmar"
 msgid "Confirm password"
 msgstr "Confirmar senha"
 
+msgid "Confirm new password"
+msgstr "Confirmar nova senha"
+
 msgid "Confirm your email"
 msgstr "Confirme seu email"
+
+msgid "Confirmation link to change email sent. Please check your email"
+msgstr "Link de confirmação para alterar o e-mail enviado. Por favor, verifique seu e-mail"
+
+msgid "Confirmed"
+msgstr "Confirmado"
+
+msgid "Current password"
+msgstr "Senha atual"
+
+msgid "Delete"
+msgstr "Apagar"
+
+msgid "Delete data and close my account"
+msgstr "Apagar dados e fechar minha conta"
+
+msgid "Delete personal data"
+msgstr "Apagar dados pessoais"
+
+msgid "Deleting this data will permanently remove your account, and this cannot be recovered."
+msgstr "Ao apagar estes dados você irá permanentemente remover sua conta e isto não pode ser desfeito."
+
+msgid "Disable"
+msgstr "Desabilitar"
+
+msgid "Disable two-factor authentication"
+msgstr "Desabilitar autenticação de dois fatores"
+
+msgid "Disable two-factor authentication (2FA)"
+msgstr "Desabilitar autenticação de dois fatores (2FA)"
+
+msgid "Disabling two-factor authentication does not change the keys used in authenticator apps. If you wish to change the key used in an authenticator app you should"
+msgstr "Desabilitar a autenticação de dois fatores não altera as chaves usadas no aplicativo autenticador. Se você deseja alterar as chaves usadas em um aplicativo autenticador, você deve"
 
 msgid "Don't have an account?"
 msgstr "Não tem uma conta?"
 
 msgid "Don't have access to your authenticator device?"
 msgstr "Não possui acesso ao seu dispositivo autenticador?"
+
+msgid "Download"
+msgstr "Download"
+
+msgid "Download a two-factor authenticator app"
+msgstr "Faça download de um aplicativo autenticador"
 
 msgid "Email"
 msgstr "E-mail"
@@ -55,6 +127,9 @@ msgstr "E-mail enviado. Por favor, verifique seu e-mail para redefinir sua senha
 msgid "Enter"
 msgstr "Entrar"
 
+msgid "Enter the code"
+msgstr "Informe o código"
+
 msgid "Error confirming your email."
 msgstr "Erro ao confirmar seu email."
 
@@ -64,14 +139,41 @@ msgstr "Erro ao alterar o e-mail."
 msgid "Error changing user name."
 msgstr "Erro ao alterar o nome de usuário."
 
+msgid "Error when trying to set phone number"
+msgstr "Erro ao tentar definir o número de telefone"
+
+msgid "External logins"
+msgstr "Logins externos"
+
+msgid "Forget"
+msgstr "Esquecer"
+
+msgid "Forget this browser"
+msgstr "Esquecer este navegador"
+
 msgid "Forgot my password"
 msgstr "Esqueci minha senha"
 
 msgid "Forgot your password?"
 msgstr "Esqueceu sua senha?"
 
+msgid "Generate"
+msgstr "Gerar"
+
+msgid "Generate recovery codes"
+msgstr "Gerar códigos de recuperação"
+
+msgid "Generating new recovery codes does not change the keys used in authenticator apps. If you wish to change the key used in an authenticator app you should reset your authenticator keys"
+msgstr "Gerar novos códigos de recuperação não altera as chaves usadas pelo aplicativo autenticador. Se você deseja alterar a chave usada no aplicativo autenticador, você deve redefinir as chaves autenticadoras"
+
 msgid "I understand"
 msgstr "Entendi"
+
+msgid "If you lose your device and don't have the recovery codes you will lose access to your account"
+msgstr "Se você perder seu dispositivo e não tiver os códigos de recuperação, você perderá o acesso à sua conta"
+
+msgid "If you reset your authenticator key your authenticator app will not work until you reconfigure it"
+msgstr "Se você redefinir sua chave autenticadora, seu aplicativo autenticador não irá funcionar até que você o reconfigure"
 
 msgid "Incorrect password"
 msgstr "Senha incorreta"
@@ -112,11 +214,35 @@ msgstr "Entre usando sua conta {0}"
 msgid "Log in with a recovery code"
 msgstr "Entre com um código de recuperação"
 
+msgid "Manage email"
+msgstr "Gerenciar email"
+
+msgid "Manage your external logins"
+msgstr "Gerencie seus logins externos"
+
 msgid "More info"
 msgstr "Mais informações"
 
+msgid "Name"
+msgstr "Nome"
+
+msgid "New email"
+msgstr "Novo e-mail"
+
+msgid "New password"
+msgstr "Nova senha"
+
 msgid "No external authentication services configured"
 msgstr "Nenhum serviço de autenticação externa configurado"
+
+msgid "Not confirmed"
+msgstr "Não confirmado"
+
+msgid "Once you have scanned the QR Code or input the key above, your two factor authentication app will provide you with a unique code. Enter the code in the confirmation form below."
+msgstr "Após escanear o QR Code ou informar a chave acima, seu aplicativo de autenticação de dois fatores irá fornecer um código único. Informe o código no formulário de confirmação abaixo."
+
+msgid "Open the authenticator app"
+msgstr "Abra o aplicativo autenticador"
 
 msgid "Or register using:"
 msgstr "Ou cadastre-se usando:"
@@ -127,14 +253,26 @@ msgstr "Ou entre usando:"
 msgid "Password"
 msgstr "Senha"
 
+msgid "Personal data"
+msgstr "Dados pessoais"
+
+msgid "Phone number"
+msgstr "Número de telefone"
+
 msgid "Please confirm your account by clicking the button below."
 msgstr "Por favor, confirme sua conta de acesso clicando no botão abaixo."
 
 msgid "Please enter an email address below to finish logging in"
 msgstr "Por favor informe um endereço de e-mail abaixo para completar o acesso"
 
+msgid "Profile"
+msgstr "Perfil"
+
 msgid "Recovery code"
 msgstr "Código de recuperação"
+
+msgid "Recovery codes"
+msgstr "Códigos de recuperação"
 
 msgid "Recovery code redemption failure"
 msgstr "Falha ao resgatar o código de recuperação"
@@ -151,11 +289,23 @@ msgstr "Confirmação de cadastro"
 msgid "Register here"
 msgstr "Cadastre-se aqui"
 
+msgid "Registered logins"
+msgstr "Logins registrados"
+
+msgid "Remember:"
+msgstr "Lembre-se:"
+
 msgid "Remember this machine"
 msgstr "Lembrar este dispositivo"
 
 msgid "Remember my login"
 msgstr "Lembrar meu login"
+
+msgid "Remove"
+msgstr "Remover"
+
+msgid "Remove this {0} login from your account"
+msgstr "Remover este login {0} de sua conta"
 
 msgid "Resend"
 msgstr "Reenviar"
@@ -169,17 +319,53 @@ msgstr "Reenviar email de confirmação"
 msgid "Reset"
 msgstr "Redefinir"
 
+msgid "Reset authenticator app"
+msgstr "Redefinir aplicativo autenticador"
+
+msgid "Reset authenticator key"
+msgstr "Redefinir chave autenticadora"
+
 msgid "Reset Password"
 msgstr "Redefinir Senha"
 
 msgid "Reset password"
 msgstr "Redefinir senha"
 
+msgid "Reset recovery codes"
+msgstr "Redefinir códigos de recuperação"
+
+msgid "reset your authenticator keys"
+msgstr "redefinir suas chaves autenticadoras"
+
 msgid "Role name '{0}' is already taken"
 msgstr "O nome do grupo '{0}' já está sendo usado"
 
 msgid "Role name '{0}' is invalid"
 msgstr "O nome do grupo '{0}' é inválido"
+
+msgid "Save"
+msgstr "Salvar"
+
+msgid "Save these codes in a safe place"
+msgstr "Salve estes códigos em um lugar seguro"
+
+msgid "Scan the QR Code or enter the key {0} into your two factor authenticator app. Spaces and casing do not matter."
+msgstr "Escaneie o QR Code ou entre com a chave {0} em seu aplicativo autenticador de dois fatores. Espaços e letras maiúsculas/minúsculas não importam."
+
+msgid "Send verification email"
+msgstr "Enviar e-mail de verificação"
+
+msgid "Set password"
+msgstr "Definir senha"
+
+msgid "Setup"
+msgstr "Configurar"
+
+msgid "Setup authenticator app"
+msgstr "Configurar aplicativo autenticador"
+
+msgid "Sugested apps:"
+msgstr "Apps sugeridos:"
 
 msgid "Thank you for confirming your email."
 msgstr "Obrigado por confirmar seu email."
@@ -193,6 +379,9 @@ msgstr "O código é obrigatório"
 msgid "The code must have at least {2} and max {1} characters"
 msgstr "O código deve ter no mínimo {2} e no máximo {1} caracteres"
 
+msgid "The current browser has been forgotten"
+msgstr "O navegador atual foi esquecido"
+
 msgid "The email '{0}' is already taken"
 msgstr "O e-mail '{0}' já está sendo usado"
 
@@ -202,8 +391,32 @@ msgstr "O email não é válido"
 msgid "The email is required"
 msgstr "O email é obrigatório"
 
+msgid "The external login was removed"
+msgstr "O login externo foi removido"
+
+msgid "The external login was added"
+msgstr "O login externo foi adicionado"
+
+msgid "The external login was not added. External logins can only be associated with one account"
+msgstr "O login externo não foi adicionado. Logins externos apenas podem ser associados à uma conta"
+
+msgid "The external login was not removed"
+msgstr "O login externo não foi removido"
+
 msgid "The name is required"
 msgstr "O nome é obrigatório"
+
+msgid "The name must have less than {1} characters"
+msgstr "O nome deve ter menos que {1} caracteres"
+
+msgid "The new email is required"
+msgstr "O novo e-mail é obrigatório"
+
+msgid "The new password is required"
+msgstr "A nova senha é obrigatória"
+
+msgid "The new password and confirmation password do not match"
+msgstr "A nova senha e a confirmação de senha não correspondem"
 
 msgid "The password and confirmation password do not match"
 msgstr "A senha e a confirmação de senha não correspondem"
@@ -232,8 +445,20 @@ msgstr "A senha deve ter ao menos um caractere não-alfanumérico"
 msgid "The password must have at least one uppercase letter (A-Z)"
 msgstr "A senha deve ter ao menos uma letra maiúscula (A-Z)"
 
+msgid "The phone number is not valid"
+msgstr "O número de telefone é inválido"
+
+msgid "These codes help you log in if you don't have your device with your authenticator app at hand"
+msgstr "Estes códigos ajudam você a fazer log in se você não tiver seu dispositivo com o app autenticador em mãos"
+
 msgid "This account has been locked out. Please try again later."
 msgstr "Esta conta foi bloqueada. Por favor, tente novamente mais tarde."
+
+msgid "This action disables the two-factor authentication. You can reenable it when you setup an authenticator app."
+msgstr "Esta ação desabilita a autenticação de dois fatores. Você pode reabilitá-la quando configurar um aplicativo autenticador."
+
+msgid "This process disables two-factor authentication until you verify your authenticator app. If you do not complete your authenticator app configuration you may lose access to your account"
+msgstr "Este processo desabilita a autenticação de dois fatores até que você confirme seu aplicativo autenticador. Se você não completar a configuração de seu aplicativo autenticador você poderá perder o acesso à sua conta"
 
 msgid "This site stores data like cookies to enable required functionality"
 msgstr "Este site armazena dados como cookies para habilitar funcionalidades obrigatórias"
@@ -250,11 +475,20 @@ msgstr "Para redefinir sua senha, clique no botão abaixo."
 msgid "To send a confirmation email, enter the email associated with your account."
 msgstr "Para enviar um email de confirmação, informe o e-mail associado à sua conta."
 
+msgid "To use an authenticator app go through the following steps:"
+msgstr "Para usar um aplicativo autenticador siga os passos a seguir:"
+
 msgid "Toggle password visibility"
 msgstr "Alternar visibilidade da senha"
 
 msgid "Two-factor authentication"
-msgstr "Autenticação em dois fatores"
+msgstr "Autenticação de dois fatores"
+
+msgid "Two-factor authentication (2FA)"
+msgstr "Autenticação de dois fatores (2FA)"
+
+msgid "Update"
+msgstr "Atualizar"
 
 msgid "User already has a password set"
 msgstr "O usuário já tem uma senha definida"
@@ -265,23 +499,86 @@ msgstr "O usuário já está no grupo '{0}'"
 msgid "User is not in role '{0}'"
 msgstr "O usuário não está no grupo '{0}'"
 
+msgid "Username"
+msgstr "Nome de usuário"
+
 msgid "Username '{0}' can only contain letters or digits"
 msgstr "O nome de usuário '{0}' apenas pode conter letras ou digitos"
 
 msgid "Username '{0}' is already taken"
 msgstr "O nome de usuário '{0}' já está sendo usado"
 
+msgid "Verification code"
+msgstr "Código de verificação"
+
+msgid "Verification code is invalid"
+msgstr "Código de verificação inválido"
+
 msgid "Verification email sent. Please check your email"
 msgstr "Email de confirmação enviado. Por favor, verifique seu email"
+
+msgid "Verify"
+msgstr "Verificar"
+
+msgid "When you login again from this browser you will be prompted for your two-factor code"
+msgstr "Quando você fizer log in novamente com este navegador você será solicitado pelo seu código de dois fatores"
 
 msgid "You've successfully authenticated with {0}"
 msgstr "Você foi autenticado com sucesso com a conta {0}"
 
+msgid "You can re-enable afterwards"
+msgstr "Você pode reativar posteriormente"
+
+msgid "You do not have a local username/password. Add a local account so you can log in without an external login"
+msgstr "Você não possui um usuário/senha local. Adicione uma conta local para que você possa fazer log in sem uma conta externa"
+
+msgid "You have {0} recovery code left"
+msgstr "Você tem {0} código de recuperação restante"
+
+msgid "You have {0} recovery codes left"
+msgstr "Você tem {0} códigos de recuperação restantes"
+
+msgid "You have generated new recovery codes"
+msgstr "Você gerou novos códigos de recuperação"
+
+msgid "You have no recovery codes left"
+msgstr "Você não tem mais códigos de recuperação"
+
 msgid "You have requested to log in with a recovery code. This login will not be remembered until you provide an authenticator app code at log in or disable 2FA and log in again."
-msgstr "Você solicitou para entrar com um código de verificação. Este login não será lembrado até que você providencie um código de um aplicativo autenticador no log in ou desabilite a autenticação em dois fatores e faça login novamente."
+msgstr "Você solicitou para entrar com um código de verificação. Este login não será lembrado até que você providencie um código de um aplicativo autenticador no log in ou desabilite a autenticação de dois fatores e faça login novamente."
+
+msgid "You must generate a new set of recovery codes before you can log in with a recovery code"
+msgstr "Você deve gerar um novo conjunto de códigos de recuperação antes de fazer log in com um código de recuperação"
+
+msgid "You should generate a new set of recovery codes"
+msgstr "Você deveria gerar um novo conjunto de códigos de recuperação"
+
+msgid "You will not have access to theses codes later. Make sure you save them for future use"
+msgstr "Você não terá acesso a estes códigos depois. Certifique-se de salvá-los para uso futuro"
+
+msgid "Your account contains personal data that you have given us. You can download and view your collected data by clicking the button."
+msgstr "Sua conta contém dados pessoais que você nos forneceu. Você pode baixar e visualizar seus dados coletados clicando no botão."
+
+msgid "Your authenticator app has been verified"
+msgstr "Seu aplicativo autenticador foi verificado"
+
+msgid "Your authenticator app key has been reset. You will need to configure your authenticator app using the new key"
+msgstr "A chave do seu aplicativo autenticador foi redefinida. Você precisará configurar seu aplicativo autenticador usando a nova chave"
+
+msgid "Your email is unchanged"
+msgstr "Seu e-mail está igual"
 
 msgid "Your login is protected with an authenticator app. Enter your authenticator code below."
 msgstr "Seu login está protegido por um aplicativo de autenticação. Informe seu código autenticador abaixo."
 
+msgid "Your password has been changed"
+msgstr "Sua senha foi alterada"
+
 msgid "Your password has been reset"
 msgstr "Sua senha foi redefinida"
+
+msgid "Your password has been set"
+msgstr "Sua senha foi definida"
+
+msgid "Your profile has been updated"
+msgstr "Seu perfil foi atualizado"
