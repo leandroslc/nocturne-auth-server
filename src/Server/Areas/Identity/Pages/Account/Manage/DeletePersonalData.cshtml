@@ -1,33 +1,56 @@
 ﻿@page "/manage/delete-account"
 @model DeletePersonalDataModel
+@inject IViewLocalizer localizer;
+
 @{
-    ViewData["Title"] = "Delete Personal Data";
-    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+    var title = localizer["Delete personal data"];
+
+    ViewData[KnownViewData.Title] = title;
+    ViewData[KnownViewData.PageGroup] = ManageNavPages.PersonalData;
 }
 
-<h4>@ViewData["Title"]</h4>
-
-<div class="alert alert-warning" role="alert">
-    <p>
-        <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
-    </p>
-</div>
-
-<div>
-    <form id="delete-user" method="post" class="form-group">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        @if (Model.RequirePassword)
-        {
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+<div class="page">
+    <div class="page-heading">
+        <div class="page-container">
+            <a class="page-back" asp-page="./PersonalData">
+                <span class="bi-arrow-left" aria-hidden="true"></span>
+                <span>@localizer["Personal data"]</span>
+            </a>
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-header">
+                <div class="page-card-title">@title</div>
             </div>
-        }
-        <button class="btn btn-danger" type="submit">Delete data and close my account</button>
-    </form>
-</div>
+            <div class="page-card-content">
+                <form id="delete-user" method="post" loading="loading" class="col-md-6">
+                    <div class="alert alert-warning" role="alert">
+                        @localizer["Deleting this data will permanently remove your account, and this cannot be recovered."]
+                    </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+                    <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+
+                    @if (Model.RequirePassword)
+                    {
+                        <div class="form-group">
+                            <label class="form-label" asp-for="Input.Password">@localizer["Password"]</label>
+                            <input class="form-control" asp-for="Input.Password" autofocus />
+                            <span class="d-block form-text text-danger" asp-validation-for="Input.Password"></span>
+                        </div>
+                    }
+
+                    <div class="form-group mt-5">
+                        <button class="btn btn-danger" type="submit">
+                            @localizer["Delete data and close my account"]
+                        </button>
+
+                        <div class="spinner-border spinner-border-sm text-primary" role="status" id="loading" style="display: none;">
+                            <span class="sr-only">@localizer["Loading..."]</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

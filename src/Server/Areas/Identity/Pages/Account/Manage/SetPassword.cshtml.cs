@@ -9,50 +9,48 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
     public class SetPasswordModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
         public SetPasswordModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
 
         [TempData]
-        public string StatusMessage { get; set; }
+        public bool SetPasswordSucceeded { get; set; }
 
         public class InputModel
         {
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "The new password is required")]
+            [StringLength(100, ErrorMessage = "The password must have at least {2} and max {1} characters", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match")]
             public string ConfirmPassword { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetUserAsync();
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return UserNotFound();
             }
 
-            var hasPassword = await _userManager.HasPasswordAsync(user);
+            var hasPassword = await userManager.HasPasswordAsync(user);
 
             if (hasPassword)
             {
-                return RedirectToPage("./ChangePassword");
+                return RedirectToChangePassword();
             }
 
             return Page();
@@ -60,31 +58,48 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid is false)
             {
                 return Page();
             }
 
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetUserAsync();
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return UserNotFound();
             }
 
-            var addPasswordResult = await _userManager.AddPasswordAsync(user, Input.NewPassword);
-            if (!addPasswordResult.Succeeded)
+            var addPasswordResult = await userManager.AddPasswordAsync(user, Input.NewPassword);
+            if (addPasswordResult.Succeeded is false)
             {
                 foreach (var error in addPasswordResult.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
+
                 return Page();
             }
 
-            await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your password has been set.";
+            await signInManager.RefreshSignInAsync(user);
 
-            return RedirectToPage();
+            SetPasswordSucceeded = true;
+
+            return RedirectToChangePassword();
+        }
+
+        private Task<ApplicationUser> GetUserAsync()
+        {
+            return userManager.GetUserAsync(User);
+        }
+
+        private IActionResult UserNotFound()
+        {
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
+        }
+
+        private IActionResult RedirectToChangePassword()
+        {
+            return RedirectToPage("./ChangePassword");
         }
     }
 }

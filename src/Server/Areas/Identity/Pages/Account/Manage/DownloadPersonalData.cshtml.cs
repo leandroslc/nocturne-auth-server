@@ -13,44 +13,77 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
     public class DownloadPersonalDataModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ILogger<DownloadPersonalDataModel> _logger;
+        private const string PersonalDataFileName = "PersonalData.json";
+
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<DownloadPersonalDataModel> logger;
 
         public DownloadPersonalDataModel(
             UserManager<ApplicationUser> userManager,
             ILogger<DownloadPersonalDataModel> logger)
         {
-            _userManager = userManager;
-            _logger = logger;
+            this.userManager = userManager;
+            this.logger = logger;
+        }
+
+        public IActionResult OnGet()
+        {
+            return NotFound();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
             }
 
-            _logger.LogInformation("User with ID '{UserId}' asked for their personal data.", _userManager.GetUserId(User));
+            logger.LogInformation(
+                "User with ID '{UserId}' asked for their personal data.",
+                userManager.GetUserId(User));
 
+            var personalData = new Dictionary<string, object>();
+
+            AddUserPersonalData(personalData, user);
+
+            await AdUserLoginProviders(personalData, user);
+
+            return File(
+                JsonSerializer.SerializeToUtf8Bytes(personalData),
+                "application/json",
+                PersonalDataFileName);
+        }
+
+        private static void AddUserPersonalData(
+            Dictionary<string, object> personalData,
+            ApplicationUser user)
+        {
             // Only include personal data for download
-            var personalData = new Dictionary<string, string>();
-            var personalDataProps = typeof(ApplicationUser).GetProperties().Where(
-                            prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
-            foreach (var p in personalDataProps)
-            {
-                personalData.Add(p.Name, p.GetValue(user)?.ToString() ?? "null");
-            }
+            var personalDataProps = typeof(ApplicationUser)
+                .GetProperties()
+                .Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
 
-            var logins = await _userManager.GetLoginsAsync(user);
-            foreach (var l in logins)
+            foreach (var property in personalDataProps)
             {
-                personalData.Add($"{l.LoginProvider} external login provider key", l.ProviderKey);
-            }
+                var value = property.GetValue(user);
 
-            Response.Headers.Add("Content-Disposition", "attachment; filename=PersonalData.json");
-            return new FileContentResult(JsonSerializer.SerializeToUtf8Bytes(personalData), "application/json");
+                personalData.Add(
+                    property.Name,
+                    property.PropertyType.IsPrimitive ? value : value?.ToString());
+            }
+        }
+
+        private async Task AdUserLoginProviders(
+            Dictionary<string, object> personalData,
+            ApplicationUser user)
+        {
+            var logins = await userManager.GetLoginsAsync(user);
+
+            foreach (var login in logins)
+            {
+                personalData.Add($"{login.LoginProvider} external login provider key", login.ProviderKey);
+            }
         }
     }
 }

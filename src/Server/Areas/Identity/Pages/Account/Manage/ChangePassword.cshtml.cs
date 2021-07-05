@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -10,55 +11,52 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ILogger<ChangePasswordModel> _logger;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly ILogger<ChangePasswordModel> logger;
 
         public ChangePasswordModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<ChangePasswordModel> logger)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.logger = logger;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
 
         [TempData]
-        public string StatusMessage { get; set; }
+        public bool UpdatePasswordSucceeded { get; set; }
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "The password is required")]
             [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
             public string OldPassword { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "The new password is required")]
+            [StringLength(100, ErrorMessage = "The password must have at least {2} and max {1} characters", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match")]
             public string ConfirmPassword { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
             }
 
-            var hasPassword = await _userManager.HasPasswordAsync(user);
-            if (!hasPassword)
+            var hasPassword = await userManager.HasPasswordAsync(user);
+            if (hasPassword is false)
             {
                 return RedirectToPage("./SetPassword");
             }
@@ -68,32 +66,49 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid is false)
             {
                 return Page();
             }
 
-            var user = await _userManager.GetUserAsync(User);
+            var user = await userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
             }
 
-            var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
-            if (!changePasswordResult.Succeeded)
+            var changePasswordResult = await userManager.ChangePasswordAsync(
+                user,
+                Input.OldPassword,
+                Input.NewPassword);
+
+            if (changePasswordResult.Succeeded is false)
             {
-                foreach (var error in changePasswordResult.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-                return Page();
+                return PageWithErrors(changePasswordResult.Errors);
             }
 
-            await _signInManager.RefreshSignInAsync(user);
-            _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            await signInManager.RefreshSignInAsync(user);
+
+            logger.LogInformation("User changed their password successfully.");
+
+            return RedirectToPageWithSuccess();
+        }
+
+        private IActionResult RedirectToPageWithSuccess()
+        {
+            UpdatePasswordSucceeded = true;
 
             return RedirectToPage();
+        }
+
+        private IActionResult PageWithErrors(IEnumerable<IdentityError> errors)
+        {
+            foreach (var error in errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return Page();
         }
     }
 }

@@ -1,24 +1,45 @@
 ﻿@page "/manage/reset-authenticator"
 @model ResetAuthenticatorModel
+@inject IViewLocalizer localizer;
+
 @{
-    ViewData["Title"] = "Reset authenticator key";
-    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+    var title = localizer["Reset authenticator key"];
+
+    ViewData[KnownViewData.Title] = title;
+    ViewData[KnownViewData.PageGroup] = ManageNavPages.TwoFactorAuthentication;
 }
 
-<partial name="_StatusMessage" for="StatusMessage" />
-<h4>@ViewData["Title"]</h4>
-<div class="alert alert-warning" role="alert">
-    <p>
-        <span class="glyphicon glyphicon-warning-sign"></span>
-        <strong>If you reset your authenticator key your authenticator app will not work until you reconfigure it.</strong>
-    </p>
-    <p>
-        This process disables 2FA until you verify your authenticator app.
-        If you do not complete your authenticator app configuration you may lose access to your account.
-    </p>
-</div>
-<div>
-    <form id="reset-authenticator-form" method="post" class="form-group">
-        <button id="reset-authenticator-button" class="btn btn-danger" type="submit">Reset authenticator key</button>
-    </form>
+<div class="page">
+    <div class="page-heading">
+        <div class="page-container">
+            <a class="page-back" asp-page="./TwoFactorAuthentication">
+                <span class="bi-arrow-left" aria-hidden="true"></span>
+                <span>@localizer["Two-factor authentication (2FA)"]</span>
+            </a>
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-header">
+                <div class="page-card-title">@title</div>
+            </div>
+            <div class="page-card-content col-md-8">
+                <div class="alert alert-warning" role="alert">
+                    @localizer["If you reset your authenticator key your authenticator app will not work until you reconfigure it"].
+                </div>
+
+                <p>
+                    @localizer["This process disables two-factor authentication until you verify your authenticator app. If you do not complete your authenticator app configuration you may lose access to your account"].
+                </p>
+
+                <form id="reset-authenticator-form" method="post" class="form-group" loading="loading">
+                    <button id="reset-authenticator-button" class="btn btn-danger" type="submit">@localizer["Reset authenticator key"]</button>
+
+                    <div class="spinner-border spinner-border-sm text-primary" role="status" id="loading" style="display: none;">
+                        <span class="sr-only">@localizer["Loading..."]</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

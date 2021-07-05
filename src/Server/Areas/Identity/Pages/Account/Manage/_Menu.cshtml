@@ -1,0 +1,39 @@
+@inject IViewLocalizer localizer;
+@inject SignInManager<ApplicationUser> signInManager;
+
+@{
+    var hasExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+
+<a class="sidebar-item @ManageNavPages.IsActiveItem(ViewContext, ManageNavPages.Index)" id="menu-profile" asp-page="./Index">
+    <span class="bi-person sidenav-icon mr-2" aria-hidden="true"></span>
+    <span>@localizer["Profile"]</span>
+</a>
+
+<a class="sidebar-item @ManageNavPages.IsActiveItem(ViewContext, ManageNavPages.Email)" id="menu-email" asp-page="./Email">
+    <span class="bi-envelope-open sidenav-icon mr-2" aria-hidden="true"></span>
+    <span>@localizer["Email"]</span>
+</a>
+
+<a class="sidebar-item @ManageNavPages.IsActiveItem(ViewContext, ManageNavPages.ChangePassword)" id="menu-change-password" asp-page="./ChangePassword">
+    <span class="bi-lock sidenav-icon mr-2" aria-hidden="true"></span>
+    <span>@localizer["Password"]</span>
+</a>
+
+@if (hasExternalLogins)
+{
+    <a class="sidebar-item @ManageNavPages.IsActiveItem(ViewContext, ManageNavPages.ExternalLogins)" id="menu-external-login" asp-page="./ExternalLogins">
+        <span class="bi-box-arrow-up-right sidenav-icon mr-2" aria-hidden="true"></span>
+        <span>@localizer["External logins"]</span>
+    </a>
+}
+
+<a class="sidebar-item @ManageNavPages.IsActiveItem(ViewContext, ManageNavPages.TwoFactorAuthentication)" id="menu-two-factor" asp-page="./TwoFactorAuthentication">
+    <span class="bi-shield-lock sidenav-icon mr-2" aria-hidden="true"></span>
+    <span>@localizer["Two-factor authentication"]</span>
+</a>
+
+<a class="sidebar-item @ManageNavPages.IsActiveItem(ViewContext, ManageNavPages.PersonalData)" id="menu-personal-data" asp-page="./PersonalData">
+    <span class="bi-card-text sidenav-icon mr-2" aria-hidden="true"></span>
+    <span>@localizer["Personal data"]</span>
+</a>

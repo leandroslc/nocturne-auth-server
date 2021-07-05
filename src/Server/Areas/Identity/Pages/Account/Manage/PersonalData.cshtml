@@ -1,27 +1,57 @@
 ﻿@page "/manage/data"
 @model PersonalDataModel
+@inject IViewLocalizer localizer;
+
 @{
-    ViewData["Title"] = "Personal Data";
-    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+    var title = localizer["Personal data"];
+
+    ViewData[KnownViewData.Title] = title;
+    ViewData[KnownViewData.PageGroup] = ManageNavPages.PersonalData;
+
+    bool enableAccountDeletion = true;
 }
 
-<h4>@ViewData["Title"]</h4>
+<div class="page">
+    <div class="page-heading"></div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-header">
+                <div class="page-card-title">@title</div>
+            </div>
+            <div class="page-card-content col-md-8">
+                <div class="row mb-5">
+                    <div class="col-sm">
+                        <p>@localizer["Your account contains personal data that you have given us. You can download and view your collected data by clicking the button."]</p>
+                    </div>
+                    <div class="col-sm-auto">
+                        <form id="download-data" asp-page="DownloadPersonalData" method="post">
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit">
+                                    @localizer["Download"]
 
-<div class="row">
-    <div class="col-md-6">
-        <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
-        <p>
-            <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
-        </p>
-        <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group">
-            <button class="btn btn-primary" type="submit">Download</button>
-        </form>
-        <p>
-            <a id="delete" asp-page="DeletePersonalData" class="btn btn-secondary">Delete</a>
-        </p>
+                                    <div class="spinner-border spinner-border-sm text-primary" role="status" id="loading" style="display: none;">
+                                        <span class="sr-only">@localizer["Loading..."]</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                @if (enableAccountDeletion)
+                {
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm">
+                            <p class="text-danger">@localizer["Deleting this data will permanently remove your account, and this cannot be recovered."]</p>
+                        </div>
+                        <div class="col-sm-auto">
+                            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">@localizer["Delete"]</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 </div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

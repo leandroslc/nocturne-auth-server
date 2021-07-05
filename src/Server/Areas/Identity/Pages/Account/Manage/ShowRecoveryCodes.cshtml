@@ -1,25 +1,84 @@
 ﻿@page "/manage/recovery-codes/show"
 @model ShowRecoveryCodesModel
+@inject IViewLocalizer localizer;
+
 @{
-    ViewData["Title"] = "Recovery codes";
-    ViewData["ActivePage"] = "TwoFactorAuthentication";
+    var title = localizer["Recovery codes"];
+
+    ViewData[KnownViewData.Title] = title;
+    ViewData[KnownViewData.PageGroup] = ManageNavPages.TwoFactorAuthentication;
 }
 
-<partial name="_StatusMessage" for="StatusMessage" />
-<h4>@ViewData["Title"]</h4>
-<div class="alert alert-warning" role="alert">
-    <p>
-        <strong>Put these codes in a safe place.</strong>
-    </p>
-    <p>
-        If you lose your device and don't have the recovery codes you will lose access to your account.
-    </p>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        @for (var row = 0; row < Model.RecoveryCodes.Length; row += 2)
-        {
-            <code class="recovery-code">@Model.RecoveryCodes[row]</code><text>&nbsp;</text><code class="recovery-code">@Model.RecoveryCodes[row + 1]</code><br />
-        }
+<div class="page">
+    <div class="page-heading">
+        <div class="page-container">
+            <a class="page-back" asp-page="./TwoFactorAuthentication">
+                <span class="bi-arrow-left" aria-hidden="true"></span>
+                <span>@localizer["Two-factor authentication (2FA)"]</span>
+            </a>
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-header">
+                <div class="page-card-title">@title</div>
+            </div>
+            <div class="page-card-content col-md-8">
+                @if (TempData["EnableAuthenticatorSucceeded"] is true)
+                {
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        @localizer["Your authenticator app has been verified"]
+                    </div>
+                }
+
+                @if (TempData["GenerateRecoveryCodesSucceeded"] is true)
+                {
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        @localizer["You have generated new recovery codes"]
+                    </div>
+                }
+
+                <p>@localizer["These codes help you log in if you don't have your device with your authenticator app at hand"].</p>
+
+                <diV class="alert alert-warning" role="alert">
+                    <strong>@localizer["Save these codes in a safe place"].</strong>
+                    <p class="mb-0">@localizer["You will not have access to theses codes later. Make sure you save them for future use"].</p>
+                </diV>
+
+                <div class="alert alert-warning" role="alert">
+                    <strong>@localizer["Remember:"]</strong>
+                    <p class="mb-0">@localizer["If you lose your device and don't have the recovery codes you will lose access to your account"].</p>
+                </div>
+
+                @{
+                    int firstGroupSize = (int)Math.Ceiling(Model.RecoveryCodes.Length / 2d);
+                }
+
+                <div class="row mb-3">
+                    <div class="col-sm">
+                        <ul class="list-group">
+                            @for (var row = 0; row < firstGroupSize; row++)
+                            {
+                                <li class="list-group-item text-monospace">@Model.RecoveryCodes[row]</li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="col-sm">
+                        <ul class="list-group">
+                            @for (int row = firstGroupSize; row < Model.RecoveryCodes.Length; row++)
+                            {
+                                <li class="list-group-item text-monospace">@Model.RecoveryCodes[row]</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

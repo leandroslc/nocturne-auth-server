@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Nocturne.Auth.Core.Services.Identity;
 
@@ -11,18 +12,25 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
     public class DeletePersonalDataModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly ILogger<DeletePersonalDataModel> logger;
+        private readonly IStringLocalizer localizer;
+        private readonly bool enableAccountDeletion;
 
         public DeletePersonalDataModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger,
+            IStringLocalizer<DeletePersonalDataModel> localizer)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.logger = logger;
+            this.localizer = localizer;
+
+            // TODO: Make it configurable
+            enableAccountDeletion = true;
         }
 
         [BindProperty]
@@ -30,7 +38,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "The password is required")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
         }
@@ -39,46 +47,62 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnGet()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            if (enableAccountDeletion is false)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound();
             }
 
-            RequirePassword = await _userManager.HasPasswordAsync(user);
+            var user = await userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
+            }
+
+            RequirePassword = await userManager.HasPasswordAsync(user);
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
             }
 
-            RequirePassword = await _userManager.HasPasswordAsync(user);
-            if (RequirePassword)
+            RequirePassword = await userManager.HasPasswordAsync(user);
+
+            if (RequirePassword && await PasswordIsIncorrect(user))
             {
-                if (!await _userManager.CheckPasswordAsync(user, Input.Password))
-                {
-                    ModelState.AddModelError(string.Empty, "Incorrect password.");
-                    return Page();
-                }
+                return PageWithError(localizer["Incorrect password"]);
             }
 
-            var result = await _userManager.DeleteAsync(user);
-            var userId = await _userManager.GetUserIdAsync(user);
-            if (!result.Succeeded)
+            var result = await userManager.DeleteAsync(user);
+            var userId = await userManager.GetUserIdAsync(user);
+            if (result.Succeeded is false)
             {
                 throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userId}'.");
             }
 
-            await _signInManager.SignOutAsync();
+            // TODO: Sign out using the authorization logout endpoint
+            await signInManager.SignOutAsync();
 
-            _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
+            logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
 
             return Redirect("~/");
+        }
+
+        private async Task<bool> PasswordIsIncorrect(ApplicationUser user)
+        {
+            return await userManager.CheckPasswordAsync(user, Input.Password) is false;
+        }
+
+        private IActionResult PageWithError(string errorMessage)
+        {
+            ModelState.AddModelError(string.Empty, errorMessage);
+
+            return Page();
         }
     }
 }
