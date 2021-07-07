@@ -28,19 +28,22 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
         private readonly IOpenIddictScopeManager scopeManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUserClaimsService userClaimsService;
 
         public AuthorizationController(
             IOpenIddictApplicationManager applicationManager,
             IOpenIddictAuthorizationManager authorizationManager,
             IOpenIddictScopeManager scopeManager,
             SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IUserClaimsService userClaimsService)
         {
             this.applicationManager = applicationManager;
             this.authorizationManager = authorizationManager;
             this.scopeManager = scopeManager;
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.userClaimsService = userClaimsService;
         }
 
         [HttpGet(AuthorizationEndpoints.Authorize)]
@@ -304,7 +307,7 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
                     "The user is no longer allowed to sign in.");
             }
 
-            SetClaimsDestinations(principal);
+            await userClaimsService.AddClaimsDestinationsAsync(principal);
 
             return SignInPrincipal(principal);
         }
@@ -315,12 +318,8 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
         {
             var principal = await signInManager.CreateUserPrincipalAsync(user);
 
-            // In this case all granted scopes match the requested scopes, so all the
-            // scopes are required by the application.
-            principal.SetScopes(request.GetScopes());
-            principal.SetResources(await scopeManager.ListResourcesAsync(principal.GetScopes()).ToListAsync());
-
-            SetClaimsDestinations(principal);
+            await userClaimsService.AddClaimsToPrincipalAsync(principal, request);
+            await userClaimsService.AddClaimsDestinationsAsync(principal);
 
             return principal;
         }
@@ -392,41 +391,6 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
             principal.SetAuthorizationId(authorizationId);
 
             return SignInPrincipal(principal);
-        }
-
-        private static ClaimsPrincipal SetClaimsDestinations(ClaimsPrincipal principal)
-        {
-            // By default claims are not included in the access or identity tokens.
-            // To allow them to be serialized, each claim must have a destination
-            // attached.
-            foreach (var claim in principal.Claims)
-            {
-                claim.SetDestinations(GetDestinations(claim, principal));
-            }
-
-            return principal;
-        }
-
-        private static IEnumerable<string> GetDestinations(Claim claim, ClaimsPrincipal principal)
-        {
-            switch (claim.Type)
-            {
-                // It is a secret value
-                case "AspNet.Identity.SecurityStamp":
-                    break;
-
-                // These will be also added to the id_token if the corresponding scope was granted
-                case Claims.Name when principal.HasScope(Scopes.Profile):
-                case Claims.Email when principal.HasScope(Scopes.Email):
-                case Claims.Role when principal.HasScope(Scopes.Roles):
-                    yield return Destinations.AccessToken;
-                    yield return Destinations.IdentityToken;
-                    break;
-
-                default:
-                    yield return Destinations.AccessToken;
-                    break;
-            }
         }
 
         private ForbidResult Forbid(string error, string errorDescription)
