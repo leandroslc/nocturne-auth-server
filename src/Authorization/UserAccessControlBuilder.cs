@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Nocturne.Auth.Authorization.Requirements;
 
-namespace Nocturne.Auth.Authorization.Configuration
+namespace Nocturne.Auth.Authorization
 {
     public sealed class UserAccessControlBuilder
     {
@@ -23,7 +23,6 @@ namespace Nocturne.Auth.Authorization.Configuration
 
         public UserAccessControlBuilder AddRoleAuthorizationHandler()
         {
-            services.AddScoped<IAuthorizationHandler, RoleAuthorizationHandler>();
             services.AddScoped<IAuthorizationHandler, AnyRoleAuthorizationHandler>();
 
             return this;
