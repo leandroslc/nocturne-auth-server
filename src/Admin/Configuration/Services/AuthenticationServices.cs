@@ -48,8 +48,8 @@ namespace Nocturne.Auth.Admin.Configuration.Services
                         options.Scope.Add(scope);
                     }
 
-                    options.GetClaimsFromUserInfoEndpoint = true;
-                    options.SaveTokens = true;
+                    options.GetClaimsFromUserInfoEndpoint = false;
+                    options.SaveTokens = false;
 
                     options.ResponseType = OpenIdConnectResponseType.Code;
                     options.AuthenticationMethod = OpenIdConnectRedirectBehavior.RedirectGet;
