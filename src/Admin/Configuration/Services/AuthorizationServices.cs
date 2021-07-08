@@ -14,6 +14,9 @@ namespace Nocturne.Auth.Admin.Configuration.Services
                 options.AddPolicy(Policies.ManageApplications,
                     policy => policy.RequirePermission(Permissions.ApplicationManage));
 
+                options.AddPolicy(Policies.ManageUsers,
+                    policy => policy.RequirePermissions(Permissions.UserRolesManage));
+
                 options.AddPolicy(Policies.ManageUserRoles,
                     policy => policy.RequirePermission(Permissions.UserRolesManage));
 
