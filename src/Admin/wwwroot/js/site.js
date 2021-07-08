@@ -31,7 +31,7 @@
   };
 
   $.validator.setDefaults(validationOptions);
-  $.validator.unobtrusive.options = validationOptions;
+  $.validator.unobtrusive.options = $.validator.defaults;
 
   window.Validator = {
     attach: function(form) {
@@ -43,6 +43,22 @@
     },
   };
 
+})();
+
+(function () {
+  window.Loading.setIsValidHandler(function (form) {
+    if (form.checkValidity && form.checkValidity() === false) {
+      return false;
+    }
+
+    const $form = $(form);
+
+    if ($form.valid && $form.valid() === false) {
+      return false;
+    }
+
+    return true;
+  });
 })();
 
 (function() {
