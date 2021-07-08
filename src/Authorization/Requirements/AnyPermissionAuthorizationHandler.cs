@@ -1,22 +1,15 @@
-using System.Linq;
-using Nocturne.Auth.Authorization.Services;
+using System.Security.Claims;
 
 namespace Nocturne.Auth.Authorization.Requirements
 {
     public class AnyPermissionAuthorizationHandler
         : AccessControlAuthorizationHandler<AnyPermissionAuthorizationRequirement>
     {
-        public AnyPermissionAuthorizationHandler(
-            UserAccessControlService service)
-            : base(service)
-        {
-        }
-
         protected override bool IsAllowed(
-            UserAccessControlResponse access,
+            ClaimsPrincipal user,
             AnyPermissionAuthorizationRequirement requirement)
         {
-            return access.Permissions.Any();
+            return user.FindFirst(Constants.PermissionClaim) != null;
         }
     }
 }

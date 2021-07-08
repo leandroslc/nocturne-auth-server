@@ -24,21 +24,7 @@ namespace Microsoft.AspNetCore.Authorization
             return builder.AddRequirements(new AnyPermissionAuthorizationRequirement());
         }
 
-        public static AuthorizationPolicyBuilder RequireCustomRole(
-            this AuthorizationPolicyBuilder builder,
-            string role)
-        {
-            return builder.RequireCustomRoles(role);
-        }
-
-        public static AuthorizationPolicyBuilder RequireCustomRoles(
-            this AuthorizationPolicyBuilder builder,
-            params string[] roles)
-        {
-            return builder.AddRequirements(new RoleAuthorizationRequirement(roles));
-        }
-
-        public static AuthorizationPolicyBuilder RequireAnyCustomRole(
+        public static AuthorizationPolicyBuilder RequireAnyRole(
             this AuthorizationPolicyBuilder builder)
         {
             return builder.AddRequirements(new AnyRoleAuthorizationRequirement());

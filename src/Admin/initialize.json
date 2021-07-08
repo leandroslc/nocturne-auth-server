@@ -10,6 +10,11 @@
         "Name": "profile",
         "DisplayName": "Profile",
         "Description": "Profile information"
+      },
+      {
+        "Name": "role",
+        "DisplayName": "Roles",
+        "Description": "Access to roles and permissions"
       }
     ],
     "AdminApplication": {
@@ -26,7 +31,9 @@
         "ept:token",
         "rst:code",
         "scp:email",
-        "scp:profile"],
+        "scp:profile",
+        "scp:role"
+      ],
       "PostLogoutRedirectUris": [
         "https://localhost:5001"
       ],
