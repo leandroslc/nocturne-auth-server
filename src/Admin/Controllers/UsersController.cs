@@ -9,7 +9,7 @@ using Nocturne.Auth.Core.Shared.Results;
 namespace Nocturne.Auth.Admin.Controllers
 {
     [Route("users")]
-    [Authorize(Policy = Policies.ManageUserRoles)]
+    [Authorize(Policy = Policies.ManageUsers)]
     public class UsersController : CustomController
     {
         [HttpGet("", Name = RouteNames.UsersHome)]

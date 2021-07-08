@@ -6,7 +6,7 @@
     <span>@localizer["Home page"]</span>
 </a>
 
-@if (await HasAccessAsync(Policies.ManageApplications))
+@if (await authorizationService.HasAccessAsync(User, Policies.ManageApplications))
 {
     <a class="sidebar-item @IsActiveItem(PageGroups.Applications)" asp-route="@RouteNames.ApplicationsHome">
         <span class="bi-window sidenav-icon mr-2" aria-hidden="true"></span>
@@ -14,7 +14,7 @@
     </a>
 }
 
-@if (await HasAccessAsync(Policies.ManageUserRoles))
+@if (await authorizationService.HasAccessAsync(User, Policies.ManageUsers))
 {
     <a class="sidebar-item @IsActiveItem(PageGroups.Users)" asp-route="@RouteNames.UsersHome">
         <span class="bi-people sidenav-icon mr-2" aria-hidden="true"></span>
@@ -26,7 +26,4 @@
 {
     private string IsActiveItem(string pageGroup)
         => ViewData[KnownViewData.PageGroup] as string == pageGroup ? "is-active" : string.Empty;
-
-    private async Task<bool> HasAccessAsync(string policy)
-        => (await authorizationService.AuthorizeAsync(User, policy)).Succeeded;
 }

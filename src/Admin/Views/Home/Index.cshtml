@@ -1,4 +1,5 @@
 ﻿@inject IViewLocalizer localizer;
+@inject IAuthorizationService authorizationService;
 
 @{
     ViewData[KnownViewData.Title] = localizer["Home page"];
@@ -13,32 +14,39 @@
     </div>
     <div class="page-container">
         <div class="card-deck">
-            <div class="card greetings-card pt-4">
-                <img class="card-img-top greetings-card-img" src="~/img/applications.svg" alt="@localizer["Applications"]">
-                <div class="card-body">
-                    <h5 class="card-title">@localizer["Applications"]</h5>
-                    <p class="card-text">@localizer["Manage applications (clients) and APIs"]</p>
+            @if (await authorizationService.HasAccessAsync(User, Policies.ManageApplications))
+            {
+                <div class="card greetings-card pt-4">
+                    <img class="card-img-top greetings-card-img" src="~/img/applications.svg" alt="@localizer["Applications"]">
+                    <div class="card-body">
+                        <h5 class="card-title">@localizer["Applications"]</h5>
+                        <p class="card-text">@localizer["Manage applications (clients) and APIs"]</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-outline-primary" asp-route="@RouteNames.ApplicationsHome">
+                            <span>@localizer["Manage"]</span>
+                            <span class="bi-arrow-right" aria-hidden="true"></span>
+                        </a>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <a class="btn btn-outline-primary" asp-route="@RouteNames.ApplicationsHome">
-                        <span>@localizer["Manage"]</span>
-                        <span class="bi-arrow-right" aria-hidden="true"></span>
-                    </a>
+            }
+
+            @if (await authorizationService.HasAccessAsync(User, Policies.ManageUsers))
+            {
+                <div class="card greetings-card pt-4">
+                    <img class="card-img-top greetings-card-img" src="~/img/users.svg" alt="@localizer["Users"]">
+                    <div class="card-body">
+                        <h5 class="card-title">@localizer["Users"]</h5>
+                        <p class="card-text">@localizer["Manage all registered users"]</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-outline-primary" asp-route="@RouteNames.UsersHome">
+                            <span>@localizer["Manage"]</span>
+                            <span class="bi-arrow-right" aria-hidden="true"></span>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="card greetings-card pt-4">
-                <img class="card-img-top greetings-card-img" src="~/img/users.svg" alt="@localizer["Users"]">
-                <div class="card-body">
-                    <h5 class="card-title">@localizer["Users"]</h5>
-                    <p class="card-text">@localizer["Manage all registered users"]</p>
-                </div>
-                <div class="card-footer">
-                    <a class="btn btn-outline-primary" asp-route="@RouteNames.UsersHome">
-                        <span>@localizer["Manage"]</span>
-                        <span class="bi-arrow-right" aria-hidden="true"></span>
-                    </a>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </div>
