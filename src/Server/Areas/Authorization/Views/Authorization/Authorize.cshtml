@@ -1,19 +1,77 @@
 @model AuthorizeViewModel
+@inject IViewLocalizer localizer;
 
-<div class="jumbotron">
-    <h1>Authorization</h1>
+@{
+    Layout = "/Views/Shared/_LayoutLogin.cshtml";
 
-    <p class="lead text-left">Do you want to grant <strong>@Model.ApplicationName</strong> access to your data? (scopes requested: @Model.Scope)</p>
+    var title = localizer["Authorization"];
+
+    ViewData[KnownViewData.Title] = title;
+}
+
+<h1 class="login-content-title">@title</h1>
+
+<section class="login-form-box">
+    <div class="d-flex justify-content-center mb-2">
+        <label class="d-flex align-items-center border rounded-pill py-1 px-3">
+            <span class="bi bi-person-circle mr-2" aria-hidden="true"></span>
+            <span>@Model.UserName</span>
+        </label>
+    </div>
+
+    <p>
+        <label class="form-label">
+            @localizer[
+                "The application {0} needs your consent to:",
+                Html.Raw($"<strong class=\"text-primary\">{Model.ApplicationName}</strong>")]
+        </label>
+    </p>
+
+    <div class="mb-5 ml-3">
+        <div class="list-group mb-3" id="scopes">
+            @foreach (var scope in Model.Scopes)
+            {
+                var id = $"scope-{scope.Name}";
+
+                <div class="list-group-item">
+                    <div class="custom-control custom-checkbox">
+                        @if (scope.Required)
+                        {
+                            <input class="custom-control-input" type="checkbox" id="@id" disabled checked />
+                        }
+                        else
+                        {
+                            <input class="custom-control-input" type="checkbox" scope="@scope.Name" id="@id" checked />
+                        }
+                        <label class="custom-control-label form-label text-reset" for="@id">@localizer[scope.Description]</label>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 
     <form asp-controller="Authorization" asp-action="Authorize" method="post">
-        @* Flow the request parameters so they can be received by the Accept/Reject actions: *@
-        @foreach (var parameter in Context.Request.HasFormContentType ?
-            (IEnumerable<KeyValuePair<string, StringValues>>) Context.Request.Form : Context.Request.Query)
+        @foreach (var parameter in Model.RequestParameters)
         {
             <input type="hidden" name="@parameter.Key" value="@parameter.Value" />
         }
 
-        <input class="btn btn-lg btn-success" name="submit.Accept" type="submit" value="Yes" />
-        <input class="btn btn-lg btn-danger" name="submit.Deny" type="submit" value="No" />
+        <p class="mb-4">
+            @localizer["By accepting the authorization you consent to grant the application the above permissions and data"].
+        </p>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" name="submit.Accept" value="@localizer["Yes, allow"]" />
+            <input type="submit" class="btn btn-outline-danger" name="submit.Deny" value="@localizer["No, deny"]" />
+        </div>
     </form>
-</div>
+</section>
+
+@section scripts
+{
+    <script src="~/js/scope-select.js" asp-append-version="true"></script>
+
+    <script>
+        scopeSelect({ scopesContainerId: 'scopes' });
+    </script>
+}
