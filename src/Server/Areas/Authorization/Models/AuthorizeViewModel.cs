@@ -1,13 +1,33 @@
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 
 namespace Nocturne.Auth.Server.Areas.Authorization.Models
 {
     public class AuthorizeViewModel
     {
-        [Display(Name = "Application")]
-        public string ApplicationName { get; set; }
+        private readonly HttpRequest request;
 
-        [Display(Name = "Scope")]
-        public string Scope { get; set; }
+        public AuthorizeViewModel(
+            HttpRequest request,
+            string userName,
+            string applicationName,
+            IReadOnlyCollection<ScopeViewModel> scopes)
+        {
+            this.request = request;
+
+            ApplicationName = applicationName;
+            Scopes = scopes;
+            UserName = userName;
+        }
+
+        public string ApplicationName { get; }
+
+        public IReadOnlyCollection<ScopeViewModel> Scopes { get; }
+
+        public string UserName { get; }
+
+        public IEnumerable<KeyValuePair<string, StringValues>> RequestParameters
+            => request.HasFormContentType ? request.Form : request.Query;
     }
 }

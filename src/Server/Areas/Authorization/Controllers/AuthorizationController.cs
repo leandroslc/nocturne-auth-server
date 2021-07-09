@@ -213,12 +213,34 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
                     return Forbid(Errors.ConsentRequired, "Interactive user consent is required.");
 
                 default:
-                    return View(new AuthorizeViewModel
-                    {
-                        ApplicationName = await applicationManager.GetLocalizedDisplayNameAsync(application),
-                        Scope = request.Scope
-                    });
+                    return await ConsentViewAsync(application, user, request);
             }
+        }
+
+        private async Task<IActionResult> ConsentViewAsync(
+            object application,
+            ApplicationUser user,
+            OpenIddictRequest request)
+        {
+            var scopeNames = request.GetScopes();
+            var scopes = await scopeManager.FindByNamesAsync(scopeNames).ToListAsync();
+
+            var scopeModels = new List<ScopeViewModel>(scopes.Count);
+
+            foreach (var scope in scopes)
+            {
+                scopeModels.Add(new ScopeViewModel(
+                    name: await scopeManager.GetNameAsync(scope),
+                    description: await scopeManager.GetDescriptionAsync(scope)));
+            }
+
+            var authorizeModel = new AuthorizeViewModel(
+                request: Request,
+                userName: user.Name,
+                applicationName: await applicationManager.GetLocalizedDisplayNameAsync(application),
+                scopes: scopeModels);
+
+            return View(authorizeModel);
         }
 
         private async Task<IActionResult> ExchangeForClientCredentialsGrant(OpenIddictRequest request)

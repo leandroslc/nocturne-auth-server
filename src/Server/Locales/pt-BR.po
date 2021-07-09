@@ -1,6 +1,15 @@
 msgid "A user with this login already exists"
 msgstr "Um usuário com este login já existe"
 
+msgid "Access to email address"
+msgstr "Acesso ao endereço de e-mail"
+
+msgid "Access to profile information"
+msgstr "Acesso às informações de perfil"
+
+msgid "Access to roles and permissions"
+msgstr "Acesso à grupos e permissões"
+
 msgid "Actions"
 msgstr "Ações"
 
@@ -28,11 +37,17 @@ msgstr "Aplicativo autenticador"
 msgid "Authenticator code"
 msgstr "Código autenticador"
 
+msgid "Authorization"
+msgstr "Autorização"
+
 msgid "Back"
 msgstr "Voltar"
 
 msgid "Back to home page"
 msgstr "Voltar à página inicial"
+
+msgid "By accepting the authorization you consent to grant the application the above permissions and data"
+msgstr "Ao aceitar a autorização, você concorda em conceder à aplicação as permissões e dados acima"
 
 msgid "Cancel"
 msgstr "Cancelar"
@@ -232,6 +247,9 @@ msgstr "Novo e-mail"
 msgid "New password"
 msgstr "Nova senha"
 
+msgid "No, deny"
+msgstr "Não, negar"
+
 msgid "No external authentication services configured"
 msgstr "Nenhum serviço de autenticação externa configurado"
 
@@ -372,6 +390,9 @@ msgstr "Obrigado por confirmar seu email."
 
 msgid "Thank you for confirming your email change."
 msgstr "Obrigado por confirmar sua alteração de email."
+
+msgid "The application {0} needs your consent to:"
+msgstr "A aplicação {0} precisa de seu consentimento para:"
 
 msgid "The code is required"
 msgstr "O código é obrigatório"
@@ -522,6 +543,9 @@ msgstr "Verificar"
 
 msgid "When you login again from this browser you will be prompted for your two-factor code"
 msgstr "Quando você fizer log in novamente com este navegador você será solicitado pelo seu código de dois fatores"
+
+msgid "Yes, allow"
+msgstr "Sim, permitir"
 
 msgid "You've successfully authenticated with {0}"
 msgstr "Você foi autenticado com sucesso com a conta {0}"

@@ -4,15 +4,15 @@
       {
         "Name": "email",
         "DisplayName": "Email",
-        "Description": "Email address"
+        "Description": "Access to email address"
       },
       {
         "Name": "profile",
         "DisplayName": "Profile",
-        "Description": "Profile information"
+        "Description": "Access to profile information"
       },
       {
-        "Name": "role",
+        "Name": "roles",
         "DisplayName": "Roles",
         "Description": "Access to roles and permissions"
       }
