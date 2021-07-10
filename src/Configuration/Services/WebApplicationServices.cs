@@ -5,7 +5,7 @@ using Nocturne.Auth.Core.Web;
 
 namespace Nocturne.Auth.Configuration.Services
 {
-    public static class WebAssetsServices
+    public static class WebApplicationServices
     {
         public static IServiceCollection AddApplicationWebAssets(
             this IServiceCollection services,
@@ -20,6 +20,18 @@ namespace Nocturne.Auth.Configuration.Services
             var assetsService = new WebAssets(options);
 
             return services.AddSingleton(assetsService);
+        }
+
+        public static IServiceCollection AddWebApplicationOptions(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            Check.NotNull(configuration, nameof(configuration));
+
+            services.Configure<WebApplicationOptions>(
+                configuration.GetSection(WebApplicationOptions.Section));
+
+            return services;
         }
     }
 }

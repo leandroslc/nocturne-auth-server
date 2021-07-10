@@ -38,7 +38,8 @@ namespace Nocturne.Auth.Server
 
             services
                 .AddApplicationAntiforgery(ApplicationConstants.Identifier)
-                .AddApplicationWebAssets(Configuration);
+                .AddApplicationWebAssets(Configuration)
+                .AddWebApplicationOptions(Configuration);
 
             services.AddApplicationLocalization(Configuration);
 
