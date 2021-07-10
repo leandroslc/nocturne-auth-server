@@ -1,9 +1,12 @@
 ﻿@using System.Globalization;
 @inject IViewLocalizer localizer;
 @inject WebAssets assets;
+@inject IOptions<WebApplicationOptions> applicationOptions;
 
 @{
-    var applicationName = "Conta de Praia Grande";
+    var currentApplicationOptions = applicationOptions.Value;
+
+    var applicationName = currentApplicationOptions.ApplicationName;
     var language = CultureInfo.CurrentCulture.Name;
 
     var menuPath = ViewData[KnownViewData.MenuPath] as string;
@@ -50,6 +53,17 @@
         <main class="layout-main pb-3">
             @RenderBody()
         </main>
+        <div class="layout-footer footer">
+            <ul class="list-unstyled d-flex flex-wrap mb-0 ml-auto">
+                @if (currentApplicationOptions.HasPrivacyPolicyUrl)
+                {
+                    <li class="mr-2">
+                        <a class="footer-link" href="@currentApplicationOptions.PrivacyPolicyUrl">@localizer["Privacy policy"]</a>
+                    </li>
+                }
+                <li>@currentApplicationOptions.CompanyName</li>
+            </ul>
+        </div>
     </div>
 
     <script src="@assets.Url("impromptu/impromptu.min.js")"></script>

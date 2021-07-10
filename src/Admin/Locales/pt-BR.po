@@ -208,6 +208,9 @@ msgstr "Página anterior"
 msgid "Previously recommended for native apps or javascript apps. Always use Authorization Code instead if possible"
 msgstr "Antigamente recomendado para apps nativos ou apps javascript. Sempre use Authorization Code se possível"
 
+msgid "Privacy policy"
+msgstr "Política de privacidade"
+
 msgid "Public"
 msgstr "Público"
 
