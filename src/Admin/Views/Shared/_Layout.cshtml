@@ -1,8 +1,11 @@
 ﻿@using System.Globalization;
 @inject IViewLocalizer localizer;
 @inject WebAssets assets;
+@inject IOptions<WebApplicationOptions> applicationOptions;
 
 @{
+    var currentApplicationOptions = applicationOptions.Value;
+
     var title = localizer["Authorization Server (Admin)"];
     var language = CultureInfo.CurrentCulture.Name;
 }
@@ -12,6 +15,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <partial name="./_CookieConsent" />
     <title>@ViewData[KnownViewData.Title] - @title</title>
     <link rel="stylesheet" href="@assets.Url("bootstrap/bootstrap.min.css")" />
     <link rel="stylesheet" href="@assets.Url("bootstrap-icons/bootstrap-icons.min.css")" />
@@ -41,6 +45,17 @@
         <main class="layout-main" class="pb-3">
             @RenderBody()
         </main>
+        <div class="layout-footer footer">
+            <ul class="list-unstyled d-flex flex-wrap mb-0 ml-auto">
+                @if (currentApplicationOptions.HasPrivacyPolicyUrl)
+                {
+                    <li class="mr-2">
+                        <a class="footer-link" href="@currentApplicationOptions.PrivacyPolicyUrl">@localizer["Privacy policy"]</a>
+                    </li>
+                }
+                <li>@currentApplicationOptions.CompanyName</li>
+            </ul>
+        </div>
     </div>
 
     <script src="@assets.Url("impromptu/impromptu.min.js")"></script>
@@ -49,11 +64,10 @@
     <script src="@assets.Url("jquery-validation/jquery.validate.min.js")"></script>
     <script src="@assets.Url("jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js")"></script>
     <script src="@assets.Url("cookieconsent/cookieconsent.min.js")"></script>
+    <script src="@assets.Url("cookieconsent/cookieconsent-default.min.js")"></script>
     <script src="~/lib/tagify/tagify.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/cookieconsent.js" asp-append-version="true"></script>
 
-    <partial name="./_CookieConsent" />
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

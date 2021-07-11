@@ -26,7 +26,8 @@ namespace Nocturne.Auth.Admin
 
             services
                 .AddApplicationAntiforgery(ApplicationConstants.Identifier)
-                .AddApplicationWebAssets(Configuration);
+                .AddApplicationWebAssets(Configuration)
+                .AddWebApplicationOptions(Configuration);
 
             services
                 .AddApplicationDbContexts(Configuration)

@@ -1,8 +1,4 @@
 @inject IViewLocalizer localizer
 
-<script>
-    window.cookieconsent.show({
-        message: '@localizer["This site stores data like cookies to enable required functionality"]',
-        dismiss: '@localizer["I understand"]'
-    });
-</script>
+<meta name="cookie-connsent-message" content="@localizer["This site stores data like cookies to enable required functionality"]" />
+<meta name="cookie-connsent-dismiss" content="@localizer["I understand"]" />

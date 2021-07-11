@@ -283,6 +283,9 @@ msgstr "Por favor, confirme sua conta de acesso clicando no botão abaixo."
 msgid "Please enter an email address below to finish logging in"
 msgstr "Por favor informe um endereço de e-mail abaixo para completar o acesso"
 
+msgid "Privacy policy"
+msgstr "Política de privacidade"
+
 msgid "Profile"
 msgstr "Perfil"
 
