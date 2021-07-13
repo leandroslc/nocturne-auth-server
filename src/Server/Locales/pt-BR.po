@@ -229,6 +229,9 @@ msgstr "Entre usando sua conta {0}"
 msgid "Log in with a recovery code"
 msgstr "Entre com um código de recuperação"
 
+msgid "Logout"
+msgstr "Sair"
+
 msgid "Manage email"
 msgstr "Gerenciar email"
 
@@ -237,6 +240,9 @@ msgstr "Gerencie seus logins externos"
 
 msgid "More info"
 msgstr "Mais informações"
+
+msgid "My account"
+msgstr "Minha conta"
 
 msgid "Name"
 msgstr "Nome"
