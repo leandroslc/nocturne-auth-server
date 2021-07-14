@@ -22,6 +22,8 @@ namespace Nocturne.Auth.Core.Services.Identity
             var principal = await base.CreateAsync(user);
 
             principal.SetClaim(OpenIddictConstants.Claims.Name, user.Name);
+            principal.SetClaim(OpenIddictConstants.Claims.Subject, user.Id.ToString());
+            principal.SetClaim(OpenIddictConstants.Claims.Username, user.UserName);
 
             return principal;
         }

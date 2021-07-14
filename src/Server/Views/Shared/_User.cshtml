@@ -1,0 +1,25 @@
+@using Microsoft.AspNetCore.Identity;
+@using Nocturne.Auth.Core.Services.Identity;
+@inject IViewLocalizer localizer;
+@inject SignInManager<ApplicationUser> signInManager;
+
+@if (signInManager.IsSignedIn(User))
+{
+    var user = User.GetApplicationUser();
+
+    <div class="dropdown">
+        <button class="user-menu-toggle" type="button" id="_user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img class="user-menu-toggle-item" src="~/img/user.svg" alt="Avatar" />
+            <span class="user-menu-toggle-item user-menu-toggle-name">@user.FirstName</span>
+        </button>
+        <div class="dropdown-menu user-menu" aria-labelledby="_user-menu">
+            <label class="user-menu-title">@user.Name</label>
+            <a class="user-menu-item" asp-route="@RouteNames.Home">
+                @localizer["My account"]
+            </a>
+            <a class="user-menu-item" asp-route="@RouteNames.AuthorizationLogout">
+                @localizer["Logout"]
+            </a>
+        </div>
+    </div>
+}

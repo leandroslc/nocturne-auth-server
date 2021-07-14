@@ -13,6 +13,7 @@ using Nocturne.Auth.Core.Services.Identity;
 using Nocturne.Auth.Core.Shared.Extensions;
 using Nocturne.Auth.Server.Areas.Authorization.Models;
 using Nocturne.Auth.Server.Configuration;
+using Nocturne.Auth.Server.Configuration.Constants;
 using Nocturne.Auth.Server.Services;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
@@ -46,7 +47,7 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
             this.userClaimsService = userClaimsService;
         }
 
-        [HttpGet(AuthorizationEndpoints.Authorize)]
+        [HttpGet(AuthorizationEndpoints.Authorize, Name = RouteNames.AuthorizationAuthorize)]
         [HttpPost(AuthorizationEndpoints.Authorize)]
         [IgnoreAntiforgeryToken]
         public async Task<IActionResult> Authorize()
@@ -122,7 +123,7 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
             return Forbid(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         }
 
-        [HttpGet(AuthorizationEndpoints.Logout)]
+        [HttpGet(AuthorizationEndpoints.Logout, Name = RouteNames.AuthorizationLogout)]
         public IActionResult Logout()
         {
             return View();
