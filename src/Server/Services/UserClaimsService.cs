@@ -34,8 +34,6 @@ namespace Nocturne.Auth.Server.Services
             await AddResourcesAsync(principal, principal.GetScopes());
 
             await AddPermissionsAndRolesAsync(principal, request);
-
-
         }
 
         public Task AddClaimsDestinationsAsync(ClaimsPrincipal principal)
@@ -45,10 +43,6 @@ namespace Nocturne.Auth.Server.Services
             // attached.
             foreach (var claim in principal.Claims)
             {
-                System.Console.WriteLine("Added claim \"{0}\" for \"{1}\"",
-                    claim.Type,
-                    string.Join(", ", GetDestinations(claim, principal)));
-
                 claim.SetDestinations(GetDestinations(claim, principal));
             }
 
