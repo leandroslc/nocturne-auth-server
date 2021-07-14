@@ -139,6 +139,9 @@ msgstr "Lista de escopos"
 msgid "List of URIs"
 msgstr "Lista de URIs"
 
+msgid "Logout"
+msgstr "Sair"
+
 msgid "Logout Redirect Uris"
 msgstr "URIs de Redirecionamento de Logout"
 
@@ -150,6 +153,9 @@ msgstr "Gerencie aplicações (clients) e APIs"
 
 msgid "Manage all registered users"
 msgstr "Gerencie todos os usuários registrados"
+
+msgid "My account"
+msgstr "Minha conta"
 
 msgid "Name"
 msgstr "Nome"

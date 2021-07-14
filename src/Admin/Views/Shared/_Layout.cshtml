@@ -35,6 +35,9 @@
                     <img class="navbar-logo mr-2" src="~/logo.svg" alt="logo" role="img" />
                     <h1 class="navbar-title">@title</h1>
                 </div>
+                <div class="ml-auto">
+                    <partial name="./_User" />
+                </div>
             </nav>
         </header>
         <aside class="sidenav layout-sidenav" id="_sidenav">
@@ -46,14 +49,14 @@
             @RenderBody()
         </main>
         <div class="layout-footer footer">
-            <ul class="list-unstyled d-flex flex-wrap mb-0 ml-auto">
+            <ul class="footer-list ml-auto">
                 @if (currentApplicationOptions.HasPrivacyPolicyUrl)
                 {
-                    <li class="mr-2">
+                    <li class="footer-list-item">
                         <a class="footer-link" href="@currentApplicationOptions.PrivacyPolicyUrl">@localizer["Privacy policy"]</a>
                     </li>
                 }
-                <li>@currentApplicationOptions.CompanyName</li>
+                <li class="footer-list-item">@currentApplicationOptions.CompanyName</li>
             </ul>
         </div>
     </div>
