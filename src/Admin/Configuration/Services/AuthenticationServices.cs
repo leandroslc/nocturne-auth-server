@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -22,11 +21,13 @@ namespace Nocturne.Auth.Admin.Configuration.Services
                 .GetSection(AuthorizationOptions.Section)
                 .Get<AuthorizationOptions>();
 
+            services.AddSingleton(authorizationOptions);
+
             services
                 .AddAuthentication(options =>
                 {
-                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                    options.DefaultScheme = ApplicationConstants.AuthenticationScheme;
+                    options.DefaultChallengeScheme = ApplicationConstants.AuthenticationChallengeScheme;
                 })
                 .AddCookie(options =>
                 {

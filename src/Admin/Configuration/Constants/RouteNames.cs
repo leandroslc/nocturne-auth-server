@@ -38,6 +38,10 @@ namespace Nocturne.Auth.Admin.Configuration.Constants
 
         public const string RolePermissionsRemove = nameof(RolePermissionsRemove);
 
+        public const string SessionAccount = nameof(SessionAccount);
+
+        public const string SessionLogout = nameof(SessionLogout);
+
         public const string UserRolesHome = nameof(UserRolesHome);
 
         public const string UsersHome = nameof(UsersHome);
