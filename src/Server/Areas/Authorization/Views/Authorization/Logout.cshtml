@@ -1,16 +1,43 @@
+@inject IViewLocalizer localizer;
+@model LogoutViewModel
 
-<div class="jumbotron">
-    <h1>Log out</h1>
-    <p class="lead text-left">Are you sure you want to sign out?</p>
+@{
+    var title = localizer["Log out"];
 
-    <form asp-controller="Authorization" asp-action="Logout" method="post">
-        @* Flow the request parameters so they can be received by the LogoutPost action: *@
-        @foreach (var parameter in Context.Request.HasFormContentType ?
-           (IEnumerable<KeyValuePair<string, StringValues>>) Context.Request.Form : Context.Request.Query)
-        {
-            <input type="hidden" name="@parameter.Key" value="@parameter.Value" />
-        }
+    ViewData[KnownViewData.Title] = title;
+}
 
-        <input class="btn btn-lg btn-success" name="Confirm" type="submit" value="Yes" />
-    </form>
+<div class="page">
+    <div class="page-heading">
+        <div class="page-container">
+
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-header">
+                <h1 class="page-card-title">@title</h1>
+            </div>
+            <div class="page-card-content">
+                <p class="mb-4">
+                    @localizer["Are you sure you want to sign out?"]
+                </p>
+
+                <form asp-controller="Authorization" asp-action="Logout" method="post" loading="loading">
+                    @foreach (var parameter in Model.RequestParameters)
+                    {
+                        <input type="hidden" name="@parameter.Key" value="@parameter.Value" />
+                    }
+
+                    <div class="form-group">
+                        <input class="btn btn-primary" name="Confirm" type="submit" value="@localizer["Yes"]" />
+
+                        <div class="spinner-border spinner-border-sm text-primary" role="status" id="loading" style="display: none;">
+                            <span class="sr-only">@localizer["Loading..."]</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

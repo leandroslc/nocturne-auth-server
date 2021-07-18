@@ -28,6 +28,9 @@ msgstr "Um erro inesperado ocorreu ao desabilitar a autenticação de dois fator
 msgid "An unknown failure has occurred"
 msgstr "Ocorreu uma falha desconhecida"
 
+msgid "Are you sure you want to sign out?"
+msgstr "Tem certeza de que deseja desconectar?"
+
 msgid "Associate your {0} account"
 msgstr "Associe sua conta {0}"
 
@@ -228,6 +231,9 @@ msgstr "Entre usando sua conta {0}"
 
 msgid "Log in with a recovery code"
 msgstr "Entre com um código de recuperação"
+
+msgid "Log out"
+msgstr "Desconectar"
 
 msgid "Logout"
 msgstr "Sair"
@@ -552,6 +558,9 @@ msgstr "Verificar"
 
 msgid "When you login again from this browser you will be prompted for your two-factor code"
 msgstr "Quando você fizer log in novamente com este navegador você será solicitado pelo seu código de dois fatores"
+
+msgid "Yes"
+msgstr "Sim"
 
 msgid "Yes, allow"
 msgstr "Sim, permitir"
