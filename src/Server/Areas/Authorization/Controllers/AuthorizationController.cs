@@ -124,25 +124,16 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
         }
 
         [HttpGet(AuthorizationEndpoints.Logout, Name = RouteNames.AuthorizationLogout)]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            return View();
+            return await LogoutInternalAsync();
         }
 
         [HttpPost(AuthorizationEndpoints.Logout)]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogoutPost()
         {
-            await signInManager.SignOutAsync();
-
-            // Redirects the user agent to the post_logout_redirect_uri specified by
-            // the client or to the RedirectUri if none was set.
-            return SignOut(
-                authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
-                properties: new AuthenticationProperties
-                {
-                    RedirectUri = "/"
-                });
+            return await LogoutInternalAsync();
         }
 
         [HttpPost(AuthorizationEndpoints.Token)]
@@ -333,6 +324,23 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
             await userClaimsService.AddClaimsDestinationsAsync(principal);
 
             return SignInPrincipal(principal);
+        }
+
+        private async Task<IActionResult> LogoutInternalAsync()
+        {
+            if (User?.Identity.IsAuthenticated is true)
+            {
+                await signInManager.SignOutAsync();
+            }
+
+            // Redirects the user agent to the post_logout_redirect_uri specified by
+            // the client or to the RedirectUri if none was set.
+            return SignOut(
+                authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
+                properties: new AuthenticationProperties
+                {
+                    RedirectUri = "/"
+                });
         }
 
         private async Task<ClaimsPrincipal> CreateUserPrincipalAsync(
