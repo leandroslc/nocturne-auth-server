@@ -8,7 +8,7 @@ using AuthOptions = Nocturne.Auth.Admin.Configuration.Options.AuthorizationOptio
 namespace Nocturne.Auth.Admin.Controllers
 {
     [Route("session")]
-    [Authorize(Policy = Policies.GeneralAccess)]
+    [Authorize]
     public class SessionController : Controller
     {
         [HttpGet("account", Name = RouteNames.SessionAccount)]
