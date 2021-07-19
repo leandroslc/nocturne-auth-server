@@ -66,7 +66,7 @@ namespace Nocturne.Auth.Server
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/error/unexpected");
                 app.UseHsts();
             }
 

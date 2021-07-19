@@ -56,17 +56,7 @@
         <main class="layout-main pb-3">
             @RenderBody()
         </main>
-        <div class="layout-footer footer">
-            <ul class="footer-list ml-auto">
-                @if (currentApplicationOptions.HasPrivacyPolicyUrl)
-                {
-                    <li class="footer-list-item">
-                        <a class="footer-link" href="@currentApplicationOptions.PrivacyPolicyUrl">@localizer["Privacy policy"]</a>
-                    </li>
-                }
-                <li class="footer-list-item">@currentApplicationOptions.CompanyName</li>
-            </ul>
-        </div>
+        <partial name="./_Footer" />
     </div>
 
     <script src="@assets.Url("impromptu/impromptu.min.js")"></script>
