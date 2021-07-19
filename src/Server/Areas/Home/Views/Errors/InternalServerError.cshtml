@@ -1,8 +1,7 @@
 @inject IViewLocalizer localizer
-@inject IAuthorizationService authorizationService
 
 @{
-    var title = localizer["Access denied"];
+    var title = localizer["Unexpected error"];
 
     ViewData[KnownViewData.Title] = title;
 }
@@ -14,9 +13,10 @@
             <div class="page-card-content">
                 <div class="d-flex flex-column align-items-center justify-content-center py-5">
                     <h1 class="h3 font-weight-normal mb-4">@title</h1>
-                    <p>@localizer["The page you are trying to access has a restricted access"].</p>
+                    <p class="mb-1">@localizer["Ops, we are sorry, an internal error has occurred"].</p>
+                    <p>@localizer["Please try again or contact us if the problem persists"].</p>
 
-                    @if (await authorizationService.HasAccessAsync(User, Policies.GeneralAccess))
+                    @if (User?.Identity.IsAuthenticated is true)
                     {
                         <a class="btn btn-outline-primary rounded-pill" asp-route="@RouteNames.Home">@localizer["Back to home"]</a>
                     }

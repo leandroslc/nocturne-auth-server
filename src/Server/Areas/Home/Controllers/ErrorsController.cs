@@ -2,15 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Nocturne.Auth.Admin.Controllers
 {
+    [Area("Home")]
     [Route("error")]
     public class ErrorsController : Controller
     {
-        [Route("denied")]
-        public IActionResult Forbidden()
-        {
-            return View();
-        }
-
         [Route("unexpected")]
         public IActionResult InternalServerError()
         {

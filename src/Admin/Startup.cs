@@ -50,7 +50,7 @@ namespace Nocturne.Auth.Admin
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/error/unexpected");
                 app.UseHsts();
             }
 

@@ -196,6 +196,9 @@ msgstr "Apenas recomendado se fluxos baseados em redirecionamento (como Authoriz
 msgid "Open menu"
 msgstr "Abrir menu"
 
+msgid "Ops, we are sorry, an internal error has occurred"
+msgstr "Ops, nos desculpe, ocorreu um erro interno"
+
 msgid "Page list"
 msgstr "Lista de páginas"
 
@@ -207,6 +210,9 @@ msgstr "Detalhes da permissão"
 
 msgid "Permission not found"
 msgstr "Permissão não encontrada"
+
+msgid "Please try again or contact us if the problem persists"
+msgstr "Por favor, tente novamente ou contate-nos se o problema persistir"
 
 msgid "Previous page"
 msgstr "Página anterior"
@@ -333,6 +339,9 @@ msgstr "Desvincular permissão"
 
 msgid "Unassign role"
 msgstr "Desvincular grupo"
+
+msgid "Unexpected error"
+msgstr "Erro inesperado"
 
 msgid "Use confidential for applications that can hold secrets secure, mainly those that runs on the server, like server-side web apps, web APIs"
 msgstr "Use confidencial para aplicações que podem manter segredos de app seguros, principalmente as que executam no servidor, como aplicações web server-side, APIs web"

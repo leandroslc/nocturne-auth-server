@@ -274,6 +274,9 @@ msgstr "Após escanear o QR Code ou informar a chave acima, seu aplicativo de au
 msgid "Open the authenticator app"
 msgstr "Abra o aplicativo autenticador"
 
+msgid "Ops, we are sorry, an internal error has occurred"
+msgstr "Ops, nos desculpe, ocorreu um erro interno"
+
 msgid "Or register using:"
 msgstr "Ou cadastre-se usando:"
 
@@ -294,6 +297,9 @@ msgstr "Por favor, confirme sua conta de acesso clicando no botão abaixo."
 
 msgid "Please enter an email address below to finish logging in"
 msgstr "Por favor informe um endereço de e-mail abaixo para completar o acesso"
+
+msgid "Please try again or contact us if the problem persists"
+msgstr "Por favor, tente novamente ou contate-nos se o problema persistir"
 
 msgid "Privacy policy"
 msgstr "Política de privacidade"
@@ -522,6 +528,9 @@ msgstr "Autenticação de dois fatores"
 
 msgid "Two-factor authentication (2FA)"
 msgstr "Autenticação de dois fatores (2FA)"
+
+msgid "Unexpected error"
+msgstr "Erro inesperado"
 
 msgid "Update"
 msgstr "Atualizar"
