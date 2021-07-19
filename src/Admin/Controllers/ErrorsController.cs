@@ -10,5 +10,11 @@ namespace Nocturne.Auth.Admin.Controllers
         {
             return View();
         }
+
+        [Route("unexpected")]
+        public IActionResult InternalServerError()
+        {
+            return View();
+        }
     }
 }
