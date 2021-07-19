@@ -9,5 +9,7 @@ namespace Nocturne.Auth.Admin.Configuration.Constants
         public const string ReturnTitle = nameof(ReturnTitle);
 
         public const string ReturnUrl = nameof(ReturnUrl);
+
+        public const string HideMenu = nameof(HideMenu);
     }
 }
