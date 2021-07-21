@@ -13,7 +13,7 @@ namespace Nocturne.Auth.Core.Shared.Models
 
         public CPF(string value)
         {
-            Value = (value?.ToAlphaNumericOnly() ?? string.Empty).PadLeft(CPFLength, '0');
+            Value = value?.ToAlphaNumericOnly() ?? string.Empty;
         }
 
         private CPF()
