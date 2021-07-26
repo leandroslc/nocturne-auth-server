@@ -161,7 +161,6 @@ namespace Migrations.Identity
                         .HasColumnType("int");
 
                     b.Property<string>("CPF")
-                        .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 

@@ -10,7 +10,7 @@ using Nocturne.Auth.Core.Services.Identity;
 namespace Migrations.Identity
 {
     [DbContext(typeof(ApplicationIdentityDbContext))]
-    [Migration("20210722001058_AddUserCPF")]
+    [Migration("20210726003819_AddUserCPF")]
     partial class AddUserCPF
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -163,7 +163,6 @@ namespace Migrations.Identity
                         .HasColumnType("int");
 
                     b.Property<string>("CPF")
-                        .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 

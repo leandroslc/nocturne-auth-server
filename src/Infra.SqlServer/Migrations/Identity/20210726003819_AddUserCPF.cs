@@ -12,8 +12,7 @@ namespace Migrations.Identity
                 table: "Users",
                 type: "nvarchar(11)",
                 maxLength: 11,
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

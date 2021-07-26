@@ -45,8 +45,7 @@ namespace Nocturne.Auth.Core.Services.Identity
             user
                 .Property(p => p.CPF)
                 .HasMaxLength(11)
-                .HasConversion(to => to.Value, from => new CPF(from))
-                .IsRequired();
+                .HasConversion(to => to.Value, from => new CPF(from));
         }
     }
 }
