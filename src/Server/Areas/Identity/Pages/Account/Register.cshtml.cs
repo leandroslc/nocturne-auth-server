@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Nocturne.Auth.Core.Services.Identity;
+using Nocturne.Auth.Core.Shared.Models;
+using Nocturne.Auth.Core.Shared.Validation;
 using Nocturne.Auth.Server.Areas.Identity.Emails;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
@@ -51,6 +53,10 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             [DataType(DataType.Text)]
             public string Name { get; set; }
 
+            [Required(ErrorMessage = "The CPF is required")]
+            [CPF(ErrorMessage = "The CPF is invalid")]
+            public string CPF { get; set; }
+
             [Required(ErrorMessage = "The email is required")]
             [EmailAddress(ErrorMessage = "The email is not valid")]
             public string Email { get; set; }
@@ -89,38 +95,24 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                 return Page();
             }
 
-
             var user = new ApplicationUser
             {
                 UserName = Input.Email,
                 Email = Input.Email,
                 Name = Input.Name,
+                CPF = CPF.ToCPF(Input.CPF),
             };
 
             var result = await userManager.CreateAsync(user, Input.Password);
 
             if (result.Succeeded is false)
             {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-
-                return Page();
+                return PageWithErrors(result);
             }
 
             logger.LogInformation("User created a new account with password.");
 
-            var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
-            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-
-            var callbackUrl = Url.Page(
-                "/Account/ConfirmEmail",
-                pageHandler: null,
-                values: new { area = "Identity", userId = user.Id, code, returnUrl },
-                protocol: Request.Scheme);
-
-            await emailSender.SendEmailConfirmation(user, Input.Email, callbackUrl);
+            await SendEmailConfirmation(user, returnUrl);
 
             if (userManager.Options.SignIn.RequireConfirmedAccount)
             {
@@ -132,6 +124,30 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 
                 return LocalRedirect(returnUrl);
             }
+        }
+
+        private async Task SendEmailConfirmation(ApplicationUser user, string returnUrl)
+        {
+            var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+            var callbackUrl = Url.Page(
+                "/Account/ConfirmEmail",
+                pageHandler: null,
+                values: new { area = "Identity", userId = user.Id, code, returnUrl },
+                protocol: Request.Scheme);
+
+            await emailSender.SendEmailConfirmation(user, Input.Email, callbackUrl);
+        }
+
+        private IActionResult PageWithErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return Page();
         }
     }
 }

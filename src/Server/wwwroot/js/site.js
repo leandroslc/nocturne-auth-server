@@ -8,6 +8,7 @@
 
   $.validator.setDefaults(validationOptions);
   $.validator.unobtrusive.options = $.validator.defaults;
+  $.validator.unobtrusive.adapters.addBool('cpf', 'cpfBR');
 
   window.Validator = {
     attach: function(form) {
