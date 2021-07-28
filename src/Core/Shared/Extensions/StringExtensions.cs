@@ -34,5 +34,12 @@ namespace Nocturne.Auth.Core.Shared.Extensions
                 ? value
                 : value.Substring(0, maxLength - truncateSufix.Length) + truncateSufix;
         }
+
+        public static string ToAlphaNumericOnly(this string value)
+        {
+            Check.NotNull(value, nameof(value));
+
+            return Regex.Replace(value, "[^\\w]", string.Empty);
+        }
     }
 }

@@ -421,6 +421,12 @@ msgstr "O código é obrigatório"
 msgid "The code must have at least {2} and max {1} characters"
 msgstr "O código deve ter no mínimo {2} e no máximo {1} caracteres"
 
+msgid "The CPF is invalid"
+msgstr "O CPF está inválido"
+
+msgid "The CPF is required"
+msgstr "O CPF é obrigatório"
+
 msgid "The current browser has been forgotten"
 msgstr "O navegador atual foi esquecido"
 

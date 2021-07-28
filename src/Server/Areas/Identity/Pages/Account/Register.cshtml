@@ -22,9 +22,20 @@
                 <div class="input-over-addon input-over-addon-left" style="font-size: 1.4rem;" aria-hidden="true">
                     <span class="bi-person"></span>
                 </div>
-                <input class="form-control" asp-for="Input.Name" />
+                <input class="form-control" asp-for="Input.Name" autofocus />
             </div>
             <span class="d-block form-text text-danger" asp-validation-for="Input.Name"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" asp-for="Input.CPF">@localizer["CPF"]</label>
+            <div class="input-over-group input-over-group-left">
+                <div class="input-over-addon input-over-addon-left" style="font-size: 1.4rem;" aria-hidden="true">
+                    <span class="bi-card-text"></span>
+                </div>
+                <input class="form-control" asp-for="Input.CPF" />
+            </div>
+            <span class="d-block form-text text-danger" asp-validation-for="Input.CPF"></span>
         </div>
 
         <div class="form-group">
@@ -111,9 +122,15 @@
 
 @section scripts {
     <script>
+        const cpfElement = document.getElementById('@($"{nameof(Model.Input)}_{nameof(Model.Input.CPF)}")');
         const passwordElement = document.getElementById('@($"{nameof(Model.Input)}_{nameof(Model.Input.Password)}")');
         const togglePasswordElement = document.getElementById('password-toggle');
 
         ElementHelper.addTogglePasswordEvent('click', togglePasswordElement, passwordElement);
+
+        IMask(cpfElement, {
+            mask: '000.000.000-00',
+            lazyPlaceholder: true,
+        });
     </script>
 }
