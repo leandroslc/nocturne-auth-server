@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Nocturne.Auth.Core.Services.Identity;
+using Nocturne.Auth.Server.Configuration.Options;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
@@ -22,15 +24,15 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<DeletePersonalDataModel> logger,
-            IStringLocalizer<DeletePersonalDataModel> localizer)
+            IStringLocalizer<DeletePersonalDataModel> localizer,
+            IOptions<AccountOptions> accountOptions)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
             this.localizer = localizer;
 
-            // TODO: Make it configurable
-            enableAccountDeletion = true;
+            enableAccountDeletion = accountOptions.Value.EnableAccountDeletion;
         }
 
         [BindProperty]
@@ -65,6 +67,11 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (enableAccountDeletion is false)
+            {
+                return NotFound();
+            }
+
             var user = await userManager.GetUserAsync(User);
             if (user == null)
             {

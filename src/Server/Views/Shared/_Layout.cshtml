@@ -1,12 +1,12 @@
 ﻿@using System.Globalization;
 @inject IViewLocalizer localizer;
 @inject WebAssets assets;
-@inject IOptions<WebApplicationOptions> applicationOptions;
+@inject IOptions<WebApplicationOptions> applicationOptionsService;
 
 @{
-    var currentApplicationOptions = applicationOptions.Value;
+    var applicationOptions = applicationOptionsService.Value;
 
-    var applicationName = currentApplicationOptions.ApplicationName;
+    var applicationName = applicationOptions.ApplicationName;
     var language = CultureInfo.CurrentCulture.Name;
 
     var menuPath = ViewData[KnownViewData.MenuPath] as string;

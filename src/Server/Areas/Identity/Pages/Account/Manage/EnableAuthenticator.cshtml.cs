@@ -8,19 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Nocturne.Auth.Core.Services.Identity;
+using Nocturne.Auth.Core.Web;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
     public class EnableAuthenticatorModel : PageModel
     {
-        // TODO: This should be configured
-        private const string ApplicationName = "Server";
-
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<EnableAuthenticatorModel> logger;
         private readonly UrlEncoder urlEncoder;
         private readonly IStringLocalizer localizer;
+        private readonly string applicationName;
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
@@ -28,12 +28,15 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
             UserManager<ApplicationUser> userManager,
             ILogger<EnableAuthenticatorModel> logger,
             UrlEncoder urlEncoder,
-            IStringLocalizer<EnableAuthenticatorModel> localizer)
+            IStringLocalizer<EnableAuthenticatorModel> localizer,
+            IOptions<WebApplicationOptions> applicationOptions)
         {
             this.userManager = userManager;
             this.logger = logger;
             this.urlEncoder = urlEncoder;
             this.localizer = localizer;
+
+            applicationName = applicationOptions.Value.ApplicationName;
         }
 
         public string SharedKey { get; set; }
@@ -168,7 +171,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                urlEncoder.Encode(ApplicationName),
+                urlEncoder.Encode(applicationName),
                 urlEncoder.Encode(email),
                 unformattedKey);
         }
