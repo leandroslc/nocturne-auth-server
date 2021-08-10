@@ -7,23 +7,28 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Nocturne.Auth.Core.Services.Identity;
+using Nocturne.Auth.Server.Configuration.Options;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
     public class DownloadPersonalDataModel : PageModel
     {
-        private const string PersonalDataFileName = "PersonalData.json";
-
+        private static JsonSerializerOptions serializerOptions;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<DownloadPersonalDataModel> logger;
+        private readonly string personalDataFileName;
 
         public DownloadPersonalDataModel(
             UserManager<ApplicationUser> userManager,
-            ILogger<DownloadPersonalDataModel> logger)
+            ILogger<DownloadPersonalDataModel> logger,
+            IOptions<AccountOptions> accountOptions)
         {
             this.userManager = userManager;
             this.logger = logger;
+
+            personalDataFileName = accountOptions.Value.PersonalDataFileName;
         }
 
         public IActionResult OnGet()
@@ -50,9 +55,9 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
             await AdUserLoginProviders(personalData, user);
 
             return File(
-                JsonSerializer.SerializeToUtf8Bytes(personalData),
+                SerializeData(personalData),
                 "application/json",
-                PersonalDataFileName);
+                personalDataFileName);
         }
 
         private static void AddUserPersonalData(
@@ -69,7 +74,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
                 var value = property.GetValue(user);
 
                 personalData.Add(
-                    property.Name,
+                    property.Name.ToLowerInvariant(),
                     property.PropertyType.IsPrimitive ? value : value?.ToString());
             }
         }
@@ -84,6 +89,16 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
             {
                 personalData.Add($"{login.LoginProvider} external login provider key", login.ProviderKey);
             }
+        }
+
+        private static byte[] SerializeData(Dictionary<string, object> data)
+        {
+            serializerOptions ??= new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            };
+
+            return JsonSerializer.SerializeToUtf8Bytes(data, serializerOptions);
         }
     }
 }

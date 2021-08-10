@@ -53,7 +53,7 @@ namespace Nocturne.Auth.Server
                 .AddApplicationEmailService(Configuration, Environment)
                 .AddApplicationEncryption(Configuration)
                 .AddApplicationModules()
-                .AddRequiredApplicationServices();
+                .AddRequiredApplicationServices(Configuration);
 
             services
                 .AddApplicationOpenIddict()

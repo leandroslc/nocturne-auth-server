@@ -1,14 +1,16 @@
 ﻿@page "/manage/data"
 @model PersonalDataModel
 @inject IViewLocalizer localizer;
+@inject IOptions<AccountOptions> accountOptionsService;
 
 @{
+    var accountOptions = accountOptionsService.Value;
     var title = localizer["Personal data"];
 
     ViewData[KnownViewData.Title] = title;
     ViewData[KnownViewData.PageGroup] = ManageNavPages.PersonalData;
 
-    bool enableAccountDeletion = true;
+    bool enableAccountDeletion = accountOptions.EnableAccountDeletion;
 }
 
 <div class="page">

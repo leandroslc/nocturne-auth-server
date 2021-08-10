@@ -1,11 +1,13 @@
 @page "/account/register"
-@model RegisterModel
-@inject IViewLocalizer localizer
+@model RegisterModel;
+@inject IViewLocalizer localizer;
+@inject IOptions<AccountOptions> accountOptionsService;
 
 @{
+    var accountOptions = accountOptionsService.Value;
     var title = localizer["Register"];
 
-    bool enableExternalLogin = false;
+    bool enableExternalLogin = accountOptions.EnableExternalAccount;
 
     ViewData[KnownViewData.Title] = title;
 }

@@ -1,14 +1,16 @@
 @page "/account/signin"
-@using Microsoft.AspNetCore.Http.Extensions
-@model LoginModel
-@inject IViewLocalizer localizer
-@inject WebAssets assets
+@using Microsoft.AspNetCore.Http.Extensions;
+@model LoginModel;
+@inject IViewLocalizer localizer;
+@inject WebAssets assets;
+@inject IOptions<AccountOptions> accountOptionsService;
 
 @{
+    var accountOptions = accountOptionsService.Value;
     var title = localizer["Log in"];
 
-    bool enableRememberLogin = false;
-    bool enableExternalLogin = false;
+    bool enableRememberLogin = Model.ShowRememberLogin;
+    bool enableExternalLogin = Model.EnableExternalAccount;
 
     var currentUrl = Request.GetEncodedPathAndQuery();
 

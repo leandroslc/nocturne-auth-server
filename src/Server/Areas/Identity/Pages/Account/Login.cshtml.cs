@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Nocturne.Auth.Core.Services.Identity;
+using Microsoft.Extensions.Options;
+using Nocturne.Auth.Server.Configuration.Options;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 {
@@ -20,15 +22,18 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ILogger<LoginModel> logger;
         private readonly IStringLocalizer localizer;
+        private readonly AccountOptions accountOptions;
 
         public LoginModel(
             SignInManager<ApplicationUser> signInManager,
             ILogger<LoginModel> logger,
-            IStringLocalizer<LoginModel> localizer)
+            IStringLocalizer<LoginModel> localizer,
+            IOptions<AccountOptions> accountOptions)
         {
             this.signInManager = signInManager;
             this.logger = logger;
             this.localizer = localizer;
+            this.accountOptions = accountOptions.Value;
         }
 
         [BindProperty]
@@ -37,6 +42,10 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public string ReturnUrl { get; set; }
+
+        public bool EnableExternalAccount => accountOptions.EnableExternalAccount;
+
+        public bool ShowRememberLogin => accountOptions.ShowRememberLogin;
 
         [TempData]
         public string ErrorMessage { get; set; }
@@ -66,7 +75,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            await SetExternalLogins();
 
             ReturnUrl = returnUrl;
         }
@@ -75,7 +84,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
 
-            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            await SetExternalLogins();
 
             if (ModelState.IsValid)
             {
@@ -111,6 +120,14 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             }
 
             return Page();
+        }
+
+        private async Task SetExternalLogins()
+        {
+            if (EnableExternalAccount)
+            {
+                ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            }
         }
     }
 }

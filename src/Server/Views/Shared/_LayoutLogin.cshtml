@@ -1,10 +1,13 @@
 @using System.Globalization;
 @inject IViewLocalizer localizer;
 @inject WebAssets assets;
+@inject IOptions<WebApplicationOptions> applicationOptionsService;
 
 @{
+    var applicationOptions = applicationOptionsService.Value;
+
     var language = CultureInfo.CurrentCulture.Name;
-    var applicationName = "Conta de Praia Grande";
+    var applicationName = applicationOptions.ApplicationName;
 }
 
 <!DOCTYPE html>
