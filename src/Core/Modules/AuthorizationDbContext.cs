@@ -99,7 +99,7 @@ namespace Nocturne.Auth.Core.Modules
                 .HasOne(p => p.Role)
                 .WithMany()
                 .HasForeignKey(p => p.RoleId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
         private static void ConfigureUserRoles(ModelBuilder builder)
