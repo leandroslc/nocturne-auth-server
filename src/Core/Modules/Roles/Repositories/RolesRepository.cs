@@ -41,6 +41,11 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
 
         public async Task DeleteAsync(Role role)
         {
+            var rolePermissions = context
+                .Set<RolePermission>()
+                .Where(rolePermission => rolePermission.RoleId == role.Id);
+
+            context.RemoveRange(rolePermissions);
             context.Remove(role);
 
             await context.SaveChangesAsync();
