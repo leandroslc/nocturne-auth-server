@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nocturne.Auth.Core.Modules;
 
-namespace MigrationsAuthorization
+namespace Nocturne.Auth.Infra.SqlServer.Migrations.Authorization
 {
     [DbContext(typeof(AuthorizationDbContext))]
     partial class AuthorizationDbContextModelSnapshot : ModelSnapshot
@@ -344,7 +344,7 @@ namespace MigrationsAuthorization
                     b.HasOne("Nocturne.Auth.Core.Modules.Roles.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Permission");

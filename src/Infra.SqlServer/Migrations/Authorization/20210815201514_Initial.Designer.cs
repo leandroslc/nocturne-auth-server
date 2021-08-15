@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nocturne.Auth.Core.Modules;
 
-namespace MigrationsAuthorization
+namespace Nocturne.Auth.Infra.SqlServer.Migrations.Authorization
 {
     [DbContext(typeof(AuthorizationDbContext))]
-    [Migration("20210510233819_UserRoles")]
-    partial class UserRoles
+    [Migration("20210815201514_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -346,7 +346,7 @@ namespace MigrationsAuthorization
                     b.HasOne("Nocturne.Auth.Core.Modules.Roles.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Permission");
