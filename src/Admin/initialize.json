@@ -32,7 +32,7 @@
         "rst:code",
         "scp:email",
         "scp:profile",
-        "scp:role"
+        "scp:roles"
       ],
       "PostLogoutRedirectUris": [
         "https://localhost:5001/signout-callback-oidc"
