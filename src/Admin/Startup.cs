@@ -38,7 +38,6 @@ namespace Nocturne.Auth.Admin
                 .AddApplicationDbContexts(Configuration)
                 .AddApplicationIdentityServicesOnly(Configuration)
                 .AddApplicationLocalization(Configuration)
-                .AddApplicationEncryption(Configuration)
                 .AddApplicationModules()
                 .AddApplicationAuthentication(Configuration)
                 .AddApplicationAccessControl()
