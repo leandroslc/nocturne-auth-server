@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Nocturne.Auth.Core.Services.Crypto;
+using Nocturne.Auth.Core.Services.OpenIddict.Cryptography;
 using OpenIddict.Abstractions;
 using OpenIddict.Core;
 
@@ -13,10 +13,10 @@ namespace Nocturne.Auth.Core.Services.OpenIddict.Managers
         : OpenIddictApplicationManager<TApplication>, ICustomOpenIddictApplicationManager
         where TApplication : class
     {
-        private readonly IEncryptionService encryptionService;
+        private readonly IClientSecretEncryptionService encryptionService;
 
         public CustomOpenIddictApplicationManager(
-            IEncryptionService encryptionService,
+            IClientSecretEncryptionService encryptionService,
             IOpenIddictApplicationCache<TApplication> cache,
             ILogger<OpenIddictApplicationManager<TApplication>> logger,
             IOptionsMonitor<OpenIddictCoreOptions> options,
