@@ -1,6 +1,8 @@
 using System;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Nocturne.Auth.Configuration.Models;
 using Nocturne.Auth.Core.Services.DataProtection;
 
 namespace Nocturne.Auth.Configuration.Services
@@ -9,16 +11,28 @@ namespace Nocturne.Auth.Configuration.Services
     {
         private const string SharedApplicationIdentifier = "nocturne-auth-server";
 
-        public static IServiceCollection AddApplicationDataProtection(
-            IServiceCollection services)
+        public static IDataProtectionBuilder AddApplicationDataProtection(
+            this IServiceCollection services,
+            IConfiguration configuration)
         {
-            services
+            var options = new ApplicationDataProtectionOptions();
+
+            configuration
+                .GetSection(ApplicationDataProtectionOptions.Section)
+                .Bind(options);
+
+            var builder = services
                 .AddDataProtection()
                 .SetApplicationName(SharedApplicationIdentifier)
                 .SetDefaultKeyLifetime(TimeSpan.FromDays(180))
                 .PersistKeysToDbContext<DataProtectionDbContext>();
 
-            return services;
+            if (string.IsNullOrWhiteSpace(options.EncryptionCertificateThumbprint) is false)
+            {
+                builder.ProtectKeysWithCertificate(options.EncryptionCertificateThumbprint);
+            }
+
+            return builder;
         }
     }
 }

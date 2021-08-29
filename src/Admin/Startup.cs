@@ -20,6 +20,8 @@ namespace Nocturne.Auth.Admin
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationDataProtection(Configuration);
+
             services
                 .AddControllersWithViews()
                 .AddApplicationMvcLocalization();
