@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nocturne.Auth.Core.Modules;
+using Nocturne.Auth.Core.Services.DataProtection;
 using Nocturne.Auth.Core.Services.Identity;
 using Nocturne.Auth.Core.Services.OpenIddict;
 
@@ -26,6 +27,9 @@ namespace Nocturne.Auth.Configuration.Services
                 {
                     options.UseOpenIddict<Application, Authorization, Scope, Token, string>();
                 });
+
+            services.AddSqlServerDbContext<DataProtectionDbContext>(
+                connectionString);
 
             return services;
         }

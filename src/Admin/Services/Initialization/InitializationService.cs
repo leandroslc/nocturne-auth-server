@@ -15,6 +15,7 @@ using Nocturne.Auth.Core.Modules.Permissions.Services;
 using Nocturne.Auth.Core.Modules.Roles;
 using Nocturne.Auth.Core.Modules.Roles.Repositories;
 using Nocturne.Auth.Core.Modules.Roles.Services;
+using Nocturne.Auth.Core.Services.DataProtection;
 using Nocturne.Auth.Core.Services.Identity;
 using OpenIddict.Abstractions;
 
@@ -49,6 +50,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             await ApplyAuthorizationMigrations(services);
             await ApplyIdentityMigrations(services);
+            await ApplyDataProtectionMigrations(services);
 
             await CreateScopes(services);
 
@@ -58,16 +60,20 @@ namespace Nocturne.Auth.Admin.Services.Initialization
         }
 
         private Task ApplyAuthorizationMigrations(IServiceProvider services)
-            => ApplyMigrations<AuthorizationDbContext>(services, nameof(AuthorizationDbContext));
+            => ApplyMigrations<AuthorizationDbContext>(services);
 
         private Task ApplyIdentityMigrations(IServiceProvider services)
-            => ApplyMigrations<ApplicationIdentityDbContext>(services, nameof(ApplicationIdentityDbContext));
+            => ApplyMigrations<ApplicationIdentityDbContext>(services);
+
+        private Task ApplyDataProtectionMigrations(IServiceProvider services)
+            => ApplyMigrations<DataProtectionDbContext>(services);
 
         private async Task ApplyMigrations<TContext>(
-            IServiceProvider services,
-            string contextName)
+            IServiceProvider services)
             where TContext : DbContext
         {
+            var contextName = typeof(TContext).Name;
+
             Logger.LogInformation("Applying database migrations for {context}", contextName);
 
             var context = services.GetRequiredService<TContext>();

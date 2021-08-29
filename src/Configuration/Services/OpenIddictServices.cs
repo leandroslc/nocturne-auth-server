@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Nocturne.Auth.Core.Modules;
 using Nocturne.Auth.Core.Services.OpenIddict;
+using Nocturne.Auth.Core.Services.OpenIddict.Cryptography;
 using Nocturne.Auth.Core.Services.OpenIddict.Managers;
 
 namespace Nocturne.Auth.Configuration.Services
@@ -10,7 +11,9 @@ namespace Nocturne.Auth.Configuration.Services
         public static OpenIddictBuilder AddApplicationOpenIddict(
             this IServiceCollection services)
         {
-            return services
+            services.AddSingleton<IClientSecretEncryptionService, ClientSecretEncryptionService>();
+
+            var builder = services
                 .AddOpenIddict()
                 .AddCore(options =>
                 {
@@ -22,6 +25,8 @@ namespace Nocturne.Auth.Configuration.Services
                         .UseDbContext<AuthorizationDbContext>()
                         .ReplaceDefaultEntities<Application, Authorization, Scope, Token, string>();
                 });
+
+            return builder;
         }
     }
 }
