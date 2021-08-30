@@ -16,5 +16,11 @@ namespace Nocturne.Auth.Admin.Controllers
         {
             return View();
         }
+
+        [Route("remote-auth")]
+        public IActionResult RemoteAuthenticationError()
+        {
+            return View();
+        }
     }
 }

@@ -1,0 +1,24 @@
+@inject IViewLocalizer localizer
+
+@{
+    var title = localizer["Remote authentication error"];
+
+    ViewData[KnownViewData.Title] = title;
+}
+
+<div class="page">
+    <div class="page-heading"></div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-content">
+                <div class="d-flex flex-column align-items-center justify-content-center py-5">
+                    <h1 class="h3 font-weight-normal mb-4">@title</h1>
+                    <p class="mb-1">@localizer["An error has occurred while completing the remote login request"].</p>
+                    <p class="mb-4">@localizer["One of the possible causes is that your remote session may have expired"].</p>
+                    <p>@localizer["Please try again by going back to the home page"].</p>
+                    <a class="btn btn-outline-primary rounded-pill" asp-route="@RouteNames.Home">@localizer["Back to home"]</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +14,7 @@ namespace Nocturne.Auth.Admin.Configuration.Services
     public static class AuthenticationServices
     {
         private const string AccessDeniedPath = "/error/denied";
+        private const string RemoteAuthFailurePath = "/error/remote-auth";
 
         public static IServiceCollection AddApplicationAuthentication(
             this IServiceCollection services,
@@ -60,11 +63,21 @@ namespace Nocturne.Auth.Admin.Configuration.Services
 
                     options.DisableTelemetry = true;
 
+                    options.Events.OnRemoteFailure = OnRemoteAuthFailure;
+
                     options.NonceCookie.Name = "oidc-nonce";
                     options.CorrelationCookie.Name = "oidc-correlation";
                 });
 
             return services;
+        }
+
+        private static Task OnRemoteAuthFailure(RemoteFailureContext context)
+        {
+            context.Response.Redirect(RemoteAuthFailurePath);
+            context.HandleResponse();
+
+            return Task.CompletedTask;
         }
     }
 }
