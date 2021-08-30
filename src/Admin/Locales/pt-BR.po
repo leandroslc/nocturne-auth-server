@@ -34,6 +34,9 @@ msgstr "Escopos Permitidos"
 msgid "Allows the application to exchange an access token when the token expires, without a new user interaction"
 msgstr "Permite que a aplicação obtenha um token de acesso quando o token expira, sem uma nova interação do usuário"
 
+msgid "An error has occurred while completing the remote login request"
+msgstr "Ocorreu um erro ao completar a solicitação de login remoto"
+
 msgid "Application {0} already exists"
 msgstr "A aplicação {0} já existe"
 
@@ -190,6 +193,9 @@ msgstr "Nenhum usuário encontrado"
 msgid "None"
 msgstr "Nenhum"
 
+msgid "One of the possible causes is that your remote session may have expired"
+msgstr "Uma das possíveis causas é que sua sessão remota pode ter expirado"
+
 msgid "Only recommended if redirect-based flows (like Authorization Code) are not possible"
 msgstr "Apenas recomendado se fluxos baseados em redirecionamento (como Authorization Code) não são possíveis"
 
@@ -210,6 +216,9 @@ msgstr "Detalhes da permissão"
 
 msgid "Permission not found"
 msgstr "Permissão não encontrada"
+
+msgid "Please try again by going back to the home page"
+msgstr "Por favor, tente novamente voltando para a página inicial"
 
 msgid "Please try again or contact us if the problem persists"
 msgstr "Por favor, tente novamente ou contate-nos se o problema persistir"
@@ -237,6 +246,9 @@ msgstr "Recomendado quando a aplicação por si mesma é o resource owner, como 
 
 msgid "Redirect Uris"
 msgstr "URIs de Redirecionamento"
+
+msgid "Remote authentication error"
+msgstr "Erro de autenticação remota"
 
 msgid "Role details"
 msgstr "Detalhes do grupo"
