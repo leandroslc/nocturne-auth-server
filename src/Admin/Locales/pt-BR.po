@@ -371,7 +371,7 @@ msgid "User not found"
 msgstr "Usuário não encontrado"
 
 msgid "Welcome"
-msgstr "Bem-vindo"
+msgstr "Boas-vindas"
 
 msgid "with PKCE"
 msgstr "com PKCE"
