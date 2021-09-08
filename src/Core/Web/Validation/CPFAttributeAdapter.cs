@@ -1,3 +1,6 @@
+// Copyright (c) Leandro Silva Luz do Carmo
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.Extensions.Localization;

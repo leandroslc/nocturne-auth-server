@@ -1,3 +1,6 @@
+// Copyright (c) Leandro Silva Luz do Carmo
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 using Microsoft.EntityFrameworkCore;
 using Nocturne.Auth.Core.Modules.Permissions;
 using Nocturne.Auth.Core.Modules.Roles;
