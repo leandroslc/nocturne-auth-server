@@ -21,3 +21,6 @@ In a production environment it is highly recommended to change:
 
 ## Web assets
 Some of the web assets, like javascript and css, are shared and served from a remote server, so you must also configure an [Impromptu](https://github.com/leandrolc/impromptu) static server.
+
+## Licensing
+This repository uses the [REUSE](https://reuse.software/spec/) specification for licensing.

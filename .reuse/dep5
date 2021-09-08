@@ -1,0 +1,9 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Nocturne Auth Server
+Upstream-Contact:
+Source: https://github.com/leandroslc/nocturne-auth-server
+Disclaimer: Some files proveninet from third-party sources have independent licenses.
+
+Files: **/*.cshtml
+Copyright: (c) Leandro Silva Luz do Carmo
+License: GPL-3.0-or-later
