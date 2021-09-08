@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
 using Nocturne.Auth.Core.Services.OpenIddict.Managers;
+using Nocturne.Auth.Core.Services.OpenIddict.Services;
 using Nocturne.Auth.Core.Shared.Extensions;
 using OpenIddict.Abstractions;
 
@@ -9,11 +10,16 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
     public abstract class ManageApplicationHandler<TCommand>
         where TCommand : ManageApplicationCommand
     {
+        private readonly IClientBuilderService clientBuilderService;
+
         public ManageApplicationHandler(
             IOpenIddictApplicationManager applicationManager,
             IOpenIddictScopeManager scopeManager,
+            IClientBuilderService clientBuilderService,
             IStringLocalizer<ManageApplicationHandler<TCommand>> localizer)
         {
+            this.clientBuilderService = clientBuilderService;
+
             ApplicationManager = applicationManager;
             ScopeManager = scopeManager;
             Localizer = localizer;
@@ -60,6 +66,15 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
             var currentApplicationId = await ApplicationManager.GetIdAsync(currentApplication);
 
             return currentApplicationId!.IsEqualInvariant(existingApplicationId) is false;
+        }
+
+        protected ApplicationDescriptorBuilder CreateApplicationDescriptorBuilder(
+            ManageApplicationCommand command)
+        {
+            return new ApplicationDescriptorBuilder(
+                command,
+                ApplicationManager,
+                clientBuilderService);
         }
     }
 }

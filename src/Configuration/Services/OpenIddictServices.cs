@@ -3,6 +3,7 @@ using Nocturne.Auth.Core.Modules;
 using Nocturne.Auth.Core.Services.OpenIddict;
 using Nocturne.Auth.Core.Services.OpenIddict.Cryptography;
 using Nocturne.Auth.Core.Services.OpenIddict.Managers;
+using Nocturne.Auth.Core.Services.OpenIddict.Services;
 
 namespace Nocturne.Auth.Configuration.Services
 {
@@ -12,6 +13,7 @@ namespace Nocturne.Auth.Configuration.Services
             this IServiceCollection services)
         {
             services.AddSingleton<IClientSecretEncryptionService, ClientSecretEncryptionService>();
+            services.AddSingleton<IClientBuilderService, ClientBuilderService>();
 
             var builder = services
                 .AddOpenIddict()
