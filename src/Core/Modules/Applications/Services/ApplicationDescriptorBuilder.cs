@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Nocturne.Auth.Core.Services.OpenIddict.Managers;
+using Nocturne.Auth.Core.Services.OpenIddict.Services;
 using Nocturne.Auth.Core.Shared.Extensions;
 using Nocturne.Auth.Core.Shared.Helpers;
 using OpenIddict.Abstractions;
@@ -14,16 +15,19 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
     {
         private readonly ManageApplicationCommand command;
         private readonly IOpenIddictApplicationManager applicationManager;
+        private readonly IClientBuilderService clientBuilderService;
 
         private object application;
         private OpenIddictApplicationDescriptor descriptor;
 
         public ApplicationDescriptorBuilder(
             ManageApplicationCommand command,
-            IOpenIddictApplicationManager applicationManager)
+            IOpenIddictApplicationManager applicationManager,
+            IClientBuilderService clientBuilderService)
         {
             this.command = command;
             this.applicationManager = applicationManager;
+            this.clientBuilderService = clientBuilderService;
         }
 
         public ApplicationDescriptorBuilder WithApplication(object application)
@@ -37,7 +41,7 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
         {
             var clientId = application is not null
                 ? await applicationManager.GetClientIdAsync(application)
-                : Guid.NewGuid().ToString();
+                : clientBuilderService.GenerateClientId();
 
             var currentClientSecret = application is not null
                 ? await applicationManager.GetUnprotectedClientSecret(application)
@@ -161,7 +165,7 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
             if (IsConfidential(command))
             {
                 return currentClientSecret is null
-                    ? Guid.NewGuid().ToString()
+                    ? clientBuilderService.GenerateClientSecret()
                     : currentClientSecret;
             }
 

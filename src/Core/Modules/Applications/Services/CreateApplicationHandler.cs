@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
+using Nocturne.Auth.Core.Services.OpenIddict.Services;
 using OpenIddict.Abstractions;
 
 namespace Nocturne.Auth.Core.Modules.Applications.Services
@@ -9,8 +10,9 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
         public CreateApplicationHandler(
             IOpenIddictApplicationManager applicationManager,
             IOpenIddictScopeManager scopeManager,
+            IClientBuilderService clientBuilderService,
             IStringLocalizer<CreateApplicationHandler> localizer)
-            : base(applicationManager, scopeManager, localizer)
+            : base(applicationManager, scopeManager, clientBuilderService, localizer)
         {
         }
 
@@ -31,8 +33,7 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
                     Localizer["Application {0} already exists", command.DisplayName]);
             }
 
-            var descriptor = await new ApplicationDescriptorBuilder(
-                command, ApplicationManager)
+            var descriptor = await CreateApplicationDescriptorBuilder(command)
                 .BuildAsync();
 
             var application = await ApplicationManager.CreateAsync(descriptor);
