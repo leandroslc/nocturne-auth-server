@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿// Copyright (c) Leandro Silva Luz do Carmo
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infra.SqlServer.Migrations.Configuration
 {
