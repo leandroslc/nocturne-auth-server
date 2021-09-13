@@ -1,3 +1,6 @@
+// Copyright (c) Leandro Silva Luz do Carmo
+// SPDX-License-Identifier: GPL-3.0-or-later
+
 namespace Nocturne.Auth.Core.Shared.Collections
 {
     public class PagedCommand<TResult>
