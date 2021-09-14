@@ -7,6 +7,8 @@ namespace Nocturne.Auth.Server.Configuration
     {
         public const string Authorize = "/connect/authorize";
 
+        public const string Intrspect = "/connect/introspect";
+
         public const string Logout = "/connect/logout";
 
         public const string Token = "/connect/token";
