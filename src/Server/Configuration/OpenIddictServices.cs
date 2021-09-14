@@ -21,6 +21,7 @@ namespace Nocturne.Auth.Server.Configuration
                 {
                     options
                         .SetAuthorizationEndpointUris(AuthorizationEndpoints.Authorize)
+                        .SetIntrospectionEndpointUris(AuthorizationEndpoints.Intrspect)
                         .SetLogoutEndpointUris(AuthorizationEndpoints.Logout)
                         .SetTokenEndpointUris(AuthorizationEndpoints.Token)
                         .SetUserinfoEndpointUris(AuthorizationEndpoints.UserInfo);
@@ -29,6 +30,7 @@ namespace Nocturne.Auth.Server.Configuration
                         .AllowAuthorizationCodeFlow()
                         .AllowClientCredentialsFlow()
                         .AllowPasswordFlow()
+                        .AllowImplicitFlow()
                         .AllowRefreshTokenFlow();
 
                     options
