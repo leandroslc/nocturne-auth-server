@@ -20,6 +20,7 @@ using Nocturne.Auth.Core.Modules.Roles.Repositories;
 using Nocturne.Auth.Core.Modules.Roles.Services;
 using Nocturne.Auth.Core.Services.DataProtection;
 using Nocturne.Auth.Core.Services.Identity;
+using Nocturne.Auth.Core.Services.OpenIddict.Services;
 using OpenIddict.Abstractions;
 
 namespace Nocturne.Auth.Admin.Services.Initialization
@@ -113,21 +114,35 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             }
 
             var applicationManager = services.GetRequiredService<IOpenIddictApplicationManager>();
+            var clientBuilderService = services.GetRequiredService<IClientBuilderService>();
 
-            var application = Data.AdminApplication;
+            var applicationDescriptor = Data.AdminApplication;
+            applicationDescriptor.ClientId = clientBuilderService.GenerateClientId();
+            applicationDescriptor.ClientSecret = clientBuilderService.GenerateClientSecret();
 
-            var registeredApplication = await applicationManager.FindByClientIdAsync(application.ClientId);
+            var registeredApplication = await applicationManager
+                .FindByClientIdAsync(applicationDescriptor.DisplayName);
 
             if (registeredApplication is not null)
             {
-                Logger.LogInformation("Application {clientId} already exists", application.ClientId);
+                Logger.LogInformation("Application {displayName} already exists", applicationDescriptor.DisplayName);
 
                 return await applicationManager.GetIdAsync(registeredApplication);
             }
 
-            registeredApplication = await applicationManager.CreateAsync(application);
+            registeredApplication = await applicationManager.CreateAsync(applicationDescriptor);
 
-            Logger.LogInformation("Created application {displayName} \"client_id: {clientId}\"", application.DisplayName, application.ClientId);
+            Logger.LogInformation(
+                "Created application {displayName} " +
+                "\"client_id: {clientId}\" " +
+                "\"client_secrect: {clientSecret}\"",
+                applicationDescriptor.DisplayName,
+                applicationDescriptor.ClientId,
+                applicationDescriptor.ClientSecret);
+
+            Logger.LogWarning(
+                "Save the client id and secret in a safe place. " +
+                "They will be used in your configuration");
 
             return await applicationManager.GetIdAsync(registeredApplication);
         }

@@ -18,8 +18,6 @@
       }
     ],
     "AdminApplication": {
-      "ClientId": "37ccb205-b374-4739-b974-fa9b8581d0ea",
-      "ClientSecret": "028ff01a-1c8c-443d-8174-464d34f06c41",
       "ConsentType": "explicit",
       "DisplayName": "Authorization Server (Admin)",
       "Type": "confidential",
