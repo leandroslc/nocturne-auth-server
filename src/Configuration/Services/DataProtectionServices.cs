@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nocturne.Auth.Configuration.Models;
 using Nocturne.Auth.Core.Services.DataProtection;
+using Nocturne.Auth.Core.Shared.Helpers;
 
 namespace Nocturne.Auth.Configuration.Services
 {
@@ -32,7 +33,10 @@ namespace Nocturne.Auth.Configuration.Services
 
             if (string.IsNullOrWhiteSpace(options.EncryptionCertificateThumbprint) is false)
             {
-                builder.ProtectKeysWithCertificate(options.EncryptionCertificateThumbprint);
+                var certificate = X509CertificateLocator.FindByThumbprint(
+                    options.EncryptionCertificateThumbprint);
+
+                builder.ProtectKeysWithCertificate(certificate);
             }
 
             return builder;
