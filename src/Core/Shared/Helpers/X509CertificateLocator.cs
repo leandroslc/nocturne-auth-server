@@ -38,7 +38,7 @@ namespace Nocturne.Auth.Core.Shared.Helpers
             if (foundCertificates.Count == 0)
             {
                 throw new InvalidOperationException(
-                    $"No certificate using the specified search criteria");
+                    $"No certificate found using the specified search criteria");
             }
 
             return foundCertificates[0];
