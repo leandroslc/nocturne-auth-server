@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <Content Include="Locales/**" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="Templates/**" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
