@@ -9,10 +9,10 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
 {
     public interface IRolePermissionsRepository
     {
-        public Task AssignPermissionsAsync(Role role, IEnumerable<Permission> permissions);
+        Task AssignPermissionsAsync(Role role, IEnumerable<Permission> permissions);
 
-        public Task<IReadOnlyCollection<Permission>> GetUnassignedPermissionsAsync(Role role, IEnumerable<long> ids);
+        Task<IReadOnlyCollection<Permission>> GetUnassignedPermissionsAsync(Role role, string applicationId);
 
-        public Task UnassignPermissionAsync(Role role, Permission permission);
+        Task UnassignPermissionAsync(Role role, Permission permission);
     }
 }

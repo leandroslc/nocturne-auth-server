@@ -5,7 +5,7 @@
     var applications = Model.AvailableApplications.Select(application => new SelectListItem(
         application.Name,
         application.Id,
-        string.Equals(application.Id, Model.CurrentApplicationId, StringComparison.InvariantCultureIgnoreCase)));
+        string.Equals(application.Id, Model.ApplicationId, StringComparison.InvariantCultureIgnoreCase)));
 }
 
 <div class="modal-header">

@@ -69,7 +69,12 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
             var selectedPermissions = command.Permissions?.Where(p => p.Selected)
                 ?? Enumerable.Empty<AssignPermissionsToRolePermission>();
 
-            var permissionsToAssign = await GetUnassignedPermissionsAsync(role, selectedPermissions);
+            var selectedPermissionIds = selectedPermissions.Select(p => p.Id).ToHashSet();
+
+            var unassignedPermissions = await GetUnassignedPermissionsAsync(role, command.ApplicationId);
+
+            var permissionsToAssign = unassignedPermissions
+                .Where(permission => selectedPermissionIds.Contains(permission.Id));
 
             await rolePermissionsRepository.AssignPermissionsAsync(role, permissionsToAssign);
 
@@ -92,7 +97,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
             AssignPermissionsToRoleCommand command,
             Role role)
         {
-            var unassignedPermissions = await GetUnassignedPermissionsAsync(role, command.Permissions);
+            var unassignedPermissions = await GetUnassignedPermissionsAsync(role, command.ApplicationId);
             var unassignedPermissionIds = unassignedPermissions.Select(p => p.Id).ToHashSet();
 
             foreach (var permission in command.Permissions)
@@ -106,11 +111,9 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
 
         private async Task<IReadOnlyCollection<Permission>> GetUnassignedPermissionsAsync(
             Role role,
-            IEnumerable<AssignPermissionsToRolePermission> permissions)
+            string applicationId)
         {
-            var permissionIds = permissions.Select(p => p.Id);
-
-            return await rolePermissionsRepository.GetUnassignedPermissionsAsync(role, permissionIds);
+            return await rolePermissionsRepository.GetUnassignedPermissionsAsync(role, applicationId);
         }
 
         private Task<IReadOnlyCollection<AssignPermissionsToRolePermission>> GetAvailableApplicationPermissionsAsync(
