@@ -27,14 +27,19 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
             await context.SaveChangesAsync();
         }
 
-        public async Task<IReadOnlyCollection<Permission>> GetUnassignedPermissionsAsync(Role role, IEnumerable<long> ids)
+        public async Task<IReadOnlyCollection<Permission>> GetUnassignedPermissionsAsync(
+            Role role,
+            string applicationId)
         {
-            return await
-                (from p in context.Set<Permission>()
-                 join rp in context.Set<RolePermission>() on p.Id equals rp.PermissionId into j
-                 from r in j.DefaultIfEmpty()
-                 where ids.Contains(p.Id) && r == null
-                 select p)
+            return await (
+                from permission in context.Set<Permission>()
+                join rolePermission in context.Set<RolePermission>()
+                    on new { PermissionId = permission.Id, RoleId = role.Id }
+                    equals new { rolePermission.PermissionId, rolePermission.RoleId }
+                    into rolePermissionJoin
+                 from rolePermission in rolePermissionJoin.DefaultIfEmpty()
+                 where permission.ApplicationId == applicationId && rolePermission == null
+                 select permission)
                  .ToListAsync();
         }
 
