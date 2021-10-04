@@ -28,13 +28,17 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
         }
 
         public async Task<IReadOnlyCollection<Role>> GetUnassignedRolesAsync(
-            ApplicationUser user, IEnumerable<long> roleIds)
+            ApplicationUser user,
+            string applicationId)
         {
             return await (
                 from role in context.Set<Role>()
-                join userRoleJoin in context.Set<UserRole>() on role.Id equals userRoleJoin.RoleId into j
-                from userRole in j.DefaultIfEmpty()
-                where roleIds.Contains(role.Id) && userRole == null
+                join userRole in context.Set<UserRole>()
+                    on new { RoleId = role.Id, UserId = user.Id }
+                    equals new { userRole.RoleId, userRole.UserId }
+                    into userRoleJoin
+                from userRole in userRoleJoin.DefaultIfEmpty()
+                where role.ApplicationId == applicationId && userRole == null
                 select role)
                 .ToListAsync();
         }

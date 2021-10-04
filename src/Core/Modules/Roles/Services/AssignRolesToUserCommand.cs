@@ -15,7 +15,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
             string currentApplicationId,
             IReadOnlyCollection<RoleApplication> availableApplications)
         {
-            CurrentApplicationId = currentApplicationId;
+            ApplicationId = currentApplicationId;
             AvailableApplications = availableApplications;
         }
 
@@ -23,7 +23,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
 
         public IReadOnlyCollection<AssignRolesToUserRole> Roles { get; set; }
 
-        public string CurrentApplicationId { get; private set; }
+        public string ApplicationId { get; set; }
 
         public IReadOnlyCollection<RoleApplication> AvailableApplications { get; private set; }
     }
