@@ -1,7 +1,8 @@
 @model EditApplicationCommand
+@inject IViewLocalizer Localizer;
 
 @{
-    ViewData[KnownViewData.Title] = "Edit application";
+    ViewData[KnownViewData.Title] = Localizer["Edit application"];
     ViewData[KnownViewData.PageGroup] = PageGroups.Applications;
     ViewData[KnownViewData.ReturnTitle] = "Application details";
     ViewData[KnownViewData.ReturnUrl] = Url.RouteUrl(RouteNames.ApplicationsView, new { Model.Id });

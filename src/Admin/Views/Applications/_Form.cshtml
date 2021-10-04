@@ -1,9 +1,9 @@
 @using static OpenIddict.Abstractions.OpenIddictConstants;
 @model ManageApplicationCommand
-@inject IViewLocalizer localizer
+@inject IViewLocalizer localizer;
 
 @{
-    var title = localizer[(string)ViewData[KnownViewData.Title]];
+    var title = ViewData[KnownViewData.Title];
     var returnUrl = ViewData[KnownViewData.ReturnUrl];
     var returnTitle = localizer[(string)ViewData[KnownViewData.ReturnTitle]];
 }
