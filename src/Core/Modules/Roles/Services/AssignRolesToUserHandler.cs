@@ -71,10 +71,15 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
                 return AssignRolesToUserResult.NotFound(localizer["User not found"]);
             }
 
-            var selectedRoles = command.Roles?.Where(p => p.Selected)
+            var selectedRoles = command.Roles?.Where(role => role.Selected)
                 ?? Enumerable.Empty<AssignRolesToUserRole>();
 
-            var rolesToAssign = await GetUnassignedRolesAsync(user, selectedRoles);
+            var selectedRoleIds = selectedRoles.Select(role => role.Id).ToHashSet();
+
+            var unassignedRoles = await GetUnassignedRolesAsync(user, command.ApplicationId);
+
+            var rolesToAssign = unassignedRoles
+                .Where(role => selectedRoleIds.Contains(role.Id));
 
             await userRolesRepository.AssignRolesAsync(user, rolesToAssign);
 
@@ -97,7 +102,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
             AssignRolesToUserCommand command,
             ApplicationUser user)
         {
-            var unassignedRoles = await GetUnassignedRolesAsync(user, command.Roles);
+            var unassignedRoles = await GetUnassignedRolesAsync(user, command.ApplicationId);
             var unassignedRoleIds = unassignedRoles.Select(p => p.Id).ToHashSet();
 
             foreach (var role in command.Roles)
@@ -111,11 +116,9 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
 
         private async Task<IReadOnlyCollection<Role>> GetUnassignedRolesAsync(
             ApplicationUser user,
-            IEnumerable<AssignRolesToUserRole> roles)
+            string applicationId)
         {
-            var roleIds = roles.Select(p => p.Id);
-
-            return await userRolesRepository.GetUnassignedRolesAsync(user, roleIds);
+            return await userRolesRepository.GetUnassignedRolesAsync(user, applicationId);
         }
 
         private Task<IReadOnlyCollection<AssignRolesToUserRole>> GetAvailableApplicationRolesAsync(
