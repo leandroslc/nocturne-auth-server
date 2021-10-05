@@ -2,8 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <ProjectName>Nocturne.Auth.Server</ProjectName>
     <UserSecretsId>aspnet-Server-129A4C6A-5365-490D-A4BF-19ABD606D1E2</UserSecretsId>
   </PropertyGroup>
+
+  <Import Project="..\..\build\common.props" />
 
   <ItemGroup>
     <Content Include="Locales/**" CopyToPublishDirectory="PreserveNewest" />

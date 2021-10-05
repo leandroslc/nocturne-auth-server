@@ -2,7 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <ProjectName>Nocturne.Auth.Configuration</ProjectName>
   </PropertyGroup>
+
+  <Import Project="..\..\build\common.props" />
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
