@@ -88,7 +88,7 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
 
         private async ValueTask<string> GetAllowedScopes(
             object application,
-            IReadOnlyCollection<string> availableScopes)
+            IEnumerable<string> availableScopes)
         {
             var selectedScopes = new HashSet<string>();
 

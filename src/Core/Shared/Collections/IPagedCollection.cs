@@ -1,9 +1,11 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Collections;
+
 namespace Nocturne.Auth.Core.Shared.Collections
 {
-    public interface IPagedCollection
+    public interface IPagedCollection : ICollection
     {
         long Total { get; }
 

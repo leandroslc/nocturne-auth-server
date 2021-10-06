@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Globalization;
 using System.Security.Claims;
 using OpenIddict.Abstractions;
 
@@ -22,7 +23,9 @@ namespace Nocturne.Auth.Core.Services.Identity
         public static long GetApplicationUserId(
             this ClaimsPrincipal principal)
         {
-            return long.Parse(principal.FindFirstValue(ClaimTypes.NameIdentifier));
+            return long.Parse(
+                principal.FindFirstValue(ClaimTypes.NameIdentifier),
+                CultureInfo.InvariantCulture);
         }
     }
 }

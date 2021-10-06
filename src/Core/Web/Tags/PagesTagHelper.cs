@@ -1,6 +1,8 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -29,6 +31,7 @@ namespace Nocturne.Auth.Core.Web.TagHelpers
         [HtmlAttributeNotBound]
         public ViewContext ViewContext { get; set; }
 
+        [SuppressMessage("Usage", "CA2227", Justification = "The collection needs to be set externally")]
         public IPagedCollection Collection { get; set; }
 
         public string ParamName { get; set; }
@@ -148,7 +151,8 @@ namespace Nocturne.Auth.Core.Web.TagHelpers
         private string GetUrlForPage(int page)
         {
             return ViewContext.HttpContext.Request
-                .CreateUrlWithNewQuery((ParamName, page.ToString()));
+                .CreateUrlWithNewQuery((ParamName, page.ToString(CultureInfo.InvariantCulture)))
+                .PathAndQuery;
         }
     }
 }

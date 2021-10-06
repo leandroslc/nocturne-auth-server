@@ -10,7 +10,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
     {
         public const string Section = "Initialization";
 
-        public ICollection<OpenIddictScopeDescriptor> Scopes { get; set; }
+        public ICollection<OpenIddictScopeDescriptor> Scopes { get; } = new List<OpenIddictScopeDescriptor>();
 
         public OpenIddictApplicationDescriptor AdminApplication { get; set; }
 

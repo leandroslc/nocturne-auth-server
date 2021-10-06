@@ -1,7 +1,10 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -44,10 +47,10 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 
         public string SharedKey { get; set; }
 
-        public string AuthenticatorUri { get; set; }
+        public Uri AuthenticatorUri { get; set; }
 
         [TempData]
-        public string[] RecoveryCodes { get; set; }
+        public ICollection<string> RecoveryCodes { get; private set; }
 
         [TempData]
         public bool EnableAuthenticatorSucceeded { get; set; }
@@ -170,20 +173,23 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
             return result.ToString().ToLowerInvariant();
         }
 
-        private string GenerateQrCodeUri(string email, string unformattedKey)
+        private Uri GenerateQrCodeUri(string email, string unformattedKey)
         {
-            return string.Format(
+            var authenticatorUrl = string.Format(
+                CultureInfo.InvariantCulture,
                 AuthenticatorUriFormat,
                 urlEncoder.Encode(applicationName),
                 urlEncoder.Encode(email),
                 unformattedKey);
+
+            return new Uri(authenticatorUrl);
         }
 
         private static string NormalizeCode(string code)
         {
             return code
-                .Replace(" ", string.Empty)
-                .Replace("-", string.Empty);
+                .Replace(" ", string.Empty, StringComparison.Ordinal)
+                .Replace("-", string.Empty, StringComparison.Ordinal);
         }
     }
 }

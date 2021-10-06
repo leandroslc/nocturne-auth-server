@@ -40,16 +40,16 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
 
         public bool AllowLogoutEndpoint { get; set; }
 
-        public List<string> AvailableScopes { get; } = new List<string>();
+        public ICollection<string> AvailableScopes { get; } = new List<string>();
 
-        public virtual IEnumerable<ValidationResult> Validate(ValidationContext context)
+        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield return UriValidator
-                .Validate(context, RedirectUris, nameof(RedirectUris))
+                .Validate(validationContext, RedirectUris, nameof(RedirectUris))
                 .FirstOrDefault();
 
             yield return UriValidator
-                .Validate(context, PostLogoutRedirectUris, nameof(PostLogoutRedirectUris))
+                .Validate(validationContext, PostLogoutRedirectUris, nameof(PostLogoutRedirectUris))
                 .FirstOrDefault();
         }
     }

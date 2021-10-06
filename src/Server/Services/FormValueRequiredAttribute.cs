@@ -10,12 +10,12 @@ namespace Nocturne.Auth.Server.Services
 {
     public sealed class FormValueRequiredAttribute : ActionMethodSelectorAttribute
     {
-        private readonly string name;
-
         public FormValueRequiredAttribute(string name)
         {
-            this.name = name;
+            Name = name;
         }
+
+        public string Name { get; }
 
         public override bool IsValidForRequest(RouteContext routeContext, ActionDescriptor action)
         {
@@ -36,7 +36,7 @@ namespace Nocturne.Auth.Server.Services
                 return false;
             }
 
-            return !string.IsNullOrEmpty(routeContext.HttpContext.Request.Form[name]);
+            return !string.IsNullOrEmpty(routeContext.HttpContext.Request.Form[Name]);
         }
 
         private static bool IsMethodNotAllowed(RouteContext context)
@@ -59,7 +59,7 @@ namespace Nocturne.Auth.Server.Services
             return string.Equals(
                 context.HttpContext.Request.Method,
                 method,
-                StringComparison.InvariantCultureIgnoreCase);
+                StringComparison.OrdinalIgnoreCase);
         }
     }
 }

@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -42,9 +43,9 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
+        public IList<AuthenticationScheme> ExternalLogins { get; private set; }
 
-        public string ReturnUrl { get; set; }
+        public Uri ReturnUrl { get; set; }
 
         public bool EnableExternalAccount => accountOptions.EnableExternalAccount;
 
@@ -66,26 +67,24 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             public bool RememberMe { get; set; }
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task OnGetAsync(Uri returnUrl = null)
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
 
-            returnUrl ??= Url.Content("~/");
+            ReturnUrl = returnUrl ?? new Uri(Url.Content("~/"), UriKind.RelativeOrAbsolute);
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             await SetExternalLogins();
-
-            ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(Uri returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            ReturnUrl = returnUrl ?? new Uri(Url.Content("~/"), UriKind.RelativeOrAbsolute);
 
             await SetExternalLogins();
 
@@ -101,12 +100,14 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                 {
                     logger.LogInformation("User logged in.");
 
-                    return LocalRedirect(returnUrl);
+                    return LocalRedirect(ReturnUrl.AbsolutePath);
                 }
 
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("./LoginWith2fa", new { returnUrl, rememberMe = Input.RememberMe });
+                    return RedirectToPage(
+                        "./LoginWith2fa",
+                        new { returnUrl = ReturnUrl.PathAndQuery, rememberMe = Input.RememberMe });
                 }
 
                 if (result.IsLockedOut)

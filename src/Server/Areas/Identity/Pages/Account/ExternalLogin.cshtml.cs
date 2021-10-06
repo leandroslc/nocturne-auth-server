@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Text;
@@ -41,7 +42,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 
         public string ProviderDisplayName { get; set; }
 
-        public string ReturnUrl { get; set; }
+        public Uri ReturnUrl { get; set; }
 
         [TempData]
         public string ErrorMessage { get; set; }
@@ -58,7 +59,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             return RedirectToPage("./Login");
         }
 
-        public IActionResult OnPost(string provider, string returnUrl = null)
+        public IActionResult OnPost(string provider, Uri returnUrl = null)
         {
             // Request a redirect to the external login provider.
             var redirectUrl = Url.Page("./ExternalLogin", pageHandler: "Callback", values: new { returnUrl });
@@ -67,9 +68,9 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             return new ChallengeResult(provider, properties);
         }
 
-        public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
+        public async Task<IActionResult> OnGetCallbackAsync(Uri returnUrl = null, string remoteError = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= new Uri(Url.Content("~/"), UriKind.RelativeOrAbsolute);
 
             if (remoteError != null)
             {
@@ -98,7 +99,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                 logger.LogInformation("{Name} logged in with {LoginProvider} provider.",
                     info.Principal.Identity.Name, info.LoginProvider);
 
-                return LocalRedirect(returnUrl);
+                return LocalRedirect(returnUrl.AbsolutePath);
             }
 
             if (result.IsLockedOut)
@@ -121,9 +122,9 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             return Page();
         }
 
-        public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostConfirmationAsync(Uri returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= new Uri(Url.Content("~/"), UriKind.RelativeOrAbsolute);
 
             // Get the information about the user from the external login provider
             var info = await signInManager.GetExternalLoginInfoAsync();
@@ -156,7 +157,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                             values: new { area = "Identity", userId, code },
                             protocol: Request.Scheme);
 
-                        await emailSender.SendEmailConfirmation(user, Input.Email, callbackUrl);
+                        await emailSender.SendEmailConfirmation(user, Input.Email, new Uri(callbackUrl));
 
                         if (userManager.Options.SignIn.RequireConfirmedAccount)
                         {
@@ -165,7 +166,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 
                         await signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
 
-                        return LocalRedirect(returnUrl);
+                        return LocalRedirect(returnUrl.AbsolutePath);
                     }
                 }
 

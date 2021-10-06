@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
@@ -167,7 +168,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
                 values: values,
                 protocol: Request.Scheme);
 
-            await emailSender.SendEmailConfirmation(user, email, callbackUrl);
+            await emailSender.SendEmailConfirmation(user, email, new Uri(callbackUrl));
         }
 
         private IActionResult PageWithSuccess(string message)

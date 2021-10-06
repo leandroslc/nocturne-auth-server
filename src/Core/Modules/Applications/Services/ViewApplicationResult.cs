@@ -19,7 +19,7 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
 
         public string Type { get; set; }
 
-        public ICollection<string> AllowedScopes { get; set; } = new HashSet<string>();
+        public ICollection<string> AllowedScopes { get; } = new HashSet<string>();
 
         public IReadOnlyCollection<string> RedirectUris { get; set; }
 

@@ -83,7 +83,7 @@ namespace Nocturne.Auth.Core.Shared.Models
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            if (string.Equals("n", format, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals("n", format, StringComparison.OrdinalIgnoreCase))
             {
                 return Value;
             }

@@ -7,11 +7,11 @@ namespace Nocturne.Auth.Server.Configuration.Options
     {
         public const string Section = "Account";
 
-        public bool EnableExternalAccount { get; set; } = false;
+        public bool EnableExternalAccount { get; set; }
 
-        public bool EnableAccountDeletion { get; set; } = false;
+        public bool EnableAccountDeletion { get; set; }
 
-        public bool ShowRememberLogin { get; set; } = false;
+        public bool ShowRememberLogin { get; set; }
 
         public string PersonalDataFileName { get; set; } = "personal-data.json";
     }

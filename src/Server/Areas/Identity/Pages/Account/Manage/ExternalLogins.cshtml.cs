@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -30,9 +31,9 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
             this.localizer = localizer;
         }
 
-        public IList<UserLoginInfo> CurrentLogins { get; set; }
+        public IList<UserLoginInfo> CurrentLogins { get; private set; }
 
-        public IList<AuthenticationScheme> OtherLogins { get; set; }
+        public IList<AuthenticationScheme> OtherLogins { get; private set; }
 
         public bool ShowRemoveButton { get; set; }
 
@@ -109,7 +110,9 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
                 return UserNotFound();
             }
 
-            var info = await signInManager.GetExternalLoginInfoAsync(user.Id.ToString());
+            var userId = user.Id.ToString(CultureInfo.InvariantCulture);
+
+            var info = await signInManager.GetExternalLoginInfoAsync(userId);
             if (info == null)
             {
                 throw new InvalidOperationException(

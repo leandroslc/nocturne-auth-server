@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -35,7 +36,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 
         public bool RememberMe { get; set; }
 
-        public string ReturnUrl { get; set; }
+        public Uri ReturnUrl { get; set; }
 
         public class InputModel
         {
@@ -47,7 +48,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             public bool RememberMachine { get; set; }
         }
 
-        public async Task<IActionResult> OnGetAsync(bool rememberMe, string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync(bool rememberMe, Uri returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
             var user = await signInManager.GetTwoFactorAuthenticationUserAsync();
@@ -63,14 +64,14 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(bool rememberMe, string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(bool rememberMe, Uri returnUrl = null)
         {
             if (ModelState.IsValid is false)
             {
                 return Page();
             }
 
-            returnUrl ??= Url.Content("~/");
+            ReturnUrl = returnUrl ?? new Uri(Url.Content("~/"), UriKind.RelativeOrAbsolute);
 
             var user = await signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
@@ -89,7 +90,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             {
                 logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
 
-                return LocalRedirect(returnUrl);
+                return LocalRedirect(ReturnUrl.AbsolutePath);
             }
 
             if (result.IsLockedOut)
@@ -109,8 +110,8 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         private static string NormalizeCode(string code)
         {
             return code
-                .Replace(" ", string.Empty)
-                .Replace("-", string.Empty);
+                .Replace(" ", string.Empty, StringComparison.Ordinal)
+                .Replace("-", string.Empty, StringComparison.Ordinal);
         }
     }
 }

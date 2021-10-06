@@ -10,3 +10,22 @@ trim_trailing_whitespace = true
 
 [*{.cs,.cshtml}]
 indent_size = 4
+
+[*.cs]
+# https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1010
+dotnet_diagnostic.CA1010.severity = none
+
+# https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1034
+dotnet_diagnostic.CA1034.severity = none
+
+# WARNING: Disabled until we enable nullable reference types
+dotnet_diagnostic.CA1062.severity = none
+
+# https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1308
+dotnet_diagnostic.CA1308.severity = none
+
+# https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1711
+dotnet_code_quality.CA1711.allowed_suffixes = Permission
+
+#https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca2007
+dotnet_diagnostic.CA2007.severity = none

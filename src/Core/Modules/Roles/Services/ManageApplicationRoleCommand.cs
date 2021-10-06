@@ -7,13 +7,13 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
 {
     public abstract class ManageApplicationRoleCommand
     {
-        public ManageApplicationRoleCommand(RoleApplication application)
+        protected ManageApplicationRoleCommand(RoleApplication application)
         {
             ApplicationId = application.Id;
             Application = application;
         }
 
-        public ManageApplicationRoleCommand()
+        protected ManageApplicationRoleCommand()
         {
         }
 

@@ -6,7 +6,7 @@ using Nocturne.Auth.Core.Shared.Models;
 
 namespace Nocturne.Auth.Core.Shared.Validation
 {
-    public class CPFAttribute : ValidationAttribute
+    public sealed class CPFAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

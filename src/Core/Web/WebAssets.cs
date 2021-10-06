@@ -14,9 +14,9 @@ namespace Nocturne.Auth.Core.Web
             BaseUrl = GetBaseUrl(options);
         }
 
-        public string BaseUrl { get; }
+        public Uri BaseUrl { get; }
 
-        public string Url(string relativePath)
+        public Uri Url(string relativePath)
         {
             const char Separator = '/';
 
@@ -25,12 +25,12 @@ namespace Nocturne.Auth.Core.Web
                 return BaseUrl;
             }
 
-            return $"{BaseUrl.TrimEnd(Separator)}/{relativePath.TrimStart(Separator)}";
+            return new Uri(BaseUrl, relativePath.TrimStart(Separator));
         }
 
-        private static string GetBaseUrl(WebAssetsOptions options)
+        private static Uri GetBaseUrl(WebAssetsOptions options)
         {
-            if (string.IsNullOrWhiteSpace(options.BaseUrl))
+            if (options.BaseUrl is null)
             {
                 throw new InvalidOperationException(
                     "The web assets base url address cannot be empty");

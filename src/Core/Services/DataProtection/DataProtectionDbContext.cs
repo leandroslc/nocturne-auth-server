@@ -15,9 +15,9 @@ namespace Nocturne.Auth.Core.Services.DataProtection
 
         public DbSet<DataProtectionKey> DataProtectionKeys { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.HasDefaultSchema("config");
+            modelBuilder.HasDefaultSchema("config");
         }
     }
 }

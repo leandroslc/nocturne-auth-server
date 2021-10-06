@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
@@ -9,7 +10,7 @@ namespace Nocturne.Auth.Core.Shared.Extensions
 {
     public static class HttpRequestExtensions
     {
-        public static string CreateUrlWithNewQuery(
+        public static Uri CreateUrlWithNewQuery(
             this HttpRequest request,
             params (string, string)[] parameters)
         {
@@ -17,15 +18,12 @@ namespace Nocturne.Auth.Core.Shared.Extensions
 
             var values = request.Query.ToDictionary(q => q.Key, q => q.Value.ToString());
 
-            if (parameters != null)
+            foreach (var parameter in parameters)
             {
-                foreach (var parameter in parameters)
-                {
-                    values.AddOrReplace(parameter.Item1, parameter.Item2);
-                }
+                values.AddOrReplace(parameter.Item1, parameter.Item2);
             }
 
-            return QueryHelpers.AddQueryString(request.Path, values);
+            return new Uri(QueryHelpers.AddQueryString(request.Path, values), UriKind.Relative);
         }
     }
 }

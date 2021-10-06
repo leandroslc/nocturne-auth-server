@@ -22,11 +22,7 @@ namespace Nocturne.Auth.Admin.Controllers
         {
             var results = await handler.HandleAsync(command);
 
-            var model = new UserIndexViewModel
-            {
-                Users = results,
-                Query = command,
-            };
+            var model = new UserIndexViewModel(results, command);
 
             return View(model);
         }

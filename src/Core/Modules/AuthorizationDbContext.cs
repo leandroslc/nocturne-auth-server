@@ -15,17 +15,17 @@ namespace Nocturne.Auth.Core.Modules
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modelBuilder);
 
-            builder.HasDefaultSchema("auth");
+            modelBuilder.HasDefaultSchema("auth");
 
-            ConfigureOpenIdModels(builder);
-            ConfigurePermissions(builder);
-            ConfigureRoles(builder);
-            ConfigureRolePermissions(builder);
-            ConfigureUserRoles(builder);
+            ConfigureOpenIdModels(modelBuilder);
+            ConfigurePermissions(modelBuilder);
+            ConfigureRoles(modelBuilder);
+            ConfigureRolePermissions(modelBuilder);
+            ConfigureUserRoles(modelBuilder);
         }
 
         private static void ConfigureOpenIdModels(ModelBuilder builder)

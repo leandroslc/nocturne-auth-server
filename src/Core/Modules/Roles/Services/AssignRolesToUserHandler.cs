@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -88,14 +89,26 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
 
         public async Task<bool> UserExistsAsync(long? id)
         {
-            return id.HasValue && await userManager.FindByIdAsync(id.Value.ToString()) is not null;
+            if (id.HasValue)
+            {
+                var userId = id.Value.ToString(CultureInfo.InvariantCulture);
+
+                return await userManager.FindByIdAsync(userId) is not null;
+            }
+
+            return false;
         }
 
         private async Task<ApplicationUser> GetUserAsync(long? id)
         {
-            return id.HasValue
-                ? await userManager.FindByIdAsync(id.Value.ToString())
-                : null;
+            if (id.HasValue)
+            {
+                var userId = id.Value.ToString(CultureInfo.InvariantCulture);
+
+                return await userManager.FindByIdAsync(userId);
+            }
+
+            return null;
         }
 
         private async Task SetSelectedRolesAsync(

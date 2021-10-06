@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -25,7 +26,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
         }
 
         [TempData]
-        public string[] RecoveryCodes { get; set; }
+        public ICollection<string> RecoveryCodes { get; private set; }
 
         [TempData]
         public bool GenerateRecoveryCodesSucceeded { get; set; }

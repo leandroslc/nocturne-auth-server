@@ -7,14 +7,29 @@ using System.Runtime.Serialization;
 namespace Nocturne.Auth.Core.Shared.Results
 {
     [Serializable]
-    public class ResultNotHandledException : Exception
+    public sealed class ResultNotHandledException : Exception
     {
+        public ResultNotHandledException()
+            : base()
+        {
+        }
+
+        public ResultNotHandledException(string message)
+            : base(message)
+        {
+        }
+
+        public ResultNotHandledException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
+
         public ResultNotHandledException(object result)
             : base(GetMessageError(result))
         {
         }
 
-        protected ResultNotHandledException(
+        private ResultNotHandledException(
             SerializationInfo info,
             StreamingContext context)
             : base(info, context)

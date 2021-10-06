@@ -6,7 +6,7 @@ using Nocturne.Auth.Configuration;
 
 namespace Nocturne.Auth.Server
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
             => new AppHostBuilder<Startup>(args).Start();

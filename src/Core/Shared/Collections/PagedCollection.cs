@@ -69,6 +69,35 @@ namespace Nocturne.Auth.Core.Shared.Collections
 
         public bool IsLastPage { get; }
 
+        public int Count => PageCount;
+
+        public bool IsSynchronized => true;
+
+        public object SyncRoot => this;
+
+        public void CopyTo(Array array, int index)
+        {
+            Check.NotNull(array, nameof(array));
+
+            bool hasEnoughElementsAfterIndex = array.Length - index >= Count;
+
+            if (index < 0 || hasEnoughElementsAfterIndex is false)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            var currentSubsetIndex = 0;
+
+            foreach (var item in subset)
+            {
+                array.SetValue(item, currentSubsetIndex + index);
+
+                currentSubsetIndex += 1;
+            }
+
+            throw new NotImplementedException();
+        }
+
         public IEnumerator<TValue> GetEnumerator()
         {
             return subset.GetEnumerator();
