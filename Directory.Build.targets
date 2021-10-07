@@ -5,20 +5,19 @@
     <PackageReference Update="Base62-Net" Version="1.2.157201" />
     <PackageReference Update="FluentEmail.Liquid" Version="3.0.0" />
     <PackageReference Update="FluentEmail.MailKit" Version="3.0.0" />
-    <PackageReference Update="MailKit" Version="2.10.1" />
+    <PackageReference Update="MailKit" Version="2.15.0" />
     <PackageReference Update="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.2.0" />
-    <PackageReference Update="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.4" />
-    <PackageReference Update="Microsoft.AspNetCore.Authorization" Version="5.0.6" />
-    <PackageReference Update="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="5.0.9" />
-    <PackageReference Update="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.3" />
-    <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.3" />
-    <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.3" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.3" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Tools" Version="5.0.3" />
-    <PackageReference Update="OpenIddict.AspNetCore" Version="3.0.1" />
-    <PackageReference Update="OpenIddict.EntityFrameworkCore" Version="3.0.1" />
-    <PackageReference Update="OrchardCore.Localization.Core" Version="1.0.0-rc2-13450" />
-    <PackageReference Update="Serilog.AspNetCore" Version="4.0.0" />
+    <PackageReference Update="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.10" />
+    <PackageReference Update="Microsoft.AspNetCore.Authorization" Version="5.0.10" />
+    <PackageReference Update="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="5.0.10" />
+    <PackageReference Update="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.10" />
+    <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.10" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10" />
+    <PackageReference Update="OpenIddict.AspNetCore" Version="3.1.1" />
+    <PackageReference Update="OpenIddict.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Update="OrchardCore.Localization.Core" Version="1.0.0" />
+    <PackageReference Update="Serilog.AspNetCore" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>
