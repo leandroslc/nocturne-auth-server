@@ -11,7 +11,7 @@ using OpenIddict.Abstractions;
 namespace Nocturne.Auth.Core.Services.Identity
 {
     public class CustomUserClaimsPrincipalFactory
-		: UserClaimsPrincipalFactory<ApplicationUser, ApplicationRole>
+        : UserClaimsPrincipalFactory<ApplicationUser, ApplicationRole>
     {
         public CustomUserClaimsPrincipalFactory(
             UserManager<ApplicationUser> userManager,

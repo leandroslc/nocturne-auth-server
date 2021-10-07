@@ -48,6 +48,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
                 ErrorDescription = description,
             };
         }
+
         public static ManageApplicationRoleResult Fail(string description)
         {
             return new ManageApplicationRoleResult

@@ -18,10 +18,10 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
     public class DownloadPersonalDataModel : PageModel
     {
-        private static JsonSerializerOptions serializerOptions;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<DownloadPersonalDataModel> logger;
         private readonly string personalDataFileName;
+        private static JsonSerializerOptions serializerOptions;
 
         public DownloadPersonalDataModel(
             UserManager<ApplicationUser> userManager,

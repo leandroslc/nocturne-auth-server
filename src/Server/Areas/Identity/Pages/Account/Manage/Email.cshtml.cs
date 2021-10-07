@@ -44,13 +44,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The new email is required")]
-            [EmailAddress(ErrorMessage = "The email is not valid")]
-            public string NewEmail { get; set; }
-        }
-
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await GetUserAsync();
@@ -182,6 +175,13 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
         private static string Encode(string token)
         {
             return WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The new email is required")]
+            [EmailAddress(ErrorMessage = "The email is not valid")]
+            public string NewEmail { get; set; }
         }
     }
 }

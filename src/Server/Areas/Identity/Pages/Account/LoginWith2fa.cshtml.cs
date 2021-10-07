@@ -38,16 +38,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 
         public Uri ReturnUrl { get; set; }
 
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The code is required")]
-            [StringLength(7, ErrorMessage = "The code must have at least {2} and max {1} characters", MinimumLength = 6)]
-            [DataType(DataType.Text)]
-            public string TwoFactorCode { get; set; }
-
-            public bool RememberMachine { get; set; }
-        }
-
         public async Task<IActionResult> OnGetAsync(bool rememberMe, Uri returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
@@ -112,6 +102,16 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             return code
                 .Replace(" ", string.Empty, StringComparison.Ordinal)
                 .Replace("-", string.Empty, StringComparison.Ordinal);
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The code is required")]
+            [StringLength(7, ErrorMessage = "The code must have at least {2} and max {1} characters", MinimumLength = 6)]
+            [DataType(DataType.Text)]
+            public string TwoFactorCode { get; set; }
+
+            public bool RememberMachine { get; set; }
         }
     }
 }

@@ -6,16 +6,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using Nocturne.Auth.Core.Services.Identity;
 using Microsoft.Extensions.Options;
+using Nocturne.Auth.Core.Services.Identity;
 using Nocturne.Auth.Server.Configuration.Options;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
@@ -53,19 +53,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 
         [TempData]
         public string ErrorMessage { get; set; }
-
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The email is required")]
-            [EmailAddress(ErrorMessage = "The email is not valid")]
-            public string Email { get; set; }
-
-            [Required(ErrorMessage = "The password is required")]
-            [DataType(DataType.Password)]
-            public string Password { get; set; }
-
-            public bool RememberMe { get; set; }
-        }
 
         public async Task OnGetAsync(Uri returnUrl = null)
         {
@@ -132,6 +119,19 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             {
                 ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             }
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The email is required")]
+            [EmailAddress(ErrorMessage = "The email is not valid")]
+            public string Email { get; set; }
+
+            [Required(ErrorMessage = "The password is required")]
+            [DataType(DataType.Password)]
+            public string Password { get; set; }
+
+            public bool RememberMe { get; set; }
         }
     }
 }

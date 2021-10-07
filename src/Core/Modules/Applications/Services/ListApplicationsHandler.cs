@@ -23,14 +23,14 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
         public async ValueTask<IPagedCollection<ListApplicationsResult>> HandleAsync(
             ListApplicationsCommand command)
         {
-            IQueryable<ListApplicationsResult> query(IQueryable<Application> applications)
+            IQueryable<ListApplicationsResult> Query(IQueryable<Application> applications)
                 => GetQuery(applications, command);
 
-            IQueryable<ListApplicationsResult> queryWithPages(IQueryable<Application> applications)
-                => GetSubset(query(applications), command);
+            IQueryable<ListApplicationsResult> QueryWithPages(IQueryable<Application> applications)
+                => GetSubset(Query(applications), command);
 
-            var total = await applicationManager.CountAsync(query);
-            var applications = applicationManager.ListAsync(queryWithPages);
+            var total = await applicationManager.CountAsync(Query);
+            var applications = applicationManager.ListAsync(QueryWithPages);
 
             return new PagedCollection<ListApplicationsResult>(
                 await applications.ToListAsync(), command.Page, command.PageSize, total);

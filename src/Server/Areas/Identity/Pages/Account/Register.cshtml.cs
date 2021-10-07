@@ -50,31 +50,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 
         public IList<AuthenticationScheme> ExternalLogins { get; private set; }
 
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The name is required")]
-            [MaxLength(200, ErrorMessage = "The name must have less than {1} characters")]
-            [DataType(DataType.Text)]
-            public string Name { get; set; }
-
-            [Required(ErrorMessage = "The CPF is required")]
-            [CPF(ErrorMessage = "The CPF is invalid")]
-            public string CPF { get; set; }
-
-            [Required(ErrorMessage = "The email is required")]
-            [EmailAddress(ErrorMessage = "The email is not valid")]
-            public string Email { get; set; }
-
-            [Required(ErrorMessage = "The password is required")]
-            [StringLength(100, ErrorMessage = "The password must have at least {2} and max {1} characters", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            public string Password { get; set; }
-
-            [DataType(DataType.Password)]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
-            public string ConfirmPassword { get; set; }
-        }
-
         public async Task OnGetAsync(
             Uri returnUrl = null,
             Uri cancelUrl = null)
@@ -152,6 +127,31 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             }
 
             return Page();
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The name is required")]
+            [MaxLength(200, ErrorMessage = "The name must have less than {1} characters")]
+            [DataType(DataType.Text)]
+            public string Name { get; set; }
+
+            [Required(ErrorMessage = "The CPF is required")]
+            [CPF(ErrorMessage = "The CPF is invalid")]
+            public string CPF { get; set; }
+
+            [Required(ErrorMessage = "The email is required")]
+            [EmailAddress(ErrorMessage = "The email is not valid")]
+            public string Email { get; set; }
+
+            [Required(ErrorMessage = "The password is required")]
+            [StringLength(100, ErrorMessage = "The password must have at least {2} and max {1} characters", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            public string Password { get; set; }
+
+            [DataType(DataType.Password)]
+            [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
+            public string ConfirmPassword { get; set; }
         }
     }
 }

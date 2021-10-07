@@ -43,7 +43,7 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
             var claims = new Dictionary<string, object>(StringComparer.Ordinal)
             {
                 // Note: the "sub" claim is a mandatory claim and must be included in the JSON response.
-                [Claims.Subject] = await userManager.GetUserIdAsync(user)
+                [Claims.Subject] = await userManager.GetUserIdAsync(user),
             };
 
             if (User.HasScope(Scopes.Email))

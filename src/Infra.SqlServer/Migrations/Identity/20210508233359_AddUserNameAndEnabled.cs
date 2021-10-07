@@ -24,7 +24,7 @@ namespace Migrations.Identity
                 type: "nvarchar(200)",
                 maxLength: 200,
                 nullable: false,
-                defaultValue: "");
+                defaultValue: string.Empty);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

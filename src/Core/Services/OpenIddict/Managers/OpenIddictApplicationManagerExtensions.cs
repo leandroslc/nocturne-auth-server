@@ -44,6 +44,6 @@ namespace Nocturne.Auth.Core.Services.OpenIddict.Managers
         }
 
         private static NotSupportedException MethodNotSupported()
-            => new("The application manager does not support this method");
+            => new ("The application manager does not support this method");
     }
 }

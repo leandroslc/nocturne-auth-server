@@ -32,13 +32,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The email is required")]
-            [EmailAddress(ErrorMessage = "The email is not valid")]
-            public string Email { get; set; }
-        }
-
         public Uri ReturnUrl { get; set; }
 
         [TempData]
@@ -85,6 +78,13 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             EmailSent = true;
 
             return Page();
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The email is required")]
+            [EmailAddress(ErrorMessage = "The email is not valid")]
+            public string Email { get; set; }
         }
     }
 }

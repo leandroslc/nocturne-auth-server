@@ -52,6 +52,10 @@ namespace Nocturne.Auth.Core.Services.OpenIddict.Managers
             return Store.GetClientSecretAsync(application, cancellationToken);
         }
 
+        ValueTask<string> ICustomOpenIddictApplicationManager.GetUnprotectedClientSecretAsync(
+            object application, CancellationToken cancellationToken)
+            => GetUnprotectedClientSecretAsync((TApplication)application, cancellationToken);
+
         protected override ValueTask<string> ObfuscateClientSecretAsync(
             string secret,
             CancellationToken cancellationToken = default)
@@ -84,9 +88,5 @@ namespace Nocturne.Auth.Core.Services.OpenIddict.Managers
             return ValueTask.FromResult(
                 string.Equals(secret, unprotectedSecret, StringComparison.Ordinal));
         }
-
-        ValueTask<string> ICustomOpenIddictApplicationManager.GetUnprotectedClientSecretAsync(
-            object application, CancellationToken cancellationToken)
-            => GetUnprotectedClientSecretAsync((TApplication)application, cancellationToken);
     }
 }

@@ -36,14 +36,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 
         public Uri ReturnUrl { get; set; }
 
-        public class InputModel
-        {
-            [BindProperty]
-            [Required(ErrorMessage = "The code is required")]
-            [DataType(DataType.Text)]
-            public string RecoveryCode { get; set; }
-        }
-
         public async Task<IActionResult> OnGetAsync(Uri returnUrl = null)
         {
             // Ensure the user has gone through the username & password screen first
@@ -101,6 +93,14 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         private static string NormalizeCode(string code)
         {
             return code.Replace(" ", string.Empty, StringComparison.Ordinal);
+        }
+
+        public class InputModel
+        {
+            [BindProperty]
+            [Required(ErrorMessage = "The code is required")]
+            [DataType(DataType.Text)]
+            public string RecoveryCode { get; set; }
         }
     }
 }

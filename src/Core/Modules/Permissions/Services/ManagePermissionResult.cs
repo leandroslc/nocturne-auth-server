@@ -43,6 +43,7 @@ namespace Nocturne.Auth.Core.Modules.Permissions.Services
                 ErrorDescription = description,
             };
         }
+
         public static ManagePermissionResult Fail(string description)
         {
             return new ManagePermissionResult

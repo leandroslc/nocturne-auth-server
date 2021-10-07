@@ -47,13 +47,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         [TempData]
         public string ErrorMessage { get; set; }
 
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The email is required")]
-            [EmailAddress(ErrorMessage = "The email is not valid")]
-            public string Email { get; set; }
-        }
-
         public IActionResult OnGetAsync()
         {
             return RedirectToPage("./Login");
@@ -92,11 +85,12 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                 info.LoginProvider,
                 info.ProviderKey,
                 isPersistent: false,
-                bypassTwoFactor : true);
+                bypassTwoFactor: true);
 
             if (result.Succeeded)
             {
-                logger.LogInformation("{Name} logged in with {LoginProvider} provider.",
+                logger.LogInformation(
+                    "{Name} logged in with {LoginProvider} provider.",
                     info.Principal.Identity.Name, info.LoginProvider);
 
                 return LocalRedirect(returnUrl.AbsolutePath);
@@ -115,7 +109,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             {
                 Input = new InputModel
                 {
-                    Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                    Email = info.Principal.FindFirstValue(ClaimTypes.Email),
                 };
             }
 
@@ -180,6 +174,13 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
 
             return Page();
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The email is required")]
+            [EmailAddress(ErrorMessage = "The email is not valid")]
+            public string Email { get; set; }
         }
     }
 }

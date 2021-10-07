@@ -32,13 +32,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The email is required")]
-            [EmailAddress(ErrorMessage = "The email is not valid")]
-            public string Email { get; set; }
-        }
-
         public Uri ReturnUrl { get; set; }
 
         public void OnGet(Uri returnUrl = null)
@@ -79,6 +72,13 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         private IActionResult ConfirmationPage()
         {
             return RedirectToPage("./ForgotPasswordConfirmation", new { returnUrl = ReturnUrl });
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The email is required")]
+            [EmailAddress(ErrorMessage = "The email is not valid")]
+            public string Email { get; set; }
         }
     }
 }

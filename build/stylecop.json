@@ -1,0 +1,31 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "documentationRules": {
+      "companyName": "Leandro Silva Luz do Carmo",
+      "copyrightText": "Copyright (c) {companyName}\nSPDX-License-Identifier: GPL-3.0-or-later",
+      "documentInterfaces": false,
+      "documentInternalElements": false,
+      "documentExposedElements": false,
+      "fileNamingConvention": "metadata",
+      "xmlHeader": false
+    },
+    "indentation": {
+      "indentationSize": 4,
+      "useTabs": false
+    },
+    "layoutRules": {
+      "newlineAtEndOfFile": "require"
+    },
+    "orderingRules": {
+      "elementOrder": [
+        "kind",
+        "accessibility",
+        "constant",
+        "readonly"
+      ],
+      "systemUsingDirectivesFirst": true,
+      "usingDirectivesPlacement": "outsideNamespace"
+    }
+  }
+}

@@ -22,13 +22,13 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
     public class EnableAuthenticatorModel : PageModel
     {
+        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
+
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<EnableAuthenticatorModel> logger;
         private readonly UrlEncoder urlEncoder;
         private readonly IStringLocalizer localizer;
         private readonly string applicationName;
-
-        private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         public EnableAuthenticatorModel(
             UserManager<ApplicationUser> userManager,
@@ -57,14 +57,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 
         [BindProperty]
         public InputModel Input { get; set; }
-
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The code is required")]
-            [StringLength(7, ErrorMessage = "The code must have at least {2} and max {1} characters", MinimumLength = 6)]
-            [DataType(DataType.Text)]
-            public string Code { get; set; }
-        }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -190,6 +182,14 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
             return code
                 .Replace(" ", string.Empty, StringComparison.Ordinal)
                 .Replace("-", string.Empty, StringComparison.Ordinal);
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The code is required")]
+            [StringLength(7, ErrorMessage = "The code must have at least {2} and max {1} characters", MinimumLength = 6)]
+            [DataType(DataType.Text)]
+            public string Code { get; set; }
         }
     }
 }
