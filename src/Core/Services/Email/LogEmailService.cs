@@ -24,7 +24,8 @@ namespace Nocturne.Auth.Core.Services.Email
 
         public Task SendAsync(EmailWithTemplateCommand command)
         {
-            logger.LogInformation("Email sent.\nTo: {to}.\nSub: {subject}.\nMsg: {template}",
+            logger.LogInformation(
+                "Email sent.\nTo: {to}.\nSub: {subject}.\nMsg: {template}",
                 command.Email, command.Subject, command.TemplateName);
 
             return Task.CompletedTask;

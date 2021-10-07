@@ -9,13 +9,6 @@ namespace Nocturne.Auth.Core.Shared.Helpers
 {
     public static class UriValidator
     {
-        /// <summary>
-        /// Validates the specified space or comma delimited list of uris
-        /// </summary>
-        /// <param name="context">An instance of <see cref="ValidationResult" /></param>
-        /// <param name="uris">A space or comma delimited list of URIs</param>
-        /// <param name="memberName">Member name associated with the validation</param>
-        /// <returns>A collection of <see cref="ValidationResult" />s</returns>
         public static IEnumerable<ValidationResult> Validate(
             ValidationContext context,
             string uris,

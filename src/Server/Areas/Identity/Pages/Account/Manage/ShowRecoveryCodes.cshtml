@@ -57,23 +57,23 @@
                 </div>
 
                 @{
-                    int firstGroupSize = (int)Math.Ceiling(Model.RecoveryCodes.Length / 2d);
+                    int firstGroupSize = (int)Math.Ceiling(Model.RecoveryCodes.Count / 2d);
                 }
 
                 <div class="row mb-3">
                     <div class="col-sm">
                         <ul class="list-group">
-                            @for (var row = 0; row < firstGroupSize; row++)
+                            @foreach (var recoveryCode in Model.RecoveryCodes.Take(firstGroupSize))
                             {
-                                <li class="list-group-item text-monospace">@Model.RecoveryCodes[row]</li>
+                                <li class="list-group-item text-monospace">@recoveryCode</li>
                             }
                         </ul>
                     </div>
                     <div class="col-sm">
                         <ul class="list-group">
-                            @for (int row = firstGroupSize; row < Model.RecoveryCodes.Length; row++)
+                            @foreach (var recoveryCode in Model.RecoveryCodes.Skip(firstGroupSize))
                             {
-                                <li class="list-group-item text-monospace">@Model.RecoveryCodes[row]</li>
+                                <li class="list-group-item text-monospace">@recoveryCode</li>
                             }
                         </ul>
                     </div>

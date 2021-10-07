@@ -8,8 +8,16 @@ namespace Nocturne.Auth.Admin.Controllers.Models
 {
     public class ApplicationIndexViewModel
     {
-        public ListApplicationsCommand Query { get; set; }
+        public ApplicationIndexViewModel(
+            IPagedCollection<ListApplicationsResult> applications,
+            ListApplicationsCommand query)
+        {
+            Applications = applications;
+            Query = query;
+        }
 
-        public IPagedCollection<ListApplicationsResult> Applications { get; set; }
+        public IPagedCollection<ListApplicationsResult> Applications { get; }
+
+        public ListApplicationsCommand Query { get; }
     }
 }

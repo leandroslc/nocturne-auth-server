@@ -1,6 +1,8 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System;
+
 namespace Nocturne.Auth.Core.Services.Email
 {
     public class EmailTemplateModel
@@ -9,7 +11,7 @@ namespace Nocturne.Auth.Core.Services.Email
 
         public string CompanyInfo { get; set; }
 
-        public string CompanyLogoUrl { get; set; }
+        public Uri CompanyLogoUrl { get; set; }
 
         public string CompanyName { get; set; }
 

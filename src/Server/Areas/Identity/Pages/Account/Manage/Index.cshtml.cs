@@ -41,17 +41,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public class InputModel
-        {
-            [RegularExpression(@"[0-9\-\(\)\s]+", ErrorMessage = "The phone number is not valid")]
-            public string PhoneNumber { get; set; }
-
-            [Required(ErrorMessage = "The name is required")]
-            [DataType(DataType.Text)]
-            [MaxLength(200, ErrorMessage = "The name must have less than {1} characters")]
-            public string Name { get; set; }
-        }
-
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await userManager.GetUserAsync(User);
@@ -143,6 +132,17 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
             var setPhoneResult = await userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
 
             return setPhoneResult.Succeeded;
+        }
+
+        public class InputModel
+        {
+            [RegularExpression(@"[0-9\-\(\)\s]+", ErrorMessage = "The phone number is not valid")]
+            public string PhoneNumber { get; set; }
+
+            [Required(ErrorMessage = "The name is required")]
+            [DataType(DataType.Text)]
+            [MaxLength(200, ErrorMessage = "The name must have less than {1} characters")]
+            public string Name { get; set; }
         }
     }
 }

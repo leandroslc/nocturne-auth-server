@@ -73,8 +73,7 @@ namespace Nocturne.Auth.Core.Modules.Users.Services
 
             return new GetUserAccessReturn(
                 roles: permissions.GroupBy(p => p.RoleName).Select(g => g.Key),
-                permissions: permissions.Select(p => p.PermissionName)
-            );
+                permissions: permissions.Select(p => p.PermissionName));
         }
     }
 }

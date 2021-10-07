@@ -34,22 +34,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
         [TempData]
         public bool UpdatePasswordSucceeded { get; set; }
 
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The password is required")]
-            [DataType(DataType.Password)]
-            public string OldPassword { get; set; }
-
-            [Required(ErrorMessage = "The new password is required")]
-            [StringLength(100, ErrorMessage = "The password must have at least {2} and max {1} characters", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            public string NewPassword { get; set; }
-
-            [DataType(DataType.Password)]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match")]
-            public string ConfirmPassword { get; set; }
-        }
-
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await userManager.GetUserAsync(User);
@@ -112,6 +96,22 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
             }
 
             return Page();
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The password is required")]
+            [DataType(DataType.Password)]
+            public string OldPassword { get; set; }
+
+            [Required(ErrorMessage = "The new password is required")]
+            [StringLength(100, ErrorMessage = "The password must have at least {2} and max {1} characters", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            public string NewPassword { get; set; }
+
+            [DataType(DataType.Password)]
+            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match")]
+            public string ConfirmPassword { get; set; }
         }
     }
 }

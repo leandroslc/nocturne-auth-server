@@ -29,18 +29,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
         [TempData]
         public bool SetPasswordSucceeded { get; set; }
 
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The new password is required")]
-            [StringLength(100, ErrorMessage = "The password must have at least {2} and max {1} characters", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            public string NewPassword { get; set; }
-
-            [DataType(DataType.Password)]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match")]
-            public string ConfirmPassword { get; set; }
-        }
-
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await GetUserAsync();
@@ -103,6 +91,18 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
         private IActionResult RedirectToChangePassword()
         {
             return RedirectToPage("./ChangePassword");
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The new password is required")]
+            [StringLength(100, ErrorMessage = "The password must have at least {2} and max {1} characters", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            public string NewPassword { get; set; }
+
+            [DataType(DataType.Password)]
+            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match")]
+            public string ConfirmPassword { get; set; }
         }
     }
 }

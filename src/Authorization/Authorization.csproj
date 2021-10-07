@@ -2,11 +2,14 @@
 
   <PropertyGroup>
     <TargetFrameworks>net5.0</TargetFrameworks>
+    <ProjectName>Nocturne.Auth.Authorization</ProjectName>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="5.0.6" />
+  <Import Project="..\..\build\common.props" />
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" />
   </ItemGroup>
 
 </Project>

@@ -15,7 +15,7 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
     {
         private readonly IClientBuilderService clientBuilderService;
 
-        public ManageApplicationHandler(
+        protected ManageApplicationHandler(
             IOpenIddictApplicationManager applicationManager,
             IOpenIddictScopeManager scopeManager,
             IClientBuilderService clientBuilderService,

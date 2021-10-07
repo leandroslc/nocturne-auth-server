@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -43,53 +44,28 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public string ReturnUrl { get; set; }
+        public Uri ReturnUrl { get; set; }
 
-        public string CancelUrl { get; set; }
+        public Uri CancelUrl { get; set; }
 
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The name is required")]
-            [MaxLength(200, ErrorMessage = "The name must have less than {1} characters")]
-            [DataType(DataType.Text)]
-            public string Name { get; set; }
-
-            [Required(ErrorMessage = "The CPF is required")]
-            [CPF(ErrorMessage = "The CPF is invalid")]
-            public string CPF { get; set; }
-
-            [Required(ErrorMessage = "The email is required")]
-            [EmailAddress(ErrorMessage = "The email is not valid")]
-            public string Email { get; set; }
-
-            [Required(ErrorMessage = "The password is required")]
-            [StringLength(100, ErrorMessage = "The password must have at least {2} and max {1} characters", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            public string Password { get; set; }
-
-            [DataType(DataType.Password)]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
-            public string ConfirmPassword { get; set; }
-        }
+        public IList<AuthenticationScheme> ExternalLogins { get; private set; }
 
         public async Task OnGetAsync(
-            string returnUrl = null,
-            string cancelUrl = null)
+            Uri returnUrl = null,
+            Uri cancelUrl = null)
         {
-            ReturnUrl = returnUrl ?? Url.Content("~/");
-            CancelUrl = cancelUrl ?? returnUrl;
+            ReturnUrl = returnUrl ?? new Uri(Url.Content("~/"), UriKind.RelativeOrAbsolute);
+            CancelUrl = cancelUrl ?? ReturnUrl;
 
             ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(
-            string returnUrl = null,
-            string cancelUrl = null)
+            Uri returnUrl = null,
+            Uri cancelUrl = null)
         {
-            ReturnUrl = returnUrl ?? Url.Content("~/");
-            CancelUrl = cancelUrl ?? returnUrl;
+            ReturnUrl = returnUrl ?? new Uri(Url.Content("~/"), UriKind.RelativeOrAbsolute);
+            CancelUrl = cancelUrl ?? ReturnUrl;
 
             ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
@@ -115,21 +91,21 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 
             logger.LogInformation("User created a new account with password.");
 
-            await SendEmailConfirmation(user, returnUrl);
+            await SendEmailConfirmation(user, ReturnUrl);
 
             if (userManager.Options.SignIn.RequireConfirmedAccount)
             {
-                return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
+                return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = ReturnUrl });
             }
             else
             {
                 await signInManager.SignInAsync(user, isPersistent: false);
 
-                return LocalRedirect(returnUrl);
+                return LocalRedirect(ReturnUrl.PathAndQuery);
             }
         }
 
-        private async Task SendEmailConfirmation(ApplicationUser user, string returnUrl)
+        private async Task SendEmailConfirmation(ApplicationUser user, Uri returnUrl)
         {
             var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -140,7 +116,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                 values: new { area = "Identity", userId = user.Id, code, returnUrl },
                 protocol: Request.Scheme);
 
-            await emailSender.SendEmailConfirmation(user, Input.Email, callbackUrl);
+            await emailSender.SendEmailConfirmation(user, Input.Email, new Uri(callbackUrl));
         }
 
         private IActionResult PageWithErrors(IdentityResult result)
@@ -151,6 +127,31 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             }
 
             return Page();
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The name is required")]
+            [MaxLength(200, ErrorMessage = "The name must have less than {1} characters")]
+            [DataType(DataType.Text)]
+            public string Name { get; set; }
+
+            [Required(ErrorMessage = "The CPF is required")]
+            [CPF(ErrorMessage = "The CPF is invalid")]
+            public string CPF { get; set; }
+
+            [Required(ErrorMessage = "The email is required")]
+            [EmailAddress(ErrorMessage = "The email is not valid")]
+            public string Email { get; set; }
+
+            [Required(ErrorMessage = "The password is required")]
+            [StringLength(100, ErrorMessage = "The password must have at least {2} and max {1} characters", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            public string Password { get; set; }
+
+            [DataType(DataType.Password)]
+            [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
+            public string ConfirmPassword { get; set; }
         }
     }
 }

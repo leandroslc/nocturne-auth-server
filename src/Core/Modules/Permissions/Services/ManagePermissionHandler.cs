@@ -11,7 +11,7 @@ namespace Nocturne.Auth.Core.Modules.Permissions.Services
 {
     public abstract class ManagePermissionHandler
     {
-        public ManagePermissionHandler(
+        protected ManagePermissionHandler(
             IStringLocalizer<ManagePermissionHandler> localizer,
             CustomOpenIddictApplicationManager<Application> applicationManager,
             IPermissionsRepository permissionsRepository)

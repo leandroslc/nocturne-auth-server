@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Nocturne.Auth.Core.Services.OpenIddict.Managers;
@@ -159,7 +160,7 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
 
         private void RemovePermissionsOfType(string permissionType)
         {
-            descriptor.Permissions.RemoveWhere(p => p.StartsWith(permissionType));
+            descriptor.Permissions.RemoveWhere(p => p.StartsWith(permissionType, StringComparison.Ordinal));
         }
 
         private string GetClientSecret(string currentClientSecret)

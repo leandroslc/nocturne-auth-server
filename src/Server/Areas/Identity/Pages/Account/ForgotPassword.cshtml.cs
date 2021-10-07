@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,23 +32,16 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public class InputModel
+        public Uri ReturnUrl { get; set; }
+
+        public void OnGet(Uri returnUrl = null)
         {
-            [Required(ErrorMessage = "The email is required")]
-            [EmailAddress(ErrorMessage = "The email is not valid")]
-            public string Email { get; set; }
+            ReturnUrl = returnUrl ?? new Uri(Url.Content("~/"), UriKind.RelativeOrAbsolute);
         }
 
-        public string ReturnUrl { get; set; }
-
-        public void OnGet(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(Uri returnUrl = null)
         {
-            ReturnUrl = returnUrl ?? Url.Content("~/");
-        }
-
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-        {
-            ReturnUrl = returnUrl ?? Url.Content("~/");
+            ReturnUrl = returnUrl ?? new Uri(Url.Content("~/"), UriKind.RelativeOrAbsolute);
 
             if (ModelState.IsValid is false)
             {
@@ -70,7 +64,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                 values: new { area = "Identity", code },
                 protocol: Request.Scheme);
 
-            await emailSender.SendResetPassword(user, Input.Email, callbackUrl);
+            await emailSender.SendResetPassword(user, Input.Email, new Uri(callbackUrl));
 
             return ConfirmationPage();
         }
@@ -78,6 +72,13 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         private IActionResult ConfirmationPage()
         {
             return RedirectToPage("./ForgotPasswordConfirmation", new { returnUrl = ReturnUrl });
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The email is required")]
+            [EmailAddress(ErrorMessage = "The email is not valid")]
+            public string Email { get; set; }
         }
     }
 }

@@ -27,24 +27,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The email is required")]
-            [EmailAddress(ErrorMessage = "The email is not valid")]
-            public string Email { get; set; }
-
-            [Required(ErrorMessage = "The password is required")]
-            [StringLength(100, ErrorMessage = "The password must have at least {2} and max {1} characters", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            public string Password { get; set; }
-
-            [DataType(DataType.Password)]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
-            public string ConfirmPassword { get; set; }
-
-            public string Code { get; set; }
-        }
-
         public IActionResult OnGet(string code = null)
         {
             if (code == null)
@@ -54,7 +36,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 
             Input = new InputModel
             {
-                Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
+                Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code)),
             };
 
             return Page();
@@ -91,6 +73,24 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         private IActionResult ConfirmationPage()
         {
             return RedirectToPage("./ResetPasswordConfirmation");
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The email is required")]
+            [EmailAddress(ErrorMessage = "The email is not valid")]
+            public string Email { get; set; }
+
+            [Required(ErrorMessage = "The password is required")]
+            [StringLength(100, ErrorMessage = "The password must have at least {2} and max {1} characters", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            public string Password { get; set; }
+
+            [DataType(DataType.Password)]
+            [Compare("Password", ErrorMessage = "The password and confirmation password do not match")]
+            public string ConfirmPassword { get; set; }
+
+            public string Code { get; set; }
         }
     }
 }

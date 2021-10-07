@@ -342,7 +342,7 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
                 authenticationSchemes: OpenIddictServerAspNetCoreDefaults.AuthenticationScheme,
                 properties: new AuthenticationProperties
                 {
-                    RedirectUri = "/"
+                    RedirectUri = "/",
                 });
         }
 

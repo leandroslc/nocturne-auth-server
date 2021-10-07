@@ -30,7 +30,7 @@ namespace Nocturne.Auth.Infra.SqlServer.Migrations.Authorization
                     Properties = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RedirectUris = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Requirements = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                 },
                 constraints: table =>
                 {
@@ -50,7 +50,7 @@ namespace Nocturne.Auth.Infra.SqlServer.Migrations.Authorization
                     DisplayNames = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Properties = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Resources = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Resources = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -70,7 +70,7 @@ namespace Nocturne.Auth.Infra.SqlServer.Migrations.Authorization
                     Scopes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Subject = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                 },
                 constraints: table =>
                 {
@@ -94,7 +94,7 @@ namespace Nocturne.Auth.Infra.SqlServer.Migrations.Authorization
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
                     ApplicationId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ConcurrencyToken = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    ConcurrencyToken = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                 },
                 constraints: table =>
                 {
@@ -118,7 +118,7 @@ namespace Nocturne.Auth.Infra.SqlServer.Migrations.Authorization
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
                     ApplicationId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ConcurrencyToken = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    ConcurrencyToken = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                 },
                 constraints: table =>
                 {
@@ -149,7 +149,7 @@ namespace Nocturne.Auth.Infra.SqlServer.Migrations.Authorization
                     ReferenceId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Subject = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                    Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                 },
                 constraints: table =>
                 {
@@ -176,7 +176,7 @@ namespace Nocturne.Auth.Infra.SqlServer.Migrations.Authorization
                 columns: table => new
                 {
                     PermissionId = table.Column<long>(type: "bigint", nullable: false),
-                    RoleId = table.Column<long>(type: "bigint", nullable: false)
+                    RoleId = table.Column<long>(type: "bigint", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -202,7 +202,7 @@ namespace Nocturne.Auth.Infra.SqlServer.Migrations.Authorization
                 columns: table => new
                 {
                     UserId = table.Column<long>(type: "bigint", nullable: false),
-                    RoleId = table.Column<long>(type: "bigint", nullable: false)
+                    RoleId = table.Column<long>(type: "bigint", nullable: false),
                 },
                 constraints: table =>
                 {

@@ -20,7 +20,7 @@ namespace Nocturne.Auth.Admin.Configuration.Options
 
         public string ClientSecret { get; set; }
 
-        public ICollection<string> Scopes { get; set; }
+        public ICollection<string> Scopes { get; } = new HashSet<string>();
 
         public bool RequireHttps { get; set; } = true;
     }

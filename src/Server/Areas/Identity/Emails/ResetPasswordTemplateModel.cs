@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System;
 using Nocturne.Auth.Core.Services.Email;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Emails
@@ -11,7 +12,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Emails
 
         public string Message { get; set; }
 
-        public string CallbackUrl { get; set; }
+        public Uri CallbackUrl { get; set; }
 
         public string ResetButtonText { get; set; }
     }

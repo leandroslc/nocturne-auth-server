@@ -11,7 +11,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
 {
     public abstract class ManageApplicationRoleHandler
     {
-        public ManageApplicationRoleHandler(
+        protected ManageApplicationRoleHandler(
             IStringLocalizer<ManageApplicationRoleHandler> localizer,
             CustomOpenIddictApplicationManager<Application> applicationManager,
             IRolesRepository rolesRepository)

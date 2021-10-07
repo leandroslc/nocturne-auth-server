@@ -25,7 +25,7 @@ namespace Nocturne.Auth.Core.Shared.Helpers
         {
             const bool allowSelfSignedCertificates = true;
 
-            var store = new X509Store(
+            using var store = new X509Store(
                 storeName,
                 storeLocation,
                 OpenFlags.ReadOnly);

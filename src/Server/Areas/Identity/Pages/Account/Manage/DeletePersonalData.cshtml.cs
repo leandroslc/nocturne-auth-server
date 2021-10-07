@@ -41,13 +41,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The password is required")]
-            [DataType(DataType.Password)]
-            public string Password { get; set; }
-        }
-
         public bool RequirePassword { get; set; }
 
         public async Task<IActionResult> OnGet()
@@ -113,6 +106,13 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
             ModelState.AddModelError(string.Empty, errorMessage);
 
             return Page();
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The password is required")]
+            [DataType(DataType.Password)]
+            public string Password { get; set; }
         }
     }
 }

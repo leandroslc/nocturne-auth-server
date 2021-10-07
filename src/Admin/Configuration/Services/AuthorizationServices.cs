@@ -14,16 +14,20 @@ namespace Nocturne.Auth.Admin.Configuration.Services
         {
             return services.AddAuthorization(options =>
             {
-                options.AddPolicy(Policies.ManageApplications,
+                options.AddPolicy(
+                    Policies.ManageApplications,
                     policy => policy.RequirePermission(Permissions.ApplicationManage));
 
-                options.AddPolicy(Policies.ManageUsers,
+                options.AddPolicy(
+                    Policies.ManageUsers,
                     policy => policy.RequirePermissions(Permissions.UserRolesManage));
 
-                options.AddPolicy(Policies.ManageUserRoles,
+                options.AddPolicy(
+                    Policies.ManageUserRoles,
                     policy => policy.RequirePermission(Permissions.UserRolesManage));
 
-                options.AddPolicy(Policies.GeneralAccess,
+                options.AddPolicy(
+                    Policies.GeneralAccess,
                     policy => policy.RequireAnyPermission());
             });
         }

@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,26 +32,19 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public class InputModel
-        {
-            [Required(ErrorMessage = "The email is required")]
-            [EmailAddress(ErrorMessage = "The email is not valid")]
-            public string Email { get; set; }
-        }
-
-        public string ReturnUrl { get; set; }
+        public Uri ReturnUrl { get; set; }
 
         [TempData]
         public bool EmailSent { get; set; }
 
-        public void OnGet(string returnUrl = null)
+        public void OnGet(Uri returnUrl = null)
         {
-            ReturnUrl = returnUrl ?? Url.Content("~/");
+            ReturnUrl = returnUrl ?? new Uri(Url.Content("~/"), UriKind.RelativeOrAbsolute);
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(Uri returnUrl = null)
         {
-            ReturnUrl = returnUrl ?? Url.Content("~/");
+            ReturnUrl = returnUrl ?? new Uri(Url.Content("~/"), UriKind.RelativeOrAbsolute);
 
             if (ModelState.IsValid is false)
             {
@@ -74,7 +68,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                 values: new { userId, code },
                 protocol: Request.Scheme);
 
-            await emailSender.SendEmailConfirmation(user, Input.Email, callbackUrl);
+            await emailSender.SendEmailConfirmation(user, Input.Email, new Uri(callbackUrl));
 
             return PageWithStatus();
         }
@@ -84,6 +78,13 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             EmailSent = true;
 
             return Page();
+        }
+
+        public class InputModel
+        {
+            [Required(ErrorMessage = "The email is required")]
+            [EmailAddress(ErrorMessage = "The email is not valid")]
+            public string Email { get; set; }
         }
     }
 }

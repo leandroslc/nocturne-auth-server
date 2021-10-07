@@ -8,8 +8,16 @@ namespace Nocturne.Auth.Admin.Controllers.Models
 {
     public class UserIndexViewModel
     {
-        public ListUsersCommand Query { get; set; }
+        public UserIndexViewModel(
+            IPagedCollection<ListUsersItem> users,
+            ListUsersCommand query)
+        {
+            Users = users;
+            Query = query;
+        }
 
-        public IPagedCollection<ListUsersItem> Users { get; set; }
+        public ListUsersCommand Query { get; }
+
+        public IPagedCollection<ListUsersItem> Users { get; }
     }
 }

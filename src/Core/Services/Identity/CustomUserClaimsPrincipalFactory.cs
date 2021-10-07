@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Globalization;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +11,7 @@ using OpenIddict.Abstractions;
 namespace Nocturne.Auth.Core.Services.Identity
 {
     public class CustomUserClaimsPrincipalFactory
-		: UserClaimsPrincipalFactory<ApplicationUser, ApplicationRole>
+        : UserClaimsPrincipalFactory<ApplicationUser, ApplicationRole>
     {
         public CustomUserClaimsPrincipalFactory(
             UserManager<ApplicationUser> userManager,
@@ -24,8 +25,10 @@ namespace Nocturne.Auth.Core.Services.Identity
         {
             var principal = await base.CreateAsync(user);
 
+            var userId = user.Id.ToString(CultureInfo.InvariantCulture);
+
             principal.SetClaim(OpenIddictConstants.Claims.Name, user.Name);
-            principal.SetClaim(OpenIddictConstants.Claims.Subject, user.Id.ToString());
+            principal.SetClaim(OpenIddictConstants.Claims.Subject, userId);
             principal.SetClaim(OpenIddictConstants.Claims.Username, user.UserName);
 
             return principal;

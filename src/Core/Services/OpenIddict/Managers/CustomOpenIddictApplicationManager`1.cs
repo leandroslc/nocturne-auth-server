@@ -52,6 +52,10 @@ namespace Nocturne.Auth.Core.Services.OpenIddict.Managers
             return Store.GetClientSecretAsync(application, cancellationToken);
         }
 
+        ValueTask<string> ICustomOpenIddictApplicationManager.GetUnprotectedClientSecretAsync(
+            object application, CancellationToken cancellationToken)
+            => GetUnprotectedClientSecretAsync((TApplication)application, cancellationToken);
+
         protected override ValueTask<string> ObfuscateClientSecretAsync(
             string secret,
             CancellationToken cancellationToken = default)
@@ -66,7 +70,7 @@ namespace Nocturne.Auth.Core.Services.OpenIddict.Managers
 
         protected override ValueTask<bool> ValidateClientSecretAsync(
             string secret,
-            string protectedSecret,
+            string comparand,
             CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(secret))
@@ -74,28 +78,15 @@ namespace Nocturne.Auth.Core.Services.OpenIddict.Managers
                 throw new ArgumentException("Secrect cannot be empty", nameof(secret));
             }
 
-            if (string.IsNullOrEmpty(protectedSecret))
+            if (string.IsNullOrEmpty(comparand))
             {
-                throw new ArgumentException("Value cannot be empty", nameof(protectedSecret));
+                throw new ArgumentException("Value cannot be empty", nameof(comparand));
             }
 
-            try
-            {
-                var unprotectedSecret = encryptionService.Decrypt(protectedSecret);
+            var unprotectedSecret = encryptionService.Decrypt(comparand);
 
-                return ValueTask.FromResult(
-                    string.Equals(secret, unprotectedSecret, StringComparison.InvariantCulture));
-            }
-            catch (Exception exception)
-            {
-                Logger.LogWarning(exception, "Client secrect validation failed");
-
-                return new ValueTask<bool>(false);
-            }
+            return ValueTask.FromResult(
+                string.Equals(secret, unprotectedSecret, StringComparison.Ordinal));
         }
-
-        ValueTask<string> ICustomOpenIddictApplicationManager.GetUnprotectedClientSecretAsync(
-            object application, CancellationToken cancellationToken)
-            => GetUnprotectedClientSecretAsync((TApplication)application, cancellationToken);
     }
 }
