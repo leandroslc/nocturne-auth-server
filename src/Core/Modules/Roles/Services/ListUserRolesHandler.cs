@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -64,6 +65,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
             return null;
         }
 
+        [SuppressMessage("Globalization", "CA1307", Justification = "Will fail within LINQ provider")]
         private static IQueryable<ListUserRolesItem> GetRolesQuery(
             IQueryable<Role> query,
             ListUserRolesCommand command)

@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -31,6 +32,7 @@ namespace Nocturne.Auth.Core.Modules.Users.Services
                 users, command.Page, command.PageSize, total);
         }
 
+        [SuppressMessage("Globalization", "CA1307", Justification = "Will fail within LINQ provider")]
         private IQueryable<ListUsersItem> Query(ListUsersCommand command)
         {
             var query = userManager.Users;
