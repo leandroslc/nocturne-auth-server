@@ -93,7 +93,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                     "{Name} logged in with {LoginProvider} provider.",
                     info.Principal.Identity.Name, info.LoginProvider);
 
-                return LocalRedirect(returnUrl.AbsolutePath);
+                return LocalRedirect(returnUrl.OriginalString);
             }
 
             if (result.IsLockedOut)
@@ -160,7 +160,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
 
                         await signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
 
-                        return LocalRedirect(returnUrl.AbsolutePath);
+                        return LocalRedirect(returnUrl.OriginalString);
                     }
                 }
 

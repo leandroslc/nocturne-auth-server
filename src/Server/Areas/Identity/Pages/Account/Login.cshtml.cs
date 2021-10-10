@@ -87,7 +87,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                 {
                     logger.LogInformation("User logged in.");
 
-                    return LocalRedirect(ReturnUrl.AbsolutePath);
+                    return LocalRedirect(ReturnUrl.OriginalString);
                 }
 
                 if (result.RequiresTwoFactor)

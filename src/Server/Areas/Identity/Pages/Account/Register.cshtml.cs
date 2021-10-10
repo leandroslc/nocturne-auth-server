@@ -101,7 +101,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             {
                 await signInManager.SignInAsync(user, isPersistent: false);
 
-                return LocalRedirect(ReturnUrl.PathAndQuery);
+                return LocalRedirect(ReturnUrl.OriginalString);
             }
         }
 
