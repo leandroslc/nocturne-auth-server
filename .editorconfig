@@ -12,18 +12,26 @@ trim_trailing_whitespace = true
 indent_size = 4
 
 [*.cs]
+#
 # NET Analyzers
+#
 dotnet_code_quality.CA1711.allowed_suffixes = Permission
 
 dotnet_diagnostic.CA1010.severity = none
 dotnet_diagnostic.CA1034.severity = none
 dotnet_diagnostic.CA1308.severity = none
+dotnet_diagnostic.CA1724.severity = none
 dotnet_diagnostic.CA2007.severity = none
+
+# Not a priority for now
+dotnet_diagnostic.CA1716.severity = none
 
 # WARNING: Disabled until we enable nullable reference types
 dotnet_diagnostic.CA1062.severity = none
 
+#
 # StyleCop Rules
+#
 dotnet_diagnostic.SA0001.severity = none
 dotnet_diagnostic.SA1101.severity = none
 dotnet_diagnostic.SX1101.severity = warning
