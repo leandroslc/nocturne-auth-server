@@ -53,6 +53,7 @@ namespace Nocturne.Auth.Admin.Controllers
         }
 
         [HttpPost("new")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
             [FromServices] CreatePermissionHandler handler,
             CreatePermissionCommand command)
@@ -100,6 +101,7 @@ namespace Nocturne.Auth.Admin.Controllers
         }
 
         [HttpPost("edit")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             [FromServices] EditPermissionHandler handler,
             long? id,
@@ -170,6 +172,7 @@ namespace Nocturne.Auth.Admin.Controllers
         }
 
         [HttpPost("{id}/delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(
             [FromServices] DeleteApplicationPermissionHandler handler,
             DeleteApplicationPermissionCommand command)

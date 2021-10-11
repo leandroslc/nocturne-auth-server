@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -53,6 +54,7 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
         [HttpGet(AuthorizationEndpoints.Authorize, Name = RouteNames.AuthorizationAuthorize)]
         [HttpPost(AuthorizationEndpoints.Authorize)]
         [IgnoreAntiforgeryToken]
+        [SuppressMessage("Security", "CA5391", Justification = "The antiforgery must be ignored")]
         public async Task<IActionResult> Authorize()
         {
             var request = GetOpenIdRequest();
@@ -140,7 +142,9 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
         }
 
         [HttpPost(AuthorizationEndpoints.Token)]
+        [IgnoreAntiforgeryToken]
         [Produces("application/json")]
+        [SuppressMessage("Security", "CA5391", Justification = "The antiforgery must be ignored")]
         public async Task<IActionResult> Exchange()
         {
             var request = GetOpenIdRequest();

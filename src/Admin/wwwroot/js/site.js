@@ -229,3 +229,17 @@
 
   window.Modal = Modal;
 })();
+
+(function() {
+  window.ResponseHelper = {
+    isBadRequest: function(response) {
+      return response.status === 400;
+    },
+
+    isHtml: function(response) {
+      const contentType = response.getResponseHeader('content-type');
+
+      return contentType && contentType.indexOf('text/html') !== -1;
+    },
+  };
+})();
