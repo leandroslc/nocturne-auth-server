@@ -53,6 +53,7 @@ namespace Nocturne.Auth.Admin.Controllers
         }
 
         [HttpPost("new")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
             [FromServices]CreateApplicationRoleHandler handler,
             CreateApplicationRoleCommand command)
@@ -100,6 +101,7 @@ namespace Nocturne.Auth.Admin.Controllers
         }
 
         [HttpPost("{id}/edit")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             [FromServices] EditApplicationRoleHandler handler,
             EditApplicationRoleCommand command)
@@ -167,6 +169,7 @@ namespace Nocturne.Auth.Admin.Controllers
         }
 
         [HttpPost("{id}/delete", Name = RouteNames.ApplicationRolesDelete)]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(
             [FromServices]DeleteApplicationRoleHandler handler,
             DeleteApplicationRoleCommand command)

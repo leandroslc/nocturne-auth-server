@@ -9,7 +9,7 @@ namespace Nocturne.Auth.Admin.Controllers
     [Route("error")]
     public class ErrorsController : Controller
     {
-        [Route("unexpected")]
+        [HttpGet("unexpected")]
         public IActionResult InternalServerError()
         {
             return View();

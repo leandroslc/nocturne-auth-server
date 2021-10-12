@@ -16,7 +16,8 @@ using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
 {
-    public class UserInfoController : Controller
+    [ApiController]
+    public class UserInfoController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
 

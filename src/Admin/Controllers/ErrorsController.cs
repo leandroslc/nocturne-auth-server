@@ -8,19 +8,19 @@ namespace Nocturne.Auth.Admin.Controllers
     [Route("error")]
     public class ErrorsController : Controller
     {
-        [Route("denied")]
+        [HttpGet("denied")]
         public IActionResult Forbidden()
         {
             return View();
         }
 
-        [Route("unexpected")]
+        [HttpGet("unexpected")]
         public IActionResult InternalServerError()
         {
             return View();
         }
 
-        [Route("remote-auth")]
+        [HttpGet("remote-auth")]
         public IActionResult RemoteAuthenticationError()
         {
             return View();

@@ -73,7 +73,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             {
                 logger.LogInformation("User with ID '{UserId}' logged in with a recovery code.", user.Id);
 
-                return LocalRedirect(ReturnUrl.PathAndQuery);
+                return LocalRedirect(ReturnUrl.OriginalString);
             }
 
             if (result.IsLockedOut)

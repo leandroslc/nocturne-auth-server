@@ -1,6 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Nocturne.Auth.Core.Services.OpenIddict;
@@ -36,6 +37,7 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
                 await applications.ToListAsync(), command.Page, command.PageSize, total);
         }
 
+        [SuppressMessage("Globalization", "CA1310", Justification = "Will fail within LINQ provider")]
         private static IQueryable<ListApplicationsResult> GetQuery(
             IQueryable<Application> applications,
             ListApplicationsCommand command)

@@ -56,9 +56,11 @@
           searchRoles.search();
           modal.close();
         }).fail(function (response) {
-          if (response.status === 400) {
+          if (ResponseHelper.isBadRequest(response) && ResponseHelper.isHtml(response)) {
             setupModal(response.responseText, url);
           }
+
+          modal.close();
         });
       };
     }

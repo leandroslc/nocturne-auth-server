@@ -54,6 +54,7 @@ namespace Nocturne.Auth.Admin.Controllers
         }
 
         [HttpPost("add")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(
             [FromServices]AssignPermissionsToRoleHandler handler,
             AssignPermissionsToRoleCommand command)
@@ -100,6 +101,7 @@ namespace Nocturne.Auth.Admin.Controllers
         }
 
         [HttpPost("{permissionId}/remove")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Remove(
             [FromServices]UnassignPermissionFromRoleHandler handler,
             UnassignPermissionFromRoleCommand command)

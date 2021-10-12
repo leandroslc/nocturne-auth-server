@@ -80,7 +80,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             {
                 logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
 
-                return LocalRedirect(ReturnUrl.AbsolutePath);
+                return LocalRedirect(ReturnUrl.OriginalString);
             }
 
             if (result.IsLockedOut)
