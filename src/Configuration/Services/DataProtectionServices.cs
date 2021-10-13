@@ -5,7 +5,7 @@ using System;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nocturne.Auth.Configuration.Models;
+using Nocturne.Auth.Configuration.Options;
 using Nocturne.Auth.Core.Services.DataProtection;
 using Nocturne.Auth.Core.Shared.Helpers;
 

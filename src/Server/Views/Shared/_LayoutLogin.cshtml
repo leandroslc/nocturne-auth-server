@@ -1,10 +1,10 @@
 @using System.Globalization;
 @inject IViewLocalizer localizer;
 @inject WebAssets assets;
-@inject IOptions<WebApplicationOptions> applicationOptionsService;
+@inject IOptions<ServerApplicationOptions> ApplicationOptions;
 
 @{
-    var applicationOptions = applicationOptionsService.Value;
+    var applicationOptions = ApplicationOptions.Value;
 
     var language = CultureInfo.CurrentCulture.Name;
     var applicationName = applicationOptions.ApplicationName;
@@ -42,6 +42,9 @@
                         <img class="login-application-logo" src="~/logo.svg" alt="Logo" />
                         <span class="login-application-title">@applicationName</span>
                         <img class="login-application-image" src="~/img/authentication.svg" alt="Authentication" />
+                        <small>
+                            Photo by <a href="https://unsplash.com/@@adigold1?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Adi Goldstein</a> on <a href="https://unsplash.com/s/photos/electronic?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+                        </small>
                     </div>
                 </aside>
 

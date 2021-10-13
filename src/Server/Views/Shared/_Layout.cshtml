@@ -1,10 +1,10 @@
 ﻿@using System.Globalization;
 @inject IViewLocalizer localizer;
 @inject WebAssets assets;
-@inject IOptions<WebApplicationOptions> applicationOptionsService;
+@inject IOptions<ServerApplicationOptions> ApplicationOptions;
 
 @{
-    var applicationOptions = applicationOptionsService.Value;
+    var applicationOptions = ApplicationOptions.Value;
 
     var applicationName = applicationOptions.ApplicationName;
     var language = CultureInfo.CurrentCulture.Name;

@@ -16,7 +16,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Nocturne.Auth.Core.Services.Identity;
-using Nocturne.Auth.Core.Web;
+using Nocturne.Auth.Server.Configuration.Options;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 {
@@ -35,7 +35,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
             ILogger<EnableAuthenticatorModel> logger,
             UrlEncoder urlEncoder,
             IStringLocalizer<EnableAuthenticatorModel> localizer,
-            IOptions<WebApplicationOptions> applicationOptions)
+            IOptions<ServerApplicationOptions> applicationOptions)
         {
             this.userManager = userManager;
             this.logger = logger;

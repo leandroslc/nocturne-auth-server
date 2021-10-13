@@ -3,9 +3,9 @@
 
 using System;
 
-namespace Nocturne.Auth.Core.Web
+namespace Nocturne.Auth.Configuration.Options
 {
-    public class WebApplicationOptions
+    public abstract class ApplicationOptions
     {
         public const string Section = "Application";
 

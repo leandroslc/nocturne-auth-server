@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Nocturne.Auth.Admin.Configuration.Constants;
+using Nocturne.Auth.Admin.Configuration.Options;
 using Nocturne.Auth.Admin.Configuration.Services;
 using Nocturne.Auth.Configuration.Services;
 
@@ -14,12 +15,17 @@ namespace Nocturne.Auth.Admin
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(
+            IConfiguration configuration,
+            IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+
+        public IWebHostEnvironment Environment { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -35,7 +41,7 @@ namespace Nocturne.Auth.Admin
             services
                 .AddApplicationAntiforgery(ApplicationConstants.Identifier)
                 .AddApplicationWebAssets(Configuration)
-                .AddWebApplicationOptions(Configuration);
+                .AddApplicationOptions<AdminApplicationOptions>(Configuration);
 
             services
                 .AddApplicationDbContexts(Configuration)
@@ -49,9 +55,9 @@ namespace Nocturne.Auth.Admin
             services.AddApplicationOpenIddict();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
