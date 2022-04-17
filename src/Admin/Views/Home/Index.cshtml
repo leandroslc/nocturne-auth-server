@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="page-container">
-        <div class="card-deck">
+        <div class="card-deck mx-0">
             @if (await authorizationService.HasAccessAsync(User, Policies.ManageApplications))
             {
                 <div class="card greetings-card pt-4">
