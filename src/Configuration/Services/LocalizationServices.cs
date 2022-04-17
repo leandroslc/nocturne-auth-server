@@ -5,7 +5,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nocturne.Auth.Configuration.Models;
+using Nocturne.Auth.Configuration.Options;
 
 namespace Nocturne.Auth.Configuration.Services
 {

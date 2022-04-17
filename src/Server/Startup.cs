@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Nocturne.Auth.Configuration.Services;
 using Nocturne.Auth.Server.Configuration;
 using Nocturne.Auth.Server.Configuration.Constants;
+using Nocturne.Auth.Server.Configuration.Options;
 
 namespace Nocturne.Auth.Server
 {
@@ -47,7 +48,7 @@ namespace Nocturne.Auth.Server
             services
                 .AddApplicationAntiforgery(ApplicationConstants.Identifier)
                 .AddApplicationWebAssets(Configuration)
-                .AddWebApplicationOptions(Configuration);
+                .AddApplicationOptions<ServerApplicationOptions>(Configuration);
 
             services.AddApplicationLocalization(Configuration);
 
@@ -64,9 +65,9 @@ namespace Nocturne.Auth.Server
                 .AddApplicationServer(Configuration);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();

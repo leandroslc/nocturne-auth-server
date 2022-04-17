@@ -49,6 +49,9 @@ msgstr "Voltar"
 msgid "Back to home page"
 msgstr "Voltar à página inicial"
 
+msgid "Background image by"
+msgstr "Imagem de fundo por"
+
 msgid "By accepting the authorization you consent to grant the application the above permissions and data"
 msgstr "Ao aceitar a autorização, você concorda em conceder à aplicação as permissões e dados acima"
 

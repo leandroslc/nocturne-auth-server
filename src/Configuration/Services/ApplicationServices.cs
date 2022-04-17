@@ -3,12 +3,13 @@
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Nocturne.Auth.Configuration.Options;
 using Nocturne.Auth.Core;
 using Nocturne.Auth.Core.Web;
 
 namespace Nocturne.Auth.Configuration.Services
 {
-    public static class WebApplicationServices
+    public static class ApplicationServices
     {
         public static IServiceCollection AddApplicationWebAssets(
             this IServiceCollection services,
@@ -25,14 +26,15 @@ namespace Nocturne.Auth.Configuration.Services
             return services.AddSingleton(assetsService);
         }
 
-        public static IServiceCollection AddWebApplicationOptions(
+        public static IServiceCollection AddApplicationOptions<TApplicationOptions>(
             this IServiceCollection services,
             IConfiguration configuration)
+            where TApplicationOptions : ApplicationOptions
         {
             Check.NotNull(configuration, nameof(configuration));
 
-            services.Configure<WebApplicationOptions>(
-                configuration.GetSection(WebApplicationOptions.Section));
+            services.Configure<TApplicationOptions>(
+                configuration.GetSection(ApplicationOptions.Section));
 
             return services;
         }
