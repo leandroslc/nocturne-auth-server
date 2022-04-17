@@ -8,11 +8,13 @@
   </p>
 </div>
 
-> :warning: **Note**: This is still a working in progress and, by the moment, for educational purposes only, far from production ready.
-
 <div align="center">
   <img src=".github/demo-screenshot.png" />
 </div>
+
+<br>
+
+> :warning: **Note**: This is still a working in progress and, by the moment, for educational purposes only, far from production ready.
 
 ## Requirements
 - Make sure you have [.NET 5 SDK](https://dotnet.microsoft.com/download) installed.
