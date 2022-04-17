@@ -7,5 +7,11 @@ namespace Nocturne.Auth.Server.Configuration.Options
 {
     public class ServerApplicationOptions : ApplicationOptions
     {
+        public ServerApplicationOptions()
+        {
+            LoginBackground = new LoginBackgroundOptions();
+        }
+
+        public LoginBackgroundOptions LoginBackground { get; set; }
     }
 }

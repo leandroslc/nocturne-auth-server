@@ -24,7 +24,11 @@
     <link rel="stylesheet" href="@assets.Url("cookieconsent/cookieconsent.min.css")" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<body class="login-background">
+<body class="login-body">
+    @if (applicationOptions.LoginBackground.HasImageUrl)
+    {
+        <img src="@applicationOptions.LoginBackground.ImageUrl" class="login-background" />
+    }
     <div class="layout">
         <header class="layout-header">
             <nav class="navbar">
@@ -42,9 +46,12 @@
                         <img class="login-application-logo" src="~/logo.svg" alt="Logo" />
                         <span class="login-application-title">@applicationName</span>
                         <img class="login-application-image" src="~/img/authentication.svg" alt="Authentication" />
-                        <small>
-                            Photo by <a href="https://unsplash.com/@@adigold1?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Adi Goldstein</a> on <a href="https://unsplash.com/s/photos/electronic?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-                        </small>
+                        @if (applicationOptions.LoginBackground.HasImageAttribution)
+                        {
+                            <span class="login-background-attribution mt-auto">
+                                @localizer["Background image by"] @Html.Raw(applicationOptions.LoginBackground.ImageAttribution)
+                            </span>
+                        }
                     </div>
                 </aside>
 
