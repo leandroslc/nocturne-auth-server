@@ -2,11 +2,13 @@
 <Project>
 
   <PropertyGroup>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisLevel>latest</AnalysisLevel>
-    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <AnalysisMode>All</AnalysisMode>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
 

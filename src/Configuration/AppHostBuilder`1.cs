@@ -12,37 +12,37 @@ namespace Nocturne.Auth.Configuration
     public class AppHostBuilder<TStartup>
         where TStartup : class
     {
-        private readonly string[] args;
-        private Action<IWebHostBuilder> configureWebHostDefaultsAction;
-        private Action<IHostBuilder> configureHostAction;
+        private readonly IHostBuilder hostBuilder;
 
         public AppHostBuilder(string[] args)
         {
-            this.args = args;
+            hostBuilder = CreateHostBuilder(args);
         }
+
+        public IHostBuilder InternalBuilder => hostBuilder;
 
         public AppHostBuilder<TStartup> ConfigureDefaults(Action<IWebHostBuilder> configure)
         {
-            configureWebHostDefaultsAction = configure;
+            hostBuilder.ConfigureWebHostDefaults(configure);
 
             return this;
         }
 
         public AppHostBuilder<TStartup> Configure(Action<IHostBuilder> configure)
         {
-            configureHostAction = configure;
+            configure?.Invoke(hostBuilder);
 
             return this;
         }
 
-        public IHostBuilder GetHostBuilder()
+        public IHost Build()
         {
-            return CreateHostBuilder();
+            return hostBuilder.Build();
         }
 
-        public void Start()
+        public void BuildAndStart()
         {
-            var host = CreateHostBuilder().Build();
+            var host = Build();
 
             var configuration = (IConfiguration)host.Services.GetService(typeof(IConfiguration));
 
@@ -53,7 +53,7 @@ namespace Nocturne.Auth.Configuration
             Run(host);
         }
 
-        private IHostBuilder CreateHostBuilder()
+        private static IHostBuilder CreateHostBuilder(string[] args)
         {
             var host = Host
                 .CreateDefaultBuilder(args)
@@ -68,16 +68,12 @@ namespace Nocturne.Auth.Configuration
                 {
                     webBuilder.ConfigureKestrel(options => options.AddServerHeader = false);
                     webBuilder.UseStartup<TStartup>();
-
-                    configureWebHostDefaultsAction?.Invoke(webBuilder);
                 })
                 .UseSerilog((hostContext, loggerConfig) =>
                 {
                     loggerConfig
                         .ReadFrom.Configuration(hostContext.Configuration);
                 });
-
-            configureHostAction?.Invoke(host);
 
             return host;
         }

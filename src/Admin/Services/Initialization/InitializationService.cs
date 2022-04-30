@@ -78,7 +78,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
         {
             var contextName = typeof(TContext).Name;
 
-            Logger.LogInformation("Applying database migrations for {context}", contextName);
+            Logger.LogInformation("Applying database migrations for {Context}", contextName);
 
             var context = services.GetRequiredService<TContext>();
             await context.Database.MigrateAsync();
@@ -125,7 +125,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             if (registeredApplication is not null)
             {
-                Logger.LogInformation("Application {displayName} already exists", applicationDescriptor.DisplayName);
+                Logger.LogInformation("Application {DisplayName} already exists", applicationDescriptor.DisplayName);
 
                 return await applicationManager.GetIdAsync(registeredApplication);
             }
@@ -133,9 +133,9 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             registeredApplication = await applicationManager.CreateAsync(applicationDescriptor);
 
             Logger.LogInformation(
-                "Created application {displayName} " +
-                "\"client_id: {clientId}\" " +
-                "\"client_secrect: {clientSecret}\"",
+                "Created application {DisplayName} " +
+                "\"client_id: {ClientId}\" " +
+                "\"client_secrect: {ClientSecret}\"",
                 applicationDescriptor.DisplayName,
                 applicationDescriptor.ClientId,
                 applicationDescriptor.ClientSecret);
@@ -164,14 +164,14 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             {
                 if (await scopeManager.FindByNameAsync(scope.Name) is not null)
                 {
-                    Logger.LogInformation("Scope {name} already exists", scope.Name);
+                    Logger.LogInformation("Scope {Name} already exists", scope.Name);
 
                     continue;
                 }
 
                 await scopeManager.CreateAsync(scope);
 
-                Logger.LogInformation("Created scope {name}", scope.Name);
+                Logger.LogInformation("Created scope {Name}", scope.Name);
             }
         }
 
@@ -179,7 +179,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             IServiceProvider services,
             string adminApplicationId)
         {
-            Logger.LogInformation("Creating permissions for {adminApplicationId}", adminApplicationId);
+            Logger.LogInformation("Creating permissions for {AdminApplicationId}", adminApplicationId);
 
             var applicationManagePermissionId = await CreatePermission(
                 services,
@@ -214,7 +214,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             if (permission is not null)
             {
-                Logger.LogInformation("Permission {name} of {applicationId} already exists", name, applicationId);
+                Logger.LogInformation("Permission {Name} of {ApplicationId} already exists", name, applicationId);
 
                 return permission.Id;
             }
@@ -230,7 +230,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             if (result.IsSuccess)
             {
-                Logger.LogInformation("Created permission {name} for {applicationId}", name, applicationId);
+                Logger.LogInformation("Created permission {Name} for {ApplicationId}", name, applicationId);
 
                 return result.PermissionId;
             }
@@ -266,7 +266,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             if (role is not null)
             {
-                Logger.LogInformation("Role {name} of {applicationId} already exists", name, applicationId);
+                Logger.LogInformation("Role {Name} of {ApplicationId} already exists", name, applicationId);
 
                 await AssignPermissionsToRole(services, role.Id, permissionIds);
 
@@ -284,7 +284,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             if (result.IsSuccess)
             {
-                Logger.LogInformation("Created permission {name} for {applicationId}", name, applicationId);
+                Logger.LogInformation("Created permission {Name} for {ApplicationId}", name, applicationId);
 
                 await AssignPermissionsToRole(services, result.RoleId, permissionIds);
 
@@ -331,11 +331,14 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             if (result.IsSuccess)
             {
-                Logger.LogInformation("Assigned permissions to role {roleId}", roleId);
+                Logger.LogInformation("Assigned permissions to role {RoleId}", roleId);
             }
             else
             {
-                Logger.LogWarning($"Failed to assign permissions to role {roleId}. {result.ErrorDescription}");
+                Logger.LogWarning(
+                    "Failed to assign permissions to role {RoleId}. {ErrorDescription}",
+                    roleId,
+                    result.ErrorDescription);
             }
         }
 
@@ -363,7 +366,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             if (registeredUser is not null)
             {
-                Logger.LogInformation("User {userName} already exists", userData.Email);
+                Logger.LogInformation("User {UserName} already exists", userData.Email);
 
                 return registeredUser.Id;
             }
@@ -384,7 +387,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
                 throw new InvalidOperationException($"Error while creating user {userData.Email}");
             }
 
-            Logger.LogInformation("Created user {userName}", userData.Email);
+            Logger.LogInformation("Created user {UserName}", userData.Email);
 
             registeredUser = await userManager.FindByNameAsync(userData.Email);
 
@@ -410,11 +413,14 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             if (result.IsSuccess)
             {
-                Logger.LogInformation("Assigned roles to user {userId}", userId);
+                Logger.LogInformation("Assigned roles to user {UserId}", userId);
             }
             else
             {
-                Logger.LogWarning($"Failed to assign roles to user {userId}. {result.ErrorDescription}");
+                Logger.LogWarning(
+                    "Failed to assign roles to user {UserId}. {ErrorDescription}",
+                    userId,
+                    result.ErrorDescription);
             }
         }
     }

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -26,7 +27,9 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
         }
 
         [TempData]
-        public ICollection<string> RecoveryCodes { get; private set; }
+        [SuppressMessage("Usage", "CA2227",
+            Justification = "TempData requires it public and not read-only")]
+        public ICollection<string> RecoveryCodes { get; set; }
 
         [TempData]
         public bool GenerateRecoveryCodesSucceeded { get; set; }
