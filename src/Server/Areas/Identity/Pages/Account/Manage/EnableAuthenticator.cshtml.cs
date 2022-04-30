@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -50,7 +51,9 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
         public Uri AuthenticatorUri { get; set; }
 
         [TempData]
-        public ICollection<string> RecoveryCodes { get; private set; }
+        [SuppressMessage("Usage", "CA2227",
+            Justification = "TempData requires it public and not read-only")]
+        public ICollection<string> RecoveryCodes { get; set; }
 
         [TempData]
         public bool EnableAuthenticatorSucceeded { get; set; }
@@ -153,7 +156,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 
             while (currentPosition + 4 < unformattedKey.Length)
             {
-                result.Append(unformattedKey.Substring(currentPosition, 4)).Append(' ');
+                result.Append(unformattedKey[currentPosition..4]).Append(' ');
                 currentPosition += 4;
             }
 
