@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    volumes:
+      - ./data:/var/opt/mssql/data
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=47dfb729-a25c-4988-997d-ffb8a90a3f1c
