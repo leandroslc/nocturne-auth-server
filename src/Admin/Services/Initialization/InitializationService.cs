@@ -1,17 +1,11 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Nocturne.Auth.Admin.Configuration.Constants;
 using Nocturne.Auth.Core.Modules;
+using Nocturne.Auth.Core.Modules.Initialization;
 using Nocturne.Auth.Core.Modules.Permissions;
 using Nocturne.Auth.Core.Modules.Permissions.Repositories;
 using Nocturne.Auth.Core.Modules.Permissions.Services;
@@ -38,6 +32,8 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
         private InitializationData Data { get; set; }
 
+        private string SettingsFile { get; set; }
+
         public static void Run(IServiceProvider services)
         {
             new InitializationService(services).Run().Wait();
@@ -47,6 +43,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
         {
             Logger = CreateLogger();
             Data = GetInitializationData();
+            SettingsFile = Path.Combine(Environment.CurrentDirectory, "appsettings.local.json");
 
             using var serviceScope = ServiceProvider.CreateScope();
 
@@ -140,9 +137,13 @@ namespace Nocturne.Auth.Admin.Services.Initialization
                 applicationDescriptor.ClientId,
                 applicationDescriptor.ClientSecret);
 
-            Logger.LogWarning(
-                "Save the client id and secret in a safe place. " +
-                "They will be used in your configuration");
+            var settingsWritter = new SettingsWritter(SettingsFile);
+            settingsWritter.Set(
+                "Authorization",
+                new () { ["ClientId"] = applicationDescriptor.ClientId, ["ClientSecret"] = applicationDescriptor.ClientSecret });
+            settingsWritter.Write();
+
+            Logger.LogInformation("Wrote admin application client id and secret to {SettingsFile}", SettingsFile);
 
             return await applicationManager.GetIdAsync(registeredApplication);
         }
@@ -284,7 +285,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             if (result.IsSuccess)
             {
-                Logger.LogInformation("Created permission {Name} for {ApplicationId}", name, applicationId);
+                Logger.LogInformation("Created role {Name} for {ApplicationId}", name, applicationId);
 
                 await AssignPermissionsToRole(services, result.RoleId, permissionIds);
 
@@ -292,7 +293,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             }
 
             throw new InvalidOperationException(
-                $"Error while creating permission {name} for {applicationId}: {result.ErrorDescription}");
+                $"Error while creating role {name} for {applicationId}: {result.ErrorDescription}");
         }
 
         private static async Task<Role> FindRole(
