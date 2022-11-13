@@ -1,0 +1,33 @@
+@use '../core/core';
+@use '../core/vars';
+
+.layout {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidenav main"
+    "footer footer";
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto 1fr;
+  height: 100%;
+}
+
+.layout-header {
+  display: flex;
+  flex-direction: column;
+  grid-area: header;
+}
+
+.layout-main {
+  flex: 1;
+  grid-area: main;
+  min-width: 0;
+}
+
+.layout-sidenav {
+  grid-area: sidenav;
+}
+
+.layout-footer {
+  grid-area: footer;
+}

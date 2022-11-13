@@ -1,0 +1,149 @@
+@use 'sass:math';
+@use '../core/core';
+
+$chevron-border-width: 0.3rem;
+$chevron-margin: 0.1rem;
+$chevron-skew: 35deg;
+
+$toggle-margin-x: 0.8rem;
+$toggle-padding-right: $chevron-border-width * 2 + $chevron-margin + $toggle-margin-x;
+
+.user-menu-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0.3rem $toggle-padding-right 0.3rem $toggle-margin-x;
+  font-size: 0.93rem;
+  font-weight: 400;
+  color: core.color('text');
+  text-decoration: none;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  background: core.color('user-menu-toggle-bg');
+  border: none;
+  border-radius: 50rem;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    background: core.color('user-menu-toggle-bg');
+    border: none;
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    top: 50%;
+    width: $chevron-border-width;
+    height: 0.1rem;
+    content: '';
+    background-color: currentColor;
+  }
+
+  &::before {
+    right: $chevron-border-width + $toggle-margin-x;
+    transform: skew(0deg, $chevron-skew);
+  }
+
+  &::after {
+    right: $toggle-margin-x;
+    transform: skew(0deg, -$chevron-skew);
+  }
+}
+
+.user-menu-toggle-item {
+  & + & {
+    margin: 0 0.25rem;
+  }
+}
+
+.user-menu-toggle-name {
+  display: none;
+
+  @include core.bq-greather-than('md') {
+    display: inline;
+  }
+}
+
+$menu-padding-y: 0.5rem;
+$menu-padding-x: $menu-padding-y;
+$menu-margin-top: 1rem;
+
+$menu-arrow-height: 1.8rem;
+$menu-arrow-border: math.div($menu-arrow-height, 2);
+$menu-arrow-border-offset: 0.07rem;
+$menu-arrow-offset: $menu-margin-top + $menu-padding-y + ($menu-arrow-border-offset * 2);
+
+.user-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: auto;
+  display: none;
+  float: left;
+  min-width: 14rem;
+  padding: $menu-padding-y $menu-padding-x;
+  margin: $menu-margin-top 0 0;
+  font-size: 1rem;
+  color: core.color('text');
+  text-align: left;
+  list-style: none;
+  background-color: core.color('user-menu-bg');
+  background-clip: padding-box;
+  border: 1px solid core.color('user-menu-border');
+  border-radius: 0.4rem;
+  box-shadow: 0 0.2rem 0.5rem core.color('shadow');
+
+  &::before,
+  &::after {
+    position: absolute;
+    right: 1rem;
+    display: block;
+    width: 0;
+    height: 0;
+    content: '';
+    border-color: transparent;
+    border-style: solid;
+    border-width: #{$menu-arrow-border - $menu-arrow-border-offset} $menu-arrow-border;
+  }
+
+  &::after {
+    top: -#{$menu-arrow-offset - $menu-arrow-border-offset};
+    border-bottom-color: core.color('user-menu-bg');
+  }
+
+  &::before {
+    top: -#{$menu-arrow-offset + $menu-arrow-border-offset};
+    border-bottom-color: core.color('user-menu-border');
+  }
+}
+
+.user-menu-title {
+  display: block;
+  margin: 0.7rem 0 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  margin-bottom: 0.1rem;
+  color: core.color('text');
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 0.4rem;
+
+  &:hover,
+  &:focus {
+    color: core.color('text');
+    text-decoration: none;
+    background-color: core.color('user-menu-item-hover');
+  }
+}

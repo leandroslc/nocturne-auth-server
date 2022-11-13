@@ -1,0 +1,14 @@
+@use '../core/core';
+@use '../core/vars';
+
+html {
+  height: 100%;
+  font-size: vars.$font-size;
+}
+
+body {
+  height: 100%;
+  font-size: vars.$font-size;
+  color: core.color('text');
+  background-color: core.color('background');
+}

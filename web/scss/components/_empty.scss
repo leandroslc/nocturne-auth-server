@@ -1,0 +1,17 @@
+@use '../core/core';
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  padding: 1rem;
+}
+
+.empty-text {
+  margin-top: 0.2rem;
+}
+
+.empty-icon {
+  font-size: 2.4rem;
+}

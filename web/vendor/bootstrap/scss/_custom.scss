@@ -1,0 +1,21 @@
+@use '../../../scss/core/core';
+
+.btn-secondary {
+  color: core.color('text');
+  background-color: core.color('secondary-bg');
+  border-color: transparent;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+.w-min {
+  width: 1% !important;
+}
+
+.form-text {
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: #6c757d;
+}

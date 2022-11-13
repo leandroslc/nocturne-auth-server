@@ -5,6 +5,7 @@
 
 /data
 appsettings.local.json
+**/wwwroot/dist/
 
 # User-specific files
 *.rsuser
