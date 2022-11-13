@@ -6,10 +6,6 @@
   list-style: none;
 }
 
-.tagify.form-control {
-  height: unset;
-}
-
 .greetings-card {
   border: none;
   box-shadow: 0 0 0.36rem rgb(0, 0, 0, 0.125);

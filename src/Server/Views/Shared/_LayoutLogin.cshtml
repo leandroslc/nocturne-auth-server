@@ -17,11 +17,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <partial name="./_CookieConsent" />
     <title>@ViewData[KnownViewData.Title] - @applicationName</title>
-    <link rel="stylesheet" href="@assets.Url("bootstrap/bootstrap.min.css")" />
-    <link rel="stylesheet" href="@assets.Url("bootstrap-icons/bootstrap-icons.min.css")" />
-    <link rel="stylesheet" href="@assets.Url("impromptu/impromptu.min.css")" />
-    <link rel="stylesheet" href="@assets.Url("impromptu/impromptu-login.min.css")" />
-    <link rel="stylesheet" href="@assets.Url("cookieconsent/cookieconsent.min.css")" />
+    <link rel="stylesheet" href="~/dist/bootstrap/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/dist/bootstrap-icons/bootstrap-icons.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/dist/nocturne-auth-server/main.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/dist/nocturne-auth-server/login.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/dist/cookieconsent/cookieconsent.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body class="login-body">
@@ -64,16 +64,16 @@
         </main>
     </div>
 
-    <script src="@assets.Url("jquery/jquery.min.js")"></script>
-    <script src="@assets.Url("imask/imask.min.js")"></script>
-    <script src="@assets.Url("bootstrap/bootstrap.bundle.min.js")"></script>
-    <script src="@assets.Url("impromptu/impromptu.min.js")"></script>
-    <script src="@assets.Url("cookieconsent/cookieconsent.min.js")"></script>
-    <script src="@assets.Url("cookieconsent/cookieconsent-default.min.js")"></script>
-    <script src="@assets.Url("jquery-validation/jquery.validate.min.js")"></script>
-    <script src="@assets.Url("jquery-validation/additional-methods.min.js")"></script>
-    <script src="@assets.Url("jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js")"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/dist/jquery/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/dist/imask/imask.min.js" asp-append-version="true"></script>
+    <script src="~/dist/bootstrap/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="~/dist/nocturne-auth-server/main.min.js" asp-append-version="true"></script>
+    <script src="~/dist/nocturne-auth-server/providers.min.js" asp-append-version="true"></script>
+    <script src="~/dist/cookieconsent/cookieconsent.min.js" asp-append-version="true"></script>
+    <script src="~/dist/cookieconsent/cookieconsent-default.min.js" asp-append-version="true"></script>
+    <script src="~/dist/jquery-validation/jquery.validate.min.js" asp-append-version="true"></script>
+    <script src="~/dist/jquery-validation/additional-methods.min.js" asp-append-version="true"></script>
+    <script src="~/dist/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

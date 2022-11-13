@@ -73,7 +73,7 @@
 
 @section scripts
 {
-    <script src="~/js/role-permissions.js" asp-append-version="true"></script>
+    <script src="~/dist/nocturne-auth-server/admin-role-permissions.min.js" asp-append-version="true"></script>
     <script>
         managePermissions({
             searchUrl: '@Url.RouteUrl(RouteNames.RolePermissionsHome, new { roleId = Model.Role.Id })',
