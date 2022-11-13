@@ -1,0 +1,56 @@
+@use 'sass:color';
+
+$font-size: 16px !default;
+
+$navbar-zindex: 9;
+$navbar-height: 3.75rem !default;
+
+$sidebar-width: 17.5rem !default;
+
+$color-inverse: #fff;
+$color-inverse-900: #f5f5f5;
+$color-neutral: #141414;
+$color-primary: #3272b2;
+$color-text: #3d4e59;
+
+$colors: (
+  'background': #eff2f7,
+  'footer-bg': transparent,
+  'footer-border': color.change(#d3d3d3, $alpha: 0.6),
+  'inverse': $color-inverse,
+  'inverse-900': $color-inverse-900,
+  'login-background': #404245,
+  'navbar-bg': $color-inverse,
+  'navbar-text': $color-text,
+  'navbar-toggle-bg': color.change($color-neutral, $alpha: 0.075),
+  'navbar-toggle-border': color.change($color-neutral, $alpha: 0.175),
+  'page-card-bg': $color-inverse,
+  'page-card-header-border': color.change(#dedede, $alpha: 0.6),
+  'primary': $color-primary,
+  'secondary-bg': color.change($color-primary, $alpha: 0.14),
+  'shadow': color.change($color-neutral, $alpha: 0.175),
+  'shadow-50': color.change($color-neutral, $alpha: 0.075),
+  'sidenav-bg': $color-inverse-900,
+  'sidenav-border': $color-inverse-900,
+  'sidenav-item-active-bg': color.change($color-neutral, $alpha: 0.025),
+  'sidenav-item-active-text': $color-primary,
+  'sidenav-item-bg-hover': color.change($color-primary, $alpha: 0.05),
+  'sidenav-item-text': $color-text,
+  'sidenav-item-text-hover': $color-text,
+  'text': $color-text,
+  'user-menu-bg': $color-inverse,
+  'user-menu-border': rgba(0, 0, 0, 0.15),
+  'user-menu-item-hover': color.change($color-primary, $alpha: 0.1),
+  'user-menu-toggle-bg': $color-inverse-900,
+);
+
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+);
+
+$include-login-background: true !default;
+$login-background: '../img/login-background.png' !default;

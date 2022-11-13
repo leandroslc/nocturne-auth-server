@@ -1,0 +1,14 @@
+@use '../../../scss/core/core';
+
+$primary: core.color('primary');
+$success: #207b35;
+
+$link-color: #1976d2;
+
+$border-radius: 0.187rem;
+$border-radius-sm: 0.12rem;
+$border-radius-lg: 0.2rem;
+
+$input-btn-focus-width: 0.17rem;
+
+$spinner-width: 3rem;

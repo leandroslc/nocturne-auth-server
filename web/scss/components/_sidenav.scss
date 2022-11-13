@@ -1,0 +1,104 @@
+@use '../core/core';
+@use '../core/vars';
+
+$width: vars.$sidebar-width;
+$item-margin-x: 0.4rem;
+$item-padding-x: 1rem;
+
+.sidenav {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: $width;
+  height: 100%;
+  background-color: core.color('sidenav-bg');
+  border-right: 1px solid core.color('sidenav-border');
+  transform: translateX(-#{$width});
+
+  @include core.bq-greather-than('md') {
+    transform: translateX(0);
+  }
+
+  @include core.bq-less-than('md') {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    visibility: hidden;
+    box-shadow: 1px 0 5px core.color('shadow');
+
+    &.is-expanded {
+      visibility: visible;
+      transition: transform 0.2s;
+      transform: translateX(0);
+    }
+  }
+}
+
+.sidenav-content {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+  padding: 1.2rem $item-margin-x;
+  overflow-x: hidden;
+
+  @include core.bq-greather-than('md') {
+    height: auto;
+  }
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem $item-padding-x;
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: core.color('sidenav-item-text');
+  text-decoration: none;
+  border-radius: 0.3rem;
+  transition: background-color 0.2s;
+
+  &:hover,
+  &:focus {
+    color: core.color('sidenav-item-text-hover');
+    text-decoration: none;
+    background-color: core.color('sidenav-item-bg-hover');
+  }
+
+  &.is-active {
+    padding-right: #{$item-padding-x};
+    padding-left: #{$item-padding-x + $item-margin-x};
+    margin-right: -#{$item-margin-x};
+    margin-left: -#{$item-margin-x};
+    color: core.color('sidenav-item-active-text');
+    background-color: core.color('sidenav-item-active-bg');
+    border-right: #{$item-margin-x} solid #{core.color('sidenav-item-active-text')};
+    border-radius: 0;
+  }
+}
+
+.sidenav-icon {
+  font-size: 1rem;
+}
+
+.sidenav-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 998;
+  display: none;
+  background-color: core.color('shadow');
+  transition: background-color 0.2s;
+
+  &.is-expanded {
+    @include core.bq-less-than('md') {
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+
+  "extends": [
+    "airbnb-base",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
+
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    },
+    "react": {
+      "version": "detect"
+    }
+  },
+
+  "parser": "@typescript-eslint/parser",
+
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+
+  "plugins": [
+    "@typescript-eslint",
+    "prettier"
+  ],
+
+  "rules": {
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", {"args": "all", "argsIgnorePattern": "^_"}],
+    "import/extensions": "off",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "class-methods-use-this": "off"
+  },
+
+  "overrides": [
+    {
+      "files": ["*.spec.ts"],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
+}

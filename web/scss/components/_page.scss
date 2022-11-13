@@ -1,0 +1,76 @@
+@use '../core/core';
+
+$card-padding-x: 1.5rem;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.page-container {
+  width: 100%;
+  max-width: 56.2rem;
+  padding: 0 0.4rem;
+  margin: 0 auto 1.2rem auto;
+}
+
+.page-heading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 4.42rem;
+  padding: 1rem 0.2rem;
+  color: core.color('inverse');
+  background-color: core.color('primary');
+  box-shadow: 0 -0.2rem 0.27rem #{core.color('shadow')} inset;
+
+  & + .page-container {
+    margin-top: -1rem;
+  }
+}
+
+.page-card {
+  background-color: core.color('page-card-bg');
+  border-radius: 0.2rem;
+  box-shadow: 0 0 5px 0 #{core.color('shadow-50')}, 0 11px 6px -7px #{core.color('shadow-50')};
+}
+
+.page-card-header {
+  display: flex;
+  align-items: center;
+  min-height: 3.87rem;
+  padding: 0.9rem $card-padding-x;
+  border-bottom: 1px solid #{core.color('page-card-header-border')};
+}
+
+.page-card-title {
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: core.color('primary');
+}
+
+.page-card-content {
+  padding: 1.2rem $card-padding-x;
+}
+
+.page-back {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  color: core.color('inverse-900');
+  text-decoration: none;
+  border-radius: 0.1rem;
+  transition: background-color 0.2s;
+
+  &:hover,
+  &:focus {
+    color: core.color('primary');
+    text-decoration: none;
+    background-color: core.color('inverse-900');
+  }
+}
+
+.page-title {
+  font-weight: normal;
+}

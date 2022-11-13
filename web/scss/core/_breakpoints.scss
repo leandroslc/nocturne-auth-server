@@ -1,0 +1,32 @@
+@use 'sass:map';
+@use '../core/vars';
+
+@function min($name) {
+  $min: _get($name);
+
+  @if ($min != 0) {
+    @return $min;
+  }
+
+  @return null;
+}
+
+@function max($name) {
+  $max: _get($name);
+
+  @if ($max and $max > 0) {
+    @return $max - 0.02;
+  }
+
+  @return null;
+}
+
+@function _get($name) {
+  $breakpoint: map.get(vars.$breakpoints, $name);
+
+  @if (not $breakpoint) {
+    @error 'Breakpoint "#{$breakpoint}" not found';
+  }
+
+  @return $breakpoint;
+}

@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/src/*": [
+        "./src/*"
+      ],
+      "@/vendor/*": [
+        "./vendor/*"
+      ]
+    },
+  },
+  "include": ["src/**/*.ts", "vendor/**/*.ts"]
+}

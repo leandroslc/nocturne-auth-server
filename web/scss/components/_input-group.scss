@@ -1,0 +1,31 @@
+
+.input-over-group {
+  position: relative;
+
+  &.input-over-group-left > input {
+    padding-left: 2.75rem;
+  }
+
+  &.input-over-group-right > input {
+    padding-right: 2.75rem;
+  }
+}
+
+.input-over-addon {
+  position: absolute;
+  top: 0.2rem;
+  bottom: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: calc(100% - 0.4rem);
+
+  &.input-over-addon-left {
+    left: 0.2rem;
+  }
+
+  &.input-over-addon-right {
+    right: 0.2rem;
+  }
+}
