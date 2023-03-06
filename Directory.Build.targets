@@ -20,10 +20,6 @@
     <PackageReference Update="Serilog.AspNetCore" Version="5.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <AdditionalFiles Include="$(RepositoryRoot)build\stylecop.json" Visible="false" />
-  </ItemGroup>
-
   <!-- Includes the CLSCompliant attriute to all assemblies -->
   <ItemGroup>
     <AssemblyAttribute Include="System.CLSCompliant">
