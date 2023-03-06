@@ -140,7 +140,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             var settingsWritter = new SettingsWritter(SettingsFile);
             settingsWritter.Set(
                 "Authorization",
-                new () { ["ClientId"] = applicationDescriptor.ClientId, ["ClientSecret"] = applicationDescriptor.ClientSecret });
+                new() { ["ClientId"] = applicationDescriptor.ClientId, ["ClientSecret"] = applicationDescriptor.ClientSecret });
             settingsWritter.Write();
 
             Logger.LogInformation("Wrote admin application client id and secret to {SettingsFile}", SettingsFile);

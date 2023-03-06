@@ -1,9 +1,6 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Nocturne.Auth.Core.Modules.Permissions;
 
@@ -37,10 +34,10 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
                     on new { PermissionId = permission.Id, RoleId = role.Id }
                     equals new { rolePermission.PermissionId, rolePermission.RoleId }
                     into rolePermissionJoin
-                 from rolePermission in rolePermissionJoin.DefaultIfEmpty()
-                 where permission.ApplicationId == applicationId && rolePermission == null
-                 select permission)
-                 .ToListAsync();
+                from rolePermission in rolePermissionJoin.DefaultIfEmpty()
+                where permission.ApplicationId == applicationId && rolePermission == null
+                select permission)
+                .ToListAsync();
         }
 
         public async Task UnassignPermissionAsync(Role role, Permission permission)

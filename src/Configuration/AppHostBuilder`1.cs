@@ -1,7 +1,6 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -12,32 +11,30 @@ namespace Nocturne.Auth.Configuration
     public class AppHostBuilder<TStartup>
         where TStartup : class
     {
-        private readonly IHostBuilder hostBuilder;
-
         public AppHostBuilder(string[] args)
         {
-            hostBuilder = CreateHostBuilder(args);
+            InternalBuilder = CreateHostBuilder(args);
         }
 
-        public IHostBuilder InternalBuilder => hostBuilder;
+        public IHostBuilder InternalBuilder { get; }
 
         public AppHostBuilder<TStartup> ConfigureDefaults(Action<IWebHostBuilder> configure)
         {
-            hostBuilder.ConfigureWebHostDefaults(configure);
+            InternalBuilder.ConfigureWebHostDefaults(configure);
 
             return this;
         }
 
         public AppHostBuilder<TStartup> Configure(Action<IHostBuilder> configure)
         {
-            configure?.Invoke(hostBuilder);
+            configure?.Invoke(InternalBuilder);
 
             return this;
         }
 
         public IHost Build()
         {
-            return hostBuilder.Build();
+            return InternalBuilder.Build();
         }
 
         public void BuildAndStart()

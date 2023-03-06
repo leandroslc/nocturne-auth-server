@@ -25,6 +25,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
         public const string TwoFactorAuthentication = nameof(TwoFactorAuthentication);
 
         public static string IsActiveItem(ViewContext context, string pageGroup)
-            => context.ViewData[KnownViewData.PageGroup] as string == pageGroup ? "is-active" : string.Empty;
+            => (context.ViewData[KnownViewData.PageGroup] as string) == pageGroup ? "is-active" : string.Empty;
     }
 }

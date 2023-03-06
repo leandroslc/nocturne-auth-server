@@ -1,9 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System;
 using System.Globalization;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Nocturne.Auth.Core.Shared.Extensions;
 
@@ -104,7 +102,7 @@ namespace Nocturne.Auth.Core.Shared.Models
 
             var modulo = sum % CPFLength;
 
-            return modulo == 1 || modulo == 0
+            return modulo is 1 or 0
                 ? 0
                 : CPFLength - modulo;
         }

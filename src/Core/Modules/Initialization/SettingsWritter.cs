@@ -5,56 +5,57 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace Nocturne.Auth.Core.Modules.Initialization;
-
-public class SettingsWritter
+namespace Nocturne.Auth.Core.Modules.Initialization
 {
-    private readonly string settingsFile;
-    private readonly JsonNode rootNode;
-
-    public SettingsWritter(string filepath)
+    public class SettingsWritter
     {
-        settingsFile = filepath;
-        rootNode = ParseJson();
-    }
+        private readonly string settingsFile;
+        private readonly JsonNode rootNode;
 
-    public void Set(string property, JsonObject value)
-    {
-        rootNode[property] = value;
-    }
-
-    public void Write()
-    {
-        var options = new JsonWriterOptions
+        public SettingsWritter(string filepath)
         {
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            Indented = true,
-        };
-
-        using var writeStream = File.Open(
-            settingsFile,
-            FileMode.OpenOrCreate,
-            FileAccess.Write,
-            FileShare.None);
-
-        using var writer = new Utf8JsonWriter(writeStream, options);
-
-        rootNode.WriteTo(writer);
-    }
-
-    private JsonNode ParseJson()
-    {
-        if (!File.Exists(settingsFile))
-        {
-            return new JsonObject();
+            settingsFile = filepath;
+            rootNode = ParseJson();
         }
 
-        using var readFileStream = File.Open(
-            settingsFile,
-            FileMode.Open,
-            FileAccess.Read,
-            FileShare.None);
+        public void Set(string property, JsonObject value)
+        {
+            rootNode[property] = value;
+        }
 
-        return JsonNode.Parse(readFileStream);
+        public void Write()
+        {
+            var options = new JsonWriterOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                Indented = true,
+            };
+
+            using var writeStream = File.Open(
+                settingsFile,
+                FileMode.OpenOrCreate,
+                FileAccess.Write,
+                FileShare.None);
+
+            using var writer = new Utf8JsonWriter(writeStream, options);
+
+            rootNode.WriteTo(writer);
+        }
+
+        private JsonNode ParseJson()
+        {
+            if (!File.Exists(settingsFile))
+            {
+                return new JsonObject();
+            }
+
+            using var readFileStream = File.Open(
+                settingsFile,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.None);
+
+            return JsonNode.Parse(readFileStream);
+        }
     }
 }

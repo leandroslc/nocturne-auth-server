@@ -1,10 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System;
 using System.Globalization;
-using System.IO;
-using System.Threading.Tasks;
 using FluentEmail.Core;
 using MailKit.Net.Smtp;
 using MailKit.Security;

@@ -1,7 +1,6 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Auth.Core.Modules.Users.Services;
@@ -17,7 +16,7 @@ namespace Nocturne.Auth.Server.Areas.Api.Controllers
     {
         [HttpGet("{clientId}")]
         public async Task<IActionResult> GetByClient(
-            [FromServices]GetUserAccessHandler handler,
+            [FromServices] GetUserAccessHandler handler,
             string clientId)
         {
             var command = new GetUserAccessCommand

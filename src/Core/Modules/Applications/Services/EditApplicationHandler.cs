@@ -1,8 +1,6 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
 using Nocturne.Auth.Core.Services.OpenIddict.Services;
 using OpenIddict.Abstractions;
@@ -61,7 +59,7 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
             if (await HasDuplicatedApplication(command, application))
             {
                 return EditApplicationResult.Fail(
-                    Localizer["Application {0} already exists", command.DisplayName] !);
+                    Localizer["Application {0} already exists", command.DisplayName]!);
             }
 
             var descriptor = await CreateApplicationDescriptorBuilder(command)
@@ -75,7 +73,7 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
             catch (ConcurrencyException)
             {
                 EditApplicationResult.Fail(
-                    Localizer["The application has been modified externally. Check the data and try again"] !);
+                    Localizer["The application has been modified externally. Check the data and try again"]!);
             }
 
             return EditApplicationResult.Updated(command.Id);

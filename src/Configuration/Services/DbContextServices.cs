@@ -5,10 +5,12 @@ using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Nocturne.Auth.Configuration.Options;
 using Nocturne.Auth.Core.Modules;
 using Nocturne.Auth.Core.Services.DataProtection;
 using Nocturne.Auth.Core.Services.Identity;
 using Nocturne.Auth.Core.Services.OpenIddict;
+using Nocturne.Auth.Infra.SqlServer;
 
 namespace Nocturne.Auth.Configuration.Services
 {

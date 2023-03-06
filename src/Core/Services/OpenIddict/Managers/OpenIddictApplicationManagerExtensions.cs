@@ -1,10 +1,6 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using OpenIddict.Abstractions;
 using OpenIddict.Core;
 
@@ -44,6 +40,6 @@ namespace Nocturne.Auth.Core.Services.OpenIddict.Managers
         }
 
         private static NotSupportedException MethodNotSupported()
-            => new ("The application manager does not support this method");
+            => new("The application manager does not support this method");
     }
 }

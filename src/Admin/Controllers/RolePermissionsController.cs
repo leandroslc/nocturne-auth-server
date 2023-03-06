@@ -1,7 +1,6 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Auth.Admin.Configuration.Constants;
@@ -17,7 +16,7 @@ namespace Nocturne.Auth.Admin.Controllers
     {
         [HttpGet("", Name = RouteNames.RolePermissionsHome)]
         public async Task<IActionResult> List(
-            [FromServices]ListRolePermissionsHandler handler,
+            [FromServices] ListRolePermissionsHandler handler,
             ListRolePermissionsCommand command)
         {
             var result = await handler.HandleAsync(command);
@@ -39,7 +38,7 @@ namespace Nocturne.Auth.Admin.Controllers
 
         [HttpGet("add", Name = RouteNames.RolePermissionsAdd)]
         public async Task<IActionResult> Add(
-            [FromServices]AssignPermissionsToRoleHandler handler,
+            [FromServices] AssignPermissionsToRoleHandler handler,
             long? roleId,
             string applicationId)
         {
@@ -56,7 +55,7 @@ namespace Nocturne.Auth.Admin.Controllers
         [HttpPost("add")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(
-            [FromServices]AssignPermissionsToRoleHandler handler,
+            [FromServices] AssignPermissionsToRoleHandler handler,
             AssignPermissionsToRoleCommand command)
         {
             if (ModelState.IsValid is false)
@@ -103,7 +102,7 @@ namespace Nocturne.Auth.Admin.Controllers
         [HttpPost("{permissionId}/remove")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Remove(
-            [FromServices]UnassignPermissionFromRoleHandler handler,
+            [FromServices] UnassignPermissionFromRoleHandler handler,
             UnassignPermissionFromRoleCommand command)
         {
             if (ModelState.IsValid is false)
