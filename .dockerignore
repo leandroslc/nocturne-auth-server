@@ -1,0 +1,9 @@
+**/bin/
+**/obj/
+
+.github
+.vs
+.vscode
+
+data/
+web/

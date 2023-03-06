@@ -2,6 +2,7 @@ version: "3.9"
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: nocturne-auth-server-db
     ports:
       - 1433:1433
     volumes:
@@ -9,3 +10,42 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=47dfb729-a25c-4988-997d-ffb8a90a3f1c
+    networks:
+      - services
+
+  admin:
+    build:
+      context: .
+      dockerfile: src/Admin/Dockerfile
+    depends_on:
+      - db
+    image: nocturne-auth-server/admin
+    container_name: nocturne-auth-server-admin
+    ports:
+      - '6000:80'
+    environment:
+      - DatabaseConnections__Main__Server=db,1433
+      - Initialize=true
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - services
+
+  server:
+    build:
+      context: .
+      dockerfile: src/Server/Dockerfile
+    depends_on:
+      - db
+    image: nocturne-auth-server/server
+    container_name: nocturne-auth-server-openid-provider
+    ports:
+      - '6001:80'
+    environment:
+      - DatabaseConnections__Main__Server=db,1433
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - services
+
+networks:
+  services:
+    driver: bridge
