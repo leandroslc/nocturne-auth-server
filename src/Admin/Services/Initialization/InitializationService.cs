@@ -4,6 +4,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Nocturne.Auth.Admin.Configuration.Constants;
+using Nocturne.Auth.Configuration.Health;
 using Nocturne.Auth.Core.Modules;
 using Nocturne.Auth.Core.Modules.Initialization;
 using Nocturne.Auth.Core.Modules.Permissions;
@@ -49,6 +50,8 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             var services = serviceScope.ServiceProvider;
 
+            await WaitForExternalServices(services);
+
             await ApplyAuthorizationMigrations(services);
             await ApplyIdentityMigrations(services);
             await ApplyDataProtectionMigrations(services);
@@ -58,6 +61,18 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             var adminApplicationId = await CreateAdminApplication(services);
             var adminRoleId = await CreateAdminRole(services, adminApplicationId);
             await CreateAdminUser(services, adminRoleId);
+        }
+
+        private async Task WaitForExternalServices(IServiceProvider services)
+        {
+            Logger.LogInformation("Waiting for database...");
+
+            var databaseHealthCheck = services.GetRequiredService<DatabaseConnectionHealthCheck>();
+
+            if (await HealthChecker.CheckAsync(databaseHealthCheck, delayInMilliseconds: 0) is false)
+            {
+                throw new InvalidOperationException("Database connection is degraded");
+            }
         }
 
         private Task ApplyAuthorizationMigrations(IServiceProvider services)

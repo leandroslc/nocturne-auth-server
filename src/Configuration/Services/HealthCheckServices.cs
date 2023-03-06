@@ -12,6 +12,9 @@ namespace Nocturne.Auth.Configuration.Services
             this IServiceCollection services)
         {
             services
+                .AddScoped<DatabaseConnectionHealthCheck>();
+
+            services
                 .AddHealthChecks()
                 .AddCheck<DatabaseConnectionHealthCheck>("database");
 
