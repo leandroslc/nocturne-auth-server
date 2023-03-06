@@ -3,7 +3,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace Nocturne.Auth.Admin.Controllers
+namespace Nocturne.Auth.Server.Areas.Home.Controllers
 {
     [Area("Home")]
     [Route("error")]

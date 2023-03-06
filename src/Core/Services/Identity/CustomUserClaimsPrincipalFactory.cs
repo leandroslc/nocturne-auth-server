@@ -3,7 +3,6 @@
 
 using System.Globalization;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using OpenIddict.Abstractions;
@@ -21,7 +20,7 @@ namespace Nocturne.Auth.Core.Services.Identity
         {
         }
 
-        public async override Task<ClaimsPrincipal> CreateAsync(ApplicationUser user)
+        public override async Task<ClaimsPrincipal> CreateAsync(ApplicationUser user)
         {
             var principal = await base.CreateAsync(user);
 

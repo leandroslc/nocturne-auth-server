@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.Security.Claims;
-using System.Threading.Tasks;
 using OpenIddict.Abstractions;
 
 namespace Nocturne.Auth.Server.Services

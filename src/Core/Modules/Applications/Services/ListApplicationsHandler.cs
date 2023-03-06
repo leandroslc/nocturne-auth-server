@@ -2,8 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
 using Nocturne.Auth.Core.Services.OpenIddict;
 using Nocturne.Auth.Core.Shared.Collections;
 using Nocturne.Auth.Core.Shared.Extensions;
@@ -25,10 +23,14 @@ namespace Nocturne.Auth.Core.Modules.Applications.Services
             ListApplicationsCommand command)
         {
             IQueryable<ListApplicationsResult> Query(IQueryable<Application> applications)
-                => GetQuery(applications, command);
+            {
+                return GetQuery(applications, command);
+            }
 
             IQueryable<ListApplicationsResult> QueryWithPages(IQueryable<Application> applications)
-                => GetSubset(Query(applications), command);
+            {
+                return GetSubset(Query(applications), command);
+            }
 
             var total = await applicationManager.CountAsync(Query);
             var applications = applicationManager.ListAsync(QueryWithPages);

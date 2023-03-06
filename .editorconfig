@@ -31,12 +31,13 @@ dotnet_diagnostic.CA1716.severity = none
 dotnet_diagnostic.CA1062.severity = none
 
 #
-# StyleCop Rules
+# Style Rules
 #
-dotnet_diagnostic.SA0001.severity = none
-dotnet_diagnostic.SA1101.severity = none
-dotnet_diagnostic.SX1101.severity = warning
-dotnet_diagnostic.SA1117.severity = none
+dotnet_analyzer_diagnostic.category-Style.severity = warning
+dotnet_diagnostic.IDE0008.severity = none
+dotnet_diagnostic.IDE0022.severity = none
+dotnet_diagnostic.IDE0046.severity = none
+dotnet_diagnostic.IDE0058.severity = none
 
 [*.cshtml.cs]
 dotnet_diagnostic.SA1649.severity = none

@@ -1,7 +1,6 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Threading.Tasks;
 using Nocturne.Auth.Core.Modules.Permissions.Repositories;
 
 namespace Nocturne.Auth.Core.Modules.Permissions.Services

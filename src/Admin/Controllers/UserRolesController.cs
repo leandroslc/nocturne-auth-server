@@ -1,7 +1,6 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Auth.Admin.Configuration.Constants;
@@ -17,7 +16,7 @@ namespace Nocturne.Auth.Admin.Controllers
     {
         [HttpGet("", Name = RouteNames.UserRolesHome)]
         public async Task<IActionResult> List(
-            [FromServices]ListUserRolesHandler handler,
+            [FromServices] ListUserRolesHandler handler,
             ListUserRolesCommand command)
         {
             var result = await handler.HandleAsync(command);
@@ -39,7 +38,7 @@ namespace Nocturne.Auth.Admin.Controllers
 
         [HttpGet("add", Name = RouteNames.UserRolesAdd)]
         public async Task<IActionResult> Add(
-            [FromServices]AssignRolesToUserHandler handler,
+            [FromServices] AssignRolesToUserHandler handler,
             long? userId,
             string applicationId)
         {
@@ -56,7 +55,7 @@ namespace Nocturne.Auth.Admin.Controllers
         [HttpPost("add")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(
-            [FromServices]AssignRolesToUserHandler handler,
+            [FromServices] AssignRolesToUserHandler handler,
             AssignRolesToUserCommand command)
         {
             if (ModelState.IsValid is false)
@@ -101,7 +100,7 @@ namespace Nocturne.Auth.Admin.Controllers
         [HttpPost("{roleId}/remove")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Remove(
-            [FromServices]UnassignRoleFromUserHandler handler,
+            [FromServices] UnassignRoleFromUserHandler handler,
             UnassignRoleFromUserCommand command)
         {
             if (ModelState.IsValid is false)

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using System.Globalization;
-using System.IO;
 
 namespace Nocturne.Auth.Core.Services.Email
 {

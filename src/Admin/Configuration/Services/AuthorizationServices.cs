@@ -1,9 +1,8 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.DependencyInjection;
 using Nocturne.Auth.Admin.Configuration.Constants;
+using Nocturne.Auth.Authorization;
 
 namespace Nocturne.Auth.Admin.Configuration.Services
 {

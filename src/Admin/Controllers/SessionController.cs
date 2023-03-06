@@ -1,7 +1,6 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +15,7 @@ namespace Nocturne.Auth.Admin.Controllers
     {
         [HttpGet("account", Name = RouteNames.SessionAccount)]
         public IActionResult Account(
-            [FromServices]AuthOptions options)
+            [FromServices] AuthOptions options)
         {
             return Redirect(options.Authority);
         }

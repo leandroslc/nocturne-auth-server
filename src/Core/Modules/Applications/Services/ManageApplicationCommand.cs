@@ -1,9 +1,7 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using Nocturne.Auth.Core.Shared.Helpers;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 

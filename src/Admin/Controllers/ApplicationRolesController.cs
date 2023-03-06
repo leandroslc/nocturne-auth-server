@@ -1,7 +1,6 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Auth.Admin.Configuration.Constants;
@@ -17,7 +16,7 @@ namespace Nocturne.Auth.Admin.Controllers
     {
         [HttpGet("", Name = RouteNames.ApplicationRolesHome)]
         public async Task<IActionResult> List(
-            [FromServices]ListApplicationRolesHandler handler,
+            [FromServices] ListApplicationRolesHandler handler,
             ListApplicationRolesCommand command)
         {
             var result = await handler.HandleAsync(command);
@@ -39,7 +38,7 @@ namespace Nocturne.Auth.Admin.Controllers
 
         [HttpGet("new", Name = RouteNames.ApplicationRolesNew)]
         public async Task<IActionResult> Create(
-            [FromServices]CreateApplicationRoleHandler handler,
+            [FromServices] CreateApplicationRoleHandler handler,
             string applicationId)
         {
             if (await handler.ApplicationExists(applicationId) is false)
@@ -55,7 +54,7 @@ namespace Nocturne.Auth.Admin.Controllers
         [HttpPost("new")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [FromServices]CreateApplicationRoleHandler handler,
+            [FromServices] CreateApplicationRoleHandler handler,
             CreateApplicationRoleCommand command)
         {
             if (ModelState.IsValid is false)
@@ -87,7 +86,7 @@ namespace Nocturne.Auth.Admin.Controllers
 
         [HttpGet("{id}/edit", Name = RouteNames.ApplicationRolesEdit)]
         public async Task<IActionResult> Edit(
-            [FromServices]EditApplicationRoleHandler handler,
+            [FromServices] EditApplicationRoleHandler handler,
             long? id)
         {
             if (await handler.RoleExsits(id) is false)
@@ -135,7 +134,7 @@ namespace Nocturne.Auth.Admin.Controllers
 
         [HttpGet("{id}", Name = RouteNames.ApplicationRolesView)]
         public async Task<IActionResult> Details(
-            [FromServices]ViewApplicationRoleHandler handler,
+            [FromServices] ViewApplicationRoleHandler handler,
             ViewApplicationRoleCommand command)
         {
             var result = await handler.HandleAsync(command);
@@ -171,7 +170,7 @@ namespace Nocturne.Auth.Admin.Controllers
         [HttpPost("{id}/delete", Name = RouteNames.ApplicationRolesDelete)]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(
-            [FromServices]DeleteApplicationRoleHandler handler,
+            [FromServices] DeleteApplicationRoleHandler handler,
             DeleteApplicationRoleCommand command)
         {
             if (ModelState.IsValid is false)

@@ -1,9 +1,6 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Nocturne.Auth.Core.Services.OpenIddict.Managers;
 using Nocturne.Auth.Core.Services.OpenIddict.Services;
 using Nocturne.Auth.Core.Shared.Extensions;

@@ -1,7 +1,6 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System;
 using System.Text.RegularExpressions;
 
 namespace Nocturne.Auth.Core.Shared.Extensions
@@ -35,7 +34,7 @@ namespace Nocturne.Auth.Core.Shared.Extensions
 
             return value.Length <= maxLength
                 ? value
-                : value[.. (maxLength - truncateSufix.Length)] + truncateSufix;
+                : value[..(maxLength - truncateSufix.Length)] + truncateSufix;
         }
 
         public static string ToAlphaNumericOnly(this string value)

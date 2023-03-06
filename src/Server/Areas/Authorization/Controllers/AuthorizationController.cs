@@ -1,16 +1,11 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Nocturne.Auth.Core.Services.Identity;
@@ -362,7 +357,7 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
             return principal;
         }
 
-        private async Task<string> GetOrCreatePermanetAuthorizationAsync<TApplication>(
+        private async Task<string> GetOrCreatePermanentAuthorizationAsync<TApplication>(
             ClaimsPrincipal principal,
             ApplicationUser user,
             TApplication application,
@@ -370,15 +365,12 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
         {
             var authorization = authorizations.LastOrDefault();
 
-            if (authorization is null)
-            {
-                authorization = await authorizationManager.CreateAsync(
+            authorization ??= await authorizationManager.CreateAsync(
                     principal: principal,
                     subject: await userManager.GetUserIdAsync(user),
                     client: await applicationManager.GetIdAsync(application),
                     type: AuthorizationTypes.Permanent,
                     scopes: principal.GetScopes());
-            }
 
             return await authorizationManager.GetIdAsync(authorization);
         }
@@ -423,7 +415,7 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
         {
             var principal = await CreateUserPrincipalAsync(user, request);
 
-            var authorizationId = await GetOrCreatePermanetAuthorizationAsync(
+            var authorizationId = await GetOrCreatePermanentAuthorizationAsync(
                 principal, user, application, authorizations);
 
             principal.SetAuthorizationId(authorizationId);
