@@ -41,6 +41,7 @@ services.AddApplicationLocalization(configuration);
 
 services
     .AddApplicationDbContexts(configuration)
+    .AddApplicationHealthChecks()
     .AddApplicationIdentity(configuration, ApplicationConstants.Identifier)
     .AddIdentityEmails()
     .AddApplicationEmailService(configuration, environment)
@@ -74,5 +75,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapRazorPages();
+app.MapHealthChecks("/health");
 
 app.Run();

@@ -38,6 +38,7 @@ services
 
 services
     .AddApplicationDbContexts(configuration)
+    .AddApplicationHealthChecks()
     .AddApplicationIdentityServicesOnly(configuration)
     .AddApplicationLocalization(configuration)
     .AddApplicationModules()
@@ -80,6 +81,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapRazorPages();
+app.MapHealthChecks("/health");
 
 app.Run();
 
