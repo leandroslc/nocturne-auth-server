@@ -1,50 +1,89 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+using Nocturne.Auth.Admin.Configuration.Constants;
+using Nocturne.Auth.Admin.Configuration.Options;
+using Nocturne.Auth.Admin.Configuration.Services;
 using Nocturne.Auth.Admin.Services.Initialization;
-using Nocturne.Auth.Configuration;
+using Nocturne.Auth.Configuration.Services;
 
-namespace Nocturne.Auth.Admin
+if (HasInitializationArg(args))
 {
-    public static class Program
-    {
-        public static void Main(string[] args)
-        {
-            var builder = new AppHostBuilder<Startup>(args);
+    var initializationBuilder = WebApplication.CreateBuilder(args);
+}
 
-            if (HasInitializationArg(args))
-            {
-                var host = builder
-                    .ConfigureDefaults(AddInitializationConfig)
-                    .Build();
+var builder = WebApplication.CreateBuilder(args);
 
-                InitializationService.Run(host.Services);
+builder
+    .AddLocalSettings()
+    .AddLogging();
 
-                return;
-            }
+var services = builder.Services;
+var configuration = builder.Configuration;
+var environment = builder.Environment;
 
-            builder.BuildAndStart();
-        }
+services.AddApplicationDataProtection(configuration);
 
-        // Used by external services, like EF CLI
-        public static IHostBuilder CreateHostBuilder(string[] args)
-            => new AppHostBuilder<Startup>(args).InternalBuilder;
+services
+    .AddControllersWithViews()
+    .AddApplicationMvcLocalization();
 
-        private static void AddInitializationConfig(IWebHostBuilder webHostBuilder)
-        {
-            webHostBuilder.ConfigureAppConfiguration((hostContext, configBuilder) =>
-            {
-                configBuilder.AddJsonFile("initialize.json", optional: false);
-            });
+services
+    .AddApplicationCustomMvcValidationAttributes();
 
-            webHostBuilder.ConfigureLogging(loggingBuilder =>
-            {
-                loggingBuilder.ClearProviders();
-                loggingBuilder.AddConsole();
-            });
-        }
+services
+    .AddApplicationAntiforgery(ApplicationConstants.Identifier)
+    .AddApplicationWebAssets(configuration)
+    .AddApplicationOptions<AdminApplicationOptions>(configuration);
 
-        private static bool HasInitializationArg(string[] args)
-            => args.Any(arg => string.Equals(arg, "--init", StringComparison.OrdinalIgnoreCase));
-    }
+services
+    .AddApplicationDbContexts(configuration)
+    .AddApplicationIdentityServicesOnly(configuration)
+    .AddApplicationLocalization(configuration)
+    .AddApplicationModules()
+    .AddApplicationAuthentication(configuration)
+    .AddApplicationAccessControl()
+    .AddApplicationAuthorization();
+
+services.AddApplicationOpenIddict();
+
+if (HasInitializationArg(args))
+{
+    builder.Configuration.AddJsonFile("initialize.json", optional: false);
+
+    var initialization = builder.Build();
+
+    InitializationService.Run(initialization.Services);
+
+    return;
+}
+
+var app = builder.Build();
+
+if (environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/error/unexpected");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+app.MapRazorPages();
+
+app.Run();
+
+static bool HasInitializationArg(string[] args)
+{
+    return args.Any(arg => string.Equals(arg, "--init", StringComparison.OrdinalIgnoreCase));
 }
