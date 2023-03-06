@@ -7,11 +7,6 @@ using Nocturne.Auth.Admin.Configuration.Services;
 using Nocturne.Auth.Admin.Services.Initialization;
 using Nocturne.Auth.Configuration.Services;
 
-if (HasInitializationArg(args))
-{
-    var initializationBuilder = WebApplication.CreateBuilder(args);
-}
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder
@@ -48,7 +43,7 @@ services
 
 services.AddApplicationOpenIddict();
 
-if (HasInitializationArg(args))
+if (configuration.GetValue<bool>("Initialize"))
 {
     builder.Configuration.AddJsonFile("initialize.json", optional: false);
 
@@ -84,8 +79,3 @@ app.MapRazorPages();
 app.MapHealthChecks("/health");
 
 app.Run();
-
-static bool HasInitializationArg(string[] args)
-{
-    return args.Any(arg => string.Equals(arg, "--init", StringComparison.OrdinalIgnoreCase));
-}
