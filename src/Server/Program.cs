@@ -1,16 +1,78 @@
 // Copyright (c) Leandro Silva Luz do Carmo
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-using Nocturne.Auth.Configuration;
+using Nocturne.Auth.Configuration.Services;
+using Nocturne.Auth.Server.Configuration;
+using Nocturne.Auth.Server.Configuration.Constants;
+using Nocturne.Auth.Server.Configuration.Options;
 
-namespace Nocturne.Auth.Server
-{
-    public static class Program
+var builder = WebApplication.CreateBuilder(args);
+
+builder
+    .AddLocalSettings()
+    .AddLogging();
+
+var services = builder.Services;
+var configuration = builder.Configuration;
+var environment = builder.Environment;
+
+services.AddApplicationDataProtection(configuration);
+
+services
+    .AddControllersWithViews()
+    .AddApplicationMvcLocalization();
+
+services
+    .AddRazorPages(options =>
     {
-        public static void Main(string[] args)
-            => new AppHostBuilder<Startup>(args).BuildAndStart();
+        options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+    })
+    .AddApplicationMvcLocalization();
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
-            => new AppHostBuilder<Startup>(args).InternalBuilder;
-    }
+services
+    .AddApplicationCustomMvcValidationAttributes();
+
+services
+    .AddApplicationAntiforgery(ApplicationConstants.Identifier)
+    .AddApplicationWebAssets(configuration)
+    .AddApplicationOptions<ServerApplicationOptions>(configuration);
+
+services.AddApplicationLocalization(configuration);
+
+services
+    .AddApplicationDbContexts(configuration)
+    .AddApplicationIdentity(configuration, ApplicationConstants.Identifier)
+    .AddIdentityEmails()
+    .AddApplicationEmailService(configuration, environment)
+    .AddApplicationModules()
+    .AddRequiredApplicationServices(configuration);
+
+services
+    .AddApplicationOpenIddict()
+    .AddApplicationServer(configuration);
+
+var app = builder.Build();
+
+if (environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseMigrationsEndPoint();
 }
+else
+{
+    app.UseExceptionHandler("/error/unexpected");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+app.MapRazorPages();
+
+app.Run();
