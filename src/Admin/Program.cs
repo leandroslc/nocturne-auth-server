@@ -43,18 +43,14 @@ services
 
 services.AddApplicationOpenIddict();
 
-if (configuration.GetValue<bool>("Initialize"))
-{
-    builder.Configuration.AddJsonFile("initialize.json", optional: false);
-
-    var initialization = builder.Build();
-
-    InitializationService.Run(initialization.Services);
-
-    return;
-}
+builder.Configuration.AddJsonFile("initialize.json", optional: false);
 
 var app = builder.Build();
+
+if (configuration.GetValue<bool>("Initialize"))
+{
+    InitializationService.Run(app.Services);
+}
 
 if (environment.IsDevelopment())
 {
@@ -75,7 +71,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapRazorPages();
 app.MapHealthChecks("/health");
 
 app.Run();
