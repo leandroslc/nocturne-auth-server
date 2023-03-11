@@ -5,8 +5,6 @@ namespace Nocturne.Auth.Configuration.Options
 {
     public class DatabaseConnectionOptions
     {
-        public const string Section = "DatabaseConnections";
-
         public string Host { get; set; }
 
         public string Port { get; set; }

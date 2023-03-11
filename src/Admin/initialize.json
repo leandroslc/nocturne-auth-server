@@ -18,6 +18,8 @@
       }
     ],
     "AdminApplication": {
+      "ClientId": "7aacKKLheD0eiSnaIhe6uH",
+      "ClientSecret": "NyUTOELGEtFFEvAS4tnScbGQ9ts1h5zDmcpHh2unMeo",
       "ConsentType": "explicit",
       "DisplayName": "Authorization Server (Admin)",
       "Type": "confidential",
@@ -33,10 +35,10 @@
         "scp:roles"
       ],
       "PostLogoutRedirectUris": [
-        "https://localhost:5001/signout-callback-oidc"
+        "https://localhost:34560/signout-callback-oidc"
       ],
       "RedirectUris": [
-        "https://localhost:5001/signin-oidc"
+        "https://localhost:34560/signin-oidc"
       ]
     },
     "AdminUser": {

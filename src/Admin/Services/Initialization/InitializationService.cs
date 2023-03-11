@@ -15,7 +15,7 @@ using Nocturne.Auth.Core.Modules.Roles.Repositories;
 using Nocturne.Auth.Core.Modules.Roles.Services;
 using Nocturne.Auth.Core.Services.DataProtection;
 using Nocturne.Auth.Core.Services.Identity;
-using Nocturne.Auth.Core.Services.OpenIddict.Services;
+using Nocturne.Auth.Core.Services.OpenIddict.Managers;
 using OpenIddict.Abstractions;
 
 namespace Nocturne.Auth.Admin.Services.Initialization
@@ -33,8 +33,6 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
         private InitializationData Data { get; set; }
 
-        private string SettingsFile { get; set; }
-
         public static void Run(IServiceProvider services)
         {
             new InitializationService(services).Run().Wait();
@@ -44,7 +42,6 @@ namespace Nocturne.Auth.Admin.Services.Initialization
         {
             Logger = CreateLogger();
             Data = GetInitializationData();
-            SettingsFile = Path.Combine(Environment.CurrentDirectory, "appsettings.local.json");
 
             using var serviceScope = ServiceProvider.CreateScope();
 
@@ -60,16 +57,16 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             var adminApplicationId = await CreateAdminApplication(services);
             var adminRoleId = await CreateAdminRole(services, adminApplicationId);
-            await CreateAdminUser(services, adminRoleId);
+            await CreateAdminUser(services, adminApplicationId, adminRoleId);
         }
 
         private async Task WaitForExternalServices(IServiceProvider services)
         {
             Logger.LogInformation("Waiting for database...");
 
-            var databaseHealthCheck = services.GetRequiredService<DatabaseConnectionHealthCheck>();
+            var databaseHealthCheck = services.GetRequiredService<DatabaseServerHealthCheck>();
 
-            if (await HealthChecker.CheckAsync(databaseHealthCheck, delayInMilliseconds: 0) is false)
+            if (await HealthChecker.CheckAsync(databaseHealthCheck, delayInMilliseconds: 3000) is false)
             {
                 throw new InvalidOperationException("Database connection is degraded");
             }
@@ -126,14 +123,11 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             }
 
             var applicationManager = services.GetRequiredService<IOpenIddictApplicationManager>();
-            var clientBuilderService = services.GetRequiredService<IClientBuilderService>();
 
             var applicationDescriptor = Data.AdminApplication;
-            applicationDescriptor.ClientId = clientBuilderService.GenerateClientId();
-            applicationDescriptor.ClientSecret = clientBuilderService.GenerateClientSecret();
 
             var registeredApplication = await applicationManager
-                .FindByClientIdAsync(applicationDescriptor.DisplayName);
+                .FindByNameAsync(applicationDescriptor.DisplayName);
 
             if (registeredApplication is not null)
             {
@@ -151,14 +145,6 @@ namespace Nocturne.Auth.Admin.Services.Initialization
                 applicationDescriptor.DisplayName,
                 applicationDescriptor.ClientId,
                 applicationDescriptor.ClientSecret);
-
-            var settingsWritter = new SettingsWritter(SettingsFile);
-            settingsWritter.Set(
-                "Authorization",
-                new() { ["ClientId"] = applicationDescriptor.ClientId, ["ClientSecret"] = applicationDescriptor.ClientSecret });
-            settingsWritter.Write();
-
-            Logger.LogInformation("Wrote admin application client id and secret to {SettingsFile}", SettingsFile);
 
             return await applicationManager.GetIdAsync(registeredApplication);
         }
@@ -284,7 +270,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             {
                 Logger.LogInformation("Role {Name} of {ApplicationId} already exists", name, applicationId);
 
-                await AssignPermissionsToRole(services, role.Id, permissionIds);
+                await AssignPermissionsToRole(services, role.Id, applicationId, permissionIds);
 
                 return role.Id;
             }
@@ -302,7 +288,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             {
                 Logger.LogInformation("Created role {Name} for {ApplicationId}", name, applicationId);
 
-                await AssignPermissionsToRole(services, result.RoleId, permissionIds);
+                await AssignPermissionsToRole(services, result.RoleId, applicationId, permissionIds);
 
                 return result.RoleId;
             }
@@ -328,6 +314,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
         private async Task AssignPermissionsToRole(
             IServiceProvider services,
             long roleId,
+            string applicationId,
             IReadOnlyCollection<long> permissionIds)
         {
             var assignPermissionHandler = services.GetRequiredService<AssignPermissionsToRoleHandler>();
@@ -335,6 +322,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             var command = new AssignPermissionsToRoleCommand
             {
                 RoleId = roleId,
+                ApplicationId = applicationId,
                 Permissions = permissionIds.Select(id => new AssignPermissionsToRolePermission
                 {
                     Id = id,
@@ -358,7 +346,10 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             }
         }
 
-        private async Task CreateAdminUser(IServiceProvider services, params long[] roleIds)
+        private async Task CreateAdminUser(
+            IServiceProvider services,
+            string applicationId,
+            params long[] roleIds)
         {
             if (Data.AdminUser is null)
             {
@@ -369,7 +360,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             var userId = await CreateUser(services, Data.AdminUser);
 
-            await AssignRolesToUser(services, userId, roleIds);
+            await AssignRolesToUser(services, userId, applicationId, roleIds);
         }
 
         private async Task<long> CreateUser(
@@ -410,13 +401,18 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             return registeredUser.Id;
         }
 
-        private async Task AssignRolesToUser(IServiceProvider services, long userId, params long[] roleIds)
+        private async Task AssignRolesToUser(
+            IServiceProvider services,
+            long userId,
+            string applicationId,
+            params long[] roleIds)
         {
             var assignRolesToUserhandler = services.GetRequiredService<AssignRolesToUserHandler>();
 
             var command = new AssignRolesToUserCommand
             {
                 UserId = userId,
+                ApplicationId = applicationId,
                 Roles = roleIds.Select(id => new AssignRolesToUserRole
                 {
                     Id = id,

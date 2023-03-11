@@ -16,13 +16,16 @@ namespace Nocturne.Auth.Configuration.Services
 {
     public static class DbContextServices
     {
-        private const string MainConnection = "Main";
-
         public static IServiceCollection AddApplicationDbContexts(
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            var connectionString = BuildConnectionString(configuration, MainConnection);
+            var databaseConnections = new DatabaseConnections
+            {
+                Main = GetOptions(configuration, DatabaseConnections.MainConnectionName),
+            };
+
+            var connectionString = BuildConnectionString(databaseConnections.Main);
 
             services.AddSqlServerDbContext<ApplicationIdentityDbContext>(
                 connectionString);
@@ -37,26 +40,31 @@ namespace Nocturne.Auth.Configuration.Services
             services.AddSqlServerDbContext<DataProtectionDbContext>(
                 connectionString);
 
+            services.AddSingleton(databaseConnections);
+
             return services;
         }
 
-        private static string BuildConnectionString(IConfiguration configuration, string connectionName)
+        private static DatabaseConnectionOptions GetOptions(IConfiguration configuration, string connectionName)
         {
             var databaseConnections = configuration
-                .GetSection(DatabaseConnectionOptions.Section);
+                .GetSection(DatabaseConnections.Section);
 
-            var databaseOptions = databaseConnections
+            return databaseConnections
                 .GetSection(connectionName)
                 .Get<DatabaseConnectionOptions>();
+        }
 
+        private static string BuildConnectionString(DatabaseConnectionOptions options)
+        {
             var builder = new DbConnectionStringBuilder
             {
-                { "Server", databaseOptions.Host },
-                { "Port", databaseOptions.Port },
-                { "Database", databaseOptions.Database },
-                { "User Id", databaseOptions.User },
-                { "Password", databaseOptions.Password },
-                { "Application Name", databaseOptions.ApplicationName },
+                { "Server", options.Host },
+                { "Port", options.Port },
+                { "Database", options.Database },
+                { "User Id", options.User },
+                { "Password", options.Password },
+                { "Application Name", options.ApplicationName },
             };
 
             builder = RemoveEmptyKeysFromConnection(builder);
