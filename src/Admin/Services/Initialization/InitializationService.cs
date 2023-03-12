@@ -7,9 +7,6 @@ using Nocturne.Auth.Admin.Configuration.Constants;
 using Nocturne.Auth.Configuration.Health;
 using Nocturne.Auth.Core.Modules;
 using Nocturne.Auth.Core.Modules.Initialization;
-using Nocturne.Auth.Core.Modules.Permissions;
-using Nocturne.Auth.Core.Modules.Permissions.Repositories;
-using Nocturne.Auth.Core.Modules.Permissions.Services;
 using Nocturne.Auth.Core.Modules.Roles;
 using Nocturne.Auth.Core.Modules.Roles.Repositories;
 using Nocturne.Auth.Core.Modules.Roles.Services;
@@ -56,8 +53,8 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             await CreateScopes(services);
 
             var adminApplicationId = await CreateAdminApplication(services);
-            var adminRoleId = await CreateAdminRole(services, adminApplicationId);
-            await CreateAdminUser(services, adminApplicationId, adminRoleId);
+            var adminRoleIds = await CreateAdminRole(services, adminApplicationId);
+            await CreateAdminUser(services, adminRoleIds);
         }
 
         private async Task WaitForExternalServices(IServiceProvider services)
@@ -177,107 +174,43 @@ namespace Nocturne.Auth.Admin.Services.Initialization
             }
         }
 
-        private async Task<long> CreateAdminRole(
+        private async Task<IReadOnlyCollection<long>> CreateAdminRole(
             IServiceProvider services,
             string adminApplicationId)
         {
             Logger.LogInformation("Creating permissions for {AdminApplicationId}", adminApplicationId);
 
-            var applicationManagePermissionId = await CreatePermission(
-                services,
-                adminApplicationId,
-                Permissions.ApplicationManage,
-                "View, create and manage all applications");
-
-            var userRolesManagePermissionId = await CreatePermission(
-                services,
-                adminApplicationId,
-                Permissions.UserRolesManage,
-                "Assign and unassign users' roles");
-
-            return await CreateRole(
-                services,
-                adminApplicationId,
-                UserRoles.Administrator,
-                "Provides full access to all features of the system",
-                applicationManagePermissionId,
-                userRolesManagePermissionId);
-        }
-
-        private async Task<long> CreatePermission(
-            IServiceProvider services,
-            string applicationId,
-            string name,
-            string description)
-        {
-            var createPermissionHandler = services.GetRequiredService<CreatePermissionHandler>();
-
-            var permission = await FindPermission(services, applicationId, name);
-
-            if (permission is not null)
+            return new[]
             {
-                Logger.LogInformation("Permission {Name} of {ApplicationId} already exists", name, applicationId);
-
-                return permission.Id;
-            }
-
-            var command = new CreatePermissionCommand
-            {
-                ApplicationId = applicationId,
-                Name = name,
-                Description = description,
+                await CreateRole(
+                    services,
+                    Permissions.ApplicationManage,
+                    "View, create and manage all applications"),
+                await CreateRole(
+                    services,
+                    Permissions.UserRolesManage,
+                    "Assign and unassign users' roles"),
             };
-
-            var result = await createPermissionHandler.HandleAsync(command);
-
-            if (result.IsSuccess)
-            {
-                Logger.LogInformation("Created permission {Name} for {ApplicationId}", name, applicationId);
-
-                return result.PermissionId;
-            }
-
-            throw new InvalidOperationException(
-                $"Error while creating permission {name} for {applicationId}: {result.ErrorDescription}");
-        }
-
-        private static async Task<Permission> FindPermission(
-            IServiceProvider services,
-            string applicationId,
-            string name)
-        {
-            var repository = services.GetRequiredService<IPermissionsRepository>();
-
-            var permissions = await repository.QueryByApplication(
-                applicationId,
-                q => q.Where(p => p.Name == name));
-
-            return permissions.FirstOrDefault();
         }
 
         private async Task<long> CreateRole(
             IServiceProvider services,
-            string applicationId,
             string name,
-            string description,
-            params long[] permissionIds)
+            string description)
         {
-            var createRoleHandler = services.GetRequiredService<CreateApplicationRoleHandler>();
+            var createRoleHandler = services.GetRequiredService<CreateRoleHandler>();
 
-            var role = await FindRole(services, applicationId, name);
+            var role = await FindRole(services, name);
 
             if (role is not null)
             {
-                Logger.LogInformation("Role {Name} of {ApplicationId} already exists", name, applicationId);
-
-                await AssignPermissionsToRole(services, role.Id, applicationId, permissionIds);
+                Logger.LogInformation("Role {Name} already exists", name);
 
                 return role.Id;
             }
 
-            var command = new CreateApplicationRoleCommand
+            var command = new CreateRoleCommand
             {
-                ApplicationId = applicationId,
                 Name = name,
                 Description = description,
             };
@@ -286,70 +219,29 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             if (result.IsSuccess)
             {
-                Logger.LogInformation("Created role {Name} for {ApplicationId}", name, applicationId);
-
-                await AssignPermissionsToRole(services, result.RoleId, applicationId, permissionIds);
+                Logger.LogInformation("Created role {Name}", name);
 
                 return result.RoleId;
             }
 
             throw new InvalidOperationException(
-                $"Error while creating role {name} for {applicationId}: {result.ErrorDescription}");
+                $"Error while creating role {name}: {result.ErrorDescription}");
         }
 
         private static async Task<Role> FindRole(
             IServiceProvider services,
-            string applicationId,
             string name)
         {
             var repository = services.GetRequiredService<IRolesRepository>();
 
-            var roles = await repository.QueryByApplication(
-                applicationId,
-                q => q.Where(r => r.Name == name));
+            var roles = await repository.Query(q => q.Where(r => r.Name == name));
 
             return roles.FirstOrDefault();
         }
 
-        private async Task AssignPermissionsToRole(
-            IServiceProvider services,
-            long roleId,
-            string applicationId,
-            IReadOnlyCollection<long> permissionIds)
-        {
-            var assignPermissionHandler = services.GetRequiredService<AssignPermissionsToRoleHandler>();
-
-            var command = new AssignPermissionsToRoleCommand
-            {
-                RoleId = roleId,
-                ApplicationId = applicationId,
-                Permissions = permissionIds.Select(id => new AssignPermissionsToRolePermission
-                {
-                    Id = id,
-                    Selected = true,
-                })
-                .ToArray(),
-            };
-
-            var result = await assignPermissionHandler.HandleAsync(command);
-
-            if (result.IsSuccess)
-            {
-                Logger.LogInformation("Assigned permissions to role {RoleId}", roleId);
-            }
-            else
-            {
-                Logger.LogWarning(
-                    "Failed to assign permissions to role {RoleId}. {ErrorDescription}",
-                    roleId,
-                    result.ErrorDescription);
-            }
-        }
-
         private async Task CreateAdminUser(
             IServiceProvider services,
-            string applicationId,
-            params long[] roleIds)
+            IReadOnlyCollection<long> roleIds)
         {
             if (Data.AdminUser is null)
             {
@@ -360,7 +252,7 @@ namespace Nocturne.Auth.Admin.Services.Initialization
 
             var userId = await CreateUser(services, Data.AdminUser);
 
-            await AssignRolesToUser(services, userId, applicationId, roleIds);
+            await AssignRolesToUser(services, userId, roleIds);
         }
 
         private async Task<long> CreateUser(
@@ -404,15 +296,13 @@ namespace Nocturne.Auth.Admin.Services.Initialization
         private async Task AssignRolesToUser(
             IServiceProvider services,
             long userId,
-            string applicationId,
-            params long[] roleIds)
+            IReadOnlyCollection<long> roleIds)
         {
             var assignRolesToUserhandler = services.GetRequiredService<AssignRolesToUserHandler>();
 
             var command = new AssignRolesToUserCommand
             {
                 UserId = userId,
-                ApplicationId = applicationId,
                 Roles = roleIds.Select(id => new AssignRolesToUserRole
                 {
                     Id = id,

@@ -34,7 +34,7 @@ namespace Nocturne.Auth.Server.Services
 
             await AddResourcesAsync(principal, principal.GetScopes());
 
-            await AddPermissionsAndRolesAsync(principal, request);
+            await AddRolesAsync(principal, request);
         }
 
         public Task AddClaimsDestinationsAsync(ClaimsPrincipal principal)
@@ -66,7 +66,7 @@ namespace Nocturne.Auth.Server.Services
             principal.SetResources(resources);
         }
 
-        private async Task AddPermissionsAndRolesAsync(
+        private async Task AddRolesAsync(
             ClaimsPrincipal principal,
             OpenIddictRequest request)
         {
@@ -81,7 +81,6 @@ namespace Nocturne.Auth.Server.Services
             if (result.IsSuccess)
             {
                 principal.SetClaims(RoleClaim, result.Value.Roles.ToImmutableArray());
-                principal.SetClaims(PermissionClaim, result.Value.Permissions.ToImmutableArray());
             }
         }
 

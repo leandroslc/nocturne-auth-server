@@ -6,9 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using Nocturne.Auth.Core.Modules.Roles.Repositories;
 using Nocturne.Auth.Core.Services.Identity;
-using Nocturne.Auth.Core.Services.OpenIddict;
-using Nocturne.Auth.Core.Services.OpenIddict.Managers;
-using Nocturne.Auth.Core.Shared.Extensions;
 
 namespace Nocturne.Auth.Core.Modules.Roles.Services
 {
@@ -17,20 +14,17 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
         private readonly IStringLocalizer localizer;
         private readonly IRolesRepository rolesRepository;
         private readonly IUserRolesRepository userRolesRepository;
-        private readonly CustomOpenIddictApplicationManager<Application> applicationManager;
         private readonly UserManager<ApplicationUser> userManager;
 
         public AssignRolesToUserHandler(
             IStringLocalizer<AssignRolesToUserHandler> localizer,
             IRolesRepository rolesRepository,
             IUserRolesRepository userRolesRepository,
-            CustomOpenIddictApplicationManager<Application> applicationManager,
             UserManager<ApplicationUser> userManager)
         {
             this.localizer = localizer;
             this.rolesRepository = rolesRepository;
             this.userRolesRepository = userRolesRepository;
-            this.applicationManager = applicationManager;
             this.userManager = userManager;
         }
 
@@ -42,11 +36,9 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
 
             var availableRoles = applicationId is null
                 ? null
-                : await GetAvailableApplicationRolesAsync(applicationId);
+                : await GetAvailableRolesAsync();
 
-            var command = new AssignRolesToUserCommand(
-                applicationId,
-                await GetAvailableApplicationsAsync())
+            var command = new AssignRolesToUserCommand
             {
                 UserId = user.Id,
                 Roles = availableRoles,
@@ -74,7 +66,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
 
             var selectedRoleIds = selectedRoles.Select(role => role.Id).ToHashSet();
 
-            var unassignedRoles = await GetUnassignedRolesAsync(user, command.ApplicationId);
+            var unassignedRoles = await GetUnassignedRolesAsync(user);
 
             var rolesToAssign = unassignedRoles
                 .Where(role => selectedRoleIds.Contains(role.Id));
@@ -112,7 +104,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
             AssignRolesToUserCommand command,
             ApplicationUser user)
         {
-            var unassignedRoles = await GetUnassignedRolesAsync(user, command.ApplicationId);
+            var unassignedRoles = await GetUnassignedRolesAsync(user);
             var unassignedRoleIds = unassignedRoles.Select(p => p.Id).ToHashSet();
 
             foreach (var role in command.Roles)
@@ -124,17 +116,14 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
             }
         }
 
-        private async Task<IReadOnlyCollection<Role>> GetUnassignedRolesAsync(
-            ApplicationUser user,
-            string applicationId)
+        private async Task<IReadOnlyCollection<Role>> GetUnassignedRolesAsync(ApplicationUser user)
         {
-            return await userRolesRepository.GetUnassignedRolesAsync(user, applicationId);
+            return await userRolesRepository.GetUnassignedRolesAsync(user);
         }
 
-        private Task<IReadOnlyCollection<AssignRolesToUserRole>> GetAvailableApplicationRolesAsync(
-            string applicationId)
+        private Task<IReadOnlyCollection<AssignRolesToUserRole>> GetAvailableRolesAsync()
         {
-            return rolesRepository.QueryByApplication(applicationId, Query);
+            return rolesRepository.Query(Query);
 
             static IQueryable<AssignRolesToUserRole> Query(IQueryable<Role> query)
             {
@@ -144,22 +133,6 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
                 {
                     Id = p.Id,
                     Name = p.Name,
-                });
-            }
-        }
-
-        private async Task<IReadOnlyCollection<RoleApplication>> GetAvailableApplicationsAsync()
-        {
-            return await applicationManager.ListAsync(Query).ToListAsync();
-
-            static IQueryable<RoleApplication> Query(IQueryable<Application> query)
-            {
-                query = query.OrderBy(p => p.DisplayName);
-
-                return query.Select(p => new RoleApplication
-                {
-                    Id = p.Id,
-                    Name = p.DisplayName,
                 });
             }
         }

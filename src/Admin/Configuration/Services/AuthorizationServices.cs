@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using Nocturne.Auth.Admin.Configuration.Constants;
-using Nocturne.Auth.Authorization;
 
 namespace Nocturne.Auth.Admin.Configuration.Services
 {
@@ -15,19 +14,22 @@ namespace Nocturne.Auth.Admin.Configuration.Services
             {
                 options.AddPolicy(
                     Policies.ManageApplications,
-                    policy => policy.RequirePermission(Permissions.ApplicationManage));
+                    policy => policy.RequireRole(Permissions.ApplicationManage));
 
                 options.AddPolicy(
                     Policies.ManageUsers,
-                    policy => policy.RequirePermissions(Permissions.UserRolesManage));
+                    policy => policy.RequireRole(Permissions.UserRolesManage));
 
                 options.AddPolicy(
                     Policies.ManageUserRoles,
-                    policy => policy.RequirePermission(Permissions.UserRolesManage));
+                    policy => policy.RequireRole(Permissions.UserRolesManage));
 
                 options.AddPolicy(
                     Policies.GeneralAccess,
-                    policy => policy.RequireAnyPermission());
+                    policy => policy.RequireRole(
+                        Permissions.ApplicationManage,
+                        Permissions.UserRolesManage
+                    ));
             });
         }
     }

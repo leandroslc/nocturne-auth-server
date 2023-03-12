@@ -9,6 +9,8 @@ namespace Nocturne.Auth.Admin.Configuration.Constants
 
         public const string Home = nameof(Home);
 
+        public const string Roles = nameof(Roles);
+
         public const string Users = nameof(Users);
     }
 }

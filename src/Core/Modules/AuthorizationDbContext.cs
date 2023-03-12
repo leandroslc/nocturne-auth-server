@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using Microsoft.EntityFrameworkCore;
-using Nocturne.Auth.Core.Modules.Permissions;
 using Nocturne.Auth.Core.Modules.Roles;
 using Nocturne.Auth.Core.Services.OpenIddict;
 
@@ -22,9 +21,7 @@ namespace Nocturne.Auth.Core.Modules
             modelBuilder.HasDefaultSchema("auth");
 
             ConfigureOpenIdModels(modelBuilder);
-            ConfigurePermissions(modelBuilder);
             ConfigureRoles(modelBuilder);
-            ConfigureRolePermissions(modelBuilder);
             ConfigureUserRoles(modelBuilder);
         }
 
@@ -34,31 +31,6 @@ namespace Nocturne.Auth.Core.Modules
             builder.Entity<Authorization>().ToTable("Authorizations");
             builder.Entity<Scope>().ToTable("Scopes");
             builder.Entity<Token>().ToTable("Tokens");
-        }
-
-        private static void ConfigurePermissions(ModelBuilder builder)
-        {
-            var permissions = builder.Entity<Permission>().ToTable("Permissions");
-
-            permissions
-                .Property(p => p.ConcurrencyToken)
-                .HasMaxLength(50)
-                .IsConcurrencyToken();
-
-            permissions
-                .Property(p => p.Name)
-                .IsRequired()
-                .HasMaxLength(200);
-
-            permissions
-                .Property(p => p.Description)
-                .HasMaxLength(400);
-
-            permissions
-                .HasOne(p => p.Application)
-                .WithMany()
-                .HasForeignKey(p => p.ApplicationId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
 
         private static void ConfigureRoles(ModelBuilder builder)
@@ -78,31 +50,6 @@ namespace Nocturne.Auth.Core.Modules
             roles
                 .Property(p => p.Description)
                 .HasMaxLength(400);
-
-            roles
-                .HasOne(p => p.Application)
-                .WithMany()
-                .HasForeignKey(p => p.ApplicationId)
-                .OnDelete(DeleteBehavior.Cascade);
-        }
-
-        private static void ConfigureRolePermissions(ModelBuilder builder)
-        {
-            var rolePermissions = builder.Entity<RolePermission>().ToTable("RolePermissions");
-
-            rolePermissions.HasKey(p => new { p.RoleId, p.PermissionId });
-
-            rolePermissions
-                .HasOne(p => p.Permission)
-                .WithMany()
-                .HasForeignKey(p => p.PermissionId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            rolePermissions
-                .HasOne(p => p.Role)
-                .WithMany()
-                .HasForeignKey(p => p.RoleId)
-                .OnDelete(DeleteBehavior.NoAction);
         }
 
         private static void ConfigureUserRoles(ModelBuilder builder)

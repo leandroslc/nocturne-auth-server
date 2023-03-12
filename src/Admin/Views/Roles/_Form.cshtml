@@ -1,0 +1,53 @@
+@model ManageRoleCommand
+@inject IViewLocalizer localizer
+
+@{
+    var title = localizer[(string)ViewData[KnownViewData.Title]];
+    var returnUrl = ViewData[KnownViewData.ReturnUrl];
+    var returnTitle = localizer[(string)ViewData[KnownViewData.ReturnTitle]];
+}
+
+<div class="page">
+    <div class="page-heading">
+        <div class="page-container">
+            <a class="page-back" href="@returnUrl">
+                <span class="bi-arrow-left" aria-hidden="true"></span>
+                <span>@returnTitle</span>
+            </a>
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-header">
+                <h1 class="page-card-title">@title</h1>
+            </div>
+            <div class="page-card-content">
+                <form method="POST" loading="loading">
+
+                    <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label">@localizer["Name"]</label>
+                        <input asp-for="Name" class="form-control" autofocus />
+                        <span asp-validation-for="Name" class="d-block form-text text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label">@localizer["Description"]</label>
+                        <textarea asp-for="Description" class="form-control text-area"></textarea>
+                        <span asp-validation-for="Description" class="d-block form-text text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <button class="btn btn-primary" type="submit">@localizer["Save"]</button>
+                        <a class="btn btn-secondary" role="button" href="@returnUrl">@localizer["Cancel"]</a>
+
+                        <div class="spinner-border spinner-border-sm text-primary" role="status" id="loading" style="display: none;">
+                            <span class="sr-only">@localizer["Loading..."]</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

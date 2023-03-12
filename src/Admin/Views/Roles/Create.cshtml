@@ -1,0 +1,10 @@
+@model CreateRoleCommand
+
+@{
+    ViewData[KnownViewData.Title] = "New role";
+    ViewData[KnownViewData.PageGroup] = PageGroups.Roles;
+    ViewData[KnownViewData.ReturnTitle] = "Roles";
+    ViewData[KnownViewData.ReturnUrl] = Url.RouteUrl(RouteNames.RolesHome);
+}
+
+<partial name="_Form" />

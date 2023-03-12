@@ -57,9 +57,6 @@ namespace Nocturne.Auth.Admin.Configuration.Services
                     options.ResponseType = OpenIdConnectResponseType.Code;
                     options.AuthenticationMethod = OpenIdConnectRedirectBehavior.RedirectGet;
 
-                    options.TokenValidationParameters.NameClaimType = "name";
-                    options.TokenValidationParameters.RoleClaimType = "role";
-
                     options.DisableTelemetry = true;
 
                     options.Events.OnRemoteFailure = OnRemoteAuthFailure;

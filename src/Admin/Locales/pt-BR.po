@@ -379,5 +379,5 @@ msgstr "com PKCE"
 msgid "You are about to delete the permission {0} and this action is irreversible. All applications and/or users may be affected."
 msgstr "Você está prestes a excluir a permissão {0} e esta ação é irreversível. Todas as aplicações e/ou usuários poderão ser afetados."
 
-msgid "You are about to delete the role {0} and this action is irreversible. The users of the application may be affected."
-msgstr "Você está prestes a excluir o grupo {0} e esta ação é irreversível. Os usuários da aplicação poderão ser afetados."
+msgid "You are about to delete the role {0} and this action is irreversible. All applications and/or users may be affected."
+msgstr "Você está prestes a excluir o grupo {0} e esta ação é irreversível. Todas as aplicações e/ou usuários poderão ser afetados."

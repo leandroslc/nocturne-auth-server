@@ -6,15 +6,11 @@ namespace Nocturne.Auth.Core.Modules.Users.Services
     public sealed class GetUserAccessReturn
     {
         public GetUserAccessReturn(
-            IEnumerable<string> roles,
-            IEnumerable<string> permissions)
+            IReadOnlyCollection<string> roles)
         {
-            Roles = roles.ToList();
-            Permissions = permissions.ToList();
+            Roles = roles;
         }
 
         public IReadOnlyCollection<string> Roles { get; }
-
-        public IReadOnlyCollection<string> Permissions { get; }
     }
 }

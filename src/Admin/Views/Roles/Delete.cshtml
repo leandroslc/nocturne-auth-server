@@ -1,0 +1,38 @@
+@inject IViewLocalizer localizer
+@model DeleteRoleCommand
+
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <h5 class="modal-title" id="role-modal-label">@localizer["Delete role"]</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form method="post" loading="role-loading">
+    <div class="modal-body">
+        <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+
+        <div class="mb-3">
+            <p>@localizer["You are about to delete the role {0} and this action is irreversible. The users' access may be affected.", Html.Raw($"<strong>{Model.Name}</strong>")]</p>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="NameConfirmation" class="form-label">@localizer["Type the role name to confirm"]</label>
+            <input asp-for="NameConfirmation" class="form-control" autofocus />
+            <span asp-validation-for="NameConfirmation" class="d-block form-text text-danger"></span>
+        </div>
+
+        <input type="hidden" asp-for="Name" />
+    </div>
+    <div class="modal-footer">
+        <div class="spinner-border spinner-border-sm text-primary" role="status" id="role-loading" style="display: none;">
+            <span class="sr-only">@localizer["Loading..."]</span>
+        </div>
+
+        <button type="submit" class="btn btn-danger">@localizer["Delete"]</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">@localizer["Cancel"]</button>
+    </div>
+</form>

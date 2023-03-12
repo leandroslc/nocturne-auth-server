@@ -34,17 +34,11 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
                 .Set<Role>()
                 .AnyAsync(p =>
                     p.Name == role.Name &&
-                    p.ApplicationId == role.ApplicationId &&
                     p.Id != role.Id);
         }
 
         public async Task DeleteAsync(Role role)
         {
-            var rolePermissions = context
-                .Set<RolePermission>()
-                .Where(rolePermission => rolePermission.RoleId == role.Id);
-
-            context.RemoveRange(rolePermissions);
             context.Remove(role);
 
             await context.SaveChangesAsync();
@@ -66,13 +60,10 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
             await context.SaveChangesAsync();
         }
 
-        public async Task<IReadOnlyCollection<TResult>> QueryByApplication<TResult>(
-            string applicationId,
+        public async Task<IReadOnlyCollection<TResult>> Query<TResult>(
             Func<IQueryable<Role>, IQueryable<TResult>> query)
         {
-            var roles = context
-                .Set<Role>()
-                .Where(p => p.ApplicationId == applicationId);
+            var roles = context.Set<Role>();
 
             return await query(roles).ToListAsync();
         }
