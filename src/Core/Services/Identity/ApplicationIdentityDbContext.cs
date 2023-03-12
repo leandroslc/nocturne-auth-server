@@ -9,7 +9,7 @@ using Nocturne.Auth.Core.Shared.Models;
 namespace Nocturne.Auth.Core.Services.Identity
 {
     public class ApplicationIdentityDbContext
-        : IdentityDbContext<ApplicationUser, ApplicationRole, long>
+        : IdentityUserContext<ApplicationUser, long>
     {
         public ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options)
             : base(options)
@@ -24,11 +24,8 @@ namespace Nocturne.Auth.Core.Services.Identity
 
             ConfigureUsers(builder);
 
-            builder.Entity<ApplicationRole>().ToTable("Roles");
-            builder.Entity<IdentityRoleClaim<long>>().ToTable("RoleClaims");
             builder.Entity<IdentityUserClaim<long>>().ToTable("UserClaims");
             builder.Entity<IdentityUserLogin<long>>().ToTable("UserLogins");
-            builder.Entity<IdentityUserRole<long>>().ToTable("UserRoles");
             builder.Entity<IdentityUserToken<long>>().ToTable("UserTokens");
         }
 
