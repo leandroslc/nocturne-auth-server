@@ -73,16 +73,12 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
                 query = query.Where(p => p.Name.Contains(command.Name));
             }
 
-            query = query
-                .OrderBy(p => p.Application.DisplayName)
-                .ThenBy(p => p.Name);
+            query = query.OrderBy(p => p.Name);
 
             return query.Select(p => new ListUserRolesItem
             {
                 Id = p.Id,
                 Name = p.Name,
-                ApplicationId = p.Application.Id,
-                ApplicationName = p.Application.DisplayName,
             });
         }
 

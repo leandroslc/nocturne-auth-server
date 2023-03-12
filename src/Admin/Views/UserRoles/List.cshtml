@@ -33,9 +33,8 @@
                             </div>
                         </td>
                         <td>
-                            <a target="_blank" href="@Url.RouteUrl(RouteNames.ApplicationRolesView, new { role.ApplicationId, role.Id })">@role.Name</a>
+                            <a target="_blank" href="@Url.RouteUrl(RouteNames.RolesView, new { role.Id })">@role.Name</a>
                         </td>
-                        <td>@role.ApplicationName</td>
                     </tr>
                 }
             </tbody>

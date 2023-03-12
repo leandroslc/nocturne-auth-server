@@ -1,13 +1,6 @@
 @inject IViewLocalizer localizer
 @model AssignRolesToUserCommand
 
-@{
-    var applications = Model.AvailableApplications.Select(application => new SelectListItem(
-        application.Name,
-        application.Id,
-        string.Equals(application.Id, Model.ApplicationId, StringComparison.InvariantCultureIgnoreCase)));
-}
-
 <div class="modal-header">
     <h5 class="modal-title" id="roles-modal-label">@localizer["Assign roles"]</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -17,13 +10,6 @@
 <form method="post" loading="role-loading">
     <div class="modal-body">
         <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
-
-        <div class="mb-3">
-            <label class="form-label" for="applicationId">@localizer["Application"]</label>
-            <select class="custom-select" asp-items="applications" id="applicationId" name="applicationId" autofocus data-application-change="@Url.RouteUrl(RouteNames.UserRolesAdd, new { Model.UserId })">
-                <option value="">@localizer["Select..."]</option>
-            </select>
-        </div>
 
         @{
             var roleNumber = 0;

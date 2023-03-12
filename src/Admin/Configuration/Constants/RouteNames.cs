@@ -13,33 +13,17 @@ namespace Nocturne.Auth.Admin.Configuration.Constants
 
         public const string ApplicationsView = nameof(ApplicationsView);
 
-        public const string ApplicationPermissionsDelete = nameof(ApplicationPermissionsDelete);
+        public const string RolesDelete = nameof(RolesDelete);
 
-        public const string ApplicationPermissionsEdit = nameof(ApplicationPermissionsEdit);
+        public const string RolesEdit = nameof(RolesEdit);
 
-        public const string ApplicationPermissionsHome = nameof(ApplicationPermissionsHome);
+        public const string RolesHome = nameof(RolesHome);
 
-        public const string ApplicationPermissionsNew = nameof(ApplicationPermissionsNew);
+        public const string RolesNew = nameof(RolesNew);
 
-        public const string ApplicationPermissionsView = nameof(ApplicationPermissionsView);
-
-        public const string ApplicationRolesDelete = nameof(ApplicationRolesDelete);
-
-        public const string ApplicationRolesEdit = nameof(ApplicationRolesEdit);
-
-        public const string ApplicationRolesHome = nameof(ApplicationRolesHome);
-
-        public const string ApplicationRolesNew = nameof(ApplicationRolesNew);
-
-        public const string ApplicationRolesView = nameof(ApplicationRolesView);
+        public const string RolesView = nameof(RolesView);
 
         public const string Home = nameof(Home);
-
-        public const string RolePermissionsHome = nameof(RolePermissionsHome);
-
-        public const string RolePermissionsAdd = nameof(RolePermissionsAdd);
-
-        public const string RolePermissionsRemove = nameof(RolePermissionsRemove);
 
         public const string SessionAccount = nameof(SessionAccount);
 

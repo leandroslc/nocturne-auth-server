@@ -36,12 +36,6 @@
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">@localizer["Settings"]</a>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="permissions-tab" data-toggle="tab" href="#permissions" role="tab" aria-controls="permissions" aria-selected="false">@localizer["Permissions"]</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="roles-tab" data-toggle="tab" href="#roles" role="tab" aria-controls="roles" aria-selected="false">@localizer["Roles"]</a>
-                    </li>
                 </ul>
 
                 <div class="tab-content">
@@ -215,14 +209,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="tab-pane py-3 px-3" id="permissions" role="tabpanel" aria-labelledby="permissions-tab">
-                        <partial name="./Permissions" />
-                    </div>
-
-                    <div class="tab-pane py-3 px-3" id="roles" role="tabpanel" aria-labelledby="roles-tab">
-                        <partial name="./Roles" />
-                    </div>
                 </div>
             </div>
         </div>
@@ -232,8 +218,6 @@
 @section scripts
 {
     <script src="~/dist/nocturne-auth-server/admin-applications.min.js" asp-append-version="true"></script>
-    <script src="~/dist/nocturne-auth-server/admin-permissions.min.js" asp-append-version="true"></script>
-    <script src="~/dist/nocturne-auth-server/admin-roles.min.js" asp-append-version="true"></script>
     <script>
         viewApplication({
             ids: {
@@ -243,21 +227,6 @@
                 copyClientSecret: 'CopyClientSecret',
                 toggleClientSecret: 'ToggleClientSecret'
             },
-        });
-
-        managePermissions({
-            searchUrl: '@Url.RouteUrl(RouteNames.ApplicationPermissionsHome, new { applicationId = Model.Id })',
-            searchForm: document.getElementById('search-permissions-form'),
-            results: document.getElementById('search-permissions-results'),
-            modalId: 'permission-modal',
-            newPermissionButton: document.getElementById('new-permission-button'),
-        });
-
-        manageRoles({
-            searchUrl: '@Url.RouteUrl(RouteNames.ApplicationRolesHome, new { applicationId = Model.Id })',
-            searchForm: document.getElementById('search-roles-form'),
-            results: document.getElementById('search-roles-results'),
-            modalId: 'role-modal',
         });
     </script>
 }

@@ -24,9 +24,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
             await context.SaveChangesAsync();
         }
 
-        public async Task<IReadOnlyCollection<Role>> GetUnassignedRolesAsync(
-            ApplicationUser user,
-            string applicationId)
+        public async Task<IReadOnlyCollection<Role>> GetUnassignedRolesAsync(ApplicationUser user)
         {
             return await (
                 from role in context.Set<Role>()
@@ -35,7 +33,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
                     equals new { userRole.RoleId, userRole.UserId }
                     into userRoleJoin
                 from userRole in userRoleJoin.DefaultIfEmpty()
-                where role.ApplicationId == applicationId && userRole == null
+                where userRole == null
                 select role)
                 .ToListAsync();
         }
@@ -46,15 +44,6 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
                 .Set<UserRole>()
                 .Where(p => p.UserId == userId)
                 .Select(p => p.Role);
-        }
-
-        public IQueryable<RolePermission> QueryRolePermissionsByUser(long userId)
-        {
-            return
-                from userRole in context.Set<UserRole>()
-                join rolePermission in context.Set<RolePermission>() on userRole.RoleId equals rolePermission.RoleId
-                where userRole.UserId == userId
-                select rolePermission;
         }
 
         public async Task UnassignRoleAsync(ApplicationUser user, Role role)

@@ -3,10 +3,8 @@
 
 namespace Nocturne.Auth.Core.Modules.Roles.Services
 {
-    public sealed class ListUserRolesItem
+    public sealed class ViewRoleCommand
     {
-        public long Id { get; set; }
-
-        public string Name { get; set; }
+        public long? Id { get; set; }
     }
 }

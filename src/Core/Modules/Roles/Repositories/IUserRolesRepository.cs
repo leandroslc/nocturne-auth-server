@@ -9,12 +9,9 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
     {
         IQueryable<Role> QueryByUser(long userId);
 
-        IQueryable<RolePermission> QueryRolePermissionsByUser(long userId);
-
         Task AssignRolesAsync(ApplicationUser user, IEnumerable<Role> roles);
 
-        Task<IReadOnlyCollection<Role>> GetUnassignedRolesAsync(
-            ApplicationUser user, string applicationId);
+        Task<IReadOnlyCollection<Role>> GetUnassignedRolesAsync(ApplicationUser user);
 
         Task UnassignRoleAsync(ApplicationUser user, Role role);
     }

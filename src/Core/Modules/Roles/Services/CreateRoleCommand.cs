@@ -3,10 +3,7 @@
 
 namespace Nocturne.Auth.Core.Modules.Roles.Services
 {
-    public sealed class ListUserRolesItem
+    public class CreateRoleCommand : ManageRoleCommand
     {
-        public long Id { get; set; }
-
-        public string Name { get; set; }
     }
 }

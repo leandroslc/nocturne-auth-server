@@ -17,8 +17,7 @@ namespace Nocturne.Auth.Core.Modules.Roles.Repositories
 
         Task UpdateAsync(Role role);
 
-        Task<IReadOnlyCollection<TResult>> QueryByApplication<TResult>(
-            string applicationId,
+        Task<IReadOnlyCollection<TResult>> Query<TResult>(
             Func<IQueryable<Role>, IQueryable<TResult>> query);
     }
 }

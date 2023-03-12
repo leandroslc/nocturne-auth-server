@@ -9,20 +9,8 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
         {
         }
 
-        public AssignRolesToUserCommand(
-            string currentApplicationId,
-            IReadOnlyCollection<RoleApplication> availableApplications)
-        {
-            ApplicationId = currentApplicationId;
-            AvailableApplications = availableApplications;
-        }
-
         public long? UserId { get; set; }
 
         public IReadOnlyCollection<AssignRolesToUserRole> Roles { get; set; }
-
-        public string ApplicationId { get; set; }
-
-        public IReadOnlyCollection<RoleApplication> AvailableApplications { get; private set; }
     }
 }
