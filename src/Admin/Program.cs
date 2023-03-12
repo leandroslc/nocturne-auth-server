@@ -38,7 +38,6 @@ services
     .AddApplicationLocalization(configuration)
     .AddApplicationModules()
     .AddApplicationAuthentication(configuration)
-    .AddApplicationAccessControl()
     .AddApplicationAuthorization();
 
 services.AddApplicationOpenIddict();
