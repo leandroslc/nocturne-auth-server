@@ -24,9 +24,6 @@ services
     .AddApplicationMvcLocalization();
 
 services
-    .AddApplicationCustomMvcValidationAttributes();
-
-services
     .AddApplicationAntiforgery(ApplicationConstants.Identifier)
     .AddApplicationWebAssets(configuration)
     .AddApplicationOptions<AdminApplicationOptions>(configuration);

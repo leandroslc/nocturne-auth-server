@@ -4,7 +4,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Nocturne.Auth.Core.Shared.Models;
 
 namespace Nocturne.Auth.Core.Services.Identity
 {
@@ -41,11 +40,6 @@ namespace Nocturne.Auth.Core.Services.Identity
                 .Property(p => p.Name)
                 .HasMaxLength(200)
                 .IsRequired();
-
-            user
-                .Property(p => p.CPF)
-                .HasMaxLength(11)
-                .HasConversion(to => to.Value, from => new CPF(from));
         }
     }
 }
