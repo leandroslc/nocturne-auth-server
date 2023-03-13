@@ -8,14 +8,22 @@ using Microsoft.Extensions.DependencyInjection;
 using Nocturne.Auth.Configuration.Options;
 using Nocturne.Auth.Core.Modules;
 using Nocturne.Auth.Core.Services.DataProtection;
+using Nocturne.Auth.Core.Services.EntityFramework;
 using Nocturne.Auth.Core.Services.Identity;
 using Nocturne.Auth.Core.Services.OpenIddict;
+using Nocturne.Auth.Infra.PostgreSql;
 using Nocturne.Auth.Infra.SqlServer;
 
 namespace Nocturne.Auth.Configuration.Services
 {
     public static class DbContextServices
     {
+        private static readonly EntityFrameworkProviders Providers = new()
+        {
+            ["SqlServer"] = new SqlServerEntityFrameworkDatabaseProvider(),
+            ["Npgsql"] = new NpgsqlEntityFrameworkDatabaseProvider(),
+        };
+
         public static IServiceCollection AddApplicationDbContexts(
             this IServiceCollection services,
             IConfiguration configuration)
@@ -26,23 +34,44 @@ namespace Nocturne.Auth.Configuration.Services
             };
 
             var connectionString = BuildConnectionString(databaseConnections.Main);
+            var providerName = databaseConnections.Main.Provider;
 
-            services.AddSqlServerDbContext<ApplicationIdentityDbContext>(
-                connectionString);
+            AddDbContext<ApplicationIdentityDbContext>(
+                services,
+                providerName: providerName,
+                connectionString: connectionString);
 
-            services.AddSqlServerDbContext<AuthorizationDbContext>(
-                connectionString,
-                options =>
-                {
-                    options.UseOpenIddict<Application, Authorization, Scope, Token, string>();
-                });
+            AddDbContext<AuthorizationDbContext>(
+                services,
+                providerName: providerName,
+                connectionString: connectionString,
+                optionsBuilder:
+                    options => options.UseOpenIddict<Application, Authorization, Scope, Token, string>());
 
-            services.AddSqlServerDbContext<DataProtectionDbContext>(
-                connectionString);
+            AddDbContext<DataProtectionDbContext>(
+                services,
+                providerName: providerName,
+                connectionString: connectionString);
 
             services.AddSingleton(databaseConnections);
 
             return services;
+        }
+
+        private static void AddDbContext<TContext>(
+            IServiceCollection services,
+            string providerName,
+            string connectionString,
+            Action<DbContextOptionsBuilder> optionsBuilder = null)
+            where TContext : DbContext
+        {
+            services.AddDbContext<TContext>(
+                options =>
+                {
+                    Providers.Use(providerName, connectionString, options);
+                    options.UseSnakeCaseNamingConvention();
+                    optionsBuilder?.Invoke(options);
+                });
         }
 
         private static DatabaseConnectionOptions GetOptions(IConfiguration configuration, string connectionName)
