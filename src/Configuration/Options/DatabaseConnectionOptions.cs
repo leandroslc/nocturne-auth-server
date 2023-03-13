@@ -5,6 +5,8 @@ namespace Nocturne.Auth.Configuration.Options
 {
     public class DatabaseConnectionOptions
     {
+        public string Provider { get; set; }
+
         public string Host { get; set; }
 
         public string Port { get; set; }
