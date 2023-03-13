@@ -2,10 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Infra.SqlServer.Migrations.Configuration
+namespace Nocturne.Auth.Infra.PostgreSql.Migrations.DataProtection
 {
-    public partial class CreateDataProtection : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,25 +14,25 @@ namespace Infra.SqlServer.Migrations.Configuration
                 name: "config");
 
             migrationBuilder.CreateTable(
-                name: "DataProtectionKeys",
+                name: "data_protection_keys",
                 schema: "config",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FriendlyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Xml = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    friendly_name = table.Column<string>(type: "text", nullable: true),
+                    xml = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DataProtectionKeys", x => x.Id);
+                    table.PrimaryKey("pk_data_protection_keys", x => x.id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DataProtectionKeys",
+                name: "data_protection_keys",
                 schema: "config");
         }
     }

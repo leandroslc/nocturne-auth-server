@@ -27,15 +27,15 @@ namespace Nocturne.Auth.Core.Modules
 
         private static void ConfigureOpenIdModels(ModelBuilder builder)
         {
-            builder.Entity<Application>().ToTable("Applications");
-            builder.Entity<Authorization>().ToTable("Authorizations");
-            builder.Entity<Scope>().ToTable("Scopes");
-            builder.Entity<Token>().ToTable("Tokens");
+            builder.Entity<Application>().ToTable("applications");
+            builder.Entity<Authorization>().ToTable("authorizations");
+            builder.Entity<Scope>().ToTable("scopes");
+            builder.Entity<Token>().ToTable("tokens");
         }
 
         private static void ConfigureRoles(ModelBuilder builder)
         {
-            var roles = builder.Entity<Role>().ToTable("Roles");
+            var roles = builder.Entity<Role>().ToTable("roles");
 
             roles
                 .Property(p => p.ConcurrencyToken)
@@ -54,7 +54,7 @@ namespace Nocturne.Auth.Core.Modules
 
         private static void ConfigureUserRoles(ModelBuilder builder)
         {
-            var userRoles = builder.Entity<UserRole>().ToTable("UserRoles");
+            var userRoles = builder.Entity<UserRole>().ToTable("user_roles");
 
             userRoles.HasKey(p => new { p.UserId, p.RoleId });
 

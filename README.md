@@ -187,6 +187,7 @@ Before executing a script, it is needed to change the database connection config
 | Description | Script
 | :---------- | :-----
 | Add migration | `dotnet ef migrations add <name> -p src/Infra.<provider> -s src/Admin -c <context>`
+| Add migration (separated by directory) | `dotnet ef migrations add <name> -p src/Infra.<provider> -s src/Admin -c <context> -o Migrations/<name>`
 | Remove last added migration | `dotnet ef migrations remove -p src/Infra.<provider> -s src/Admin -c <context>`
 
 **Contexts reference:**

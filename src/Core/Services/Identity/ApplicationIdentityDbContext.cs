@@ -23,14 +23,14 @@ namespace Nocturne.Auth.Core.Services.Identity
 
             ConfigureUsers(builder);
 
-            builder.Entity<IdentityUserClaim<long>>().ToTable("UserClaims");
-            builder.Entity<IdentityUserLogin<long>>().ToTable("UserLogins");
-            builder.Entity<IdentityUserToken<long>>().ToTable("UserTokens");
+            builder.Entity<IdentityUserClaim<long>>().ToTable("user_claims");
+            builder.Entity<IdentityUserLogin<long>>().ToTable("user_logins");
+            builder.Entity<IdentityUserToken<long>>().ToTable("user_tokens");
         }
 
         private static void ConfigureUsers(ModelBuilder builder)
         {
-            var user = builder.Entity<ApplicationUser>().ToTable("Users");
+            var user = builder.Entity<ApplicationUser>().ToTable("users");
 
             user
                 .Property(p => p.Enabled)
