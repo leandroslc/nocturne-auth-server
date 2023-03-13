@@ -212,5 +212,8 @@ As a convention for naming roles (actions), we propose using the format:
 In addition to this, always try to use policy base authorization were possible in the systems (will depend on the language/framework you use).
 
 
+## :hand: Contributing
+If you wish to contribute, read [the contribution guide](CONTRIBUTING.md).
+
 ## :balance_scale: License
 This project is licensed under GPL 3.0. _If necessary, the license can be modified._
