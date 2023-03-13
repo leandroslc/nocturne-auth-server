@@ -10,8 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Nocturne.Auth.Core.Services.Identity;
-using Nocturne.Auth.Core.Shared.Models;
-using Nocturne.Auth.Core.Shared.Validation;
 using Nocturne.Auth.Server.Areas.Identity.Emails;
 
 namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
@@ -74,7 +72,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
                 UserName = Input.Email,
                 Email = Input.Email,
                 Name = Input.Name,
-                CPF = CPF.ToCPF(Input.CPF),
             };
 
             var result = await userManager.CreateAsync(user, Input.Password);
@@ -130,10 +127,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account
             [MaxLength(200, ErrorMessage = "The name must have less than {1} characters")]
             [DataType(DataType.Text)]
             public string Name { get; set; }
-
-            [Required(ErrorMessage = "The CPF is required")]
-            [CPF(ErrorMessage = "The CPF is invalid")]
-            public string CPF { get; set; }
 
             [Required(ErrorMessage = "The email is required")]
             [EmailAddress(ErrorMessage = "The email is not valid")]
