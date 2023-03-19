@@ -151,7 +151,7 @@ namespace Nocturne.Auth.Server.Areas.Identity.Pages.Account.Manage
 
             while (currentPosition + 4 < unformattedKey.Length)
             {
-                result.Append(unformattedKey[currentPosition..4]).Append(' ');
+                result.Append(unformattedKey[currentPosition..(currentPosition + 4)]).Append(' ');
                 currentPosition += 4;
             }
 
