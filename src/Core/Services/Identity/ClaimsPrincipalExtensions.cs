@@ -3,7 +3,6 @@
 
 using System.Globalization;
 using System.Security.Claims;
-using OpenIddict.Abstractions;
 
 namespace Nocturne.Auth.Core.Services.Identity
 {
@@ -15,8 +14,8 @@ namespace Nocturne.Auth.Core.Services.Identity
             return new ApplicationUser
             {
                 Id = GetApplicationUserId(principal),
-                Name = principal.FindFirstValue(OpenIddictConstants.Claims.Name),
-                UserName = principal.FindFirstValue(ClaimTypes.Name),
+                Name = principal.FindFirstValue("name") ?? principal.FindFirstValue(ClaimTypes.Name),
+                UserName = principal.FindFirstValue(ClaimTypes.Email),
             };
         }
 
