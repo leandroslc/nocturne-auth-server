@@ -10,13 +10,12 @@ using OpenIddict.Abstractions;
 namespace Nocturne.Auth.Core.Services.Identity
 {
     public class CustomUserClaimsPrincipalFactory
-        : UserClaimsPrincipalFactory<ApplicationUser, ApplicationRole>
+        : UserClaimsPrincipalFactory<ApplicationUser>
     {
         public CustomUserClaimsPrincipalFactory(
             UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager,
             IOptions<IdentityOptions> optionsAccessor)
-            : base(userManager, roleManager, optionsAccessor)
+            : base(userManager, optionsAccessor)
         {
         }
 

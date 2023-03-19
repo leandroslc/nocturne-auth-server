@@ -13,6 +13,7 @@
     <PackageReference Update="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="6.0.4" />
     <PackageReference Update="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.4" />
     <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.4" />
+    <PackageReference Update="Microsoft.AspNetCore.Identity.UI" Version="6.0.4" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4" />
     <PackageReference Update="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />

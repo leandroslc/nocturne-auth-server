@@ -17,7 +17,7 @@ namespace Nocturne.Auth.Configuration.Services
             string applicationIdentifier)
         {
             services
-                .AddIdentity<ApplicationUser, ApplicationRole>(options =>
+                .AddDefaultIdentity<ApplicationUser>(options =>
                 {
                     BindIdentityOptions(options, configuration);
                 })
