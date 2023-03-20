@@ -328,6 +328,9 @@ msgstr "Usuários"
 msgid "User not found"
 msgstr "Usuário não encontrado"
 
+msgid "Username"
+msgstr "Nome de usuário"
+
 msgid "Welcome"
 msgstr "Boas-vindas"
 

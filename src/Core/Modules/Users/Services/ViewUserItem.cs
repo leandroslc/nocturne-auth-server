@@ -12,11 +12,14 @@ namespace Nocturne.Auth.Core.Modules.Users.Services
             Id = user.Id;
             Name = user.Name;
             Enabled = user.Enabled;
+            UserName = user.UserName;
         }
 
         public long Id { get; }
 
         public string Name { get; }
+
+        public string UserName { get; }
 
         public bool Enabled { get; }
     }
