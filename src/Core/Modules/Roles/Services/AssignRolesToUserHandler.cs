@@ -28,15 +28,11 @@ namespace Nocturne.Auth.Core.Modules.Roles.Services
             this.userManager = userManager;
         }
 
-        public async Task<AssignRolesToUserCommand> CreateCommandAsync(
-            long? userId,
-            string applicationId = null)
+        public async Task<AssignRolesToUserCommand> CreateCommandAsync(long? userId)
         {
             var user = await GetUserAsync(userId);
 
-            var availableRoles = applicationId is null
-                ? null
-                : await GetAvailableRolesAsync();
+            var availableRoles = await GetAvailableRolesAsync();
 
             var command = new AssignRolesToUserCommand
             {

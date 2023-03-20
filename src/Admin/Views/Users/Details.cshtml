@@ -65,7 +65,7 @@
 {
     <script src="~/dist/nocturne-auth-server/admin-user-roles.min.js" asp-append-version="true"></script>
     <script>
-        manageRoles({
+        manageUserRoles({
             searchUrl: '@Url.RouteUrl(RouteNames.UserRolesHome, new { userId = Model.Id })',
             searchForm: document.getElementById('search-roles-form'),
             results: document.getElementById('search-roles-results'),

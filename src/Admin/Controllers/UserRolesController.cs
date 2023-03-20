@@ -39,15 +39,14 @@ namespace Nocturne.Auth.Admin.Controllers
         [HttpGet("add", Name = RouteNames.UserRolesAdd)]
         public async Task<IActionResult> Add(
             [FromServices] AssignRolesToUserHandler handler,
-            long? userId,
-            string applicationId)
+            long? userId)
         {
             if (await handler.UserExistsAsync(userId) is false)
             {
                 return NotFound();
             }
 
-            var command = await handler.CreateCommandAsync(userId, applicationId);
+            var command = await handler.CreateCommandAsync(userId);
 
             return View(command);
         }

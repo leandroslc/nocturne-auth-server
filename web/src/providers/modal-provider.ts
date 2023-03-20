@@ -6,10 +6,10 @@ const provider: ModalProviderFactory = (element) => {
   return {
     contentSelector: '.modal-content',
     addOnModalClosedEvent: (listener) => {
-      $modal.on('hidden.bs.modal', listener);
+      $modal.on('hidden.bs.modal', listener as () => void);
     },
     addOnModalOpenedEvent: (listener) => {
-      $modal.on('shown.bs.modal', listener);
+      $modal.on('shown.bs.modal', listener as () => void);
     },
     close: () => {
       $modal.modal('hide');

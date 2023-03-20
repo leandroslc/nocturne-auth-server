@@ -31,7 +31,7 @@ export default () => {
     }
 
     enable() {
-      this.enable();
+      this.provider.enable();
     }
   }
 
