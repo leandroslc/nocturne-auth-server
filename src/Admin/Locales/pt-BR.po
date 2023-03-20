@@ -52,12 +52,6 @@ msgstr "Aplicação"
 msgid "Applications"
 msgstr "Aplicações"
 
-msgid "Are you sure you want to unassign the permission from the role?"
-msgstr "Tem certeza de que deseja desvincular a permissão do grupo?"
-
-msgid "Assign permissions"
-msgstr "Atribuir permissões"
-
 msgid "Assign roles"
 msgstr "Atribuir grupos"
 
@@ -91,9 +85,6 @@ msgstr "Copiar"
 msgid "Delete"
 msgstr "Excluir"
 
-msgid "Delete permission"
-msgstr "Apagar permissão"
-
 msgid "Delete role"
 msgstr "Apagar grupo"
 
@@ -111,9 +102,6 @@ msgstr "Editar"
 
 msgid "Edit application"
 msgstr "Editar aplicação"
-
-msgid "Edit permission"
-msgstr "Editar permissão"
 
 msgid "Edit role"
 msgstr "Editar grupo"
@@ -157,6 +145,9 @@ msgstr "Gerencie aplicações (clients) e APIs"
 msgid "Manage all registered users"
 msgstr "Gerencie todos os usuários registrados"
 
+msgid "Manage all roles"
+msgstr "Gerencie todos os grupos"
+
 msgid "My account"
 msgstr "Minha conta"
 
@@ -169,20 +160,11 @@ msgstr "Próxima página"
 msgid "New application"
 msgstr "Nova aplicação"
 
-msgid "New permission"
-msgstr "Nova permissão"
-
 msgid "New role"
 msgstr "Novo grupo"
 
 msgid "No applications found"
 msgstr "Nenhuma aplicação encontrada"
-
-msgid "No permissions assigned"
-msgstr "Nenhuma permissão atribuída"
-
-msgid "No permissions found"
-msgstr "Nenhuma permissão encontrada"
 
 msgid "No roles found"
 msgstr "Nenhum grupo encontrado"
@@ -207,15 +189,6 @@ msgstr "Ops, nos desculpe, ocorreu um erro interno"
 
 msgid "Page list"
 msgstr "Lista de páginas"
-
-msgid "Permissions"
-msgstr "Permissões"
-
-msgid "Permission details"
-msgstr "Detalhes da permissão"
-
-msgid "Permission not found"
-msgstr "Permissão não encontrada"
 
 msgid "Please try again by going back to the home page"
 msgstr "Por favor, tente novamente voltando para a página inicial"
@@ -316,15 +289,6 @@ msgstr "A descrição deve ter menos que {1} caracteres"
 msgid "The page you are trying to access has a restricted access"
 msgstr "A página que você está tentando acessar possui acesso restrito"
 
-msgid "The permission {0} already exists"
-msgstr "A permissão {0} já existe"
-
-msgid "The permission id is required"
-msgstr "O id da permissão é obrigatório"
-
-msgid "The permission has been modified. Check the data and try again"
-msgstr "A permissão foi modificada. Verifique os dados e tente novamente"
-
 msgid "The type is required"
 msgstr "O tipo é obrigatório"
 
@@ -337,17 +301,11 @@ msgstr "Alternar visibilidade do client secret"
 msgid "Type"
 msgstr "Tipo"
 
-msgid "Type the permission name to confirm"
-msgstr "Digite o nome da permissão para confirmar"
-
 msgid "Type the role name to confirm"
 msgstr "Digite o nome do grupo para confirmar"
 
 msgid "Unassign"
 msgstr "Desvincular"
-
-msgid "Unassign permission"
-msgstr "Desvincular permissão"
 
 msgid "Unassign role"
 msgstr "Desvincular grupo"
@@ -375,9 +333,6 @@ msgstr "Boas-vindas"
 
 msgid "with PKCE"
 msgstr "com PKCE"
-
-msgid "You are about to delete the permission {0} and this action is irreversible. All applications and/or users may be affected."
-msgstr "Você está prestes a excluir a permissão {0} e esta ação é irreversível. Todas as aplicações e/ou usuários poderão ser afetados."
 
 msgid "You are about to delete the role {0} and this action is irreversible. All applications and/or users may be affected."
 msgstr "Você está prestes a excluir o grupo {0} e esta ação é irreversível. Todas as aplicações e/ou usuários poderão ser afetados."
