@@ -168,6 +168,8 @@ Localization is base on the literal text (in English, the default language).
 
 For reference of language tags, see [IETF BCP 47 language tag](https://en.wikipedia.org/wiki/IETF_language_tag).
 
+> The first translations were designed to use a neutral and inclusive language, so always strive to use a language that fits everyone.
+
 ### Add email template
 Email templates uses [Liquid template language](https://shopify.github.io/liquid). There is no convetion for where to add the templates, but it is highly recommended they are added to a directory `Templates/Emails` at the project root.
 
