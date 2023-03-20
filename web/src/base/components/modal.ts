@@ -18,8 +18,12 @@ export default () => {
         this.provider.contentSelector,
       );
 
-      this.provider.addOnModalClosedEvent(window.ElementHelper.clearFormInputs);
-      this.provider.addOnModalOpenedEvent(window.ElementHelper.autoFocus);
+      this.provider.addOnModalClosedEvent((event) =>
+        window.ElementHelper.clearFormInputs(event.target as ParentNode),
+      );
+      this.provider.addOnModalOpenedEvent((event) =>
+        window.ElementHelper.autoFocus(event.target as ParentNode),
+      );
     }
 
     show() {

@@ -11,8 +11,8 @@ export type LoadingProvider = {
 
 export type ModalProvider = {
   contentSelector: string;
-  addOnModalOpenedEvent(listener: () => void): void;
-  addOnModalClosedEvent(listener: () => void): void;
+  addOnModalOpenedEvent(listener: (event: Event) => void): void;
+  addOnModalClosedEvent(listener: (event: Event) => void): void;
   open(): void;
   close(): void;
 };
