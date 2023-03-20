@@ -2,6 +2,8 @@
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
+    "importsNotUsedAsValues": "preserve",
+    "preserveConstEnums": true,
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
