@@ -116,6 +116,6 @@
         const passwordElement = document.getElementById('@($"{nameof(Model.Input)}_{nameof(Model.Input.Password)}")');
         const togglePasswordElement = document.getElementById('password-toggle');
 
-        ElementHelper.addTogglePasswordEvent('click', togglePasswordElement, passwordElement);
+        ElementHelper.addTogglePasswordEvent(passwordElement, togglePasswordElement);
     </script>
 }
