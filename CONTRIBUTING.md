@@ -16,4 +16,4 @@ Remember:
 - If it is a problem/bug, give clear steps to reproduce it.
 
 ## Code of conduct
-- Always be polite and respectiful when sending/answaring issues or PRs.
+- Always be polite and respectiful when sending/answering issues or PRs.
