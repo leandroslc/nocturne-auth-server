@@ -11,7 +11,6 @@
                 <tr>
                     <th></th>
                     <th>@localizer["Name"]</th>
-                    <th>@localizer["Application"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,16 +20,10 @@
 
                     <tr>
                         <td class="w-min">
-                            <button class="btn btn-sm btn-outline-primary" type="button" id="@menuId" data-toggle="dropdown" title="@localizer["Open menu"]" aria-haspopup="true" aria-expanded="false">
-                                <span class="sr-only">@localizer["Open menu"]</span>
-                                <span class="bi-three-dots" aria-hidden="true"></span>
+                            <button class="btn btn-sm btn-outline-danger d-flex flex-nowrap" type="button" data-role-action="@Url.RouteUrl(RouteNames.UserRolesRemove, new { Model.UserId, roleId = role.Id })">
+                                <span class="bi-trash mr-2" aria-hidden="true"></span>
+                                <span>@localizer["Unassign"]</span>
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="@menuId">
-                                <button class="dropdown-item text-danger" type="button" data-role-action="@Url.RouteUrl(RouteNames.UserRolesRemove, new { Model.UserId, roleId = role.Id })">
-                                    <span class="bi-trash mr-2" aria-hidden="true"></span>
-                                    <span>@localizer["Unassign"]</span>
-                                </button>
-                            </div>
                         </td>
                         <td>
                             <a target="_blank" href="@Url.RouteUrl(RouteNames.RolesView, new { role.Id })">@role.Name</a>
