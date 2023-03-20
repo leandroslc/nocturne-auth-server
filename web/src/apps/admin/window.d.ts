@@ -35,7 +35,7 @@ type SearchPermissionsOptions = {
 };
 
 type SearchPermissionsReturn = {
-  search: () => void
+  search: () => void;
 };
 
 type ManagePermissionsOptions = SearchPermissionsOptions & {
@@ -50,7 +50,7 @@ type SearchRolePermissionsOptions = {
 };
 
 type SearchRolePermissionsReturn = {
-  search: () => void
+  search: () => void;
 };
 
 type ManageRolePermissionsOptions = SearchRolePermissionsOptions & {
@@ -65,11 +65,16 @@ type SearchRolesOptions = {
 };
 
 type SearchRolesReturn = {
-  search: () => void
+  search: () => void;
 };
 
-type ManageRolesOptions = SearchRolesOptions & {
-  modalId: string;
+type ManageRolesOptions = {
+  ids: {
+    modalId: string;
+    deleteRoleButton: string;
+  };
+  deleteRoleAction: string;
+  deleteRoleReturnUrl: string;
 };
 
 type SearchUserRolesOptions = {
@@ -79,7 +84,7 @@ type SearchUserRolesOptions = {
 };
 
 type SearchUserRolesReturn = {
-  search: () => void
+  search: () => void;
 };
 
 type ManageUserRolesOptions = SearchUserRolesOptions & {
@@ -90,9 +95,13 @@ type ManageUserRolesOptions = SearchUserRolesOptions & {
 interface Window {
   manageApplication: (options: ManageApplicationOptions) => void;
   viewApplication: (options: ViewApplicationOptions) => void;
-  searchPermissions: (options: SearchPermissionsOptions) => SearchPermissionsReturn;
+  searchPermissions: (
+    options: SearchPermissionsOptions,
+  ) => SearchPermissionsReturn;
   managePermissions: (options: ManagePermissionsOptions) => void;
-  searchRolePermissions: (options: SearchRolePermissionsOptions) => SearchRolePermissionsReturn;
+  searchRolePermissions: (
+    options: SearchRolePermissionsOptions,
+  ) => SearchRolePermissionsReturn;
   manageRolePermissions: (options: ManageRolePermissionsOptions) => void;
   searchRoles: (options: SearchRolesOptions) => SearchRolesReturn;
   manageRoles: (options: ManageRolesOptions) => void;

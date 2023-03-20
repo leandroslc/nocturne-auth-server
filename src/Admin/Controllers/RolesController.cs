@@ -12,7 +12,7 @@ namespace Nocturne.Auth.Admin.Controllers
 {
     [Route("roles")]
     [Authorize(Policy = Policies.ManageApplications)]
-    public class ApplicationRolesController : CustomController
+    public class RolesController : CustomController
     {
         [HttpGet("", Name = RouteNames.RolesHome)]
         public async Task<IActionResult> Index(

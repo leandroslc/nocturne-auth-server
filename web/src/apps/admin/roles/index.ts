@@ -1,36 +1,11 @@
-window.searchRoles = (options) => {
-  const { searchForm: form, searchUrl, results } = options;
-  const formLoading = window.Loading.create(form);
-
-  const search = () => {
-    formLoading.start();
-
-    const data = $(form).serialize();
-
-    $.get(searchUrl, data, (response) => {
-      results.innerHTML = response;
-      formLoading.stop();
-    });
-  };
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    search();
-  });
-
-  return {
-    search,
-  };
-};
-
 window.manageRoles = (options) => {
-  const PermissionActionAttribute = 'data-role-action';
+  const { ids, deleteRoleAction, deleteRoleReturnUrl } = options;
 
-  const searchPermissions = window.searchRoles(options);
-  const { modalId, results } = options;
+  const deleteRoleButton = window.ElementHelper.getRequiredElementById(
+    ids.deleteRoleButton,
+  );
 
-  const modal = new window.Modal(modalId);
+  const modal = new window.Modal(ids.modalId);
 
   const createModalFormSubmitEvent = (form: HTMLFormElement, url: string) => {
     const formLoading = window.Loading.create(form);
@@ -47,8 +22,8 @@ window.manageRoles = (options) => {
       const data = $(form).serialize();
 
       $.post(url, data, () => {
-        searchPermissions.search();
         modal.close();
+        window.location.href = deleteRoleReturnUrl;
       }).fail((response) => {
         if (
           window.ResponseHelper.isBadRequest(response) &&
@@ -80,8 +55,8 @@ window.manageRoles = (options) => {
     setupModalForm(url);
   };
 
-  const show = (element: Element) => {
-    const url = element.getAttribute(PermissionActionAttribute)!;
+  const show = () => {
+    const url = deleteRoleAction;
 
     $.get(url, (response) => {
       setupModal(response, url);
@@ -89,16 +64,7 @@ window.manageRoles = (options) => {
     });
   };
 
-  results.addEventListener('click', (event) => {
-    const target = event.target as HTMLElement;
-    const element = target.closest(`[${PermissionActionAttribute}]`);
-
-    if (!element) {
-      return;
-    }
-
-    show(element);
+  deleteRoleButton.addEventListener('click', () => {
+    show();
   });
-
-  searchPermissions.search();
 };

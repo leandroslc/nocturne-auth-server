@@ -16,6 +16,11 @@
 
 @if (await authorizationService.HasAccessAsync(User, Policies.ManageUsers))
 {
+    <a class="sidebar-item @IsActiveItem(PageGroups.Roles)" asp-route="@RouteNames.RolesHome">
+        <span class="bi-ui-checks-grid sidenav-icon mr-2" aria-hidden="true"></span>
+        <span>@localizer["Roles"]</span>
+    </a>
+
     <a class="sidebar-item @IsActiveItem(PageGroups.Users)" asp-route="@RouteNames.UsersHome">
         <span class="bi-people sidenav-icon mr-2" aria-hidden="true"></span>
         <span>@localizer["Users"]</span>

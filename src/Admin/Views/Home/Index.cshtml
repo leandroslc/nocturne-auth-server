@@ -34,6 +34,20 @@
             @if (await authorizationService.HasAccessAsync(User, Policies.ManageUsers))
             {
                 <div class="card greetings-card pt-4">
+                    <img class="card-img-top greetings-card-img" src="~/img/roles.svg" alt="@localizer["Roles"]">
+                    <div class="card-body">
+                        <h5 class="card-title">@localizer["Roles"]</h5>
+                        <p class="card-text">@localizer["Manage all roles"]</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-outline-primary" asp-route="@RouteNames.RolesHome">
+                            <span>@localizer["Manage"]</span>
+                            <span class="bi-arrow-right" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card greetings-card pt-4">
                     <img class="card-img-top greetings-card-img" src="~/img/users.svg" alt="@localizer["Users"]">
                     <div class="card-body">
                         <h5 class="card-title">@localizer["Users"]</h5>

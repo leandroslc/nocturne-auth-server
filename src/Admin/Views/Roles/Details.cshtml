@@ -63,6 +63,12 @@
     </div>
 </div>
 
+<div class="modal fade" id="role-modal" tabindex="-1" role="dialog" aria-labelledby="role-modal-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
 @section scripts
 {
     <script src="~/dist/nocturne-auth-server/admin-roles.min.js" asp-append-version="true"></script>
@@ -70,6 +76,7 @@
         manageRoles({
             ids: {
                 deleteRoleButton: 'delete-role',
+                modalId: 'role-modal',
             },
             deleteRoleAction: '@Url.RouteUrl(RouteNames.RolesDelete, new { Model.Role.Id })',
             deleteRoleReturnUrl: '@returnUrl',

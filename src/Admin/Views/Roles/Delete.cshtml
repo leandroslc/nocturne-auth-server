@@ -16,7 +16,7 @@
         <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
 
         <div class="mb-3">
-            <p>@localizer["You are about to delete the role {0} and this action is irreversible. The users' access may be affected.", Html.Raw($"<strong>{Model.Name}</strong>")]</p>
+            <p>@localizer["You are about to delete the role {0} and this action is irreversible. All applications and/or users may be affected.", Html.Raw($"<strong>{Model.Name}</strong>")]</p>
         </div>
 
         <div class="mb-3">
