@@ -86,6 +86,11 @@ If you want to quick setup a development environment, there is a dev container a
 ## :computer: Development guides
 Some guides for development.
 
+### Specific (or secret) configuration
+For configuration values that are intended to be local, add a `appsettings.local.json` file to the project.
+
+The `appsettings.local.json` files overrides configurations of `appsettings` and `appsettings.{environment}`, and are not commited to the source control.
+
 ### Fast customization
 For quick configuration (like name), the following options are available:
 
