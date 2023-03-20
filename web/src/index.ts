@@ -1,3 +1,4 @@
+import './providers';
 import elementHelper from './base/components/element-helper';
 import loading from './base/components/loading';
 import modal from './base/components/modal';
@@ -17,15 +18,13 @@ declare global {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  window.ElementHelper = elementHelper();
-  window.Loading = loading();
-  window.Modal = modal();
-  window.ResponseHelper = responseHelper();
-  window.TagifyElement = tagsElement();
-  window.Validator = validator();
+window.ElementHelper = elementHelper();
+window.Loading = loading();
+window.Modal = modal();
+window.ResponseHelper = responseHelper();
+window.TagifyElement = tagsElement();
+window.Validator = validator();
 
-  window.Loading.initializeAll();
+window.Loading.initializeAll();
 
-  sidenav().findByToggle()?.initialize();
-});
+sidenav().findByToggle()?.initialize();

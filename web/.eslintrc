@@ -49,6 +49,7 @@
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/no-unused-vars": ["warn", {"args": "all", "argsIgnorePattern": "^_"}],
     "import/extensions": "off",
+    "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
     "class-methods-use-this": "off"

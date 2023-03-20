@@ -13,11 +13,6 @@ const modules = [
     path: './src/index.ts',
     output: '',
   },
-  {
-    name: 'providers',
-    path: './src/index.ts',
-    output: '',
-  },
   ...fs.readdirSync(path.resolve('./src/apps')).reduce((result, app) => {
     const appPath = path.resolve('./src/apps', app);
 
