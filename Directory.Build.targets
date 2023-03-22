@@ -6,7 +6,7 @@
     <PackageReference Update="EFCore.NamingConventions" Version="6.0.0" />
     <PackageReference Update="FluentEmail.Liquid" Version="3.0.2" />
     <PackageReference Update="FluentEmail.MailKit" Version="3.0.2" />
-    <PackageReference Update="MailKit" Version="3.2.0" />
+    <PackageReference Update="MailKit" Version="2.15.0" />
     <PackageReference Update="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.4" />
     <PackageReference Update="Microsoft.AspNetCore.Authorization" Version="6.0.4" />

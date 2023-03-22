@@ -51,7 +51,7 @@ namespace Nocturne.Auth.Core.Services.Email
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            using var message = new MimeMessage
+            var message = new MimeMessage
             {
                 Subject = subject,
                 Body = new TextPart("html")
