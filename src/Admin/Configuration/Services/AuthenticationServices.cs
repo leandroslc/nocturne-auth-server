@@ -63,9 +63,28 @@ namespace Nocturne.Auth.Admin.Configuration.Services
 
                     options.NonceCookie.Name = "oidc-nonce";
                     options.CorrelationCookie.Name = "oidc-correlation";
+
+                    if (authorizationOptions.DangerousAcceptAnyCertificate)
+                    {
+                        AcceptAnyServerCertificate(options);
+                    }
                 });
 
             return services;
+        }
+
+        private static OpenIdConnectOptions AcceptAnyServerCertificate(
+            OpenIdConnectOptions options)
+        {
+            var httpHandler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
+            };
+
+            options.BackchannelHttpHandler = httpHandler;
+
+            return options;
         }
 
         private static Task OnRemoteAuthFailure(RemoteFailureContext context)

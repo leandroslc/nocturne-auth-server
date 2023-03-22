@@ -45,13 +45,23 @@ This project was inpired by many cool projects and companies. You may have a loo
 - Run `docker compose up -d` in the repository root.
 
 And that is it :slightly_smiling_face:. After the initialization is completed, the systems will be available in the following urls:
-- Admin: [https://localhost:6000](https://localhost:6000).
-- OpenId Server: [https://localhost:6001](https://localhost:6001).
+- Admin: [https://localhost:34560](https://localhost:34560).
+- OpenId Server: [https://localhost:61767](https://localhost:61767).
+- Test Email Server: [http://localhost:34564](http://localhost:34564).
 
 If it was not modified in the initialization settings, the default (admin) user is:
 - Email: `test@test.com`.
 - Password: `Pass123$`.
 
+> Because of a limitation of docker-compose, only host network mode is supported.
+
+### Starting without docker
+- First make sure you have a [local development ready](#gear-local-setup).
+- _Optionally, change the initial settings as needed (read the [Initialization settings section](#scroll-initialization-settings))_
+- Setup a database. You can also [use a container](#local-database-setup). Change the applications settings to match the database connection.
+- Setup a SMTP server. You can also [use a container](#smtp-server-setup). Change the applications settings to match the SMTP server connection.
+- Set the `Initialize` environment variable to `true`.
+- Build and run the `Server` and `Admin` projects.
 
 ## :scroll: Initialization settings
 When the Admin Server starts it runs an initialization service to check for all required initial setup to make the Server operational.
@@ -82,6 +92,8 @@ If will be installing everything in your development machine:
 ### Using VSCode Dev Container
 If you want to quick setup a development environment, there is a dev container available for VSCode. For more details on how to install and open a dev container, [read the introductory tutorial](https://code.visualstudio.com/docs/devcontainers/tutorial).
 
+### Self-signed certificates
+Https connection is required to make all the authorization process work. Make sure you have trusted .NET development certificates by following [this overview](https://learn.microsoft.com/pt-br/dotnet/core/additional-tools/self-signed-certificates-guide).
 
 ## :computer: Development guides
 Some guides for development.
@@ -115,7 +127,7 @@ To configure email, there are the following options:
   "SenderName": "<sender name>",
   "SenderEmail": "<sender email>",
   "Host": "<email provider host>",
-  "Port": 465, // email provider port
+  "Port": 587, // email provider port
   "UseSSL": true,
   "Security": "Auto",
   "RequiresAuthentication": true,
@@ -127,6 +139,12 @@ To configure email, there are the following options:
   }
 }
 ```
+
+### Local database setup
+There is a service `db` in `docker-compose` file which can be used to start a database instance, if using docker. By default it is configured for Sql Server, but it can be changed to whichever database provider is of need. Just run `docker compose up -d db`.
+
+### SMTP server setup
+There is a testing smtp server available as `email` in `docker-compose` file. Just run `docker compose up -d email`.
 
 ### Configure localization
 To configure localization, specify a locale in the following options:

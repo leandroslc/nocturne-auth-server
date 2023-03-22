@@ -10,8 +10,7 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=47dfb729-a25c-4988-997d-ffb8a90a3f1c
-    networks:
-      - services
+    network_mode: host
 
   admin:
     build:
@@ -19,16 +18,21 @@ services:
       dockerfile: src/Admin/Dockerfile
     depends_on:
       - db
+      - server
     image: nocturne-auth-server/admin
     container_name: nocturne-auth-server-admin
-    ports:
-      - '6000:80'
+    volumes:
+      - ./certs:/https:ro
     environment:
-      - DatabaseConnections__Main__Server=db,1433
-      - Initialize=true
       - ASPNETCORE_ENVIRONMENT=Development
-    networks:
-      - services
+      - ASPNETCORE_URLS=https://+:34560;
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=4fd08b7e-0777-406d-97b9-734bc1515124
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/admin.pfx
+      - DatabaseConnections__Main__Host=localhost,1433
+      - Authorization__Authority=https://localhost:61767
+      - Authorization__DangerousAcceptAnyCertificate=true
+      - Initialize=true
+    network_mode: host
 
   server:
     build:
@@ -38,14 +42,23 @@ services:
       - db
     image: nocturne-auth-server/server
     container_name: nocturne-auth-server-openid-provider
-    ports:
-      - '6001:80'
+    volumes:
+      - ./certs:/https:ro
     environment:
-      - DatabaseConnections__Main__Server=db,1433
       - ASPNETCORE_ENVIRONMENT=Development
-    networks:
-      - services
+      - ASPNETCORE_URLS=https://+:61767;
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=9286bf83-89c4-4617-98bf-ae529f3ec300
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/server.pfx
+      - DatabaseConnections__Main__Host=localhost,1433
+    network_mode: host
 
-networks:
-  services:
-    driver: bridge
+  email:
+    image: rnwood/smtp4dev:v3
+    container_name: nocturne-auth-server-email
+    volumes:
+      - ./emails:/smtp4dev
+    environment:
+      - Kestrel__Endpoints__Http__Url=http://localhost:34564
+      - ServerOptions__HostName=localhost
+      - ServerOptions__Port=587
+    network_mode: host
