@@ -6,7 +6,6 @@
 /data
 /emails
 appsettings.local.json
-**/wwwroot/dist/
 
 # User-specific files
 *.rsuser
