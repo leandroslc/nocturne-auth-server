@@ -31,7 +31,6 @@ services
 
 services
     .AddApplicationAntiforgery(ApplicationConstants.Identifier)
-    .AddApplicationWebAssets(configuration)
     .AddApplicationOptions<ServerApplicationOptions>(configuration);
 
 services.AddApplicationLocalization(configuration);

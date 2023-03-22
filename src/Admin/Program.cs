@@ -25,7 +25,6 @@ services
 
 services
     .AddApplicationAntiforgery(ApplicationConstants.Identifier)
-    .AddApplicationWebAssets(configuration)
     .AddApplicationOptions<AdminApplicationOptions>(configuration);
 
 services
