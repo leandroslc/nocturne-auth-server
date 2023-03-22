@@ -52,6 +52,9 @@ msgstr "Aplicação"
 msgid "Applications"
 msgstr "Aplicações"
 
+msgid "Are you sure you want to unassign the role from this user?"
+msgstr "Tem certeza de que deseja desvincular o grupo deste usuário?"
+
 msgid "Assign roles"
 msgstr "Atribuir grupos"
 
