@@ -26,7 +26,10 @@
                             </button>
                         </td>
                         <td>
-                            <a target="_blank" href="@Url.RouteUrl(RouteNames.RolesView, new { role.Id })">@role.Name</a>
+                            <a target="_blank" href="@Url.RouteUrl(RouteNames.RolesView, new { role.Id })">
+                                <span>@role.Name</span>
+                                <span class="bi-box-arrow-up-right ml-2" aria-hidden="true"></span>
+                            </a>
                         </td>
                     </tr>
                 }
