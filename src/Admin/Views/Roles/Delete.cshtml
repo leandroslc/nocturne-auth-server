@@ -2,37 +2,55 @@
 @model DeleteRoleCommand
 
 @{
-    Layout = null;
+    var title = localizer["Delete role"];
+    var returnUrl = Url.RouteUrl(RouteNames.RolesView, new { Model.Id });
+    var returnTitle = localizer["Role details"];
+
+    ViewData[KnownViewData.Title] = @title;
+    ViewData[KnownViewData.PageGroup] = PageGroups.Roles;
 }
 
-<div class="modal-header">
-    <h5 class="modal-title" id="role-modal-label">@localizer["Delete role"]</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
+<div class="page">
+    <div class="page-heading">
+        <div class="page-container">
+            <a class="page-back" href="@returnUrl">
+                <span class="bi-arrow-left" aria-hidden="true"></span>
+                <span>@returnTitle</span>
+            </a>
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="page-card">
+            <div class="page-card-header">
+                <h1 class="page-card-title">@title</h1>
+            </div>
+            <div class="page-card-content">
+                <form method="POST" loading="loading">
+
+                    <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+
+                    <div class="mb-3">
+                        <p>@localizer["You are about to delete the role {0} and this action is irreversible. All applications and/or users may be affected.", Html.Raw($"<strong>{Model.Name}</strong>")]</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="NameConfirmation" class="form-label">@localizer["Type the role name to confirm"]</label>
+                        <input asp-for="NameConfirmation" class="form-control" autofocus />
+                        <span asp-validation-for="NameConfirmation" class="d-block form-text text-danger"></span>
+                    </div>
+
+                    <input type="hidden" asp-for="Name" />
+
+                    <div class="mb-3">
+                        <button class="btn btn-primary" type="submit">@localizer["Save"]</button>
+                        <a class="btn btn-secondary" role="button" href="@returnUrl">@localizer["Cancel"]</a>
+
+                        <div class="spinner-border spinner-border-sm text-primary" role="status" id="loading" style="display: none;">
+                            <span class="sr-only">@localizer["Loading..."]</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-<form method="post" loading="role-loading">
-    <div class="modal-body">
-        <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
-
-        <div class="mb-3">
-            <p>@localizer["You are about to delete the role {0} and this action is irreversible. All applications and/or users may be affected.", Html.Raw($"<strong>{Model.Name}</strong>")]</p>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="NameConfirmation" class="form-label">@localizer["Type the role name to confirm"]</label>
-            <input asp-for="NameConfirmation" class="form-control" autofocus />
-            <span asp-validation-for="NameConfirmation" class="d-block form-text text-danger"></span>
-        </div>
-
-        <input type="hidden" asp-for="Name" />
-    </div>
-    <div class="modal-footer">
-        <div class="spinner-border spinner-border-sm text-primary" role="status" id="role-loading" style="display: none;">
-            <span class="sr-only">@localizer["Loading..."]</span>
-        </div>
-
-        <button type="submit" class="btn btn-danger">@localizer["Delete"]</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">@localizer["Cancel"]</button>
-    </div>
-</form>
