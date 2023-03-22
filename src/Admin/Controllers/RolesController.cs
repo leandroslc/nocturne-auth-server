@@ -49,7 +49,7 @@ namespace Nocturne.Auth.Admin.Controllers
 
             if (result.IsSuccess)
             {
-                return RedirectToDetails(result.RoleId, result.ApplicationId);
+                return RedirectToDetails(result.RoleId);
             }
 
             if (result.IsFailure || result.IsDuplicated)
@@ -92,7 +92,7 @@ namespace Nocturne.Auth.Admin.Controllers
 
             if (result.IsSuccess)
             {
-                return RedirectToDetails(result.RoleId, result.ApplicationId);
+                return RedirectToDetails(result.RoleId);
             }
 
             if (result.IsFailure || result.IsDuplicated)
@@ -160,7 +160,7 @@ namespace Nocturne.Auth.Admin.Controllers
 
             if (result.IsSuccess)
             {
-                return Ok();
+                return RedirectToRoute(RouteNames.RolesHome);
             }
 
             if (result.IsNotFound)
@@ -171,14 +171,13 @@ namespace Nocturne.Auth.Admin.Controllers
             throw new ResultNotHandledException(result);
         }
 
-        private IActionResult RedirectToDetails(long roleId, string applicationId)
+        private IActionResult RedirectToDetails(long roleId)
         {
             return RedirectToRoute(
                 RouteNames.RolesView,
                 new
                 {
                     id = roleId,
-                    applicationId,
                 });
         }
 

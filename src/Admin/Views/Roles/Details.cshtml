@@ -51,10 +51,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <button class="btn btn-danger" id="delete-role" type="button">
+                            <a class="btn btn-danger" asp-route="@RouteNames.RolesDelete" asp-route-id="@Model.Role.Id">
                                 <span class="bi-trash mr-2" aria-hidden="true"></span>
                                 <span>@localizer["Delete"]</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -62,24 +62,3 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="role-modal" tabindex="-1" role="dialog" aria-labelledby="role-modal-label" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content"></div>
-  </div>
-</div>
-
-@section scripts
-{
-    <script src="~/dist/nocturne-auth-server/admin-roles.min.js" asp-append-version="true"></script>
-    <script>
-        manageRoles({
-            ids: {
-                deleteRoleButton: 'delete-role',
-                modalId: 'role-modal',
-            },
-            deleteRoleAction: '@Url.RouteUrl(RouteNames.RolesDelete, new { Model.Role.Id })',
-            deleteRoleReturnUrl: '@returnUrl',
-        });
-    </script>
-}
