@@ -35,10 +35,12 @@
         "scp:roles"
       ],
       "PostLogoutRedirectUris": [
-        "https://localhost:34560/signout-callback-oidc"
+        "https://localhost:34560/signout-callback-oidc",
+        "http://localhost:34560/signout-callback-oidc"
       ],
       "RedirectUris": [
-        "https://localhost:34560/signin-oidc"
+        "https://localhost:34560/signin-oidc",
+        "http://localhost:34560/signin-oidc"
       ]
     },
     "AdminUser": {
