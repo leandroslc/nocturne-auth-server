@@ -131,12 +131,11 @@ To configure email, there are the following options:
   "UseSSL": true,
   "Security": "Auto",
   "RequiresAuthentication": true,
-  "Template": {
-    "ApplicationName": "<custom application name>",
-    "CompanyInfo": "<custom company info>",
-    "CompanyLogoUrl": "<custom company logo url>",
-    "CompanyName": "<custom company name>"
-  }
+  "TemplatesPath": "<path>", // where templates are stored (defaults to "Templates/Email")
+  "TemplateApplicationName": "<custom application name>",
+  "TemplateCompanyInfo": "<custom company info>",
+  "TemplateCompanyLogoUrl": "<custom company logo url>",
+  "TemplateCompanyName": "<custom company name>"
 }
 ```
 

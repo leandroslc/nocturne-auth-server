@@ -27,6 +27,12 @@ namespace Nocturne.Auth.Core.Services.Email
 
         public string TemplatesPath { get; set; } = Path.Combine("Templates", "Emails");
 
-        public EmailTemplateOptions Template { get; } = new EmailTemplateOptions();
+        public string TemplateApplicationName { get; set; }
+
+        public string TemplateCompanyInfo { get; set; }
+
+        public Uri TemplateCompanyLogoUrl { get; set; }
+
+        public string TemplateCompanyName { get; set; }
     }
 }
