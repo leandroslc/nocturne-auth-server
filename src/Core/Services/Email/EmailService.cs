@@ -123,10 +123,10 @@ namespace Nocturne.Auth.Core.Services.Email
         {
             var model = command.TemplateModel ?? new EmailTemplateModel();
 
-            model.ApplicationName = options.Template.ApplicationName;
-            model.CompanyInfo = options.Template.CompanyInfo;
-            model.CompanyLogoUrl = options.Template.CompanyLogoUrl;
-            model.CompanyName = options.Template.CompanyName;
+            model.ApplicationName = options.TemplateApplicationName;
+            model.CompanyInfo = options.TemplateCompanyInfo;
+            model.CompanyLogoUrl = options.TemplateCompanyLogoUrl;
+            model.CompanyName = options.TemplateCompanyName;
 
             return model;
         }
