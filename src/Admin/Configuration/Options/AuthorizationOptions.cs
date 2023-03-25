@@ -22,6 +22,6 @@ namespace Nocturne.Auth.Admin.Configuration.Options
 
         public bool RequireHttps { get; set; } = true;
 
-        public bool DangerousAcceptAnyCertificate { get; set; }
+        public bool DisableCookiesSecurity { get; set; }
     }
 }
