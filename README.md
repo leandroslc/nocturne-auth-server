@@ -183,10 +183,10 @@ You can easily add a new database provider by following these steps:
 - Add a class that implements `IEntityFrameworkDatabaseProvider` (you can check the other projects for reference). It is also recommended that the migrations assembly is set to the current provider project.
 - Add the new provider to `Providers` in `src/Configuration/Services/DbContextServices`.
 
-### Add a new localization language
-The systems' localization uses [PO](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html) files. To add a new language, seek for a directory `Locales` at the root of the project to be localized, and add a new file following the convention: `<locale>.po`.
+### Localization language
+The applications' localization uses [PO](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html) files. To add a new language, seek for a directory `Locales` at the root of the project to be localized, and add a new file following the convention: `<locale>.po`.
 
-Localization is base on the literal text (in English, the default language).
+Localization is based on the literal text (in English, the default language).
 
 For reference of language tags, see [IETF BCP 47 language tag](https://en.wikipedia.org/wiki/IETF_language_tag).
 
