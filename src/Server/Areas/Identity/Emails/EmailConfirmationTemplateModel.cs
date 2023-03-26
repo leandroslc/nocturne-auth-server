@@ -9,10 +9,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Emails
     {
         public string UserName { get; set; }
 
-        public string Message { get; set; }
-
         public Uri CallbackUrl { get; set; }
-
-        public string ConfirmButtonText { get; set; }
     }
 }

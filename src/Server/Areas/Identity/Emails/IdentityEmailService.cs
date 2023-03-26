@@ -36,8 +36,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Emails
                 {
                     Title = title,
                     UserName = user.FirstName,
-                    Message = localizer["Please confirm your account by clicking the button below."],
-                    ConfirmButtonText = localizer["Confirm"],
                     CallbackUrl = callbackUrl,
                 },
             };
@@ -61,8 +59,6 @@ namespace Nocturne.Auth.Server.Areas.Identity.Emails
                 {
                     Title = title,
                     UserName = user.FirstName,
-                    Message = localizer["To reset your password click on the button below."],
-                    ResetButtonText = localizer["Reset"],
                     CallbackUrl = callbackUrl,
                 },
             };
