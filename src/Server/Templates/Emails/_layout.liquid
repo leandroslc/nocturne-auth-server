@@ -11,20 +11,22 @@
    <td>
      <table align="center" border="0" cellpadding="0" cellspacing="0" width="70%">
        <tr>
-         <td bgcolor="#ffffff" style="color: #153643; padding: 16px 16px 16px 16px; font-family: Arial, sans-serif; font-size: 18px;">
-           {% if CompanyLogoUrl != null and CompanyLogoUrl != "" %}
-           <img src="{{ CompanyLogoUrl }}" alt="Logo" style="margin-right: 12px;" />
-           {% endif %}
-           <b>{{ CompanyName }}</b>
-         </td>
+          <td style="width: 1%">
+            {% if CompanyLogoUrl != null and CompanyLogoUrl != "" %}
+              <img src="{{ CompanyLogoUrl }}" alt="Logo" style="margin-right: 12px; width: 48px; height: auto;" />
+            {% endif %}
+          </td>
+          <td bgcolor="#ffffff" style="color: #153643; padding: 16px 16px 16px 16px; font-family: Arial, sans-serif; font-size: 18px;">
+            <b>{{ CompanyName }}</b>
+          </td>
        </tr>
        <tr>
-         <td bgcolor="#1b6ec2" style="color: #ffffff; padding: 12px 16px 12px 16px; font-family: Arial, sans-serif; font-size: 18px;">
+         <td colspan="2" bgcolor="#1b6ec2" style="color: #ffffff; padding: 12px 16px 12px 16px; font-family: Arial, sans-serif; font-size: 18px;">
           <b>{{ ApplicationName }}</b>
          </td>
        </tr>
        <tr>
-         <td bgcolor="#ffffff" style="padding: 40px 28px 40px 28px;">
+         <td colspan="2" bgcolor="#ffffff" style="padding: 40px 28px 40px 28px;">
             <table border="0">
               <tr>
                 <td style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">

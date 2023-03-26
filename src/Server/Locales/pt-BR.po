@@ -295,9 +295,6 @@ msgstr "Dados pessoais"
 msgid "Phone number"
 msgstr "Número de telefone"
 
-msgid "Please confirm your account by clicking the button below."
-msgstr "Por favor, confirme sua conta de acesso clicando no botão abaixo."
-
 msgid "Please enter an email address below to finish logging in"
 msgstr "Por favor informe um endereço de e-mail abaixo para completar o acesso"
 
@@ -519,9 +516,6 @@ msgstr "Para finalizar seu cadastro, por favor verifique seu e-mail para confirm
 
 msgid "To request a password reset, enter the email associated with your account."
 msgstr "Para solicitar uma redefinição de senha, informe o e-mail associado à sua conta."
-
-msgid "To reset your password click on the button below."
-msgstr "Para redefinir sua senha, clique no botão abaixo."
 
 msgid "To send a confirmation email, enter the email associated with your account."
 msgstr "Para enviar um email de confirmação, informe o e-mail associado à sua conta."

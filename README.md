@@ -183,7 +183,7 @@ You can easily add a new database provider by following these steps:
 - Add a class that implements `IEntityFrameworkDatabaseProvider` (you can check the other projects for reference). It is also recommended that the migrations assembly is set to the current provider project.
 - Add the new provider to `Providers` in `src/Configuration/Services/DbContextServices`.
 
-### Localization language
+### Localization
 The applications' localization uses [PO](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html) files. To add a new language, seek for a directory `Locales` at the root of the project to be localized, and add a new file following the convention: `<locale>.po`.
 
 Localization is based on the literal text (in English, the default language).
@@ -193,9 +193,9 @@ For reference of language tags, see [IETF BCP 47 language tag](https://en.wikipe
 > The first translations were designed to use a neutral and inclusive language, so always strive to use a language that fits everyone.
 
 ### Add email template
-Email templates uses [Liquid template language](https://shopify.github.io/liquid). There is no convetion for where to add the templates, but it is highly recommended they are added to a directory `Templates/Emails` at the project root.
+Email templates uses [Liquid template language](https://shopify.github.io/liquid). There is no convetion for where to add the templates, but it is highly recommended they are added to a directory `Templates/Emails` at the project root (although it is configurable). The file should be named `<template name>.liquid`.
 
-Currently theres is limited suport for localization. Maybe the templates should also be separated by locales in the future.
+There is also support for localization in email templates, just add a file named `<template name>.<locale>.liquid`. The locale suffix should be specified in [a specific format](https://en.wikipedia.org/wiki/IETF_language_tag). See [the Localization section](#localization) for more details.
 
 ### Web assets
 Javascripts and css files are bundled in a `dist` directory when building the `web` project.

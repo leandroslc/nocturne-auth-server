@@ -19,7 +19,7 @@ namespace Nocturne.Auth.Core.Services.Email
 
         public string TemplateExtension { get; }
 
-        public string GetTemplateFilePath(string templateName)
+        public string GetExactTemplateFilePath(string templateName)
         {
             const string templateNameFormat = "{0}.{1}";
 
@@ -30,6 +30,13 @@ namespace Nocturne.Auth.Core.Services.Email
                 TemplateExtension);
 
             return Path.Combine(TemplatesPath, filePath);
+        }
+
+        public string FindTemplateFile(string templateName, string culture)
+        {
+            var files = Directory.GetFiles(TemplatesPath, $"{templateName}.{culture}*.{TemplateExtension}");
+
+            return files.FirstOrDefault();
         }
     }
 }

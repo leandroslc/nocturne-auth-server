@@ -96,16 +96,16 @@ namespace Nocturne.Auth.Core.Services.Email
             string cultureName,
             out string foundFile)
         {
-            var fileName = settings.GetTemplateFilePath($"{templateName}.{cultureName}");
+            var fileName = settings.FindTemplateFile(templateName, cultureName);
 
-            if (File.Exists(fileName))
+            if (fileName is not null && File.Exists(fileName))
             {
                 foundFile = fileName;
 
                 return true;
             }
 
-            fileName = settings.GetTemplateFilePath($"{templateName}");
+            fileName = settings.GetExactTemplateFilePath(templateName);
 
             if (File.Exists(fileName))
             {
