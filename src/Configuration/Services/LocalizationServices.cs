@@ -23,8 +23,13 @@ namespace Nocturne.Auth.Configuration.Services
             });
 
             var localizationOptions = GetOptions(configuration);
+            var supportedCultures = GetSupportedCultures().ToList();
 
-            SetDefaultCulture(localizationOptions);
+            services.AddRequestLocalization(options =>
+            {
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
 
             return services;
         }
@@ -39,12 +44,16 @@ namespace Nocturne.Auth.Configuration.Services
             return builder;
         }
 
-        private static void SetDefaultCulture(LocalizationOptions options)
+        private static IEnumerable<CultureInfo> GetSupportedCultures()
         {
-            var culture = CultureInfo.GetCultureInfo(options.DefaultCulture);
+            var localizationFiles = Directory.GetFiles(LanguagesPath);
 
-            CultureInfo.DefaultThreadCurrentCulture = culture;
-            CultureInfo.DefaultThreadCurrentUICulture = culture;
+            foreach (var file in localizationFiles)
+            {
+                yield return new CultureInfo(Path.GetFileNameWithoutExtension(file));
+            }
+
+            yield return new CultureInfo("en");
         }
 
         private static LocalizationOptions GetOptions(IConfiguration configuration)
