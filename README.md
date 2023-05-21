@@ -40,28 +40,37 @@ This project was inpired by many cool projects and companies. You may have a loo
 
 
 ## :rocket: Quick start
-- First make sure you have [docker and docker compose](https://www.docker.com/get-started).
-- _Optionally, change the initial settings as needed (read the [Initialization settings section](#scroll-initialization-settings))_
-- Run `docker compose up -d` in the repository root.
+- First make sure you have a [local development ready](#gear-local-setup).
+- _Optionally, change the initial settings as needed (read the [Initialization settings section](#scroll-initialization-settings))_.
+- Run `docker compose up -d` to easily start a preconfigured [database](#local-database-setup) and [SMTP server](#smtp-server-setup) (you can also setup both services, just change all application settings accordingly).
+- Set the `Initialize` environment variable to `true`.
+- Build and run the `Server` and `Admin` projects.
 
-And that is it :slightly_smiling_face:. After the initialization is completed, the systems will be available in the following urls:
-- Admin: [https://localhost:34560](https://localhost:34560).
-- OpenId Server: [https://localhost:61767](https://localhost:61767).
+And that is it :slightly_smiling_face:. By default, after the initialization is complete, the systems will be available in the following urls:
+- Admin: [https://localhost:61768](https://localhost:61768).
+- OpenId Server: [https://localhost:61769](https://localhost:61769).
 - Test Email Server: [http://localhost:34564](http://localhost:34564).
 
 If it was not modified in the initialization settings, the default (admin) user is:
 - Email: `test@test.com`.
 - Password: `Pass123$`.
 
-> Because of a limitation of docker-compose, only host network mode is supported.
 
-### Starting without docker
-- First make sure you have a [local development ready](#gear-local-setup).
-- _Optionally, change the initial settings as needed (read the [Initialization settings section](#scroll-initialization-settings))_
-- Setup a database. You can also [use a container](#local-database-setup). Change the applications settings to match the database connection.
-- Setup a SMTP server. You can also [use a container](#smtp-server-setup). Change the applications settings to match the SMTP server connection.
-- Set the `Initialize` environment variable to `true`.
-- Build and run the `Server` and `Admin` projects.
+## :package: Local setup
+There are different options to build and run the project locally on a development machine. Check the following sections for alternatives.
+
+### Using the host system
+If will be installing everything in your development machine:
+- Make sure you have at least the minimum [.NET version]((https://dotnet.microsoft.com/download)) set in the [global.json](./global.json).
+- Make sure you have [docker and docker compose](https://www.docker.com/get-started/).
+- Make sure you have [Node LTS greater or equal than 16](https://nodejs.org/en/).
+
+### Using VSCode Dev Container
+If you want to quick setup a development environment, there is a dev container available for VSCode. For more details on how to install and open a dev container, [read the introductory tutorial](https://code.visualstudio.com/docs/devcontainers/tutorial).
+
+### Self-signed certificates
+Https connection is required to make all the authorization process work. Make sure you have trusted .NET development certificates by following [this overview](https://learn.microsoft.com/dotnet/core/additional-tools/self-signed-certificates-guide).
+
 
 ## :scroll: Initialization settings
 When the Admin Server starts it runs an initialization service to check for all required initial setup to make the Server operational.
@@ -79,21 +88,6 @@ Some of the settings can be changed if needed by modifing the `src/Admin/initial
 | `AdminUser.Email` | The email of the default admin user.
 | `AdminUser.Password` | The password of the default admin user.
 
-
-## :gear: Local setup
-There are different options to build and run the project locally on a development machine. Check the following sections for alternatives.
-
-### Using the host system
-If will be installing everything in your development machine:
-- Make sure you have at least the minimum [.NET version]((https://dotnet.microsoft.com/download)) set in the [global.json](./global.json).
-- Make sure you have [docker and docker compose](https://www.docker.com/get-started/).
-- Make sure you have [Node LTS greater or equal than 16](https://nodejs.org/en/).
-
-### Using VSCode Dev Container
-If you want to quick setup a development environment, there is a dev container available for VSCode. For more details on how to install and open a dev container, [read the introductory tutorial](https://code.visualstudio.com/docs/devcontainers/tutorial).
-
-### Self-signed certificates
-Https connection is required to make all the authorization process work. Make sure you have trusted .NET development certificates by following [this overview](https://learn.microsoft.com/pt-br/dotnet/core/additional-tools/self-signed-certificates-guide).
 
 ## :computer: Development guides
 Some guides for development.

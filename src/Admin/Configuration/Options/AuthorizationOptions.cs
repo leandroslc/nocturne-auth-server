@@ -21,7 +21,5 @@ namespace Nocturne.Auth.Admin.Configuration.Options
         public ICollection<string> Scopes { get; } = new HashSet<string>();
 
         public bool RequireHttps { get; set; } = true;
-
-        public bool DisableCookiesSecurity { get; set; }
     }
 }
