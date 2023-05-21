@@ -63,21 +63,9 @@ namespace Nocturne.Auth.Admin.Configuration.Services
 
                     options.NonceCookie.Name = "oidc-nonce";
                     options.CorrelationCookie.Name = "oidc-correlation";
-
-                    if (authorizationOptions.DisableCookiesSecurity)
-                    {
-                        DisableCookieSecurity(options.NonceCookie);
-                        DisableCookieSecurity(options.CorrelationCookie);
-                    }
                 });
 
             return services;
-        }
-
-        private static void DisableCookieSecurity(CookieBuilder builder)
-        {
-            builder.SameSite = SameSiteMode.Lax;
-            builder.SecurePolicy = CookieSecurePolicy.None;
         }
 
         private static Task OnRemoteAuthFailure(RemoteFailureContext context)
