@@ -248,15 +248,16 @@ namespace Nocturne.Auth.Server.Areas.Authorization.Controllers
 
             identity.AddClaim(
                 Claims.Subject,
-                request.ClientId,
-                Destinations.AccessToken,
-                Destinations.IdentityToken);
+                request.ClientId);
 
             identity.AddClaim(
                 Claims.Name,
-                await applicationManager.GetDisplayNameAsync(application),
-                Destinations.AccessToken,
-                Destinations.IdentityToken);
+                await applicationManager.GetDisplayNameAsync(application));
+
+            identity.SetDestinations(claim => claim.Type switch
+            {
+                _ => new[] { Destinations.AccessToken, Destinations.IdentityToken, },
+            });
 
             var principal = new ClaimsPrincipal(identity);
             principal.SetResources(await scopeManager.ListResourcesAsync(request.GetScopes()).ToListAsync());

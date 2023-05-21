@@ -8,19 +8,21 @@
     <PackageReference Update="FluentEmail.MailKit" Version="3.0.2" />
     <PackageReference Update="MailKit" Version="2.15.0" />
     <PackageReference Update="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.2.0" />
-    <PackageReference Update="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.4" />
-    <PackageReference Update="Microsoft.AspNetCore.Authorization" Version="6.0.4" />
-    <PackageReference Update="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="6.0.4" />
-    <PackageReference Update="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.4" />
-    <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.4" />
-    <PackageReference Update="Microsoft.AspNetCore.Identity.UI" Version="6.0.4" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
-    <PackageReference Update="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4" />
+    <PackageReference Update="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.16" />
+    <PackageReference Update="Microsoft.AspNetCore.Authorization" Version="6.0.16" />
+    <PackageReference Update="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="6.0.16" />
+    <PackageReference Update="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.16" />
+    <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
+    <PackageReference Update="Microsoft.AspNetCore.Identity.UI" Version="6.0.16" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Tools" Version="6.0.16" />
     <PackageReference Update="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.4" />
-    <PackageReference Update="OpenIddict.AspNetCore" Version="3.1.1" />
-    <PackageReference Update="OpenIddict.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Update="OpenIddict.AspNetCore" Version="4.3.0" />
+    <PackageReference Update="OpenIddict.EntityFrameworkCore" Version="4.3.0" />
     <PackageReference Update="OrchardCore.Localization.Core" Version="1.3.0" />
     <PackageReference Update="Serilog.AspNetCore" Version="5.0.0" />
+    <PackageReference Update="Serilog.AspNetCore" Version="5.0.0" />
+    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
   </ItemGroup>
 
   <!-- Includes the CLSCompliant attriute to all assemblies -->
