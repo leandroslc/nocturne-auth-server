@@ -15,7 +15,7 @@
 <br>
 
 ## :book: Purpose
-This project was created primarily for educational purposes only — the author wanted to understand better how the Open Id/OAuth workflow works ;).
+This project was created primarily for educational purposes only — the author wanted to understand better how the Open Id/OAuth workflow works 😉.
 
 Therefore, as of now, this project is far from production ready.
 
