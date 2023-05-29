@@ -1,6 +1,7 @@
-node_modules
-dist
-build
-coverage
-generated
+**/node_modules
+**/dist
+**/build
+**/coverage
+**/generated
+**/vendor/**/*.min.js
 *.d.ts
