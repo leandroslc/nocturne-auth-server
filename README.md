@@ -44,7 +44,8 @@ This project was inpired by many cool projects and companies. You may have a loo
 - _Optionally, change the initial settings as needed (read the [Initialization settings section](#scroll-initialization-settings))_.
 - Run `docker compose up -d` to easily start a preconfigured [database](#local-database-setup) and [SMTP server](#smtp-server-setup) (you can also setup both services, just change all application settings accordingly).
 - Set the `Initialize` environment variable to `true`.
-- Build and run the `Server` and `Admin` projects.
+- Build and run the `Admin` project. (Unfortunately for now, you will probably want to run it first for the initialization).
+- Build and run the `Server` project.
 
 And that is it :slightly_smiling_face:. By default, after the initialization is complete, the systems will be available in the following urls:
 - Admin: [https://localhost:61768](https://localhost:61768).
